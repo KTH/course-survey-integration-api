@@ -1,0 +1,272 @@
+openapi: 3.0.0
+info:
+    version: 0.1.0
+    title: Course Survey Entity API
+    description: Entities needed to create course surveys.
+    # For a nice view of the API, go try:
+    # Swagger editor -- https://editor.swagger.io/ or https://editor-next.swagger.io/
+    # To better understand OpenAPI you can look at these:
+    # OpenAPI tutorial -- https://support.smartbear.com/swaggerhub/docs/en/get-started/openapi-3-0-tutorial.html
+    # OpenAPA how-to -- https://swagger.io/docs/specification/basic-structure/
+    # OpenAPI spec -- https://swagger.io/specification/
+    contact:
+        name: E-lärande, KTH IT
+        url: https://intra.kth.se/utbildning/e-larande/kontakt-och-support/kontakt-e-larande-1.836575
+        email: it-support@kth.se
+
+servers:
+    - url: https://api.kth.se/course-survey/v1
+      description: Production URL
+    - url: https://api-r.referens.sys.kth.se/course-survey/v1
+      description: Staging URL
+
+security:
+    - oauth2: []
+
+paths:
+    /course-round:
+        get:
+            summary: Returns a list of course rounds.
+            parameters:
+                - $ref: "#/components/parameters/PageLimit"
+                - $ref: "#/components/parameters/PageOffset"
+                - name: surveyDate
+                  in: query
+                  schema:
+                      type: string
+                      description: YYYY-mm-dd
+                  description: Return course rounds that are pending being surveyed on this date.
+            responses:
+                "200":
+                    description: Ok
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/CourseRound"
+                "401":
+                    $ref: "#/components/responses/401"
+                "default":
+                    $ref: "#/components/responses/default"
+
+    /course-round/{ladokRoundId}:
+        get:
+            summary: Returns information about this course round.
+            parameters:
+                - name: ladokRoundId
+                  in: path
+                  schema:
+                      type: string
+                  required: true
+            responses:
+                "200":
+                    description: Ok
+                    content:
+                        application/json:
+                            schema:
+                                $ref: "#/components/schemas/CourseRound"
+                "401":
+                    $ref: "#/components/responses/401"
+                "default":
+                    $ref: "#/components/responses/default"
+
+    /course-round/{ladokRoundId}/students:
+        get:
+            summary: Returns list of students belonging to the course round.
+            parameters:
+                - name: ladokRoundId
+                  in: path
+                  schema:
+                      type: string
+                  required: true
+                - $ref: "#/components/parameters/PageLimit"
+                - $ref: "#/components/parameters/PageOffset"
+            responses:
+                "200":
+                    description: Ok
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: "#/components/schemas/Student"
+                "401":
+                    $ref: "#/components/responses/401"
+                "default":
+                    $ref: "#/components/responses/default"
+
+components:
+    parameters:
+        PageLimit:
+            name: limit
+            in: query
+            description: Nrof items per page
+            schema:
+                type: integer
+                minimum: 0
+                maximum: 100
+                default: 100
+            required: false
+        PageOffset:
+            name: offset
+            in: query
+            description: Start on page (zero based)
+            schema:
+                type: integer
+                minimum: 0
+                default: 0
+            required: false
+
+    responses:
+        "401":
+            description: Unauthorized
+        "default":
+            description: Invalid request
+            content:
+                application/json:
+                    schema:
+                        type: object
+                        properties:
+                            message:
+                                type: string
+
+    securitySchemes:
+        oauth2:
+            type: oauth2
+            description: This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)
+            flows:
+                implicit: # <---- OAuth flow(authorizationCode, implicit, password or clientCredentials)
+                    authorizationUrl: https://api.example.com/oauth2/authorize
+                    scopes:
+                        read: read data
+
+    schemas:
+        CourseRound:
+            type: object
+            properties:
+                ladokCourseId:
+                    type: string
+                ladokCourseRoundId:
+                    type: string
+                name:
+                    type: string
+                courseCode:
+                    type: string
+                    description: "utbildningskod"
+                organization:
+                    type: string
+                courseGoal:
+                    type: string
+                    description: Long form text including linebreaks
+                period:
+                    type:
+                        string
+                    enum:
+                        - P1
+                        - P2
+                        - P3
+                        - P4
+                credits:
+                    type: string
+                    description: Credits awarded for this course
+                courseExaminor:
+                    type: string
+                    description: "examinator"
+                courseResponsible:
+                    type: string
+                courseTeachers:
+                    type: array
+                    items:
+                        type: string
+                nrofRegisteredStudents:
+                    type: integer
+                nrofReportedResults:
+                    type: integer
+                gradingDistribution:
+                    type: object
+                    description: "Kurs, betygsfördelning" # TODO: Add an example of what this would look like
+                    additionalProperties: true
+                programs:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/ProgramRound"
+                modules:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/CourseModule"
+
+        Student:
+            type: object
+            properties:
+                ladokStudentId:
+                    type: string
+                ladokCourseId:
+                    type: string
+                ladokCourseRoundId:
+                    type: string
+                canvasSisId:
+                    type: string
+                    description: We currently use kthUserId as canvasSisId
+                name:
+                    type: string
+                    description: Full Name of user
+                email:
+                    type: string
+                roles:
+                    type: array
+                    items:
+                        type: string
+                        enum:
+                            - TBD
+                            - ...
+                locations:
+                    type: array
+                    items:
+                        type: string
+                program:
+                    $ref: "#/components/schemas/ProgramRound"
+
+        ProgramRound:
+            type: object
+            properties:
+                code:
+                    type: string
+                semester:
+                    type: string
+                startPeriod:
+                    type: string
+                    description: Year and term when program round started
+                name:
+                    type: string
+                studyYear:
+                    type: integer
+                    description: Calculate by using startPeriod and current period.
+                specification:
+                    type: string
+                required:
+                    type: string
+                    enum:
+                        - TBD
+                        - ...                
+
+        CourseModule:
+            type: object
+            properties:
+                code:
+                    type: string
+                name:
+                    type: string
+                credits:
+                    type: string
+                    description: Credits awarded for this module.
+                gradingScheme:
+                    type: array
+                    items:
+                        type: string
+                nrofReportedResults:
+                    type: integer
+                gradingDistribution:
+                    type: object
+                    description: "Moment, betygsfördelning" # TODO: Add an example of what this would look like
+                    additionalProperties: true
