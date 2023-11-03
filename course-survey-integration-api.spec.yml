@@ -27,15 +27,10 @@ paths:
     /course-round:
         get:
             summary: Returns a list of course rounds.
+            description: The API will return any course round from this or previous term that should be surveyed. A course round might be updated and course rounds might be added to this list as time progresses during the term.
             parameters:
                 - $ref: "#/components/parameters/PageLimit"
                 - $ref: "#/components/parameters/PageOffset"
-                - name: surveyDate
-                  in: query
-                  schema:
-                      type: string
-                      description: YYYY-mm-dd
-                  description: Return course rounds that are pending being surveyed on this date.
             responses:
                 "200":
                     description: Ok
