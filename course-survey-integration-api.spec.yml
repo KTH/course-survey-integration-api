@@ -144,13 +144,29 @@ components:
                     type: string
                 ladokCourseRoundId:
                     type: string
+                canvasSisId:
+                    type: string
+                    description: We currently use LADOK UID as canvasSisId (sis_course_id in Canvas API)
                 name:
                     type: string
                 courseCode:
                     type: string
                     description: "utbildningskod"
+                language:
+                    type: string
+                    enum:
+                        - en
+                        - sv
+                    description: The main language used for this course. Determines the language used to generate report.
+                canceled:
+                    type: boolean
+                    description: Marked true if the course has been canceled (duh!).
                 organization:
                     type: string
+                    description: The school at KTH this course belongs to.
+                institution:
+                    type: string
+                    description: The specific institution at a school this course is attached to.
                 courseGoal:
                     type: string
                     description: Long form text including linebreaks
