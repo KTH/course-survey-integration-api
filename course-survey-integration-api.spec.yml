@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
     version: 0.1.0
-    title: Course Survey Entity API
+    title: Course Survey Integration API
     description: Entities needed to create course surveys.
     # For a nice view of the API, go try:
     # Swagger editor -- https://editor.swagger.io/ or https://editor-next.swagger.io/
@@ -15,9 +15,9 @@ info:
         email: it-support@kth.se
 
 servers:
-    - url: https://api.kth.se/course-survey/v1
+    - url: https://api.kth.se/course-survey-integration/v1
       description: Production URL
-    - url: https://api-r.referens.sys.kth.se/course-survey/v1
+    - url: https://api-r.referens.sys.kth.se/course-survey-integration/v1
       description: Staging URL
 
 security:
