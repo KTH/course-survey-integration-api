@@ -161,6 +161,10 @@ components:
                 canceled:
                     type: boolean
                     description: Marked true if the course has been canceled (duh!).
+                endDate:
+                    type: string
+                    format: date
+                    description: The date when the course ends.
                 organization:
                     type: string
                     description: The school at KTH this course belongs to.
