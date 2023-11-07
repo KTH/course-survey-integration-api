@@ -165,6 +165,9 @@ components:
                     type: string
                     format: date
                     description: The date when the course ends.
+                displayYear:
+                    type: string
+                    description: "The year this course round was held (YYYY). Note: there are course rounds that span multiple years and might be displayes as YYYY-YYYY"
                 organization:
                     type: string
                     description: The school at KTH this course belongs to.
