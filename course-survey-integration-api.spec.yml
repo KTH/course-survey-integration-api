@@ -189,13 +189,22 @@ components:
                     type: string
                     description: Credits awarded for this course
                 courseExaminor:
-                    $ref: "#/components/schemas/CourseUser"
+                    type: object
+                    description: "Person who is responsible for examination (source: LADOK)."
+                    schema:
+                      $ref: "#/components/schemas/CourseUser"
                 courseResponsible:
-                    $ref: "#/components/schemas/CourseUser"
+                    type: object
+                    description: "Person who is responsible for the course (source: ???)."
+                    schema:
+                      $ref: "#/components/schemas/CourseUser"
                 courseTeachers:
                     type: array
+                    description: "List of teachers connected to this course (source: ???)"
                     items:
-                        $ref: "#/components/schemas/CourseUser"
+                        type: object
+                        schema:
+                          $ref: "#/components/schemas/CourseUser"
                 nrofRegisteredStudents:
                     type: integer
                 nrofReportedResults:
@@ -207,11 +216,15 @@ components:
                 programs:
                     type: array
                     items:
-                        $ref: "#/components/schemas/ProgramRound"
+                        type: object
+                        schema:
+                          $ref: "#/components/schemas/ProgramRound"
                 modules:
                     type: array
                     items:
-                        $ref: "#/components/schemas/CourseModule"
+                        type: object
+                        schema:
+                          $ref: "#/components/schemas/CourseModule"
 
         Student:
             type: object
@@ -243,7 +256,9 @@ components:
                     items:
                         type: string
                 program:
-                    $ref: "#/components/schemas/ProgramRound"
+                    type: object
+                    schema:
+                        $ref: "#/components/schemas/ProgramRound"
 
         ProgramRound:
             type: object
