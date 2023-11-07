@@ -169,11 +169,15 @@ components:
                     type: string
                     description: "The year this course round was held (YYYY). Note: there are course rounds that span multiple years and might be displayes as YYYY-YYYY"
                 organization:
-                    type: string
+                    type: object
                     description: The school at KTH this course belongs to.
+                    schema:
+                      $ref: "#/components/schemas/OrgEntity"
                 institution:
-                    type: string
+                    type: object
                     description: The specific institution at a school this course is attached to.
+                    schema:
+                      $ref: "#/components/schemas/OrgEntity"
                 courseGoal:
                     type: string
                     description: Long form text including linebreaks
@@ -318,3 +322,13 @@ components:
                     format: email
                 fullName:
                     type: string
+
+        OrgEntity:
+            type: object
+            properties:
+                displayName:
+                    type: string
+                    description: The name of the organization entity to be displayed in report.
+                kthId:
+                    type: string
+                    description: The unique identifier used by the federated login server to refer to the organization entity.
