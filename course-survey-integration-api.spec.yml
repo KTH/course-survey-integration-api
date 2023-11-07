@@ -231,6 +231,7 @@ components:
                     description: Full Name of user
                 email:
                     type: string
+                    format: email
                 roles:
                     type: array
                     items:
