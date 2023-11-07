@@ -189,14 +189,13 @@ components:
                     type: string
                     description: Credits awarded for this course
                 courseExaminor:
-                    type: string
-                    description: "examinator"
+                    $ref: "#/components/schemas/CourseUser"
                 courseResponsible:
-                    type: string
+                    $ref: "#/components/schemas/CourseUser"
                 courseTeachers:
                     type: array
                     items:
-                        type: string
+                        $ref: "#/components/schemas/CourseUser"
                 nrofRegisteredStudents:
                     type: integer
                 nrofReportedResults:
@@ -289,3 +288,18 @@ components:
                     type: object
                     description: "Moment, betygsfördelning" # TODO: Add an example of what this would look like
                     additionalProperties: true
+
+        CourseUser:
+            type: object
+            properties:
+                userName:
+                    type: string
+                    description: This is the username used to log in to KTH SSO.
+                kthUserId:
+                    type: string
+                    description: This is the unique identifier for a user at KTH.
+                email:
+                    type: string
+                    format: email
+                fullName:
+                    type: string
