@@ -169,15 +169,11 @@ components:
                     type: string
                     description: "The year this course round was held (YYYY). Note: there are course rounds that span multiple years and might be displayes as YYYY-YYYY"
                 organization:
-                    type: object
+                    $ref: "#/components/schemas/OrgEntity"
                     description: The school at KTH this course belongs to.
-                    schema:
-                      $ref: "#/components/schemas/OrgEntity"
                 institution:
-                    type: object
+                    $ref: "#/components/schemas/OrgEntity"
                     description: The specific institution at a school this course is attached to.
-                    schema:
-                      $ref: "#/components/schemas/OrgEntity"
                 courseGoal:
                     type: string
                     description: Long form text including linebreaks
@@ -193,22 +189,16 @@ components:
                     type: string
                     description: Credits awarded for this course
                 courseExaminor:
-                    type: object
+                    $ref: "#/components/schemas/CourseUser"
                     description: "Person who is responsible for examination (source: LADOK)."
-                    schema:
-                      $ref: "#/components/schemas/CourseUser"
                 courseResponsible:
-                    type: object
+                    $ref: "#/components/schemas/CourseUser"
                     description: "Person who is responsible for the course (source: ???)."
-                    schema:
-                      $ref: "#/components/schemas/CourseUser"
                 courseTeachers:
                     type: array
                     description: "List of teachers connected to this course (source: ???)"
                     items:
-                        type: object
-                        schema:
-                          $ref: "#/components/schemas/CourseUser"
+                        $ref: "#/components/schemas/CourseUser"
                 nrofRegisteredStudents:
                     type: integer
                 nrofReportedResults:
@@ -220,15 +210,11 @@ components:
                 programs:
                     type: array
                     items:
-                        type: object
-                        schema:
-                          $ref: "#/components/schemas/ProgramRound"
+                        $ref: "#/components/schemas/ProgramRound"
                 modules:
                     type: array
                     items:
-                        type: object
-                        schema:
-                          $ref: "#/components/schemas/CourseModule"
+                        $ref: "#/components/schemas/CourseModule"
 
         Student:
             type: object
@@ -260,9 +246,7 @@ components:
                     items:
                         type: string
                 program:
-                    type: object
-                    schema:
-                        $ref: "#/components/schemas/ProgramRound"
+                    $ref: "#/components/schemas/ProgramRound"
 
         ProgramRound:
             type: object
@@ -329,6 +313,9 @@ components:
                 displayName:
                     type: string
                     description: The name of the organization entity to be displayed in report.
+                displayCode:
+                    type: string
+                    description: KTH-specific code used for organization entity.
                 kthId:
                     type: string
                     description: The unique identifier used by the federated login server to refer to the organization entity.
