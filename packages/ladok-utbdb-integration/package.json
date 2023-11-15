@@ -1,0 +1,11 @@
+{
+  "name": "ladok-utbdb-integration",
+  "description": "Abstraction layer for integration with LADOK Utbildningsdatabasen",
+  "private": true,
+  "scripts": {
+  },
+  "devDependencies": {
+  },
+  "dependencies": {
+  }
+}

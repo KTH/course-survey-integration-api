@@ -1,0 +1,24 @@
+{
+  "name": "course-survey-integration-api",
+  "description": "Monorepo for API-integration with Artologik Survey Report",
+  "private": true,
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KTH/course-survey-integration-api.git"
+  },
+  "author": "KTH Royal Institute of Technology",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/KTH/course-survey-integration-api/issues"
+  },
+  "homepage": "https://github.com/KTH/course-survey-integration-api#readme",
+  "devDependencies": {
+  },
+  "dependencies": {
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

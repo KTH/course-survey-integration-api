@@ -1,0 +1,11 @@
+{
+  "name": "kopps-integration",
+  "description": "Abstraction layer for integration with KOPPS",
+  "private": true,
+  "scripts": {
+  },
+  "devDependencies": {
+  },
+  "dependencies": {
+  }
+}
