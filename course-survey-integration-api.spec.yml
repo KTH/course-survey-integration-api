@@ -165,12 +165,19 @@ components:
                     type: string
                     format: date
                     description: The date when the course ends.
+                displayYear:
+                    type: string
+                    description: "The year this course round was held (YYYY). Note: there are course rounds that span multiple years and might be displayes as YYYY-YYYY"
                 organization:
-                    type: string
+                    type: object
                     description: The school at KTH this course belongs to.
+                    schema:
+                      $ref: "#/components/schemas/OrgEntity"
                 institution:
-                    type: string
+                    type: object
                     description: The specific institution at a school this course is attached to.
+                    schema:
+                      $ref: "#/components/schemas/OrgEntity"
                 courseGoal:
                     type: string
                     description: Long form text including linebreaks
@@ -186,14 +193,22 @@ components:
                     type: string
                     description: Credits awarded for this course
                 courseExaminor:
-                    type: string
-                    description: "examinator"
+                    type: object
+                    description: "Person who is responsible for examination (source: LADOK)."
+                    schema:
+                      $ref: "#/components/schemas/CourseUser"
                 courseResponsible:
-                    type: string
+                    type: object
+                    description: "Person who is responsible for the course (source: ???)."
+                    schema:
+                      $ref: "#/components/schemas/CourseUser"
                 courseTeachers:
                     type: array
+                    description: "List of teachers connected to this course (source: ???)"
                     items:
-                        type: string
+                        type: object
+                        schema:
+                          $ref: "#/components/schemas/CourseUser"
                 nrofRegisteredStudents:
                     type: integer
                 nrofReportedResults:
@@ -205,11 +220,15 @@ components:
                 programs:
                     type: array
                     items:
-                        $ref: "#/components/schemas/ProgramRound"
+                        type: object
+                        schema:
+                          $ref: "#/components/schemas/ProgramRound"
                 modules:
                     type: array
                     items:
-                        $ref: "#/components/schemas/CourseModule"
+                        type: object
+                        schema:
+                          $ref: "#/components/schemas/CourseModule"
 
         Student:
             type: object
@@ -228,6 +247,7 @@ components:
                     description: Full Name of user
                 email:
                     type: string
+                    format: email
                 roles:
                     type: array
                     items:
@@ -240,7 +260,9 @@ components:
                     items:
                         type: string
                 program:
-                    $ref: "#/components/schemas/ProgramRound"
+                    type: object
+                    schema:
+                        $ref: "#/components/schemas/ProgramRound"
 
         ProgramRound:
             type: object
@@ -285,3 +307,28 @@ components:
                     type: object
                     description: "Moment, betygsfördelning" # TODO: Add an example of what this would look like
                     additionalProperties: true
+
+        CourseUser:
+            type: object
+            properties:
+                userName:
+                    type: string
+                    description: This is the username used to log in to KTH SSO.
+                kthUserId:
+                    type: string
+                    description: This is the unique identifier for a user at KTH.
+                email:
+                    type: string
+                    format: email
+                fullName:
+                    type: string
+
+        OrgEntity:
+            type: object
+            properties:
+                displayName:
+                    type: string
+                    description: The name of the organization entity to be displayed in report.
+                kthId:
+                    type: string
+                    description: The unique identifier used by the federated login server to refer to the organization entity.
