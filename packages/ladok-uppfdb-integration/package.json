@@ -1,6 +1,6 @@
 {
-  "name": "ladok-utbdb-integration",
-  "description": "Abstraction layer for integration with LADOK Utbildningsdatabasen",
+  "name": "ladok-uppfdb-integration",
+  "description": "Abstraction layer for integration with LADOK Uppföljningsdatabasen",
   "private": true,
   "scripts": {
   },
