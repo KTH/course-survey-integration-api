@@ -1,0 +1,11 @@
+{
+  "name": "canvas-integration",
+  "description": "Abstraction layer for integration with Canvas",
+  "private": true,
+  "scripts": {
+  },
+  "devDependencies": {
+  },
+  "dependencies": {
+  }
+}

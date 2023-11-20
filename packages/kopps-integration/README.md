@@ -1,0 +1,3 @@
+- look at kpm/kpm-backend/src/api/common.ts
+- before caching stuff, think hard about if it really is needed
+  - if we want to cache, perhaps a timer based decorator pattern writing to db is better

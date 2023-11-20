@@ -1,0 +1,23 @@
+{
+  "name": "functions-app",
+  "private": true,
+  "version": "",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:production": "npm run prestart && npm prune --production",
+    "watch": "tsc --w",
+    "prestart": "npm run build && func extensions install",
+    "start": "func start",
+    "format": "prettier -w .",
+    "test": "npm run test:unit",
+    "test:unit": "jest"
+  },
+  "devDependencies": {
+    "@azure/functions": "^4.1.0"
+  },
+  "dependencies": {
+  }
+}
