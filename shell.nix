@@ -7,6 +7,7 @@ in pkgs.mkShell rec {
 
   buildInputs = with pkgs; [
     pkgs.azure-cli
+    pkgs.azure-functions-core-tools
     pkgs.nodejs_20
     pkgs.openssl
     # node-gyp has issues with certain versions of python
