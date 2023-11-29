@@ -5,20 +5,22 @@
   "engines": {
     "node": ">=20"
   },
+  "main": "dist/**/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc --outDir dist",
     "build:production": "npm run prestart && npm prune --production",
-    "watch": "tsc --w",
+    "clean": "rimraf dist",
+    "watch": "tsc --watch --outDir dist",
     "prestart": "npm run build && func extensions install",
     "start": "func start",
-    "format": "prettier -w .",
-    "test": "npm run test:unit",
-    "test:unit": "jest"
+    "test": "npm run test:type-checking && npm run test:regression",
+    "test:regression": "jest",
+    "test:type-checking": "tsc --noEmit"
   },
   "devDependencies": {
-    "@azure/functions": "^4.1.0"
     "azure-functions-core-tools": "^4.x"
   },
   "dependencies": {
+    "@azure/functions": "^4.1.0"
   }
 }
