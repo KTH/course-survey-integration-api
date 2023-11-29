@@ -17,6 +17,7 @@
   },
   "devDependencies": {
     "@azure/functions": "^4.1.0"
+    "azure-functions-core-tools": "^4.x"
   },
   "dependencies": {
   }
