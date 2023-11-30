@@ -1,5 +1,5 @@
 let
-  sources = import ./.nix/sources.nix;
+  sources = import ./nix/sources.nix;
   pkgs = import sources.nixpkgs {};
 
 in pkgs.mkShell rec {
@@ -7,6 +7,7 @@ in pkgs.mkShell rec {
 
   buildInputs = with pkgs; [
     azure-cli
+    azure-functions-core-tools
     nodejs_20
     openssl
     # node-gyp has issues with certain versions of python
