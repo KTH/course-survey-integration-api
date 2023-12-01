@@ -1,0 +1,11 @@
+{
+  "name": "ug-integration",
+  "description": "Abstraction layer for integration with UG",
+  "private": true,
+  "scripts": {
+  },
+  "devDependencies": {
+  },
+  "dependencies": {
+  }
+}
