@@ -3,6 +3,9 @@ info:
     version: 0.1.0
     title: Course Survey Integration API
     description: Entities needed to create course surveys.
+    #
+    #  -- - >  run `npm run generate-types` to generate typescript types from this file.
+    #
     # For a nice view of the API, go try:
     # Swagger editor -- https://editor.swagger.io/ or https://editor-next.swagger.io/
     # To better understand OpenAPI you can look at these:
