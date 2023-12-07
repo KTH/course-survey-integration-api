@@ -1,0 +1,85 @@
+{
+  "_id": {
+    "$oid": "6571d633d8d5738207d00af6"
+  },
+  "ladok3EventType": "se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent",
+  "ladok3Username": "jhsware@kth.se",
+  "message": {
+    "HandelseUID": "fb0a3095-9508-11ee-a0ce-a9a57d284dbd",
+    "EventContext": {
+      "AnvandareUID": "66830d48-51f3-11ec-8f26-98603a8f42a4",
+      "Anvandarnamn": "jhsware@kth.se",
+      "LarosateID": 29
+    },
+    "OrganisationUID": "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
+    "Status": 3,
+    "UtbildningUID": "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
+    "Attributvarde": [
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.undervisningstid",
+        "Varde": "101052",
+        "Uid": "3ea87095-9507-11ee-a0ce-a9a57d284dbd"
+      },
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.finansieringsform",
+        "Varde": "102085",
+        "Uid": "3ea87096-9507-11ee-a0ce-a9a57d284dbd"
+      },
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.studieavgiftsbelagd",
+        "Varde": "false",
+        "Uid": "3ea87097-9507-11ee-a0ce-a9a57d284dbd"
+      }
+    ],
+    "UtbildningsinstansUID": "e51b9585-9501-11ee-a0ce-a9a57d284dbd",
+    "UtbildningstypID": 52,
+    "Avgiftsbelagt": false,
+    "StartperiodID": 151878,
+    "StudielokaliseringID": 135195,
+    "StudietaktID": 1,
+    "UndervisningsformID": 1,
+    "UndervisningstidID": 101052,
+    "UtbildningUtbildningstypID": 22,
+    "UtbildningstillfalleUID": "3ea87094-9507-11ee-a0ce-a9a57d284dbd",
+    "Utbildningstillfalleskod": "12349",
+    "Kurstillfallesattribut": {
+      "Finansieringsform": 102085
+    },
+    "Kurstillfallesperioder": [
+      {
+        "ForstaRegistreringsdatum": "2023-08-28",
+        "ForstaUndervisningsdatum": "2023-08-28",
+        "Omfattningsvarde": 10,
+        "SistaRegistreringsdatum": "2024-01-15",
+        "SistaUndervisningsdatum": "2024-01-15",
+        "UtbildningsomradePerOrganisation": [
+          {
+            "OrganisationUID": "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
+            "Procent": 100,
+            "UtbildningsomradeID": 2,
+            "Uid": "3ea8709a-9507-11ee-a0ce-a9a57d284dbd"
+          }
+        ],
+        "Uid": "3ea87099-9507-11ee-a0ce-a9a57d284dbd"
+      }
+    ]
+  },
+  "userProps": {
+    "ladok3AtomEntryId": "fb64d462-9508-11ee-a853-23dc468d48bd",
+    "ladok3Username": "jhsware@kth.se",
+    "ladok3AtomEntryUpdated": "2023-12-07T15:00:29.911",
+    "ladok3EventId": "fb0a3095-9508-11ee-a0ce-a9a57d284dbd",
+    "ladok3MessageType": "ladok3Event",
+    "ladok3IsLastFeed": true,
+    "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/317122",
+    "content_HYPHEN_Type": "application/json",
+    "ladok3EventType": "se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent",
+    "traceparent": "00-bcb481a3fef09e4bc993000424c298c1-9614ea8fd903cc06-01",
+    "ladok3AtomEntryIndexInFeed": 0,
+    "ladok3KursStatus": 3,
+    "ladok3MessageSequenceNumber": 21
+  }
+}
