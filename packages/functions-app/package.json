@@ -5,14 +5,15 @@
   "engines": {
     "node": ">=20"
   },
-  "main": "dist/*.js",
+  "main": "dist/**/*.js",
   "scripts": {
     "build": "tsc --sourceMap --outDir dist",
+    "build-watch": "tsc --sourceMap --outDir dist --watch",
     "build:production": "npm run prestart && npm prune --production",
     "clean": "rimraf dist",
     "watch": "tsc --sourceMap --watch --outDir dist",
     "prestart": "npm run build && func extensions install",
-    "start": "func start --functions LadokEvents",
+    "start": "func start --functions LadokEvents --verbose false",
     "test": "npm run test:type-checking && npm run test:regression",
     "test:regression": "jest",
     "test:type-checking": "tsc --noEmit"
@@ -20,6 +21,7 @@
   "devDependencies": {
   },
   "dependencies": {
-    "@azure/functions": "^4.1.0"
+    "@azure/functions": "^4.1.0",
+    "mongodb": "^6.3.0"
   }
 }
