@@ -5,7 +5,8 @@
   "scripts": {
     "start": "npm --workspace=functions-app run start",
     "test": "npm --workspaces --if-present run test",
-    "watch": "npm --workspaces --if-present run watch"
+    "watch": "npm --workspaces --if-present run watch",
+    "generate-types": "openapi-typescript openapi/course-survey-integration-api.spec.yml --output packages/functions-app/src/__generated__/_interface.ts"
   },
   "repository": {
     "type": "git",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.2",
     "@types/node": "^20.0.0",
+    "openapi-typescript": "^6.7.1",
     "prettier": "^3.0.0",
     "ts-jest": "^29.0.1",
     "typescript": "^5.1.6",

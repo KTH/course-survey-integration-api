@@ -5,12 +5,12 @@
   "engines": {
     "node": ">=20"
   },
-  "main": "dist/**/index.js",
+  "main": "dist/*.js",
   "scripts": {
-    "build": "tsc --outDir dist",
+    "build": "tsc --sourceMap --outDir dist",
     "build:production": "npm run prestart && npm prune --production",
     "clean": "rimraf dist",
-    "watch": "tsc --watch --outDir dist",
+    "watch": "tsc --sourceMap --watch --outDir dist",
     "prestart": "npm run build && func extensions install",
     "start": "func start --functions LadokEvents",
     "test": "npm run test:type-checking && npm run test:regression",
