@@ -11,8 +11,11 @@ import {
 import got, { HTTPError } from "got";
 
 const gotClient = got.extend({
-  prefixUrl: "https://api.kth.se/api/kopps/v2/",
+  prefixUrl: process.env.KOPPS_API_URL,
   responseType: "json",
+  headers: {
+    "Ocp-Apim-Subscription-Key": process.env.KOPPS_API_SUBSCRIPTION_KEY,
+  },
 });
 
 function errorHandler(error: unknown): never {
