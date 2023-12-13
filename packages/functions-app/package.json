@@ -5,14 +5,16 @@
   "engines": {
     "node": ">=20"
   },
-  "main": "dist/*.js",
+  "main": "dist/functions/*.js",
   "scripts": {
     "build": "tsc --sourceMap --outDir dist",
     "build:production": "npm run prestart && npm prune --production",
     "clean": "rimraf dist",
     "watch": "tsc --sourceMap --watch --outDir dist",
     "prestart": "npm run build && func extensions install",
-    "start": "func start --functions LadokEvents",
+    "start": "func start",
+    "start:api": "func start --functions APIGetCourseRound APIGetCourseRoundStudents APIListCourseRounds",
+    "start:ladok": "func start --functions LadokEvents",
     "test": "npm run test:type-checking && npm run test:regression",
     "test:regression": "jest",
     "test:type-checking": "tsc --noEmit"
