@@ -3,6 +3,7 @@
   "description": "Monorepo for API-integration with Artologik Survey Report",
   "private": true,
   "scripts": {
+    "build": "npm --workspace=functions-app run build",
     "start": "npm --workspace=functions-app run start",
     "test": "npm --workspaces --if-present run test",
     "watch": "npm --workspaces --if-present run watch",
