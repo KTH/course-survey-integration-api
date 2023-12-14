@@ -5,11 +5,15 @@
   "main": "dist/src/functions/*.js",
   "scripts": {
     "build": "tsc",
-    "watch": "tsc -w",
     "clean": "rimraf dist",
+    "watch": "tsc --sourceMap --watch --outDir dist",
     "prestart": "npm run clean && npm run build",
-    "start": "func start",
-    "test": "echo \"No tests yet...\""
+    "start": "npm run start:api",
+    "start:api": "func start --functions APIGetCourseRound APIGetCourseRoundStudents APIListCourseRounds",
+    "start:ladok": "func start --functions LadokEvents",
+    "test": "npm run test:type-checking",
+    "test:regression": "jest",
+    "test:type-checking": "tsc --noEmit"
   },
   "dependencies": {
     "@azure/functions": "^4.1.0"
