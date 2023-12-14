@@ -2,6 +2,7 @@
   "name": "course-survey-integration-api",
   "description": "Monorepo for API-integration with Artologik Survey Report",
   "private": true,
+  "main": "packages/functions-app/dist/functions/src/*.js",
   "scripts": {
     "build": "npm --workspace=functions-app run build",
     "start": "npm --workspace=functions-app run start",
