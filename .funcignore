@@ -1,6 +1,9 @@
-*.js.map
 *.ts
 .git*
+.git
+nix
+shell.nix
+tsconfig.json
 .vscode
 local.settings.json
 test
