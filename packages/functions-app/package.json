@@ -3,7 +3,7 @@
   "private": true,
   "version": "",
   "engines": {
-    "node": ">=20"
+    "node": ">=18"
   },
   "main": "dist/functions/*.js",
   "scripts": {
