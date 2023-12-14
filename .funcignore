@@ -1,6 +1,6 @@
 *.ts
-.git*
-.git
+.git/
+.gitignore
 nix
 shell.nix
 tsconfig.json
