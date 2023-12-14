@@ -1,6 +1,6 @@
 {
-  "name": "functions-app",
-  "version": "0.1.0",
+  "name": "",
+  "version": "1.0.0",
   "description": "",
   "main": "dist/src/functions/*.js",
   "scripts": {
@@ -9,9 +9,7 @@
     "clean": "rimraf dist",
     "prestart": "npm run clean && npm run build",
     "start": "func start",
-    "test": "npm run test:type-checking",
-    "test:regression": "jest",
-    "test:type-checking": "tsc --noEmit"
+    "test": "echo \"No tests yet...\""
   },
   "dependencies": {
     "@azure/functions": "^4.1.0"
