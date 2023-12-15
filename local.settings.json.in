@@ -1,0 +1,10 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
+    "AzureWebJobsStorage": "",
+    "LADOK3_FEED_SERVICE_BUS_SUBSCRIPTION_NAME": "[subscription name]",
+    "LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING": "[connection string for subscription]"
+  }
+}
