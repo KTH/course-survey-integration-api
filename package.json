@@ -1,13 +1,20 @@
 {
   "name": "course-survey-integration-api",
   "description": "Monorepo for API-integration with Artologik Survey Report",
+  "version": "0.1.0",
   "private": true,
-  "main": "packages/functions-app/dist/functions/src/*.js",
+  "main": "dist/src/functions/*.js",
   "scripts": {
-    "build": "npm --workspace=functions-app run build",
-    "start": "npm --workspace=functions-app run start",
-    "test": "npm --workspaces --if-present run test",
-    "watch": "npm --workspaces --if-present run watch",
+    "build": "tsc",
+    "clean": "rimraf dist",
+    "watch": "tsc --sourceMap --watch --outDir dist",
+    "prestart": "npm run clean && npm run build",
+    "start": "npm run start:api",
+    "start:api": "func start --functions APIGetCourseRound APIGetCourseRoundStudents APIListCourseRounds",
+    "start:ladok": "func start --functions LadokEvents",
+    "test": "npm run test:type-checking",
+    "test:regression": "jest",
+    "test:type-checking": "tsc --noEmit",
     "generate-types": "openapi-typescript openapi/course-survey-integration-api.spec.yml --output packages/functions-app/src/__generated__/_interface.ts"
   },
   "repository": {
@@ -23,6 +30,7 @@
   "devDependencies": {
     "@types/jest": "^29.5.2",
     "@types/node": "^20.0.0",
+    "azure-functions-core-tools": "^4.x",
     "openapi-typescript": "^6.7.1",
     "prettier": "^3.0.0",
     "ts-jest": "^29.0.1",
@@ -30,6 +38,7 @@
     "rimraf": "^5.0.0"
   },
   "dependencies": {
+    "@azure/functions": "^4.1.0"
   },
   "workspaces": [
     "packages/*"
