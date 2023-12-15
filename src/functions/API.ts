@@ -2,9 +2,12 @@ import { HttpRequest, HttpResponseInit, InvocationContext, app } from "@azure/fu
 import {
   APICourseRoundList, APICourseRound, APICourseRoundStudentList
 } from "./interface";
+import { TLadokEventUserProperties } from "./ladok-events/types";
 import getCourseRound from "./api/getCourseRound";
 import getCourseRoundStudents from "./api/getCourseRoundStudents";
 import listCourseRounds from "./api/listCourseRounds";
+
+const SUBSCRIPTION_NAME = process.env.LADOK3_FEED_SERVICE_BUS_SUBSCRIPTION_NAME ?? "";
 
 type APIHandler = (req: HttpRequest, ctx: InvocationContext) => Promise<HttpResponseInit>;
 
@@ -50,4 +53,15 @@ app.http('APIListCourseRounds', {
   authLevel: 'function',
   handler: API(listCourseRounds<APICourseRoundList>),
   route: 'course-rounds'
+});
+
+export async function LadokEvents(message: unknown, context: InvocationContext): Promise<void> {
+  context.log('ladok3EventType:', (context?.triggerMetadata?.userProperties as TLadokEventUserProperties).ladok3EventType)
+}
+
+app.serviceBusTopic('LadokEvents', {
+  connection: 'LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING',
+  topicName: 'ladok3-feed',
+  subscriptionName: SUBSCRIPTION_NAME,
+  handler: LadokEvents
 });
