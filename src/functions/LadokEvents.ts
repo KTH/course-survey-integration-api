@@ -29,7 +29,7 @@ export async function LadokEvents(message: unknown, context: InvocationContext):
     const db = client.db(DB_NAME);
 
     switch ((context?.triggerMetadata?.userProperties as TLadokEventUserProperties).ladok3EventType) {
-      // https://docs.google.com/presentation/d/130XPuty8Ge5W5XzxiUvW_oG1ThBXwvA0p7lFy_mIxo4/edit#slide=id.g2a0bddbae82_0_0
+      // Events: https://docs.google.com/presentation/d/130XPuty8Ge5W5XzxiUvW_oG1ThBXwvA0p7lFy_mIxo4/edit#slide=id.g1ec8c4eb354_0_0
       case "RegistreringEvent":
         await registreringEvent(db, message as TRegistreringEvent, context);
         break;
