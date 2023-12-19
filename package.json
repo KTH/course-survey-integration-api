@@ -38,7 +38,8 @@
     "rimraf": "^5.0.0"
   },
   "dependencies": {
-    "@azure/functions": "^4.1.0"
+    "@azure/functions": "^4.1.0",
+    "mongodb": "^6.3.0"
   },
   "workspaces": [
     "packages/*"
