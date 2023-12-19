@@ -14,10 +14,10 @@ This API is managed by the [Azure API Management](https://azure.microsoft.com/en
 
     https://integral.developer.azure-api.net/signin
 
-2. E-mail the following information to [it-support@kth.se](email:it-support@kth.se):
+2. E-mail the following information to **[it-support@kth.se](email:it-support@kth.se)**:
 
   - API Management account name
-  - "Requesting access to Course Survery Integration API"
+  - "Requesting access to Course Survery Integration API (E-lärande)"
   - Short description of purpose
   - Contact details
 
