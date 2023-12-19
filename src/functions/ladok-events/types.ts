@@ -13,6 +13,19 @@ export type TLadokEventUserProperties = {
   traceparent: string // '00-2981b58f9654ef80b29f4028d80565f0-2b59598bb4ce2c6b-01'
 }
 
+export type TLadokEventContext = {
+  AnvandareUID: string, // "66830d48-51f3-11ec-8f26-98603a8f42a4",
+  Anvandarnamn: string, // "jhsware@kth.se",
+  LarosateID: number, // 29
+}
+
+export type TLadokAttributvarde = {
+  Grupp: number, // 0,
+  Namn: string, // "utbildning.attribut.undervisningstid",
+  Varde: string, // "101052",
+  Uid: string, // "3ea87095-9507-11ee-a0ce-a9a57d284dbd"
+}
+
 // - Utbildningsinformation:KurstillfalleEvent
 // se.ladok.schemas.utbildningsinformation.KurstillfalleEvent
 export type TKurstillfalle = {
