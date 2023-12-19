@@ -1,0 +1,41 @@
+{
+  "_id": {
+    "$oid": "6571d633d8d5738207d00afa"
+  },
+  "ladok3EventType": "se.ladok.schemas.studiedeltagande.RegistreringEvent",
+  "ladok3Username": "jhsware@kth.se",
+  "message": {
+    "Omfattningsvarde": "10.0",
+    "Studieavgiftsbetalning": "studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_aktuell",
+    "StudieperiodSlut": "2024-01-15",
+    "StudieperiodStart": "2023-08-28",
+    "ArAnpassad": false,
+    "HandelseUID": "8fb63aea-950a-11ee-99ff-6b3efc3c4159",
+    "EventContext": {
+      "AnvandareUID": "66830d48-51f3-11ec-8f26-98603a8f42a4",
+      "Anvandarnamn": "jhsware@kth.se",
+      "LarosateID": 29
+    },
+    "KursUID": "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
+    "KurstillfalleUID": "3ea87094-9507-11ee-a0ce-a9a57d284dbd",
+    "Period": 1,
+    "RegistreringUID": "64a2a94f-9509-11ee-99ff-6b3efc3c4159",
+    "StudentUID": "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
+    "TillfallesantagningUID": "64a2a94e-9509-11ee-99ff-6b3efc3c4159",
+    "UtbildningsinstansUID": "e51b9585-9501-11ee-a0ce-a9a57d284dbd"
+  },
+  "userProps": {
+    "ladok3AtomEntryId": "900a9cb1-950a-11ee-a853-23dc468d48bd",
+    "ladok3Username": "jhsware@kth.se",
+    "ladok3IsLastFeed": true,
+    "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/317122",
+    "content_HYPHEN_Type": "application/json",
+    "ladok3AtomEntryUpdated": "2023-12-07T15:11:48.836",
+    "ladok3EventType": "se.ladok.schemas.studiedeltagande.RegistreringEvent",
+    "traceparent": "00-88bc0f1957edeab98fdec946ae39e3be-928a0c4660bd138d-01",
+    "ladok3AtomEntryIndexInFeed": 0,
+    "ladok3EventId": "8fb63aea-950a-11ee-99ff-6b3efc3c4159",
+    "ladok3MessageType": "ladok3Event",
+    "ladok3MessageSequenceNumber": 27
+  }
+}

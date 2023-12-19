@@ -1,0 +1,53 @@
+{
+  "_id": {
+    "$oid": "6571d633d8d5738207d00af5"
+  },
+  "ladok3EventType": "se.ladok.schemas.studiedeltagande.ForvantatDeltagandeSkapadEvent",
+  "ladok3Username": "jhsware@kth.se",
+  "message": {
+    "BehorighetsvillkorLista": {},
+    "Perioddeltaganden": {
+      "Perioddeltagande": [
+        {
+          "Anpassat": false,
+          "Omfattningsvarde": "10.0",
+          "Periodbenamningar": {},
+          "PerioddeltagandeUID": "64a2a94f-9509-11ee-99ff-6b3efc3c4159",
+          "Periodindex": 1,
+          "Registreringsperiod": {
+            "Startdatum": "2023-08-28",
+            "Slutdatum": "2024-01-15"
+          },
+          "Tillstand": "studiedeltagande.domain.tillstandsdefinition.ej_paborjad",
+          "UtbildningsPeriodFran": "2023-08-28",
+          "UtbildningsPeriodTill": "2024-01-15"
+        }
+      ]
+    },
+    "Senaredelmarkering": false,
+    "StudentUID": "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
+    "Studieavgiftsbetalning": "studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_aktuell",
+    "TillfallesantagningUID": "64a2a94e-9509-11ee-99ff-6b3efc3c4159",
+    "UtbildningstillfalleUID": "3ea87094-9507-11ee-a0ce-a9a57d284dbd",
+    "HandelseUID": "64a2f770-9509-11ee-99ff-6b3efc3c4159",
+    "EventContext": {
+      "AnvandareUID": "66830d48-51f3-11ec-8f26-98603a8f42a4",
+      "Anvandarnamn": "jhsware@kth.se",
+      "LarosateID": 29
+    }
+  },
+  "userProps": {
+    "ladok3AtomEntryId": "64d8867d-9509-11ee-a853-23dc468d48bd",
+    "ladok3Username": "jhsware@kth.se",
+    "ladok3IsLastFeed": true,
+    "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/317122",
+    "content_HYPHEN_Type": "application/json",
+    "ladok3AtomEntryUpdated": "2023-12-07T15:03:27.071",
+    "ladok3EventType": "se.ladok.schemas.studiedeltagande.ForvantatDeltagandeSkapadEvent",
+    "traceparent": "00-37ba6de55d38f2948ca9217ade813961-050914a53c716667-01",
+    "ladok3AtomEntryIndexInFeed": 0,
+    "ladok3EventId": "64a2f770-9509-11ee-99ff-6b3efc3c4159",
+    "ladok3MessageType": "ladok3Event",
+    "ladok3MessageSequenceNumber": 24
+  }
+}
