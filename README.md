@@ -7,6 +7,24 @@ Status: **Implementationsfas**
 - [Arbetsdokument](https://docs.google.com/presentation/d/130XPuty8Ge5W5XzxiUvW_oG1ThBXwvA0p7lFy_mIxo4)
 - [API-specifikation](./course-survey-integration-api.spec.yml)
 
+## Getting Started
+This API is managed by the [Azure API Management](https://azure.microsoft.com/en-us/products/api-management) service (API-M). In order to access the API you need an account in the KTH-instance of API-M. With this account you can be granted access to the API-endpoints you require.
+
+1. Register a new account in API-M (using "sign up")
+
+    https://integral.developer.azure-api.net/signin
+
+2. E-mail the following information to [it-support@kth.se](email:it-support@kth.se):
+
+  - API Management account name
+  - "Requesting access to Course Survery Integration API"
+  - Short description of purpose
+  - Contact details
+
+This request will be processed and once your API-access key is available, you will be contacted by e-mail.
+
+[Internal ref](https://confluence.sys.kth.se/confluence/display/TJAN/How-to+consume+and+publish+API%3As+in+API+Management)
+
 ## Development
 
 In this project we use Test Driven Development (TDD). This requires you to write each test before you implement the code.
