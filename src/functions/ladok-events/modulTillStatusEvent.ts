@@ -9,51 +9,45 @@ export type TModulTillStatusEvent = {
   Status: number, // 2,
   UtbildningUID: string, // "6b741a06-9505-11ee-a0ce-a9a57d284dbd",
   Attributvarde: TLadokAttributvarde[],
-    /*
-      {
-        "Grupp": 0,
-        "Namn": "utbildning.attribut.betygsskala",
-        "Varde": "131657",
-        "Uid": "6b7419ff-9505-11ee-a0ce-a9a57d284dbd"
-      },
-      {
-        "Grupp": 0,
-        "Namn": "utbildning.attribut.titel.ska.anges",
-        "Varde": "false",
-        "Uid": "6b741a00-9505-11ee-a0ce-a9a57d284dbd"
-      },
-      {
-        "Grupp": 0,
-        "Namn": "utbildning.attribut.utbildningsomrade.organisation",
-        "Varde": "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
-        "Uid": "6b741a01-9505-11ee-a0ce-a9a57d284dbd"
-      },
-      {
-        "Grupp": 0,
-        "Namn": "utbildning.attribut.utbildningsomrade",
-        "Varde": "2",
-        "Uid": "6b741a02-9505-11ee-a0ce-a9a57d284dbd"
-      },
-      {
-        "Grupp": 0,
-        "Namn": "utbildning.attribut.utbildningsomrade.procent",
-        "Varde": "100",
-        "Uid": "6b741a03-9505-11ee-a0ce-a9a57d284dbd"
-      }
-    */
+  /*
+    {
+      "Grupp": 0,
+      "Namn": "utbildning.attribut.betygsskala",
+      "Varde": "131657",
+      "Uid": "6b7419ff-9505-11ee-a0ce-a9a57d284dbd"
+    },
+    {
+      "Grupp": 0,
+      "Namn": "utbildning.attribut.titel.ska.anges",
+      "Varde": "false",
+      "Uid": "6b741a00-9505-11ee-a0ce-a9a57d284dbd"
+    },
+    {
+      "Grupp": 0,
+      "Namn": "utbildning.attribut.utbildningsomrade.organisation",
+      "Varde": "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
+      "Uid": "6b741a01-9505-11ee-a0ce-a9a57d284dbd"
+    },
+    {
+      "Grupp": 0,
+      "Namn": "utbildning.attribut.utbildningsomrade",
+      "Varde": "2",
+      "Uid": "6b741a02-9505-11ee-a0ce-a9a57d284dbd"
+    },
+    {
+      "Grupp": 0,
+      "Namn": "utbildning.attribut.utbildningsomrade.procent",
+      "Varde": "100",
+      "Uid": "6b741a03-9505-11ee-a0ce-a9a57d284dbd"
+    }
+  */
   UtbildningsinstansUID: string, // "6b741a05-9505-11ee-a0ce-a9a57d284dbd",
-  UtbildningstypID: string, // 4,
+  UtbildningstypID: number, // 4,
   Benamningar: {
-    Benamning: [
-      {
-        Sprakkod: string, // "en",
-        Text: string, // "Testmodule 1239"
-      },
-      {
-        Sprakkod: string, // "sv",
-        Text: string, // "Testmodul 1239"
-      }
-    ]
+    Benamning: {
+      Sprakkod: string, // "en",
+      Text: string, // "Testmodule 1239"
+    }[]
   },
   EnhetID: number, // 2,
   Omfattningsvarde: string, // "10.0",
@@ -73,16 +67,19 @@ export type TModulTillStatusEvent = {
   BetygsskalaID: number, // 131657,
   TitelSkaAnges: boolean, // false,
   Utbildningsomradesfordelning: {
-    UtbildningsomradenPerOrganisation: [
-      {
-        OrganisationUID: string, // "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
-        Procent: number, // 100,
-        UtbildningsomradeID: number, // 2
-      }
-    ]
+    UtbildningsomradenPerOrganisation: {
+      OrganisationUID: string, // "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
+      Procent: number, // 100,
+      UtbildningsomradeID: number, // 2
+    }[]
   }
 }
 
 export async function handler(db: Db, message: TModulTillStatusEvent, context: InvocationContext): Promise<void> {
-
+  const utbildningstillfalleUid = message.UtbildningsinstansUID;
+  const status = message.Status;
+  context.log(`ModulTillStatusEvent: ${utbildningstillfalleUid} ${status}`);
+  // 1. Fetch CourseRound from DB
+  // 2. Update status
+  // 3. Persist in DB
 }
