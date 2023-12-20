@@ -13,5 +13,13 @@ export type TPaborjadUtbildningEvent = {
 }
 
 export async function handler(db: Db, message: TPaborjadUtbildningEvent, context: InvocationContext): Promise<void> {
+  const utbildningstillfalleUid = message.UtbildningstillfalleUID;
+  const studentUid = message.StudentUID;
+  context.log(`PaborjadUtbildningEvent: ${utbildningstillfalleUid} ${studentUid}`);
+  // 1. Create a CourseRound object
+  // 2. Get more course info from KOPPS API
+  // 3. Get more course info from LADOK API
+  // 4. Get more course info from UG REST API
+  // 5. Persist in DB
 
 }
