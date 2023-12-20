@@ -7,7 +7,7 @@ export type TRegistreringEvent = {
   Studieavgiftsbetalning: string, // "studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_aktuell",
   StudieperiodSlut: string, // "2024-01-15",
   StudieperiodStart: string, // "2023-08-28",
-  ArAnpassad: string, // false,
+  ArAnpassad: boolean, // false,
   HandelseUID: string, // "8fb63aea-950a-11ee-99ff-6b3efc3c4159",
   EventContext: TLadokEventContext,
   KursUID: string, // "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
@@ -22,6 +22,7 @@ export type TRegistreringEvent = {
 export async function handler(db: Db, message: TRegistreringEvent, context: InvocationContext): Promise<void> {
   const kurstillfalleUid = message.KurstillfalleUID;
   const studentUid = message.StudentUID;
+  context.log(`RegistreringEvent: ${kurstillfalleUid} ${studentUid}`);
   // 1. Create a StudentParticipation object
   // 2. Get more student info from UG REST API
   // 3. Persist in DB
