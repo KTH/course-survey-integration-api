@@ -1,6 +1,6 @@
 import { InvocationContext } from "@azure/functions";
-import { Db } from "mongodb";
 import { TLadokEventContext } from "./types";
+import { ServiceBus, isValidEvent } from "../utils";
 
 export type TResultatPaModulAttesteratEvent = {
   // TODO: Figure out what this event looks like!
@@ -8,6 +8,14 @@ export type TResultatPaModulAttesteratEvent = {
   EventContext: TLadokEventContext,
 }
 
-export async function handler(db: Db, message: TResultatPaModulAttesteratEvent, context: InvocationContext): Promise<void> {
+export async function handler(message: TResultatPaModulAttesteratEvent, context: InvocationContext): Promise<void> {
+  if (!isValidEvent("ResultatPaModulAttesteradEvent", context?.triggerMetadata?.userProperties)) return;
 
+  context.log(`ResultatPaModulAttesteradEvent: `);
+}
+
+export default {
+  handler: ServiceBus<TResultatPaModulAttesteratEvent>(handler),
+  extraInputs: undefined,
+  extraOutputs: undefined,
 }

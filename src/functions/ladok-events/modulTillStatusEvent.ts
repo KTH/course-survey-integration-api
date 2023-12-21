@@ -1,6 +1,6 @@
 import { InvocationContext } from "@azure/functions";
-import { Db } from "mongodb";
 import { TLadokAttributvarde, TLadokEventContext } from "./types";
+import { ServiceBus, isValidEvent } from "../utils";
 
 export type TModulTillStatusEvent = {
   HandelseUID: string, // "6b79e669-9505-11ee-a0ce-a9a57d284dbd",
@@ -75,11 +75,19 @@ export type TModulTillStatusEvent = {
   }
 }
 
-export async function handler(db: Db, message: TModulTillStatusEvent, context: InvocationContext): Promise<void> {
+export async function handler(message: TModulTillStatusEvent, context: InvocationContext): Promise<void> {
+  if (!isValidEvent("se.ladok.schemas.utbildningsinformation.ModulTillStatusEvent", context?.triggerMetadata?.userProperties)) return;
+
   const utbildningstillfalleUid = message.UtbildningsinstansUID;
   const status = message.Status;
   context.log(`ModulTillStatusEvent: ${utbildningstillfalleUid} ${status}`);
   // 1. Fetch CourseRound from DB
   // 2. Update status
   // 3. Persist in DB
+}
+
+export default {
+  handler: ServiceBus<TModulTillStatusEvent>(handler),
+  extraInputs: undefined,
+  extraOutputs: undefined,
 }
