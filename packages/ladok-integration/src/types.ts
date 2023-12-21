@@ -3,62 +3,55 @@ import { z } from "zod";
  * Response for Ladok endpoint
  * GET /resultat/kurstillfalle/{{kurstillfalleUID}}/moment
  */
-export interface LadokKurstillfalleMoment {
+export const LadokKurstillfalleMoment = z.object({
   /** Name */
-  Benamning: {
-    sv: string;
-    en: string;
-  };
+  Benamning: z.object({
+    sv: z.string(),
+    en: z.string(),
+  }),
 
   /** Course code */
-  Utbildningskod: string;
+  Utbildningskod: z.string(),
 
   /** Credits */
-  Omfattning: number;
-  AntalRegistrerade: number;
+  Omfattning: z.number(),
+  AntalRegistrerade: z.number(),
 
   /** Grading Scheme */
-  BetygsskalaID: number;
+  BetygsskalaID: z.number(),
 
   /** Modules */
-  IngaendeMoment: {
-    /** Code */
-    Utbildningskod: string;
+  IngaendeMoment: z.array(
+    z.object({
+      /** Code */
+      Utbildningskod: z.string(),
 
-    /** Name */
-    Benamning: {
-      sv: string;
-      en: string;
-    };
+      /** Name */
+      Benamning: z.object({
+        sv: z.string(),
+        en: z.string(),
+      }),
 
-    /** Credits */
-    Omfattning: number;
+      /** Credits */
+      Omfattning: z.number(),
 
-    /** Grading Scheme */
-    BetygsskalaID: number;
-  }[];
+      /** Grading Scheme */
+      BetygsskalaID: z.number(),
+    }),
+  ),
 
   /** ID of the "utbildningsinstans" */
-  UtbildningsinstansUID: string;
-}
+  UtbildningsinstansUID: z.string(),
+});
 
-/**
- * Response for the Laodk endpoint
- * GET /resultat/utbildningsinstans/kursinstans/{{utbildningsinstansUID}}
- */
-export interface LadokKursinstans {
-  OrganisationUID: string;
-}
+export const LadokKursinstans = z.object({
+  OrganisationUID: z.string(),
+});
 
-/**
- * Response for the Ladok endpoint
- * GET /kataloginformation/organisation/{{UID}}
- */
-export interface LadokOrganisation {
-  Benamning: {
-    /** We use this to take the "School code" */
-    sv: string;
-    en: string;
-  };
-  Organisationskod: string;
-}
+export const LadokOrganisation = z.object({
+  Benamning: z.object({
+    sv: z.string(),
+    en: z.string(),
+  }),
+  Organisationskod: z.string(),
+});

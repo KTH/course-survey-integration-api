@@ -41,3 +41,13 @@ export class ApiError extends Error {
     };
   }
 }
+
+/** Thrown when API response doesn't match the expected type */
+export class ApiSchemaError extends Error {
+  issues: ZodIssue[];
+
+  constructor(endpoint: string, zodError: ZodError) {
+    super(`The Ladok endpoint ${endpoint} returned an unexpected type`);
+    this.issues = zodError.issues;
+  }
+}

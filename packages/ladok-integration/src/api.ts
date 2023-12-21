@@ -1,8 +1,9 @@
-import { ApiError } from "./errors";
+import { ZodError, ZodObject, ZodRawShape } from "zod";
+import { ApiError, ApiSchemaError } from "./errors";
 import {
   LadokKursinstans,
   LadokOrganisation,
-  type LadokKurstillfalleMoment,
+  LadokKurstillfalleMoment,
 } from "./types";
 import got, { HTTPError } from "got";
 
@@ -24,37 +25,42 @@ const gotClient = got.extend({
   },
 });
 
-function errorHandler(error: unknown): never {
+function errorHandler(endpoint: string, error: unknown): never {
   if (error instanceof HTTPError) {
     throw new ApiError(error);
+  }
+
+  if (error instanceof ZodError) {
+    throw new ApiSchemaError(endpoint, error);
   }
 
   throw error;
 }
 
-export async function getKurstillfalle(kurstillfalleUID: string) {
+function typedGet<T extends ZodRawShape>(endpoint: string, type: ZodObject<T>) {
   return gotClient
-    .get<LadokKurstillfalleMoment>(
-      `resultat/kurstillfalle/${kurstillfalleUID}/moment`,
-    )
-    .then((r) => r.body)
-    .catch(errorHandler);
+    .get(endpoint)
+    .then((r) => type.parse(r.body))
+    .catch((err) => errorHandler(endpoint, err));
+}
+
+export async function getKurstillfalle(kurstillfalleUID: string) {
+  return typedGet(
+    `resultat/kurstillfalle/${kurstillfalleUID}/moment`,
+    LadokKurstillfalleMoment,
+  );
 }
 
 export async function getKursinstans(utbildningsinstansUID: string) {
-  return gotClient
-    .get<LadokKursinstans>(
-      `resultat/utbildningsinstans/kursinstans/${utbildningsinstansUID}`,
-    )
-    .then((r) => r.body)
-    .catch(errorHandler);
+  return typedGet(
+    `resultat/utbildningsinstans/kursinstans/${utbildningsinstansUID}`,
+    LadokKursinstans,
+  );
 }
 
 export async function getOrganisation(organisationUID: string) {
-  return gotClient
-    .get<LadokOrganisation>(
-      `kataloginformation/organisation/${organisationUID}`,
-    )
-    .then((r) => r.body)
-    .catch(errorHandler);
+  return typedGet(
+    `kataloginformation/organisation/${organisationUID}`,
+    LadokOrganisation,
+  );
 }
