@@ -1,6 +1,7 @@
-import { InvocationContext } from "@azure/functions";
-import { Db } from "mongodb";
+import { InvocationContext, output } from "@azure/functions";
 import { TLadokEventContext } from "./types";
+import { ServiceBus, isValidEvent, writeToCosmos } from "../utils";
+import { TStudent } from "../interface";
 
 export type TRegistreringEvent = {
   Omfattningsvarde: string, // "10.0",
@@ -19,11 +20,43 @@ export type TRegistreringEvent = {
   UtbildningsinstansUID: string, // "e51b9585-9501-11ee-a0ce-a9a57d284dbd"
 }
 
-export async function handler(db: Db, message: TRegistreringEvent, context: InvocationContext): Promise<void> {
-  const kurstillfalleUid = message.KurstillfalleUID;
-  const studentUid = message.StudentUID;
-  context.log(`RegistreringEvent: ${kurstillfalleUid} ${studentUid}`);
+const cosmosOutput = output.cosmosDB({
+  databaseName: 'CourseSurvey',
+  collectionName: 'StudentParticipation',
+  createIfNotExists: false,
+  partitionKey: '{queueTrigger}',
+  connectionStringSetting: 'MyAccount_COSMOSDB',
+});
+
+export async function handler(message: TRegistreringEvent, context: InvocationContext): Promise<void> {
+  if (!isValidEvent("se.ladok.schemas.studiedeltagande.RegistreringEvent", context?.triggerMetadata?.userProperties)) return;
+    
+  const ladokCourseRoundId = message.KurstillfalleUID;
+  const ladokCourseId = message.KursUID;
+  const ladokStudentId = message.StudentUID;
+  context.log(`RegistreringEvent: ${ladokCourseRoundId} ${ladokStudentId}`);
   // 1. Create a StudentParticipation object
+  const doc: TStudent = {
+    ladokStudentId,
+    ladokCourseId,
+    ladokCourseRoundId,
+    /** @description We currently use kthUserId as canvasSisId */
+    canvasSisId: "TBD",
+    /** @description Full Name of user */
+    name: "TBD",
+    /** Format: email */
+    email: "TBD",
+    roles: ["TBD"],
+    locations: ["TBD"],
+    program: undefined
+  }
   // 2. Get more student info from UG REST API
   // 3. Persist in DB
+  writeToCosmos<TStudent>(doc, context, cosmosOutput);
+}
+
+export default {
+  handler: ServiceBus<TRegistreringEvent>(handler),
+  extraInputs: undefined,
+  extraOutputs: [cosmosOutput],
 }

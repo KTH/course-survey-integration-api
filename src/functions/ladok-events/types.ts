@@ -1,5 +1,5 @@
 export type TLadokEventUserProperties = {
-  content_HYPHEN_Type: 'application/json'
+  content_HYPHEN_Type: string //'application/json'
   ladok3AtomEntryId: string // 'b13bb75e-902e-11ee-81dd-dd57e0af499b'
   ladok3AtomEntryIndexInFeed: number // 0
   ladok3AtomEntryUpdated: string // '2023-12-01T10:47:50.358'
@@ -8,7 +8,7 @@ export type TLadokEventUserProperties = {
   ladok3EventType: string // 'se.ladok.schemas.resultat.AnmalanPaAktivitetstillfalleEvent'
   ladok3IsLastFeed: boolean
   ladok3MessageSequenceNumber: number // 128310
-  ladok3MessageType: 'ladok3Event'
+  ladok3MessageType: string // 'ladok3Event'
   ladok3Username?: string // '[username]@kth.se'
   traceparent: string // '00-2981b58f9654ef80b29f4028d80565f0-2b59598bb4ce2c6b-01'
 }
