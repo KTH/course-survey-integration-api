@@ -1,6 +1,7 @@
 import { Db } from "mongodb";
 
 class MockCollection {
+  // This is the result of the last db operation
   _lastResult: any = undefined;
   // Methods that we use in our code need to be mocked here
   async insertOne(doc: any) {
