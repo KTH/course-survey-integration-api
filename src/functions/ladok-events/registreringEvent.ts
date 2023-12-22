@@ -1,7 +1,7 @@
 import { InvocationContext, output } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { ServiceBus, isValidEvent, writeToCosmos } from "../utils";
-import { TStudent } from "../interface";
+import { TStudentParticipation } from "../interface";
 
 export type TRegistreringEvent = {
   Omfattningsvarde: string, // "10.0",
@@ -36,7 +36,7 @@ export async function handler(message: TRegistreringEvent, context: InvocationCo
   const ladokStudentId = message.StudentUID;
   context.log(`RegistreringEvent: ${ladokCourseRoundId} ${ladokStudentId}`);
   // 1. Create a StudentParticipation object
-  const doc: TStudent = {
+  const doc: TStudentParticipation = {
     ladokStudentId,
     ladokCourseId,
     ladokCourseRoundId,
@@ -52,7 +52,7 @@ export async function handler(message: TRegistreringEvent, context: InvocationCo
   }
   // 2. Get more student info from UG REST API
   // 3. Persist in DB
-  writeToCosmos<TStudent>(doc, context, cosmosOutput);
+  writeToCosmos<TStudentParticipation>(doc, context, cosmosOutput);
 }
 
 export default {

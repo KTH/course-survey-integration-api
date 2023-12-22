@@ -65,7 +65,7 @@ export interface paths {
         /** @description Ok */
         200: {
           content: {
-            "application/json": components["schemas"]["Student"][];
+            "application/json": components["schemas"]["StudentParticipation"][];
           };
         };
         401: components["responses"]["401"];
@@ -80,6 +80,8 @@ export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
     CourseRound: {
+      /** @description Ladok equivalent: UtbildningstillfalleUID, KurstillfalleUID */
+      id?: string;
       ladokCourseId?: string;
       ladokCourseRoundId?: string;
       /** @description We currently use LADOK UID as canvasSisId (sis_course_id in Canvas API) */
@@ -126,7 +128,9 @@ export interface components {
       programs?: components["schemas"]["ProgramRound"][];
       modules?: components["schemas"]["CourseModule"][];
     };
-    Student: {
+    StudentParticipation: {
+      /** @description Ladok equivalent: `${StudentUID}.${KurstillfalleUID}` */
+      id?: string;
       ladokStudentId?: string;
       ladokCourseId?: string;
       ladokCourseRoundId?: string;
