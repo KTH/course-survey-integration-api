@@ -11,37 +11,37 @@ const sharedProps = {
   topicName: 'ladok3-feed',
 }
 
-app.serviceBusTopic('LadokEvents', {
+app.serviceBusTopic('Registrering', {
   ...sharedProps,
   ...registreringEvent,
   subscriptionName: 'csia-registrering',
 });
 
-app.serviceBusTopic('LadokEvents', {
+app.serviceBusTopic('PaborjadUtbildning', {
   ...sharedProps,
   ...paborjadUtbildningEvent,
   subscriptionName: 'csia-paborjad-utbildning',
 });
 
-app.serviceBusTopic('LadokEvents', {
+app.serviceBusTopic('KurstillfälleTillStatus', {
   ...sharedProps,
   ...kurstillfalleTillStatusEvent,
   subscriptionName: 'csia-kurstillfalle-till-status',
 });
 
-app.serviceBusTopic('LadokEvents', {
+app.serviceBusTopic('ModuleTillStatus', {
   ...sharedProps,
   ...modulTillStatusEvent,
   subscriptionName: 'csia-modul-till-status',
 });
 
-app.serviceBusTopic('LadokEvents', {
+app.serviceBusTopic('ResultatPaModulAttesterat', {
   ...sharedProps,
   ...resultatPaModulAttesteratEvent,
   subscriptionName: 'csia-resultat-pa-modul-attesterat',
 });
 
-app.serviceBusTopic('LadokEvents', {
+app.serviceBusTopic('ResultatPaHelKursAttesterat', {
   ...sharedProps,
   ...resultatPaHelKursAttesteratEvent,
   subscriptionName: 'csia-resultat-pa-hel-kurs-attesterat',
