@@ -3,6 +3,41 @@ import { LadokOrganisation } from "./types";
 
 type LadokOrganisation = z.infer<typeof LadokOrganisation>;
 
+/**
+ * This information is obtained from Ladok
+ * But hardcoded for eficiency reasons
+ */
+export function getGradingScheme(id: number) {
+  // AF
+  if (id === 131657) {
+    return {
+      code: "AF",
+      grades: [
+        { validFinalGrade: true, code: "A" },
+        { validFinalGrade: true, code: "B" },
+        { validFinalGrade: true, code: "C" },
+        { validFinalGrade: true, code: "D" },
+        { validFinalGrade: true, code: "E" },
+        { validFinalGrade: false, code: "FX" },
+        { validFinalGrade: false, code: "F" },
+      ],
+    };
+  }
+
+  // PF
+  if (id === 131656) {
+    return {
+      code: "PF",
+      grades: [
+        { validFinalGrade: true, code: "P" },
+        { validFinalGrade: false, code: "F" },
+      ],
+    };
+  }
+
+  throw new Error(`Unknown grading scheme id [${id}]`);
+}
+
 export function parseOrganisation(organisation: LadokOrganisation) {
   // Both "Benamning.sv" and "Benamning.en" are formatted as
   // "SCI/Matematik" where "SCI" is the School code and should be the same

@@ -1,5 +1,5 @@
 import { getKursinstans, getKurstillfalle, getOrganisation } from "./api";
-import { parseOrganisation } from "./utils";
+import { getGradingScheme, parseOrganisation } from "./utils";
 
 /** Get course round information from its Ladok UID */
 export async function getCourseRoundInformation(ladokUid: string) {
@@ -22,6 +22,6 @@ export async function getCourseRoundInformation(ladokUid: string) {
     })),
 
     // TODO: Extract the information from kurstillfalle.BetygsskalaID
-    gradingScheme: {},
+    gradingScheme: getGradingScheme(kurstillfalle.BetygsskalaID),
   };
 }
