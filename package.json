@@ -11,7 +11,7 @@
     "prestart": "npm run clean && npm run build",
     "start": "npm run start:api",
     "start:api": "func start --functions APIGetCourseRound APIGetCourseRoundStudents APIListCourseRounds",
-    "start:ladok": "func start --functions LadokEvents",
+    "start:ladok": "func start --functions Registrering",
     "test": "npm run test:type-checking",
     "test:regression": "jest --testMatch '**/__tests__/**/*.spec.ts' --testTimeout 1000",
     "test:type-checking": "tsc --noEmit",

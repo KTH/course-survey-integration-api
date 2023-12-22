@@ -1,6 +1,7 @@
-import { InvocationContext } from "@azure/functions";
+import { InvocationContext, input, output } from "@azure/functions";
 import { TLadokEventContext } from "./types";
-import { ServiceBus, isValidEvent } from "../utils";
+import { ServiceBus, isValidEvent, writeToCosmos } from "../utils";
+import { TCourseRound } from "../interface";
 
 export type TPaborjadUtbildningEvent = {
   StudentUID: string, // "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
@@ -12,22 +13,40 @@ export type TPaborjadUtbildningEvent = {
   EventContext: TLadokEventContext
 }
 
+const cosmosInput = input.cosmosDB({
+  databaseName: 'CourseSurvey',
+  collectionName: 'CourseRound',
+  id: '{queueTrigger.UtbildningstillfalleUID}',
+  partitionKey: '{queueTrigger}',
+  connectionStringSetting: 'COSMOSDB_CONNECTION_STRING',
+});
+
+const cosmosOutput = output.cosmosDB({
+  databaseName: 'CourseSurvey',
+  collectionName: 'CourseRound',
+  createIfNotExists: true,
+  partitionKey: '{queueTrigger}',
+  connectionStringSetting: 'COSMOSDB_CONNECTION_STRING',
+});
+
 export async function handler(message: TPaborjadUtbildningEvent, context: InvocationContext): Promise<void> {
   if (!isValidEvent("se.ladok.schemas.studiedeltagande.PaborjadUtbildningEvent", context?.triggerMetadata?.userProperties)) return;
 
   const utbildningstillfalleUid = message.UtbildningstillfalleUID;
-  const studentUid = message.StudentUID;
-  context.log(`PaborjadUtbildningEvent: ${utbildningstillfalleUid} ${studentUid}`);
+  context.log(`PaborjadUtbildningEvent: ${utbildningstillfalleUid}`);
   // 1. Create a CourseRound object
+  const doc = {
+    id: utbildningstillfalleUid,
+  }
   // 2. Get more course info from KOPPS API
   // 3. Get more course info from LADOK API
   // 4. Get more course info from UG REST API
   // 5. Persist in DB
-
+  writeToCosmos<TCourseRound>(doc, context, cosmosOutput);
 }
 
 export default {
   handler: ServiceBus<TPaborjadUtbildningEvent>(handler),
-  extraInputs: undefined,
-  extraOutputs: undefined,
+  extraInputs: [cosmosInput],
+  extraOutputs: [cosmosOutput],
 }

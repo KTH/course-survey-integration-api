@@ -1,4 +1,4 @@
-import { InvocationContext, output } from "@azure/functions";
+import { InvocationContext, input, output } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { ServiceBus, isValidEvent, writeToCosmos } from "../utils";
 import { TStudentParticipation } from "../interface";
@@ -23,20 +23,21 @@ export type TRegistreringEvent = {
 const cosmosOutput = output.cosmosDB({
   databaseName: 'CourseSurvey',
   collectionName: 'StudentParticipation',
-  createIfNotExists: false,
+  createIfNotExists: true,
   partitionKey: '{queueTrigger}',
-  connectionStringSetting: 'MyAccount_COSMOSDB',
+  connectionStringSetting: 'COSMOSDB_CONNECTION_STRING',
 });
 
 export async function handler(message: TRegistreringEvent, context: InvocationContext): Promise<void> {
   if (!isValidEvent("se.ladok.schemas.studiedeltagande.RegistreringEvent", context?.triggerMetadata?.userProperties)) return;
-    
+  
   const ladokCourseRoundId = message.KurstillfalleUID;
   const ladokCourseId = message.KursUID;
   const ladokStudentId = message.StudentUID;
   context.log(`RegistreringEvent: ${ladokCourseRoundId} ${ladokStudentId}`);
   // 1. Create a StudentParticipation object
   const doc: TStudentParticipation = {
+    id: `${ladokStudentId}.${ladokCourseRoundId}`,
     ladokStudentId,
     ladokCourseId,
     ladokCourseRoundId,
