@@ -15,7 +15,7 @@
     "test": "npm run test:type-checking",
     "test:regression": "jest --testMatch '**/__tests__/**/*.spec.ts' --testTimeout 1000",
     "test:type-checking": "tsc --noEmit",
-    "generate-types": "openapi-typescript openapi/course-survey-integration-api.spec.yml --output packages/functions-app/src/__generated__/_interface.ts"
+    "generate-types": "openapi-typescript openapi/course-survey-integration-api.spec.yml --output src/__generated__/_interface.ts"
   },
   "repository": {
     "type": "git",
