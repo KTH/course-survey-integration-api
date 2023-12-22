@@ -88,7 +88,7 @@ paths:
                             schema:
                                 type: array
                                 items:
-                                    $ref: "#/components/schemas/Student"
+                                    $ref: "#/components/schemas/StudentParticipation"
                 "401":
                     $ref: "#/components/responses/401"
                 "default":
@@ -143,6 +143,9 @@ components:
         CourseRound:
             type: object
             properties:
+                id:
+                    type: string
+                    description: "Ladok equivalent: UtbildningstillfalleUID, KurstillfalleUID"
                 ladokCourseId:
                     type: string
                 ladokCourseRoundId:
@@ -219,9 +222,12 @@ components:
                     items:
                         $ref: "#/components/schemas/CourseModule"
 
-        Student:
+        StudentParticipation:
             type: object
             properties:
+                id:
+                    type: string
+                    description: "Ladok equivalent: `${StudentUID}.${KurstillfalleUID}`"
                 ladokStudentId:
                     type: string
                 ladokCourseId:
