@@ -1,21 +1,19 @@
 import { getKursinstans, getKurstillfalle, getOrganisation } from "./api";
+import { parseOrganisation } from "./utils";
 
 /** Get course round information from its Ladok UID */
 export async function getCourseRoundInformation(ladokUid: string) {
   const kurstillfalle = await getKurstillfalle(ladokUid);
   const kursinstans = await getKursinstans(kurstillfalle.UtbildningsinstansUID);
-  const organisation = await getOrganisation(kursinstans.OrganisationUID);
+  const organisation = parseOrganisation(
+    await getOrganisation(kursinstans.OrganisationUID),
+  );
 
   return {
     name: kurstillfalle.Benamning,
     courseCode: kurstillfalle.Utbildningskod,
-    organisation: {
-      // TODO: Extract the school code from the "organisation" object
-      code: "",
-    },
-    organisationUnit: {
-      code: organisation.Organisationskod,
-    },
+    organisation: organisation.school,
+    organisationUnit: organisation.department,
     credits: kurstillfalle.Omfattning,
     modules: kurstillfalle.IngaendeMoment.map((m) => ({
       code: m.Utbildningskod,

@@ -36,10 +36,14 @@ exports[`Get information from a course round example from documentation 1`] = `
     "sv": "Artificiell intelligens",
   },
   "organisation": {
-    "code": "",
+    "code": "EECS",
   },
   "organisationUnit": {
     "code": "JR",
+    "name": {
+      "en": "Intelligent Systems",
+      "sv": "Intelligenta system",
+    },
   },
 }
 `;
