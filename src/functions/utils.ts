@@ -64,16 +64,22 @@ export class Database {
     this._client = undefined;
   }
 
-  async read(id: string | ObjectId, collectionName: string): Promise<any> {
+  async read(id: string, collectionName: string): Promise<any> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     const doc = await collection.findOne({ _id: id });
     return doc;
   }
 
-  async write(doc: any, collectionName: string): Promise<void> {
+  async insert(doc: any, collectionName: string): Promise<void> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     await collection.insertOne({ _id: doc.id, ...doc });
+  }
+
+  async update(id: string, partial: any, collectionName: string): Promise<void> {
+    await this.connect();
+    const collection = this._client!.db().collection(collectionName);
+    await collection.updateOne({ _id: id }, partial);
   }
 }
