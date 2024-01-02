@@ -5,6 +5,7 @@
     "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
     "AzureWebJobsStorage": "",
     "LADOK3_FEED_SERVICE_BUS_SUBSCRIPTION_NAME": "[subscription name]",
-    "LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING": "[connection string for subscription]"
+    "LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING": "[connection string for subscription]",
+    "COSMOSDB_CONNECTION_STRING": "[connection string for cosmosdb]"
   }
 }

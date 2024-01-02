@@ -11,9 +11,10 @@
     "prestart": "npm run clean && npm run build",
     "start": "npm run start:api",
     "start:api": "func start --functions APIGetCourseRound APIGetCourseRoundStudents APIListCourseRounds",
-    "start:ladok": "func start --functions Registrering",
+    "start:ladok": "func start --functions PaborjadUtbildning",
     "test": "npm run test:type-checking",
     "test:regression": "jest --testMatch '**/__tests__/**/*.spec.ts' --testTimeout 1000",
+    "test:update-snapshots": "jest --testMatch '**/__tests__/**/*.spec.ts' --testTimeout 1000 --updateSnapshot",
     "test:type-checking": "tsc --noEmit",
     "generate-types": "openapi-typescript openapi/course-survey-integration-api.spec.yml --output src/__generated__/_interface.ts"
   },
@@ -39,7 +40,7 @@
   },
   "dependencies": {
     "@azure/functions": "^4.1.0",
-    "mongodb": "^6.3.0"
+    "mongodb": "^4.0.0"
   },
   "workspaces": [
     "packages/*"
