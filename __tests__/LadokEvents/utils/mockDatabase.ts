@@ -21,7 +21,17 @@ export class MockDatabase implements Database {
     return this._mockData;
   }
 
-  async write(doc: any, collectionName: string): Promise<void> {
+  async insert(doc: any, collectionName: string): Promise<void> {
     this._result = doc;
+  }
+
+  async update(id: string, partial: any, collectionName: string): Promise<void> {
+    if (id === this._mockData.id) {
+      this._result = { ...this._mockData, ...partial };
+    } else if (id === this._result?.id) {
+      this._result = { ...this._result, ...partial };
+    } else {
+      this._result = { ...partial };
+    }
   }
 }

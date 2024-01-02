@@ -21,19 +21,13 @@ export async function handler(message: TPaborjadUtbildningEvent, context: Invoca
   const utbildningsUid = message.UtbildningUID;
   context.log(`PaborjadUtbildningEvent: ${utbildningstillfalleUid}`);
   // 1. Create a CourseRound object
-  let courseRound: TCourseRound;
-  try {
-    courseRound = await db.read(utbildningstillfalleUid, "CourseRound");
-  } catch (err) {
-    throw err;
-  }
+  const courseRound: TCourseRound = await db.read(utbildningstillfalleUid, "CourseRound");
 
   if (courseRound) {
     // Course round exists
-    const newDoc = { ...courseRound };
-    newDoc.nrofRegisteredStudents += 1;
-
-    await db.write(newDoc, "CourseRound");
+    let { id, nrofRegisteredStudents } = courseRound;
+    nrofRegisteredStudents++;
+    await db.update(id!, { nrofRegisteredStudents }, "CourseRound");
     await db.close();
     return;
   }
@@ -67,9 +61,8 @@ export async function handler(message: TPaborjadUtbildningEvent, context: Invoca
   // 3. Get more course info from LADOK API
   // 4. Get more course info from UG REST API
   // 5. Persist in DB
-  await db.write(doc, "CourseRound");
+  await db.insert(doc, "CourseRound");
   await db.close();
-  process.exit(0);
 }
 
 export default {
