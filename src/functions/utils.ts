@@ -1,5 +1,10 @@
 import { HttpRequest, HttpHandler, InvocationContext, CosmosDBOutput } from "@azure/functions";
+import { MongoClient, ObjectId } from 'mongodb';
 import { TLadokEventUserProperties } from "./ladok-events/types";
+
+const IS_PROD = process.env.NODE_ENV === "production";
+const { COSMOSDB_CONNECTION_STRING } = process.env;
+if (IS_PROD && !COSMOSDB_CONNECTION_STRING) throw new Error("Missing env var COSMOS_DB_CONNECTION_STRING");
 
 /**
  * This wrapper functions makes sure that the entire process doesn't crash on errors
@@ -21,7 +26,7 @@ export function API(handler: HttpHandler) {
   };
 }
 
-type ServiceBusTopicHandler<T = unknown> = (message: T, context: InvocationContext) => Promise<void>;
+type ServiceBusTopicHandler<T = unknown> = (message: T, context: InvocationContext, db: Database) => Promise<void>;
 /**
  * This wrapper functions makes sure that the entire process doesn't crash on errors
  * by wrapping it in a try/catch. See note in code.
@@ -31,7 +36,7 @@ type ServiceBusTopicHandler<T = unknown> = (message: T, context: InvocationConte
 export function ServiceBus<T>(handler: ServiceBusTopicHandler<T>) {
   return async function (msg: unknown, ctx: InvocationContext) {
     try {
-      return await handler(<T>msg, ctx);
+      return await handler(<T>msg, ctx, new Database());
     } catch (err) {
       ctx.error(err);
       // This rethrown exception will only fail the individual invocation, instead of crashing the whole process
@@ -46,6 +51,29 @@ export function isValidEvent(eventName: string, userProperties: unknown): boolea
   return (<TLadokEventUserProperties>userProperties)?.ladok3EventType === eventName;
 }
 
-export function writeToCosmos<T>(doc: T, context: InvocationContext, dbOutput: CosmosDBOutput): void {
-  context.extraOutputs.set(dbOutput, doc);
+export class Database {
+  _client: MongoClient | undefined;
+
+  async connect(): Promise<void> {
+    if (this._client) return;
+    const mongoClient = new MongoClient(COSMOSDB_CONNECTION_STRING!);
+    this._client = await mongoClient.connect();
+  }
+  async close(): Promise<void> {
+    if (this._client) await this._client.close();
+    this._client = undefined;
+  }
+
+  async read(id: string | ObjectId, collectionName: string): Promise<any> {
+    await this.connect();
+    const collection = this._client!.db().collection(collectionName);
+    const doc = await collection.findOne({ _id: id });
+    return doc;
+  }
+
+  async write(doc: any, collectionName: string): Promise<void> {
+    await this.connect();
+    const collection = this._client!.db().collection(collectionName);
+    await collection.insertOne({ _id: doc.id, ...doc });
+  }
 }

@@ -1,6 +1,6 @@
-import { InvocationContext, input, output } from "@azure/functions";
+import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
-import { ServiceBus, isValidEvent, writeToCosmos } from "../utils";
+import { ServiceBus, isValidEvent, Database } from "../utils";
 import { TStudentParticipation } from "../interface";
 
 export type TRegistreringEvent = {
@@ -20,15 +20,7 @@ export type TRegistreringEvent = {
   UtbildningsinstansUID: string, // "e51b9585-9501-11ee-a0ce-a9a57d284dbd"
 }
 
-const cosmosOutput = output.cosmosDB({
-  databaseName: 'CourseSurvey',
-  collectionName: 'StudentParticipation',
-  createIfNotExists: true,
-  partitionKey: '{queueTrigger}',
-  connectionStringSetting: 'COSMOSDB_CONNECTION_STRING',
-});
-
-export async function handler(message: TRegistreringEvent, context: InvocationContext): Promise<void> {
+export async function handler(message: TRegistreringEvent, context: InvocationContext, db: Database): Promise<void> {
   if (!isValidEvent("se.ladok.schemas.studiedeltagande.RegistreringEvent", context?.triggerMetadata?.userProperties)) return;
   
   const ladokCourseRoundId = message.KurstillfalleUID;
@@ -53,11 +45,12 @@ export async function handler(message: TRegistreringEvent, context: InvocationCo
   }
   // 2. Get more student info from UG REST API
   // 3. Persist in DB
-  writeToCosmos<TStudentParticipation>(doc, context, cosmosOutput);
+  
 }
 
 export default {
   handler: ServiceBus<TRegistreringEvent>(handler),
-  extraInputs: undefined,
-  extraOutputs: [cosmosOutput],
+  // input binding doesn't support cosmos document store yet
+  // extraInputs: [cosmosInput],
+  // extraOutputs: [cosmosOutput],
 }

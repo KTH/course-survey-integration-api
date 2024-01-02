@@ -119,8 +119,8 @@ export interface components {
       courseResponsible?: components["schemas"]["CourseUser"];
       /** @description List of teachers connected to this course (source: ???) */
       courseTeachers?: components["schemas"]["CourseUser"][];
-      nrofRegisteredStudents?: number;
-      nrofReportedResults?: number;
+      nrofRegisteredStudents: number;
+      nrofReportedResults: number;
       /** @description Kurs, betygsfördelning */
       gradingDistribution?: {
         [key: string]: unknown;

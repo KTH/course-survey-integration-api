@@ -1,7 +1,8 @@
-import { InvocationContext, input, output } from "@azure/functions";
+import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
-import { ServiceBus, isValidEvent, writeToCosmos } from "../utils";
+import { ServiceBus, isValidEvent, Database } from "../utils";
 import { TCourseRound } from "../interface";
+import { Context } from "vm";
 
 export type TPaborjadUtbildningEvent = {
   StudentUID: string, // "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
@@ -13,40 +14,67 @@ export type TPaborjadUtbildningEvent = {
   EventContext: TLadokEventContext
 }
 
-const cosmosInput = input.cosmosDB({
-  databaseName: 'CourseSurvey',
-  collectionName: 'CourseRound',
-  id: '{queueTrigger.UtbildningstillfalleUID}',
-  partitionKey: '{queueTrigger}',
-  connectionStringSetting: 'COSMOSDB_CONNECTION_STRING',
-});
-
-const cosmosOutput = output.cosmosDB({
-  databaseName: 'CourseSurvey',
-  collectionName: 'CourseRound',
-  createIfNotExists: true,
-  partitionKey: '{queueTrigger}',
-  connectionStringSetting: 'COSMOSDB_CONNECTION_STRING',
-});
-
-export async function handler(message: TPaborjadUtbildningEvent, context: InvocationContext): Promise<void> {
+export async function handler(message: TPaborjadUtbildningEvent, context: InvocationContext, db: Database): Promise<void> {
   if (!isValidEvent("se.ladok.schemas.studiedeltagande.PaborjadUtbildningEvent", context?.triggerMetadata?.userProperties)) return;
-
+  
   const utbildningstillfalleUid = message.UtbildningstillfalleUID;
+  const utbildningsUid = message.UtbildningUID;
   context.log(`PaborjadUtbildningEvent: ${utbildningstillfalleUid}`);
   // 1. Create a CourseRound object
-  const doc = {
+  let courseRound: TCourseRound;
+  try {
+    courseRound = await db.read(utbildningstillfalleUid, "CourseRound");
+  } catch (err) {
+    throw err;
+  }
+
+  if (courseRound) {
+    // Course round exists
+    const newDoc = { ...courseRound };
+    newDoc.nrofRegisteredStudents += 1;
+
+    await db.write(newDoc, "CourseRound");
+    await db.close();
+    return;
+  }
+
+  const doc: TCourseRound = {
     id: utbildningstillfalleUid,
+    ladokCourseId: utbildningsUid,
+    ladokCourseRoundId: utbildningstillfalleUid,
+    canvasSisId: undefined,
+    name: undefined,
+    courseCode: undefined,
+    language: undefined,
+    canceled: false,
+    endDate: undefined,
+    displayYear: undefined,
+    organization: undefined,
+    institution: undefined,
+    courseGoal: undefined,
+    period: undefined,
+    credits: undefined,
+    courseExaminor: undefined,
+    courseResponsible: undefined,
+    courseTeachers: [],
+    nrofRegisteredStudents: 1,
+    nrofReportedResults: 0,
+    gradingDistribution: {},
+    programs: [],
+    modules: [],
   }
   // 2. Get more course info from KOPPS API
   // 3. Get more course info from LADOK API
   // 4. Get more course info from UG REST API
   // 5. Persist in DB
-  writeToCosmos<TCourseRound>(doc, context, cosmosOutput);
+  await db.write(doc, "CourseRound");
+  await db.close();
+  process.exit(0);
 }
 
 export default {
   handler: ServiceBus<TPaborjadUtbildningEvent>(handler),
-  extraInputs: [cosmosInput],
-  extraOutputs: [cosmosOutput],
+  // input binding doesn't support cosmos document store yet
+  // extraInputs: [cosmosInput],
+  // extraOutputs: [cosmosOutput],
 }
