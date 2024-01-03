@@ -2,7 +2,6 @@ import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { ServiceBus, isValidEvent, Database } from "../utils";
 import { TCourseRound } from "../interface";
-import { Context } from "vm";
 
 export type TPaborjadUtbildningEvent = {
   StudentUID: string, // "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
@@ -17,17 +16,22 @@ export type TPaborjadUtbildningEvent = {
 export async function handler(message: TPaborjadUtbildningEvent, context: InvocationContext, db: Database): Promise<void> {
   if (!isValidEvent("se.ladok.schemas.studiedeltagande.PaborjadUtbildningEvent", context?.triggerMetadata?.userProperties)) return;
   
+  // TODO: Consider using zod to validate the message
+
   const utbildningstillfalleUid = message.UtbildningstillfalleUID;
   const utbildningsUid = message.UtbildningUID;
   context.log(`PaborjadUtbildningEvent: ${utbildningstillfalleUid}`);
   // 1. Create a CourseRound object
-  const courseRound: TCourseRound = await db.read(utbildningstillfalleUid, "CourseRound");
+  const courseRound: TCourseRound = await db.fetchById(utbildningstillfalleUid, "CourseRound");
 
   if (courseRound) {
     // Course round exists
-    let { id, nrofRegisteredStudents } = courseRound;
-    nrofRegisteredStudents++;
-    await db.update(id!, { nrofRegisteredStudents }, "CourseRound");
+    let { id, ladokCourseRoundId } = courseRound;
+    // TODO: Update OpenAPI spec marking required fields so we don't need this check
+    if (ladokCourseRoundId) {
+      const nrofRegisteredStudents = db.countByPropertyQuery("ladokCourseRoundId", ladokCourseRoundId, "StudentParticipation");
+      await db.update(id!, { nrofRegisteredStudents }, "CourseRound");
+    }
     await db.close();
     return;
   }

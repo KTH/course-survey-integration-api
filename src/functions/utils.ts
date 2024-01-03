@@ -1,10 +1,12 @@
-import { HttpRequest, HttpHandler, InvocationContext, CosmosDBOutput } from "@azure/functions";
-import { MongoClient, ObjectId } from 'mongodb';
+import { HttpRequest, InvocationContext, HttpResponseInit } from "@azure/functions";
+import { MongoClient } from 'mongodb';
 import { TLadokEventUserProperties } from "./ladok-events/types";
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const { COSMOSDB_CONNECTION_STRING } = process.env;
 if (IS_PROD && !COSMOSDB_CONNECTION_STRING) throw new Error("Missing env var COSMOS_DB_CONNECTION_STRING");
+
+type ApiHttpHandler = (req: HttpRequest, context: InvocationContext, db: Database) => Promise<HttpResponseInit>;
 
 /**
  * This wrapper functions makes sure that the entire process doesn't crash on errors
@@ -12,11 +14,11 @@ if (IS_PROD && !COSMOSDB_CONNECTION_STRING) throw new Error("Missing env var COS
  * @param handler
  * @returns
  */
-export function API(handler: HttpHandler) {
+export function API(handler: ApiHttpHandler) {
   return async function (req: HttpRequest, ctx: InvocationContext) {
     try {
       ctx.log(`Http function processed request for url "${req.url}"`);
-      return await handler(req, ctx);
+      return await handler(req, ctx, new Database());
     } catch (err) {
       ctx.error(err);
       // This rethrown exception will only fail the individual invocation, instead of crashing the whole process
@@ -51,6 +53,8 @@ export function isValidEvent(eventName: string, userProperties: unknown): boolea
   return (<TLadokEventUserProperties>userProperties)?.ladok3EventType === eventName;
 }
 
+export type DbCollectionName = "StudentParticipation" | "CourseRound" | "Module" | "Program";
+
 export class Database {
   _client: MongoClient | undefined;
 
@@ -64,20 +68,34 @@ export class Database {
     this._client = undefined;
   }
 
-  async read(id: string, collectionName: string): Promise<any> {
+  async fetchById(id: string, collectionName: DbCollectionName): Promise<any> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     const doc = await collection.findOne({ _id: id });
     return doc;
   }
 
-  async insert(doc: any, collectionName: string): Promise<void> {
+  async queryByProperty(propName: string, value: string | object, collectionName: DbCollectionName): Promise<any[]> {
+    await this.connect();
+    const collection = this._client!.db().collection(collectionName);
+    const docs = await collection.find({ [propName]: value }).toArray();
+    return docs;
+  }
+
+  async countByPropertyQuery(propName: string, value: string, collectionName: DbCollectionName): Promise<number> {
+    await this.connect();
+    const collection = this._client!.db().collection(collectionName);
+    const count = await collection.countDocuments({ [propName]: value });
+    return count;
+  }
+
+  async insert(doc: any, collectionName: DbCollectionName): Promise<void> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     await collection.insertOne({ _id: doc.id, ...doc });
   }
 
-  async update(id: string, partial: any, collectionName: string): Promise<void> {
+  async update(id: string, partial: any, collectionName: DbCollectionName): Promise<void> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     await collection.updateOne({ _id: id }, partial);
