@@ -4,12 +4,22 @@ import {
 import {
   APICourseRoundStudentList
 } from "../interface";
+import { Database } from "../utils";
 
-export default async function handler<T extends APICourseRoundStudentList>(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
-  // const body: T = {};
+export default async function handler<T extends APICourseRoundStudentList>(request: HttpRequest, context: InvocationContext, db: Database): Promise<HttpResponseInit> {
+  const { id } = request.params;
+  const outp: APICourseRoundStudentList = await db.queryByProperty('ladokCourseRoundId', id, 'StudentParticipation');
+  await db.close();
 
+  if (!outp) {
+    return {
+      status: 404,
+      body: JSON.stringify({ error: 'Not found' })
+    }
+  }
+  
   return {
     status: 200,
-    body: 'TODO: List course students!'
+    body: JSON.stringify(outp)
   }
 };

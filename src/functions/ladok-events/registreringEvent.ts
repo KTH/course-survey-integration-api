@@ -23,13 +23,25 @@ export type TRegistreringEvent = {
 export async function handler(message: TRegistreringEvent, context: InvocationContext, db: Database): Promise<void> {
   if (!isValidEvent("se.ladok.schemas.studiedeltagande.RegistreringEvent", context?.triggerMetadata?.userProperties)) return;
   
+  // TODO: Consider using zod to validate the message
+
   const ladokCourseRoundId = message.KurstillfalleUID;
   const ladokCourseId = message.KursUID;
   const ladokStudentId = message.StudentUID;
   context.log(`RegistreringEvent: ${ladokCourseRoundId} ${ladokStudentId}`);
+
+  const id = `${ladokStudentId}.${ladokCourseRoundId}`;
+  const studentParticipation: TStudentParticipation = await db.fetchById(id, "StudentParticipation");
+
+  if (studentParticipation) {
+    // StudentParticipation exists
+    await db.close();
+    return;
+  }
+
   // 1. Create a StudentParticipation object
   const doc: TStudentParticipation = {
-    id: `${ladokStudentId}.${ladokCourseRoundId}`,
+    id,
     ladokStudentId,
     ladokCourseId,
     ladokCourseRoundId,
@@ -45,7 +57,8 @@ export async function handler(message: TRegistreringEvent, context: InvocationCo
   }
   // 2. Get more student info from UG REST API
   // 3. Persist in DB
-  
+  await db.insert(doc, "StudentParticipation");
+  await db.close();
 }
 
 export default {

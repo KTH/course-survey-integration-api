@@ -1,12 +1,13 @@
-import { Database } from "../../../src/functions/utils";
+import { Database, DbCollectionName } from "../../../src/functions/utils";
 
 export class MockDatabase implements Database {
-  _result: any;
-  _mockData: any;
+  _result: Record<DbCollectionName, any>;
+  _mockData: Record<DbCollectionName, any>;
   _client: any;
 
-  constructor(mockData: any) {
+  constructor(mockData: Record<DbCollectionName, any>) {
     this._mockData = mockData;
+    this._result = {} as Record<DbCollectionName, any>;
   }
 
   async connect(): Promise<void> {
@@ -16,22 +17,34 @@ export class MockDatabase implements Database {
     // Do nothing
   }
 
-  async read(id: string, collectionName: string): Promise<any> {
+  async fetchById(id: string, collectionName: DbCollectionName): Promise<any> {
     // TODO: Read mock data
-    return this._mockData;
+    const data = this._mockData[collectionName]
+    const outp = Array.isArray(data) ? data : [data];
+    return outp.filter((doc: any) => doc.id === id)[0];
   }
 
-  async insert(doc: any, collectionName: string): Promise<void> {
-    this._result = doc;
+  async queryByProperty(propName: string, value: string, collectionName: DbCollectionName): Promise<any[]> {
+    const data = this._mockData[collectionName]
+    const outp = Array.isArray(data) ? data : [data];
+    return outp.filter((doc: any) => doc[propName] === value);
   }
 
-  async update(id: string, partial: any, collectionName: string): Promise<void> {
-    if (id === this._mockData.id) {
-      this._result = { ...this._mockData, ...partial };
-    } else if (id === this._result?.id) {
-      this._result = { ...this._result, ...partial };
+  async countByPropertyQuery(propName: string, value: string, collectionName: DbCollectionName): Promise<number> {
+    return 1;
+  }
+
+  async insert(doc: any, collectionName: DbCollectionName): Promise<void> {
+    this._result[collectionName] = doc;
+  }
+
+  async update(id: string, partial: any, collectionName: DbCollectionName): Promise<void> {
+    if (id === this._result[collectionName].id) {
+      this._result[collectionName] = { ...this._result[collectionName], ...partial };
+    } else if (id === this._mockData[collectionName].id) {
+      this._result[collectionName] = { ...this._mockData[collectionName], ...partial };
     } else {
-      this._result = { ...partial };
+      this._result[collectionName] = { ...partial };
     }
   }
 }
