@@ -1,4 +1,4 @@
-import event from "./fixtures/01_utbildningsinformation.ModulTillStatusEvent_1.json";
+import event from "./fixtures/events/01_utbildningsinformation.ModulTillStatusEvent_1.json";
 import { handler } from "../../src/functions/ladok-events/modulTillStatusEvent";
 import { MockContext } from "./utils/mockContext";
 
