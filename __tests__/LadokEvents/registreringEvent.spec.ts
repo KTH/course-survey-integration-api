@@ -6,13 +6,13 @@ import { MockDatabase } from "./utils/mockDatabase";
 describe("RegistreringEvent", () => {
 
   test("can be executed", async () => {
-    const mockDb = new MockDatabase(null);
+    const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps, appConfig);
     await handler(event.message, mockContext, mockDb);
   });
 
   test("logs invocation", async () => {
-    const mockDb = new MockDatabase(null);
+    const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps, appConfig);
     await handler(event.message, mockContext, mockDb);
 
@@ -21,7 +21,7 @@ describe("RegistreringEvent", () => {
   });
 
   test.skip("fetches student data from UG", async () => {
-    const mockDb = new MockDatabase(null);
+    const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps, appConfig);
     await handler(event.message, mockContext, mockDb);
     // TODO: We meed to mock the UG REST API
@@ -29,7 +29,7 @@ describe("RegistreringEvent", () => {
   });
 
   test("writes correct data to db", async () => {
-    const mockDb = new MockDatabase(null);
+    const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps, appConfig);
     await handler(event.message, mockContext, mockDb);
 

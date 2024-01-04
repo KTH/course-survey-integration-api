@@ -5,8 +5,8 @@ export class MockDatabase implements Database {
   _mockData: Record<DbCollectionName, any>;
   _client: any;
 
-  constructor(mockData: Record<DbCollectionName, any>) {
-    this._mockData = mockData;
+  constructor(mockData: Record<DbCollectionName, any> | undefined = undefined) {
+    this._mockData = mockData ?? {} as Record<DbCollectionName, any>;
     this._result = {} as Record<DbCollectionName, any>;
   }
 

@@ -6,13 +6,13 @@ import { MockDatabase } from "./utils/mockDatabase";
 describe("RegistreringEvent", () => {
 
   test("can be executed", async () => {
-    const mockDb = new MockDatabase(null);
+    const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);
   });
 
   test("logs invocation", async () => {
-    const mockDb = new MockDatabase(null);
+    const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);
 
@@ -21,7 +21,7 @@ describe("RegistreringEvent", () => {
   });
 
   test.skip("fetches course info from KOPPS", async () => {
-    const mockDb = new MockDatabase(null);
+    const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     const outp = await handler(event.message, mockContext, mockDb);
     // TODO: We meed to mock the KOPPS API
@@ -29,7 +29,7 @@ describe("RegistreringEvent", () => {
   });
 
   test.skip("fetches course info from LADOK", async () => {
-    const mockDb = new MockDatabase(null);
+    const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     const outp = await handler(event.message, mockContext, mockDb);
     // TODO: We meed to mock the LADOK REST API
@@ -37,7 +37,7 @@ describe("RegistreringEvent", () => {
   });
 
   test.skip("fetches course info from UG", async () => {
-    const mockDb = new MockDatabase(null);
+    const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     const outp = await handler(event.message, mockContext, mockDb);
     // TODO: We meed to mock the UG REST API
@@ -45,7 +45,7 @@ describe("RegistreringEvent", () => {
   });
   
   test.skip("writes correct data to db", async () => {
-    const mockDb = new MockDatabase(null);
+    const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     const outp = await handler(event.message, mockContext, mockDb);
 
