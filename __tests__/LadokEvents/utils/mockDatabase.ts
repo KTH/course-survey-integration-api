@@ -5,7 +5,10 @@ export class MockDatabase implements Database {
   _mockData: Record<DbCollectionName, any>;
   _client: any;
 
-  constructor(mockData: Record<DbCollectionName, any> | undefined = undefined) {
+  // I would have prefered narrowing keys to DbCollectionName but
+  // the syntax Record<DbCollectionName, any> requires all keys
+  // from DbCollectionName to be present.
+  constructor(mockData: Record<string, any> | undefined = undefined) {
     this._mockData = mockData ?? {} as Record<DbCollectionName, any>;
     this._result = {} as Record<DbCollectionName, any>;
   }
@@ -21,13 +24,13 @@ export class MockDatabase implements Database {
     // TODO: Read mock data
     const data = this._mockData[collectionName]
     const outp = Array.isArray(data) ? data : [data];
-    return outp.filter((doc: any) => doc.id === id)[0];
+    return outp.filter((doc: any) => doc?.id === id)[0];
   }
 
   async queryByProperty(propName: string, value: string, collectionName: DbCollectionName): Promise<any[]> {
     const data = this._mockData[collectionName]
     const outp = Array.isArray(data) ? data : [data];
-    return outp.filter((doc: any) => doc[propName] === value);
+    return outp.filter((doc: any) => doc?.[propName] === value);
   }
 
   async countByPropertyQuery(propName: string, value: string, collectionName: DbCollectionName): Promise<number> {
