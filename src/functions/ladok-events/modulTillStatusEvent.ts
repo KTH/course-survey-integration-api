@@ -1,6 +1,7 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokAttributvarde, TLadokEventContext } from "./types";
-import { ServiceBus, isValidEvent } from "../utils";
+import { Database, ServiceBus, isValidEvent } from "../utils";
+import { TCourseModule, TCourseRound } from "../interface";
 
 export type TModulTillStatusEvent = {
   HandelseUID: string, // "6b79e669-9505-11ee-a0ce-a9a57d284dbd",
@@ -75,15 +76,40 @@ export type TModulTillStatusEvent = {
   }
 }
 
-export async function handler(message: TModulTillStatusEvent, context: InvocationContext): Promise<void> {
+const STATUS_ACTIVE = 2;
+
+export async function handler(message: TModulTillStatusEvent, context: InvocationContext, db: Database): Promise<void> {
   if (!isValidEvent("se.ladok.schemas.utbildningsinformation.ModulTillStatusEvent", context?.triggerMetadata?.userProperties)) return;
 
-  const utbildningstillfalleUid = message.UtbildningsinstansUID;
+  const courseRoundId = message.OverliggandeUtbildningsinstansUID;
+  const moduleId = message.UtbildningsinstansUID;
   const status = message.Status;
-  context.log(`ModulTillStatusEvent: ${utbildningstillfalleUid} ${status}`);
-  // 1. Fetch CourseRound from DB
-  // 2. Update status
-  // 3. Persist in DB
+  context.log(`ModulTillStatusEvent: ${courseRoundId} ${moduleId} ${status}`);
+
+  try {
+      const courseRound: TCourseRound = await db.fetchById(courseRoundId, "CourseRound");
+      let updatedModules;
+      if (status === STATUS_ACTIVE) {
+        // Add if not exists
+        if (!courseRound.modules?.find((module: TCourseModule) => module.id === moduleId)) {
+          const newModule = {
+            id: moduleId,
+          }
+          updatedModules = [...courseRound.modules ?? [], newModule];
+        }
+      } else {
+        // Remove if exists
+        // TODO: Add moduleId to Module interface
+        updatedModules = courseRound.modules.filter((module: TCourseModule) => module.id !== moduleId);
+      }
+      await db.update(courseRound.id!, { modules: updatedModules }, "CourseRound");
+      // 1. Fetch CourseRound from DB
+      // 2. Update status
+      // 3. Persist in DB
+
+  } finally {
+    await db.close();
+  }
 }
 
 export default {
