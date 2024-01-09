@@ -3,7 +3,7 @@
   "description": "Abstraction layer for integration with KOPPS",
   "private": true,
   "scripts": {
-    "test": "jest"
+    "test": "jest __tests__/.+\\.test\\.ts"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",

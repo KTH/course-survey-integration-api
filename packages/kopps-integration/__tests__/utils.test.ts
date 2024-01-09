@@ -1,5 +1,10 @@
-import { getPeriods, getSyllabus } from "../src/utils";
+import {
+  getCourseRoundInformation,
+  getPeriods,
+  getSyllabus,
+} from "../src/utils";
 import type { KoppsCourseRoundInfo, KoppsSyllabus } from "../src/types";
+import { SF1624 } from "./fixtures/detailedInformation";
 
 describe("getPeriods", () => {
   test("works with one term", () => {
@@ -92,7 +97,7 @@ describe("getPeriods", () => {
   });
 });
 
-describe("syllabusSorter", () => {
+describe("getSyllabus", () => {
   test("return latest when all are valid", () => {
     const s1: KoppsSyllabus = {
       validFromTerm: { term: 20171 },
@@ -133,5 +138,13 @@ describe("syllabusSorter", () => {
     expect(() => {
       getSyllabus([s1, s2], 20151);
     }).toThrow();
+  });
+});
+
+describe("getCourseRoundInformation", () => {
+  test("return the correct round info", () => {
+    expect(
+      getCourseRoundInformation(SF1624, "0772a941-98c8-11ee-888d-8a62d8d3440a"),
+    ).toMatchSnapshot();
   });
 });
