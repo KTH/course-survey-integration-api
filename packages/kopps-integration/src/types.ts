@@ -45,12 +45,12 @@ export interface KoppsCourseRoundInfo {
   ldapResponsibles?: KoppsPerson[];
   ldapTeachers?: KoppsPerson[];
 
-  /** This information about programs */
-  usage?: {
-    programCode: string;
-    specCode: string;
-    title: string;
-  }[];
+  // Information about programs. Not used at this moment
+  // usage?: {
+  //   programmeCode: string;
+  //   specCode: string;
+  //   title: string;
+  // }[];
 }
 
 export interface KoppsSyllabus {

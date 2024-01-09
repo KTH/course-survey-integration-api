@@ -30,6 +30,7 @@ function errorHandler(error: unknown): never {
  * Get a course round from its Ladok ID
  */
 export async function getCourseRoundSummary(ladokId: string) {
+  // TODO: Runtime type-checking
   return gotClient
     .get<KoppsCourseRoundSummary>(
       `courses/offerings/roundnumber?ladokuid=${ladokId}`,
@@ -42,6 +43,7 @@ export async function getCourseRoundSummary(ladokId: string) {
  * Get full information of a course round
  */
 export async function getCourseDetailedInformation(courseCode: string) {
+  // TODO: Runtime type-checking
   return gotClient
     .get<KoppsCourseDetailedInformation>(
       `course/${courseCode}/detailedinformation`,
