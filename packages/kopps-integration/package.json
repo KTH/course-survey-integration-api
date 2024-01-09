@@ -3,7 +3,9 @@
   "description": "Abstraction layer for integration with KOPPS",
   "private": true,
   "scripts": {
-    "test": "jest __tests__/.+\\.test\\.ts"
+    "test:lint": "prettier --check . && tsc --noEmit",
+    "test:unit": "jest __tests__/.+\\.test\\.ts",
+    "test": "npm run test:lint && npm run test:unit"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
