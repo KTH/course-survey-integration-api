@@ -142,6 +142,30 @@ components:
     schemas:
         CourseRound:
             type: object
+            required:
+                - id
+                - ladokCourseId
+                - ladokCourseRoundId
+                - canvasSisId
+                - name
+                - courseCode
+                - language
+                # - canceled
+                - endDate
+                - displayYear
+                - organization
+                - institution
+                - courseGoal
+                - period
+                - credits
+                - courseExaminor
+                - courseResponsible
+                - courseTeachers
+                - nrofRegisteredStudents
+                - nrofReportedResults
+                # - gradingDistribution
+                - programs
+                - modules
             properties:
                 id:
                     type: string
@@ -224,6 +248,17 @@ components:
 
         StudentParticipation:
             type: object
+            required:
+                - id
+                - ladokStudentId
+                - ladokCourseId
+                - ladokCourseRoundId
+                - canvasSisId
+                - name
+                - email
+                - roles
+                - locations
+                - program
             properties:
                 id:
                     type: string
@@ -259,6 +294,13 @@ components:
 
         ProgramRound:
             type: object
+            required:
+                - code
+                - semester
+                - startPeriod
+                - name
+                - studyYear
+                - specification
             properties:
                 code:
                     type: string
@@ -282,7 +324,17 @@ components:
 
         CourseModule:
             type: object
+            required:
+                - code
+                - name
+                - credits
+                - gradingScheme
+                - nrofReportedResults
+                # - gradingDistribution
             properties:
+                id:
+                    type: string
+                    description: "Ladok UID for module instance (UtbildningsinstansUID?)"
                 code:
                     type: string
                 name:
@@ -303,6 +355,11 @@ components:
 
         CourseUser:
             type: object
+            required:
+                - userName
+                - kthUserId
+                - email
+                - fullName
             properties:
                 userName:
                     type: string
@@ -318,6 +375,10 @@ components:
 
         OrgEntity:
             type: object
+            required:
+                - displayName
+                - displayCode
+                - kthId
             properties:
                 displayName:
                     type: string
