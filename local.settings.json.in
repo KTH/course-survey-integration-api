@@ -5,6 +5,9 @@
     "AzureWebJobsFeatureFlags": "EnableWorkerIndexing",
     "AzureWebJobsStorage": "",
     "LADOK3_FEED_SERVICE_BUS_SUBSCRIPTION_NAME": "[subscription name]",
-    "LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING": "[connection string for subscription]"
+    "LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING": "[connection string for subscription]",
+    "COSMOSDB_CONNECTION_STRING": "[connection string for db]",
+    "KOPPS_API_URL": "https://integral-api.sys.kth.se/api/ref/kopps/v2/api/kopps/v2"
+    "KOPPS_API_SUBSCRIPTION_KEY": "[api key for kopps]"
   }
 }
