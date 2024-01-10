@@ -1,7 +1,7 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { ServiceBus, isValidEvent, Database } from "../utils";
-import { TCourseRound } from "../interface";
+import { TCourseRound, TCourseUser, TOrgEntity } from "../interface";
 
 export type TPaborjadUtbildningEvent = {
   StudentUID: string, // "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
@@ -40,20 +40,20 @@ export async function handler(message: TPaborjadUtbildningEvent, context: Invoca
     id: utbildningstillfalleUid,
     ladokCourseId: utbildningsUid,
     ladokCourseRoundId: utbildningstillfalleUid,
-    canvasSisId: undefined,
-    name: undefined,
-    courseCode: undefined,
-    language: undefined,
+    canvasSisId: 'TBD',
+    name: 'TBD',
+    courseCode: 'TBD',
+    language: 'sv',
     canceled: false,
-    endDate: undefined,
-    displayYear: undefined,
-    organization: undefined,
-    institution: undefined,
-    courseGoal: undefined,
-    period: undefined,
-    credits: undefined,
-    courseExaminor: undefined,
-    courseResponsible: undefined,
+    endDate: 'TBD',
+    displayYear: 'TBD',
+    organization: {} as TOrgEntity,
+    institution: {} as TOrgEntity,
+    courseGoal: 'TBD',
+    period: 'P1',
+    credits: 'TBD',
+    courseExaminor: {} as TCourseUser,
+    courseResponsible: {} as TCourseUser,
     courseTeachers: [],
     nrofRegisteredStudents: 1,
     nrofReportedResults: 0,

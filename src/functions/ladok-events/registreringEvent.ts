@@ -1,7 +1,7 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { ServiceBus, isValidEvent, Database } from "../utils";
-import { TStudentParticipation } from "../interface";
+import { TProgramRound, TStudentParticipation } from "../interface";
 
 export type TRegistreringEvent = {
   Omfattningsvarde: string, // "10.0",
@@ -53,7 +53,7 @@ export async function handler(message: TRegistreringEvent, context: InvocationCo
     email: "TBD",
     roles: ["TBD"],
     locations: ["TBD"],
-    program: undefined
+    program: {} as TProgramRound
   }
   // 2. Get more student info from UG REST API
   // 3. Persist in DB
