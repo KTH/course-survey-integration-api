@@ -5,7 +5,7 @@ const SUBSCRIPTION_NAME = process.env.LADOK3_FEED_SERVICE_BUS_SUBSCRIPTION_NAME 
 // const CONNECTION_STRING = process.env.LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING ?? "" ;
 
 export async function LadokEvents(message: unknown, context: InvocationContext): Promise<void> {
-  console.log('ladok3EventType:', (context?.triggerMetadata?.userProperties as TLadokEventUserProperties).ladok3EventType)
+  context.log('ladok3EventType:', (context?.triggerMetadata?.userProperties as TLadokEventUserProperties).ladok3EventType)
 }
 
 app.serviceBusTopic('LadokEvents', {

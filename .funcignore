@@ -1,10 +1,13 @@
-*.js.map
 *.ts
-.git*
+.git/
+.gitignore
+nix
+shell.nix
+tsconfig.json
 .vscode
 local.settings.json
-__tests__
-README.md
+test
+getting_started.md
 node_modules/@types/
 node_modules/azure-functions-core-tools/
 node_modules/typescript/
