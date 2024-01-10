@@ -1,0 +1,131 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`getCourseRoundInformation return the correct round info 1`] = `
+{
+  "excerciseCount": 28,
+  "hasTimeslots": false,
+  "ldapResponsibles": [
+    {
+      "email": "lfn@kth.se",
+      "givenName": "Lars",
+      "kthid": "u1lvdahr",
+      "lastName": "Filipsson",
+      "username": "lfn",
+    },
+  ],
+  "ldapTeachers": [
+    {
+      "email": "lfn@kth.se",
+      "givenName": "Lars",
+      "kthid": "u1lvdahr",
+      "lastName": "Filipsson",
+      "username": "lfn",
+    },
+  ],
+  "lectureCount": 21,
+  "round": {
+    "applicationCodes": [
+      {
+        "applicationCode": "50233",
+        "avgFri": false,
+        "courseRoundType": {
+          "active": true,
+          "category": "PU",
+          "code": "ORD",
+          "name": "Programutbildning",
+        },
+        "term": "20242",
+      },
+    ],
+    "campus": {
+      "label": "KTH Campus",
+      "name": "KTH Campus",
+    },
+    "courseRoundTerms": [
+      {
+        "creditsP2": 7.5,
+        "endWeek": {
+          "week": 3,
+          "year": 2025,
+        },
+        "formattedPeriodsAndCredits": "P2 (7,5 hp)",
+        "startWeek": {
+          "week": 44,
+          "year": 2024,
+        },
+        "term": {
+          "term": 20242,
+        },
+      },
+    ],
+    "draftCourseRoundType": {
+      "active": true,
+      "category": "PU",
+      "code": "ORD",
+      "name": "Programutbildning",
+    },
+    "endWeek": {
+      "week": 3,
+      "year": 2025,
+    },
+    "firstTuitionDate": "2024-10-28",
+    "isPU": true,
+    "isVU": false,
+    "ladokRoundId": "1",
+    "ladokUID": "0772a941-98c8-11ee-888d-8a62d8d3440a",
+    "language": "Svenska",
+    "lastTuitionDate": "2025-01-13",
+    "municipalityCode": "KTHCAMPUS",
+    "selectionCriteriaEn": "<p></p>",
+    "selectionCriteriaSv": "<p></p>",
+    "shortName": "CMETE1 m.fl.",
+    "startDate": "Oct 28, 2024 12:00:00 AM",
+    "startTerm": {
+      "term": 20242,
+    },
+    "startWeek": {
+      "week": 44,
+      "year": 2024,
+    },
+    "state": "APPROVED",
+    "studyPace": 50,
+    "tutoringForm": {
+      "key": "tutoringform.NML",
+      "name": "NML",
+    },
+    "tutoringTimeOfDay": {
+      "key": "tutoringtime.DAG",
+      "name": "DAG",
+    },
+  },
+  "timeslots": "",
+  "usage": [
+    {
+      "electiveCondition": {
+        "abbrLabel": "Obligatorisk",
+        "name": "O",
+        "ordinal": 1,
+      },
+      "progAdmissionTerm": {
+        "term": 20242,
+      },
+      "programmeCode": "CMETE",
+      "studyYear": 1,
+      "title": "Civilingenjörsutbildning i medieteknik",
+    },
+    {
+      "electiveCondition": {
+        "abbrLabel": "Obligatorisk",
+        "name": "O",
+        "ordinal": 1,
+      },
+      "progAdmissionTerm": {
+        "term": 20242,
+      },
+      "programmeCode": "COPEN",
+      "studyYear": 1,
+      "title": "Civilingenjörsutbildning öppen ingång",
+    },
+  ],
+}
+`;
