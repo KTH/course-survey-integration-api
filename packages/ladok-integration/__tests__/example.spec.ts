@@ -1,4 +1,4 @@
-import { getCourseRoundInformation } from "../../src";
+import { getCourseRoundInformation } from "../src";
 
 describe("Get information from a course round", () => {
   test("example from documentation", async () => {
