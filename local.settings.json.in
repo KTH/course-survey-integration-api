@@ -8,6 +8,9 @@
     "LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING": "[connection string for subscription]",
     "COSMOSDB_CONNECTION_STRING": "[connection string for db]",
     "KOPPS_API_URL": "https://integral-api.sys.kth.se/api/ref/kopps/v2/api/kopps/v2"
-    "KOPPS_API_SUBSCRIPTION_KEY": "[api key for kopps]"
+    "KOPPS_API_SUBSCRIPTION_KEY": "[api key for kopps]",
+    "LADOK_API_BASEURL": "https://integrationstest.api.ladok.se",
+    "LADOK_API_PFX_BASE64": "[encoded ladok cert]",
+    "LADOK_API_PFX_PASSPHRASE": "[passphrase for ladok cert]"
   }
 }
