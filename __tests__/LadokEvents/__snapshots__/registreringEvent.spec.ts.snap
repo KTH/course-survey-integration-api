@@ -13,7 +13,7 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
       "TBD",
     ],
     "name": "TBD",
-    "program": undefined,
+    "program": {},
     "roles": [
       "TBD",
     ],
