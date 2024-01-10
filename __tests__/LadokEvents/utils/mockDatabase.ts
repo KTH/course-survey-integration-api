@@ -42,9 +42,9 @@ export class MockDatabase implements Database {
   }
 
   async update(id: string, partial: any, collectionName: DbCollectionName): Promise<void> {
-    if (id === this._result[collectionName].id) {
+    if (id === this._result[collectionName]?.id) {
       this._result[collectionName] = { ...this._result[collectionName], ...partial };
-    } else if (id === this._mockData[collectionName].id) {
+    } else if (id === this._mockData[collectionName]?.id) {
       this._result[collectionName] = { ...this._mockData[collectionName], ...partial };
     } else {
       this._result[collectionName] = { ...partial };
