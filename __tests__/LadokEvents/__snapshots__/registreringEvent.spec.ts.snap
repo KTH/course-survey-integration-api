@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RegistreringEvent writes correct data to db 1`] = `
+{
+  "StudentParticipation": {
+    "canvasSisId": "TBD",
+    "email": "TBD",
+    "id": "bbcce853-4df3-11e8-a562-6ec76bb54b9f.3ea87094-9507-11ee-a0ce-a9a57d284dbd",
+    "ladokCourseId": "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
+    "ladokCourseRoundId": "3ea87094-9507-11ee-a0ce-a9a57d284dbd",
+    "ladokStudentId": "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
+    "locations": [
+      "TBD",
+    ],
+    "name": "TBD",
+    "program": {},
+    "roles": [
+      "TBD",
+    ],
+  },
+}
+`;

@@ -5,7 +5,7 @@ import { paths, components } from "../__generated__/_interface";
 
 // ## Entities
 export type TCourseRound = components["schemas"]["CourseRound"];
-export type TStudent = components["schemas"]["Student"];
+export type TStudentParticipation = components["schemas"]["StudentParticipation"];
 export type TProgramRound = components["schemas"]["ProgramRound"];
 export type TCourseModule = components["schemas"]["CourseModule"];
 export type TCourseUser = components["schemas"]["CourseUser"];
@@ -33,5 +33,5 @@ export type APICourseRound = TCourseRound;
 
 export type PathCourseRoundStudentList = paths["/course-round/{ladokRoundId}/students"];
 export type APICourseRoundStudentListErrType = TAPIErrType;
-export type APICourseRoundStudentList = TStudent[];
+export type APICourseRoundStudentList = TStudentParticipation[];
 

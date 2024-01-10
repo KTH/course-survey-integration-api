@@ -1,0 +1,36 @@
+{
+  "_id": {
+    "$oid": "6571d633d8d5738207d00afb"
+  },
+  "ladok3EventType": "se.ladok.schemas.studiedeltagande.PaborjatUtbildningstillfalleEvent",
+  "ladok3Username": "jhsware@kth.se",
+  "message": {
+    "PaborjandeDatum": "2023-08-28",
+    "StudentUID": "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
+    "TillfallesantagningUID": "64a2a94e-9509-11ee-99ff-6b3efc3c4159",
+    "UtbildningUID": "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
+    "UtbildningsinstansUID": "e51b9585-9501-11ee-a0ce-a9a57d284dbd",
+    "UtbildningstillfalleUID": "3ea87094-9507-11ee-a0ce-a9a57d284dbd",
+    "UtbildningstillfallestypID": 52,
+    "HandelseUID": "8fb836be-950a-11ee-99ff-6b3efc3c4159",
+    "EventContext": {
+      "AnvandareUID": "66830d48-51f3-11ec-8f26-98603a8f42a4",
+      "Anvandarnamn": "jhsware@kth.se",
+      "LarosateID": 29
+    }
+  },
+  "userProps": {
+    "ladok3AtomEntryId": "900df818-950a-11ee-a853-23dc468d48bd",
+    "ladok3Username": "jhsware@kth.se",
+    "ladok3IsLastFeed": true,
+    "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/317122",
+    "content_HYPHEN_Type": "application/json",
+    "ladok3AtomEntryUpdated": "2023-12-07T15:11:48.849",
+    "ladok3EventType": "se.ladok.schemas.studiedeltagande.PaborjatUtbildningstillfalleEvent",
+    "traceparent": "00-2de32770fe627950c7d746615def51c3-6d8cb3ae63528114-01",
+    "ladok3AtomEntryIndexInFeed": 2,
+    "ladok3EventId": "8fb836be-950a-11ee-99ff-6b3efc3c4159",
+    "ladok3MessageType": "ladok3Event",
+    "ladok3MessageSequenceNumber": 29
+  }
+}
