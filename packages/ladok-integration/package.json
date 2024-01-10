@@ -6,12 +6,12 @@
     "test": "jest"
   },
   "dependencies": {
-    "dotenv": "^16.3.1",
     "got": "^11.8.6",
     "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",
+    "dotenv": "^16.3.1",
     "jest": "^29.7.0",
     "ts-jest": "^29.1.1",
     "typescript": "^5.3.3"
