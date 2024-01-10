@@ -2,6 +2,7 @@ import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { ServiceBus, isValidEvent, Database } from "../utils";
 import { TCourseRound, TCourseUser, TOrgEntity } from "../interface";
+import { getCourseInformation } from "kopps-integration";
 
 export type TPaborjadUtbildningEvent = {
   StudentUID: string, // "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
@@ -36,20 +37,23 @@ export async function handler(message: TPaborjadUtbildningEvent, context: Invoca
     return;
   }
 
+  const language = "sv";
+  const koppsInfo = await getCourseInformation(utbildningstillfalleUid);
+
   const doc: TCourseRound = {
     id: utbildningstillfalleUid,
     ladokCourseId: utbildningsUid,
     ladokCourseRoundId: utbildningstillfalleUid,
     canvasSisId: 'TBD',
-    name: 'TBD',
+    name: koppsInfo?.course.name['sv'],
     courseCode: 'TBD',
-    language: 'sv',
+    language: language,
     canceled: false,
     endDate: 'TBD',
     displayYear: 'TBD',
     organization: {} as TOrgEntity,
     institution: {} as TOrgEntity,
-    courseGoal: 'TBD',
+    courseGoal: koppsInfo?.syllabus.goals,
     period: 'P1',
     credits: 'TBD',
     courseExaminor: {} as TCourseUser,

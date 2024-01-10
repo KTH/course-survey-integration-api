@@ -1,8 +1,11 @@
 {
   "name": "ladok-integration",
+  "version": "0.1.0",
   "description": "Abstraction layer for integration with LADOK REST API",
   "private": true,
+  "main": "dist/index.js",
   "scripts": {
+    "build": "tsc src/*.ts --outDir dist --sourceMap --declaration",
     "test": "jest"
   },
   "dependencies": {
