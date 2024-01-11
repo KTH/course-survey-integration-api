@@ -20,7 +20,7 @@ type TParams = {
 
 const _mockedValues: Record<string, TParams> = {};
 
-export class KoppsIntegrationMock {
+export class LadokIntegrationMock {
   static getCourseRoundInformation(ladokUid: string, params: TParams) {
     if (_mockedValues[ladokUid]) throw new Error(`Mock value already registered for ${ladokUid}`);
 

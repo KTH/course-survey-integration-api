@@ -3,6 +3,7 @@ import { handler } from "../../src/functions/ladok-events/paborjadUtbildningEven
 import { MockContext } from "./utils/mockContext";
 import { MockDatabase } from "./utils/mockDatabase";
 import { KoppsIntegrationMock } from "kopps-integration/dist/indexMock";
+import { LadokIntegrationMock } from "ladok-integration/dist/indexMock";
 
 KoppsIntegrationMock.getCourseInformation(event.message.UtbildningstillfalleUID, {
   title: "Programmeringsteknik för F",
@@ -10,6 +11,36 @@ KoppsIntegrationMock.getCourseInformation(event.message.UtbildningstillfalleUID,
   courseCode: "DD1321",
   periods: ["P1"],
   goals: "The course aims to give basic knowledge of programming in F#.",
+});
+
+LadokIntegrationMock.getCourseRoundInformation(event.message.UtbildningstillfalleUID, {
+  name: "Programmeringsteknik för F",
+  courseCode: "DD1321",
+  organisation: "SCI",
+  organisationUnit: "Datalogi",
+  credits: "7.5",
+  modules: [
+    {
+      code: "F1",
+      name: "Programmeringsteknik för F",
+      credits: "7.5",
+    },
+  ],
+  gradingScheme: [
+    {
+      code: "TH",
+      grades: [
+        {
+          validFinalGrade: true,
+          code: "P",
+        },
+        {
+          validFinalGrade: true,
+          code: "F",
+        },
+      ],
+    },
+  ],
 });
 
 describe("RegistreringEvent", () => {

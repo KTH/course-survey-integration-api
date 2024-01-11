@@ -44,7 +44,8 @@
   "dependencies": {
     "@azure/functions": "^4.1.0",
     "mongodb": "^4.0.0",
-    "kopps-integration": "^0.1.0"
+    "kopps-integration": "^0.1.0",
+    "ladok-integration": "^0.1.0"
   },
   "workspaces": [
     "packages/*"

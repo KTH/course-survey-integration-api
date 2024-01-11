@@ -3,6 +3,7 @@ import { TLadokEventContext } from "./types";
 import { ServiceBus, isValidEvent, Database } from "../utils";
 import { TCourseRound, TCourseUser, TOrgEntity } from "../interface";
 import { getCourseInformation } from "kopps-integration";
+import { getCourseRoundInformation } from "ladok-integration";
 
 export type TPaborjadUtbildningEvent = {
   StudentUID: string, // "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
@@ -39,6 +40,7 @@ export async function handler(message: TPaborjadUtbildningEvent, context: Invoca
 
   const language = "sv";
   const koppsInfo = await getCourseInformation(utbildningstillfalleUid);
+  const ladokCourseRoundInfo = await getCourseRoundInformation(utbildningstillfalleUid);
 
   const doc: TCourseRound = {
     id: utbildningstillfalleUid,
