@@ -2,6 +2,15 @@ import event from "./fixtures/events/01_studiedeltagande.PaborjadUtbildningEvent
 import { handler } from "../../src/functions/ladok-events/paborjadUtbildningEvent";
 import { MockContext } from "./utils/mockContext";
 import { MockDatabase } from "./utils/mockDatabase";
+import { KoppsIntegrationMock } from "kopps-integration/dist/indexMock";
+
+KoppsIntegrationMock.getCourseInformation(event.message.UtbildningstillfalleUID, {
+  title: "Programmeringsteknik för F",
+  titleOther: "Programming in F",
+  courseCode: "DD1321",
+  periods: ["P1"],
+  goals: "The course aims to give basic knowledge of programming in F#.",
+});
 
 describe("RegistreringEvent", () => {
 
