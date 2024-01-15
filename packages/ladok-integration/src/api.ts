@@ -7,8 +7,14 @@ import {
 } from "./types";
 import got, { HTTPError } from "got";
 
+const {
+  LADOK_API_BASEURL,
+  LADOK_API_PFX_BASE64,
+  LADOK_API_PFX_PASSPHRASE,
+} = process.env;
+
 const gotClient = got.extend({
-  prefixUrl: process.env.LADOK_API_BASEURL,
+  prefixUrl: LADOK_API_BASEURL,
   headers: {
     // Each ladok "endpoint" (/resultat, /kataloginformation) requires a
     // different "accept" header. The easiest is to set all of them in every
@@ -19,10 +25,12 @@ const gotClient = got.extend({
     ].join(","),
   },
   responseType: "json",
-  https: {
-    pfx: Buffer.from(process.env.LADOK_API_PFX_BASE64 as string, "base64"),
-    passphrase: process.env.LADOK_API_PFX_PASSPHRASE,
-  },
+  https: (LADOK_API_PFX_BASE64 && LADOK_API_PFX_PASSPHRASE)
+    ? {
+      pfx: Buffer.from(LADOK_API_PFX_BASE64 as string, "base64"),
+      passphrase: LADOK_API_PFX_PASSPHRASE,
+    }
+    : undefined,
 });
 
 function errorHandler(endpoint: string, error: unknown): never {
