@@ -1,4 +1,6 @@
 {
+    "ladok3EventType": "se.ladok.schemas.utbildningsinformation.KursTillStatusEvent",
+    "ladok3Username": "emilsten@kth.se",
     "message": {
         "HandelseUID": "b4d2c9fd-b135-11ee-bf6a-e2af0a9345af",
         "EventContext": {
@@ -51,15 +53,15 @@
         },
         "Kurskod": "AB1234"
     },
-    "customProperties": {
+    "userProps": {
         "ladok3AtomEntryId": "b57d8864-b135-11ee-bd02-33aa2f734e59",
-        ladok3Username: 'emilsten@kth.se',
-        ladok3AtomEntryUpdated: '2024-01-12T11:31:12.016',
-        ladok3EventId: 'b4d2c9fd-b135-11ee-bf6a-e2af0a9345af',
-        ladok3MessageType: 'ladok3Event',
-        ladok3IsLastFeed: true,
-        ladok3AtomFeed: 'https://api.integrationstest.ladok.se:443/uppfoljning/feed/318876',
-        Content_HYPHEN_Type: 'application/json',
-        ladok3EventType: 'se.ladok.schemas.utbildningsinformation.KursTillStatusEvent'
+        "ladok3Username": "emilsten@kth.se",
+        "ladok3AtomEntryUpdated": "2024-01-12T11:31:12.016",
+        "ladok3EventId": "b4d2c9fd-b135-11ee-bf6a-e2af0a9345af",
+        "ladok3MessageType": "ladok3Event",
+        "ladok3IsLastFeed": true,
+        "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/318876",
+        "Content_HYPHEN_Type": "application/json",
+        "ladok3EventType": "se.ladok.schemas.utbildningsinformation.KursTillStatusEvent"
     }
 }
