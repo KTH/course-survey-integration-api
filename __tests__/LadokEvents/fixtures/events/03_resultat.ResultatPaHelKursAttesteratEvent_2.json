@@ -29,19 +29,18 @@
         "StudentUID": "e806c109-ce0e-11e7-ab7e-c364338b4317",
         "UtbildningsinstansUID": "a4565646-b3b8-11ee-bf6a-e2af0a9345af"
     },
-
     "userProps": {
         "ladok3AtomEntryId": "1f65b886-b44f-11ee-9402-fce3c03747a0",
         "ladok3Username": "emilsten@kth.se",
-        "ladok3IsLastFeed": "true",
+        "ladok3IsLastFeed": true,
         "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/318877",
         "Content_HYPHEN_Type": "application/json",
         "ladok3AtomEntryUpdated": "2024-01-16T10:10:39.754",
         "ladok3EventType": "se.ladok.schemas.resultat.ResultatPaHelKursAttesteratEvent",
         "traceparent": "00-4841967f11ba495c74b7754367dec463-741f6dd53ef6e97f-01",
-        "ladok3AtomEntryIndexInFeed": "3 ",
+        "ladok3AtomEntryIndexInFeed": 3,
         "ladok3EventId": "1e391f8b-b44f-11ee-988f-6acd08c746d6",
         "ladok3MessageType": "ladok3Event",
-        "ladok3MessageSequenceNumber": "74999"
+        "ladok3MessageSequenceNumber": 74999
     }
 }
