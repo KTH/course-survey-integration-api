@@ -38,7 +38,7 @@ export type TKurstillfalleTillStatusEvent = {
   UndervisningsformID: number, // 1,
   UndervisningstidID: number, // 101052,
   UtbildningUtbildningstypID: number, // 22,
-  UtbildningstillfalleUID: string, // "3ea87094-9507-11ee-a0ce-a9a57d284dbd",
+  UtbildningstillfalleUID: string, // "41717c91-4028-11ee-bf53-2115569549a8",
   Utbildningstillfalleskod: string, // "12349",
   Kurstillfallesattribut: {
     Finansieringsform: number, // 102085

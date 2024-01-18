@@ -17,7 +17,7 @@
     "skipLibCheck": true, /* Skip type checking all .d.ts files. */
 
     // Options from original function tsconfig.json
-    "outDir": "dist",
+    "outDir": "__tests__/LadokEvents/dist",
     "rootDir": ".",
     "sourceMap": true,
   }

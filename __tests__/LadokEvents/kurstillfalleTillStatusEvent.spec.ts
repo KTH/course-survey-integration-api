@@ -5,7 +5,7 @@ import { MockDatabase } from "./utils/mockDatabase";
 
 const DB_MOCK_INPUT = {
   "CourseRound": {
-    "id": "3ea87094-9507-11ee-a0ce-a9a57d284dbd",
+    "id": "41717c91-4028-11ee-bf53-2115569549a8",
   }
 }
 

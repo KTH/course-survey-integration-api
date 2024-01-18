@@ -1,0 +1,142 @@
+{
+  "_id": {
+    "$oid": "6571d633d8d5738207d00af1"
+  },
+  "ladok3EventType": "se.ladok.schemas.utbildningsinformation.KursTillStatusEvent",
+  "ladok3Username": "jhsware@kth.se",
+  "message": {
+    "HandelseUID": "fd2d3bb9-9501-11ee-a0ce-a9a57d284dbd",
+    "EventContext": {
+      "AnvandareUID": "66830d48-51f3-11ec-8f26-98603a8f42a4",
+      "Anvandarnamn": "jhsware@kth.se",
+      "LarosateID": 29
+    },
+    "OrganisationUID": "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
+    "Status": 2,
+    "UtbildningUID": "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
+    "Attributvarde": [
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.betygsskala",
+        "Varde": "131657",
+        "Uid": "e51b957e-9501-11ee-a0ce-a9a57d284dbd"
+      },
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.huvudomrade",
+        "Varde": "16249",
+        "Uid": "e51b957f-9501-11ee-a0ce-a9a57d284dbd"
+      },
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.successiv.fordjupning",
+        "Varde": "1",
+        "Uid": "e51b9580-9501-11ee-a0ce-a9a57d284dbd"
+      },
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.amnesgrupp",
+        "Varde": "1",
+        "Uid": "e51b9581-9501-11ee-a0ce-a9a57d284dbd"
+      },
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.utbildningsomrade",
+        "Varde": "2",
+        "Uid": "e51b9582-9501-11ee-a0ce-a9a57d284dbd"
+      },
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.utbildningsomrade.procent",
+        "Varde": "100",
+        "Uid": "e51b9583-9501-11ee-a0ce-a9a57d284dbd"
+      },
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.resultat.pa.kurs.vid.attestering.av.modul",
+        "Varde": "false",
+        "Uid": "f6b95179-9501-11ee-a0ce-a9a57d284dbd"
+      },
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.titel.ska.anges",
+        "Varde": "false",
+        "Uid": "f6b9517a-9501-11ee-a0ce-a9a57d284dbd"
+      },
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.amnesord",
+        "Varde": "154957",
+        "Uid": "f6b9517b-9501-11ee-a0ce-a9a57d284dbd"
+      },
+      {
+        "Grupp": 0,
+        "Namn": "utbildning.attribut.krav.pa.tidigare.studier",
+        "Varde": "2",
+        "Uid": "f6b9517c-9501-11ee-a0ce-a9a57d284dbd"
+      }
+    ],
+    "UtbildningsinstansUID": "e51b9585-9501-11ee-a0ce-a9a57d284dbd",
+    "UtbildningstypID": 22,
+    "Benamningar": {
+      "Benamning": [
+        {
+          "Sprakkod": "en",
+          "Text": "Test AB1239"
+        },
+        {
+          "Sprakkod": "sv",
+          "Text": "Test AB1239"
+        }
+      ]
+    },
+    "EnhetID": 2,
+    "Omfattningsvarde": "10.0",
+    "StudieordningID": 1,
+    "UtbildningsformID": 1,
+    "Utbildningskod": "AB1239",
+    "Versionsinformation": {
+      "Anteckning": "Testing",
+      "GiltigFranPeriodID": {
+        "value": 151878
+      },
+      "Versionsnummer": 1,
+      "ArSenasteVersion": true,
+      "Uid": "e51b9584-9501-11ee-a0ce-a9a57d284dbd"
+    },
+    "Kursattribut": {
+      "BetygsskalaID": 131657,
+      "HuvudomradeMedSuccessivFordjupning": [
+        {
+          "HuvudomradeID": 16249,
+          "SuccessivFordjupningID": 1
+        }
+      ],
+      "NivaInomStudieordningID": 1,
+      "TitelSkaAnges": false,
+      "UtbildningsomradeFordelning": [
+        {
+          "OrganisationUID": "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
+          "Procent": 100,
+          "UtbildningsomradeID": 2
+        }
+      ]
+    },
+    "Kurskod": "AB1239"
+  },
+  "userProps": {
+    "ladok3AtomEntryId": "fda74e2b-9501-11ee-a853-23dc468d48bd",
+    "ladok3Username": "jhsware@kth.se",
+    "ladok3AtomEntryUpdated": "2023-12-07T14:10:27.018",
+    "ladok3EventId": "fd2d3bb9-9501-11ee-a0ce-a9a57d284dbd",
+    "ladok3MessageType": "ladok3Event",
+    "ladok3IsLastFeed": true,
+    "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/317122",
+    "content_HYPHEN_Type": "application/json",
+    "ladok3EventType": "se.ladok.schemas.utbildningsinformation.KursTillStatusEvent",
+    "traceparent": "00-df409e8e12db9f600faf34f51b072d60-6107bbb071460735-01",
+    "ladok3AtomEntryIndexInFeed": 0,
+    "ladok3KursStatus": 2,
+    "ladok3MessageSequenceNumber": 1
+  }
+}
