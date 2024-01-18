@@ -1,4 +1,6 @@
 {
+  "ladok3EventType": "se.ladok.schemas.resultat.ResultatPaModulAttesteratEvent",
+  "ladok3Username": "emilsten@kth.se",
   "message": {
     "HandelseUID": "76b56344-b5de-11ee-988f-6acd08c746d6",
     "EventContext": {
@@ -27,7 +29,7 @@
     "StudentUID": "ea667761-2c55-11ee-998a-6a4f18c04b6e",
     "UtbildningsinstansUID": "715b159a-b536-11ee-aef4-bd1cad394d29"
   },
-  "customProperties": {
+  "userProps": {
     "ladok3AtomEntryId": "7717f583-b5de-11ee-9402-fce3c03747a0",
     "ladok3Username": "emilsten@kth.se",
     "ladok3IsLastFeed": "true",
