@@ -1,7 +1,7 @@
-import event from "./fixtures/events/01_studiedeltagande.PaborjadUtbildningEvent_1.json";
+import event from "../../__tests__/LadokEvents/fixtures/events/01_studiedeltagande.PaborjadUtbildningEvent_1.json";
 import { handler } from "../../src/functions/ladok-events/paborjadUtbildningEvent";
-import { MockContext } from "./utils/mockContext";
-import { MockDatabase } from "./utils/mockDatabase";
+import { MockContext } from "../../__tests__/LadokEvents/utils/mockContext";
+import { MockDatabase } from "../../__tests__/LadokEvents/utils/mockDatabase";
 
 describe("PaborjadUtbildningEvent", () => {
 
