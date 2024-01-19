@@ -1,18 +1,18 @@
 {
   "_id": {
-    "$oid": "6571d633d8d5738207d00af6"
+    "$oid": "6571d633d8d5738207d00af3"
   },
   "ladok3EventType": "se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent",
   "ladok3Username": "jhsware@kth.se",
   "message": {
-    "HandelseUID": "fb0a3095-9508-11ee-a0ce-a9a57d284dbd",
+    "HandelseUID": "7c2e425f-9507-11ee-a0ce-a9a57d284dbd",
     "EventContext": {
       "AnvandareUID": "66830d48-51f3-11ec-8f26-98603a8f42a4",
       "Anvandarnamn": "jhsware@kth.se",
       "LarosateID": 29
     },
     "OrganisationUID": "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
-    "Status": 3,
+    "Status": 2,
     "UtbildningUID": "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
     "Attributvarde": [
       {
@@ -43,7 +43,7 @@
     "UndervisningsformID": 1,
     "UndervisningstidID": 101052,
     "UtbildningUtbildningstypID": 22,
-    "UtbildningstillfalleUID": "41717c91-4028-11ee-bf53-2115569549a8",
+    "UtbildningstillfalleUID": "3ea87094-9507-11ee-a0ce-a9a57d284dbd",
     "Utbildningstillfalleskod": "12349",
     "Kurstillfallesattribut": {
       "Finansieringsform": 102085
@@ -68,18 +68,18 @@
     ]
   },
   "userProps": {
-    "ladok3AtomEntryId": "fb64d462-9508-11ee-a853-23dc468d48bd",
+    "ladok3AtomEntryId": "7c7ab4c0-9507-11ee-a853-23dc468d48bd",
     "ladok3Username": "jhsware@kth.se",
-    "ladok3AtomEntryUpdated": "2023-12-07T15:00:29.911",
-    "ladok3EventId": "fb0a3095-9508-11ee-a0ce-a9a57d284dbd",
+    "ladok3AtomEntryUpdated": "2023-12-07T14:49:47.58",
+    "ladok3EventId": "7c2e425f-9507-11ee-a0ce-a9a57d284dbd",
     "ladok3MessageType": "ladok3Event",
     "ladok3IsLastFeed": true,
     "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/317122",
     "content_HYPHEN_Type": "application/json",
     "ladok3EventType": "se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent",
-    "traceparent": "00-bcb481a3fef09e4bc993000424c298c1-9614ea8fd903cc06-01",
+    "traceparent": "00-c62cede4383e7105d7dfc2b9c1ebc8f6-6e4747f93c964593-01",
     "ladok3AtomEntryIndexInFeed": 0,
-    "ladok3KursStatus": 3,
-    "ladok3MessageSequenceNumber": 21
+    "ladok3KursStatus": 2,
+    "ladok3MessageSequenceNumber": 15
   }
 }

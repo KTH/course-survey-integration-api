@@ -13,10 +13,10 @@
     "prestart": "npm run clean && npm run build",
     "start": "npm run start:api",
     "start:api": "func start --functions APIGetCourseRound APIGetCourseRoundStudents APIListCourseRounds",
-    "start:ladok": "func start --functions PaborjadUtbildning",
+    "start:ladok": "func start --functions Registrering",
     "test": "npm run test:type-checking && npm run build && npm run test:regression",
     "test:regression": "jest --testMatch '**/__tests__/**/*.spec.ts' --testTimeout 1000",
-    "test:integration": "jest --testMatch '**/__tests__/**/*.integration.ts' --testTimeout 1000",
+    "test:integration": "jest --roots __integration__ --testMatch '**/*.integration.ts' --config=./jest.integration.config.js --testTimeout 5000",
     "test:update-snapshots": "jest --testMatch '**/__tests__/**/*.spec.ts' --testTimeout 1000 --updateSnapshot",
     "test:type-checking": "tsc --noEmit",
     "generate-types": "openapi-typescript openapi/course-survey-integration-api.spec.yml --output src/__generated__/_interface.ts"

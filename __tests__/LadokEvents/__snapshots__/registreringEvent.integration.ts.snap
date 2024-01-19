@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`RegistreringEvent writes correct data to db 1`] = `
+exports[`RegistreringEvent INTEGRATION writes correct data to db 1`] = `
 {
   "StudentParticipation": {
     "canvasSisId": "TBD",

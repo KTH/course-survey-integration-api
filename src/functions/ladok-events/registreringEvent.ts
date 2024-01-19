@@ -12,7 +12,7 @@ export type TRegistreringEvent = {
   HandelseUID: string, // "8fb63aea-950a-11ee-99ff-6b3efc3c4159",
   EventContext: TLadokEventContext,
   KursUID: string, // "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
-  KurstillfalleUID: string, // "3ea87094-9507-11ee-a0ce-a9a57d284dbd",
+  KurstillfalleUID: string, // "41717c91-4028-11ee-bf53-2115569549a8",
   Period: number, // 1,
   RegistreringUID: string, // "64a2a94f-9509-11ee-99ff-6b3efc3c4159",
   StudentUID: string, // "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
@@ -21,7 +21,7 @@ export type TRegistreringEvent = {
 }
 
 export async function handler(message: TRegistreringEvent, context: InvocationContext, db: Database): Promise<void> {
-  if (!isValidEvent("se.ladok.schemas.studiedeltagande.RegistreringEvent", context?.triggerMetadata?.userProperties)) return;
+  // if (!isValidEvent("se.ladok.schemas.studiedeltagande.RegistreringEvent", context?.triggerMetadata?.userProperties)) return;
   
   // TODO: Consider using zod to validate the message
 
