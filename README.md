@@ -47,6 +47,18 @@ The basic architecture will be:
 - reads data from the database
 - and may call a data source library abstraction
 
+### Testing
+Unit tests are stored in \__tests\__ and **run in the CD/CI-pipeline**.
+- jest.config.js
+- module mocks in test folder
+
+Integration tests are stored in \__integration\__ and **run on demand** because they can break if source data has changed in external systems.
+- jest.integration.config.js -- set test root so mocks aren't automatically loaded
+- jest.integration.setup.js -- import env-vars from .env
+- .env -- API-keys etc for data sources
+
+See package.json for tests scripts.
+
 ### Dev-Env as code with `nix-shell`
 We use nix package manager to get a consistent developer experience across devices (Linux/macOS):
 
