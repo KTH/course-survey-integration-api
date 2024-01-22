@@ -1,6 +1,6 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
-import { ServiceBus, isValidEvent } from "../utils";
+import { Database, ServiceBus, isValidEvent } from "../utils";
 
 export type TResultatPaHelKursAttesteratEvent = {
   // TODO: Figure out what this event looks like!
@@ -8,7 +8,7 @@ export type TResultatPaHelKursAttesteratEvent = {
   EventContext: TLadokEventContext,
 }
 
-export async function handler(message: TResultatPaHelKursAttesteratEvent, context: InvocationContext): Promise<void> {
+export async function handler(message: TResultatPaHelKursAttesteratEvent, context: InvocationContext, db: Database): Promise<void> {
   if (!isValidEvent("ResultatPaHelKursAttesteradEvent", context?.triggerMetadata?.userProperties)) return;
 
   context.log(`ResultatPaHelKursAttesteradEvent: `);

@@ -1,6 +1,6 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
-import { ServiceBus, isValidEvent } from "../utils";
+import { Database, ServiceBus, isValidEvent } from "../utils";
 
 export type TResultatPaModulAttesteratEvent = {
   // TODO: Figure out what this event looks like!
@@ -8,7 +8,7 @@ export type TResultatPaModulAttesteratEvent = {
   EventContext: TLadokEventContext,
 }
 
-export async function handler(message: TResultatPaModulAttesteratEvent, context: InvocationContext): Promise<void> {
+export async function handler(message: TResultatPaModulAttesteratEvent, context: InvocationContext, db: Database): Promise<void> {
   if (!isValidEvent("ResultatPaModulAttesteradEvent", context?.triggerMetadata?.userProperties)) return;
 
   context.log(`ResultatPaModulAttesteradEvent: `);
@@ -16,6 +16,7 @@ export async function handler(message: TResultatPaModulAttesteratEvent, context:
 
 export default {
   handler: ServiceBus<TResultatPaModulAttesteratEvent>(handler),
-  extraInputs: undefined,
-  extraOutputs: undefined,
+  // input binding doesn't support cosmos document store yet
+  // extraInputs: [cosmosInput],
+  // extraOutputs: [cosmosOutput],
 }

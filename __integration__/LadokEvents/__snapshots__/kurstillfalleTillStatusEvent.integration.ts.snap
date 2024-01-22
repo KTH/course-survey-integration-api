@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModulTillStatusEvent writes correct data to db 1`] = `
+{
+  "CourseRound": {
+    "id": "41717c91-4028-11ee-bf53-2115569549a8",
+    "status": 2,
+  },
+}
+`;
