@@ -2,10 +2,19 @@
   "name": "ug-integration",
   "description": "Abstraction layer for integration with UG",
   "private": true,
+  "main": "src/index.ts",
   "scripts": {
+    "build": "tsc src/*.ts --outDir dist --sourceMap --declaration",
+    "test": "jest"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.11",
+    "dotenv": "^16.3.1",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.3.3"
   },
   "dependencies": {
+    "openid-client": "^5.6.4"
   }
 }

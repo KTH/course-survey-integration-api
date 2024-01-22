@@ -1,3 +1,0 @@
-- Access LADOK through https://www.stunnel.org/
-  - you can look at the following project https://github.com/KTH/kursstatistik-api/blob/master/Dockerfile
-- You probably want a LADOK certificate of type "database"

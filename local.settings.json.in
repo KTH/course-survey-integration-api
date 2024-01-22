@@ -12,5 +12,9 @@
     "LADOK_API_BASEURL": "https://integrationstest.api.ladok.se",
     "LADOK_API_PFX_BASE64": "[encoded ladok cert]",
     "LADOK_API_PFX_PASSPHRASE": "[passphrase for ladok cert]"
+    "OAUTH_SERVER_BASE_URI": "https://login.ref.ug.kth.se/adfs"
+    "UG_REST_API_BASEURL": "https://integral-api.sys.kth.se/test/ug"
+    "UG_REST_API_CLIENT_ID": "[application id]",
+    "UG_REST_API_CLIENT_SECRET": "[client secret]"
   }
 }
