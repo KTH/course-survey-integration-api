@@ -1,4 +1,4 @@
-import event from "./fixtures/events/01_studiedeltagande.PaborjadUtbildningEvent_1.json";
+import event from "../../__fixtures__/events/01_studiedeltagande.PaborjadUtbildningEvent_1.json";
 import { handler } from "../../src/functions/ladok-events/paborjadUtbildningEvent";
 import { MockContext } from "./utils/mockContext";
 import { MockDatabase } from "./utils/mockDatabase";

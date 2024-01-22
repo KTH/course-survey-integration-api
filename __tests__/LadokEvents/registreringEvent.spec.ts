@@ -1,8 +1,8 @@
-import event from "./fixtures/events/01_studiedeltagande.RegistreringEvent_1.json";
+import event from "../../__fixtures__/events/01_studiedeltagande.RegistreringEvent_1.json";
 import appConfig, { handler } from "../../src/functions/ladok-events/registreringEvent";
 import { MockContext } from "./utils/mockContext";
 import { MockDatabase } from "./utils/mockDatabase";
-import studentParticipation_01 from "./fixtures/entities/01_studentParticipation.json";
+import studentParticipation_01 from "../../__fixtures__/entities/01_studentParticipation.json";
 
 describe("RegistreringEvent", () => {
 
