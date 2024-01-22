@@ -34,7 +34,7 @@
         "ladok3Username": "emilsten@kth.se",
         "ladok3IsLastFeed": true,
         "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/318877",
-        "Content_HYPHEN_Type": "application/json",
+        "content_HYPHEN_Type": "application/json",
         "ladok3AtomEntryUpdated": "2024-01-16T10:10:39.752",
         "ladok3EventType": "se.ladok.schemas.resultat.ResultatPaHelKursAttesteratEvent",
         "traceparent": "00-15ed0a48e3a4150e8be7139c9c9f076e-e6bd20572eee2a28-01",

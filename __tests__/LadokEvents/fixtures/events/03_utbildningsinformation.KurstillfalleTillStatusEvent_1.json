@@ -54,13 +54,13 @@
         "ladok3AtomEntryUpdated": "2024-01-15T16:18:32.074",
         "ladok3EventId": "57efa994-b3b9-11ee-bf6a-e2af0a9345af",
         "ladok3MessageType": "ladok3Event",
-        "ladok3IsLastFeed": "true",
+        "ladok3IsLastFeed": true,
         "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/318877",
-        "Content_HYPHEN_Type": "application/json",
+        "content_HYPHEN_Type": "application/json",
         "ladok3EventType": "se.ladok.schemas.utbildningsinformation.KurstillfalleTillStatusEvent",
         "traceparent": "00-7de1d2bde92ce1b6265514fb924b2fee-9fb837284034760e-01",
-        "ladok3AtomEntryIndexInFeed": "0",
+        "ladok3AtomEntryIndexInFeed": 0,
         "ladok3KursStatus": "2",
-        "ladok3MessageSequenceNumber": "74958"
+        "ladok3MessageSequenceNumber": 74958
     }
 }

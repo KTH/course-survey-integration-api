@@ -61,7 +61,7 @@
         "ladok3MessageType": "ladok3Event",
         "ladok3IsLastFeed": true,
         "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/318876",
-        "Content_HYPHEN_Type": "application/json",
+        "content_HYPHEN_Type": "application/json",
         "ladok3EventType": "se.ladok.schemas.utbildningsinformation.KursTillStatusEvent"
     }
 }

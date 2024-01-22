@@ -32,15 +32,15 @@
     "userProps": {
         "ladok3AtomEntryId": "23956e87-b446-11ee-9402-fce3c03747a0",
         "ladok3Username": "emilsten@kth.se",
-        "ladok3IsLastFeed": "true",
+        "ladok3IsLastFeed": true,
         "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/318877",
-        "Content_HYPHEN_Type": "application/json",
+        "content_HYPHEN_Type": "application/json",
         "ladok3AtomEntryUpdated": "2024-01-16T09:06:21.707",
         "ladok3EventType": "se.ladok.schemas.resultat.ResultatPaModulAttesteratEvent",
         "traceparent": "00-54357ad2d1aa12ee437a10b11c152d31-a35992a109f97c7d-01",
-        "ladok3AtomEntryIndexInFeed": "0",
+        "ladok3AtomEntryIndexInFeed": 0,
         "ladok3EventId": "22a5b75c-b446-11ee-988f-6acd08c746d6",
         "ladok3MessageType": "ladok3Event",
-        "ladok3MessageSequenceNumber": "74985"
+        "ladok3MessageSequenceNumber": 74985
     }
 }
