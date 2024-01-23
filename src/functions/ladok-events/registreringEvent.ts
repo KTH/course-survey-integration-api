@@ -1,6 +1,5 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
-import { getStudentInfo } from "ug-integration";
 import { ServiceBus, isValidEvent, Database } from "../utils";
 import { TProgramRound, TStudentParticipation } from "../interface";
 
@@ -40,7 +39,7 @@ export async function handler(message: TRegistreringEvent, context: InvocationCo
     return;
   }
 
-  // const studentInfo = await getStudentInfo(ladokStudentId);
+  // const studentInfo = ???;
 
   // 1. Create a StudentParticipation object
   const doc: TStudentParticipation = {
