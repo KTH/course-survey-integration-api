@@ -32,7 +32,7 @@ export async function getUgCourseResponsibleAndTeachers(courseCode: string, roun
       .get<any[]>(
         `groups?$filter=startswith(name,'${path}')` // &$expand=Subgroups
       )
-      .catch(ugClientGetErrorHandler)) ?? {};
+      .catch(ugClientGetErrorHandler)) ?? <any>{};
   if (statusCode !== 200) {
     throw new Error(`UGRestClient: ${statusCode} ${data}`);
   }
@@ -71,7 +71,7 @@ export async function getUgUser(kthId: string | undefined): Promise<TUgUser | u
         // `groups?$filter=name eq 'edu.courses.SF.SF1625.20222'`
         `users?$filter=kthid eq '${kthId}'`
       )
-      .catch(ugClientGetErrorHandler)) ?? {};
+      .catch(ugClientGetErrorHandler)) ?? <any>{};
 
   if (json === undefined) return;
 

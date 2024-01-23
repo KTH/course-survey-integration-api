@@ -1,4 +1,4 @@
-import assert from "node:assert/strict";
+import { strict as assert } from 'node:assert';
 import { IncomingHttpHeaders, IncomingMessage } from "node:http";
 import { BaseClient, Client, Issuer, TokenSet } from "openid-client";
 
