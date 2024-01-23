@@ -1,1 +1,1 @@
-export * from "kopps-integration/dist/indexMock";
+export * from "kopps-integration/src/indexMock";

@@ -1,1 +1,1 @@
-export * from "ladok-integration/dist/indexMock";
+export * from "ladok-integration/src/indexMock";
