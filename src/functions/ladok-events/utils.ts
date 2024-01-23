@@ -1,9 +1,7 @@
 import { TUgUser } from "ug-integration";
 import { TCourseUser } from "../interface";
 
-export function _convert(ugUser: TUgUser | undefined): TCourseUser | undefined {
-  if (ugUser === undefined) return undefined;
-
+export function _convert(ugUser: TUgUser): TCourseUser {
   const email = ugUser.email;
   const userName = email?.split('@')[0];
   const kthUserId = ugUser.kthid;
@@ -21,12 +19,13 @@ export function _convert(ugUser: TUgUser | undefined): TCourseUser | undefined {
 }
 
 export function convertUgToCourseUser(ugUser: TUgUser | undefined): TCourseUser | undefined {
+  if (ugUser === undefined) return undefined;
   return _convert(ugUser);
 }
 
-export function convertUgToCourseUserArr(ugUser: (TUgUser | undefined)[] | undefined):  (TCourseUser | undefined)[] | undefined {
+export function convertUgToCourseUserArr(ugUser: (TUgUser | undefined)[] | undefined):  TCourseUser[] {
   if (Array.isArray(ugUser)) {
-    return ugUser.map(_convert);
+    return (ugUser.filter(o => o) as TUgUser[]).map(_convert);
   }
-  return undefined;
+  return [];
 }
