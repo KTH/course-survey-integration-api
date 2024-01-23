@@ -1,5 +1,5 @@
-import event from "../../__fixtures__/events/01_studiedeltagande.PaborjadUtbildningEvent_1.json";
-import { handler } from "../../src/functions/ladok-events/paborjadUtbildningEvent";
+import event from "../../__fixtures__/events/01_studiedeltagande.PaborjatUtbildningstillfalleEvent_1.json";
+import { handler } from "../../src/functions/ladok-events/paborjatUtbildningstillfalleEvent";
 import { MockContext } from "../../__tests__/LadokEvents/utils/mockContext";
 import { MockDatabase } from "../../__tests__/LadokEvents/utils/mockDatabase";
 

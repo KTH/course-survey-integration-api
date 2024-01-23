@@ -1,9 +1,9 @@
-import event from "../../__fixtures__/events/01_studiedeltagande.PaborjadUtbildningEvent_1.json";
-import { handler } from "../../src/functions/ladok-events/paborjadUtbildningEvent";
+import event from "../../__fixtures__/events/01_studiedeltagande.PaborjatUtbildningstillfalleEvent_1.json";
+import { handler } from "../../src/functions/ladok-events/paborjatUtbildningstillfalleEvent";
 import { MockContext } from "./utils/mockContext";
 import { MockDatabase } from "./utils/mockDatabase";
-import { KoppsIntegrationMock } from "kopps-integration/dist/indexMock";
-import { LadokIntegrationMock } from "ladok-integration/dist/indexMock";
+import { KoppsIntegrationMock } from "kopps-integration/src/indexMock";
+import { LadokIntegrationMock } from "ladok-integration/src/indexMock";
 
 KoppsIntegrationMock.getCourseInformation(event.message.UtbildningstillfalleUID, {
   title: "Programmeringsteknik för F",

@@ -1,7 +1,7 @@
 import { app } from "@azure/functions";
 import kurstillfalleTillStatusEvent from "./ladok-events/kurstillfalleTillStatusEvent";
 import modulTillStatusEvent from "./ladok-events/modulTillStatusEvent";
-import paborjadUtbildningEvent from "./ladok-events/paborjadUtbildningEvent";
+import paborjadUtbildningEvent from "./ladok-events/paborjatUtbildningstillfalleEvent";
 import registreringEvent from "./ladok-events/registreringEvent";
 import resultatPaHelKursAttesteratEvent from "./ladok-events/resultatPaHelKursAttesteratEvent";
 import resultatPaModulAttesteratEvent from "./ladok-events/resultatPaModulAttesteratEvent";
@@ -17,10 +17,10 @@ app.serviceBusTopic('Registrering', {
   subscriptionName: 'csia-registrering',
 });
 
-app.serviceBusTopic('PaborjadUtbildning', {
+app.serviceBusTopic('PaborjatUtbildningstillfalleEvent', {
   ...sharedProps,
   ...paborjadUtbildningEvent,
-  subscriptionName: 'csia-paborjad-utbildning',
+  subscriptionName: 'csia-paborjad-utbildning', // TODO: Rename this to paborjat-utbildningstillfalle
 });
 
 app.serviceBusTopic('KurstillfälleTillStatus', {

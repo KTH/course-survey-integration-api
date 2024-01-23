@@ -159,7 +159,7 @@ components:
                 - period
                 - credits
                 - courseExaminor
-                - courseResponsible
+                # - courseResponsible
                 - courseTeachers
                 - nrofRegisteredStudents
                 - nrofReportedResults
