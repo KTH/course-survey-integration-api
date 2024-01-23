@@ -5,7 +5,8 @@
   "main": "src/index.ts",
   "scripts": {
     "build": "tsc src/*.ts --outDir dist --sourceMap --declaration",
-    "test": "jest"
+    "test": "jest",
+    "test:integration": "jest --roots ./__tests__ --testMatch '**/*.integration.ts' --config=./jest.integration.config.js --testTimeout 5000"
   },
   "devDependencies": {
     "@types/jest": "^29.5.11",

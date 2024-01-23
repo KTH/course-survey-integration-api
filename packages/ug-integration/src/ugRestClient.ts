@@ -146,15 +146,6 @@ export class UGRestClient {
     const { headers, method, statusCode, statusMessage, url, body } = res!;
     const textBody = await new TextDecoder().decode(body);
 
-    const outp = {
-      headers,
-      method,
-      statusCode,
-      statusMessage,
-      url,
-      data: textBody,
-    };
-
     // Does client.requestResource throw an error if this evals to true?
     if (statusCode === undefined || statusCode >= 400) {
       throw new UGRestClientError({
@@ -168,6 +159,15 @@ export class UGRestClient {
         },
       });
     }
+
+    const outp = {
+      headers,
+      method,
+      statusCode,
+      statusMessage,
+      url,
+      data: textBody,
+    };
 
     try {
       const jsonBody = JSON.parse(textBody);
