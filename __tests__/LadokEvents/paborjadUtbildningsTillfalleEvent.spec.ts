@@ -1,3 +1,4 @@
+import { UgIntegrationMock } from "ug-integration/src/indexMock";
 import event from "../../__fixtures__/events/01_studiedeltagande.PaborjatUtbildningstillfalleEvent_1.json";
 import { handler } from "../../src/functions/ladok-events/paborjatUtbildningstillfalleEvent";
 import { MockContext } from "./utils/mockContext";
@@ -41,6 +42,31 @@ LadokIntegrationMock.getCourseRoundInformation(event.message.Utbildningstillfall
       ],
     },
   ],
+});
+
+UgIntegrationMock.getUgCourseResponsibleAndTeachers("SF1625", "2022", "2", [
+  "u1responsible", ["u1teacher1", "u1teacher2"],
+]);
+
+UgIntegrationMock.getUgUser("u1responsible", {
+  email: "cr@email.com",
+  kthid: "u1responsible",
+  givenName: "Course",
+  surname: "Responsible",
+});
+
+UgIntegrationMock.getUgUser("u1teacher1", {
+  email: "t1@email.com",
+  kthid: "u1teacher1",
+  givenName: "First",
+  surname: "Teacher",
+});
+
+UgIntegrationMock.getUgUser("u1teacher2", {
+  email: "t2@email.com",
+  kthid: "u1teacher2",
+  givenName: "Second",
+  surname: "Teacher",
 });
 
 describe("RegistreringEvent", () => {

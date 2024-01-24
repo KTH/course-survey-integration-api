@@ -14,7 +14,7 @@ const ugClient = new UGRestClient({
   clientSecret: UG_REST_API_CLIENT_SECRET ?? '',
 });
 
-type TUgCourseResponsibleAndTeachers = [
+export type TUgCourseResponsibleAndTeachers = [
   courseResponsible: string,
   courseTeachers: string[],
 ]
