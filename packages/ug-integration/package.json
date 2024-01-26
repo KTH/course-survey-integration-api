@@ -2,7 +2,8 @@
   "name": "ug-integration",
   "description": "Abstraction layer for integration with UG",
   "private": true,
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "source": "src/index.ts",
   "scripts": {
     "build": "tsc src/*.ts --outDir dist --sourceMap --declaration",
     "test": "jest",
