@@ -1,4 +1,6 @@
+import { UgUser, checkGetUgCourseResponsibleAndTeachers } from "./types";
 import { UGRestClient, UGRestClientError } from "./ugRestClient";
+import { ZodError, ZodObject, ZodRawShape } from "zod";
 
 const {
   OAUTH_SERVER_BASE_URI,
@@ -49,6 +51,11 @@ export async function getUgCourseResponsibleAndTeachers(courseCode: string, roun
       return [...val, ...curr.members.filter((m: any) => !val.includes(m))]
     }, []);    
 
+  // This will throw if values are incorrect
+  // TODO: Investigate if zod can be used here too
+  // TODO: Improve error handling to level of ladok-integration
+  checkGetUgCourseResponsibleAndTeachers([courseResonsible, courseTeachers]);
+
   return [
     courseResonsible,
     courseTeachers,
@@ -75,10 +82,16 @@ export async function getUgUser(kthId: string | undefined): Promise<TUgUser | u
 
   if (json === undefined) return;
 
-  return json.pop();
+  const outp = json.pop();
+
+  // Type-check with zod, throws error if values are incorrect
+  // TODO: Improve error handling to level of ladok-integration
+  UgUser.parse(outp)
+
+  return outp;
 }
 
-function ugClientGetErrorHandler(err: any) {
+function ugClientGetErrorHandler(err: any): never {
   if (err instanceof UGRestClientError) {
     throw err;
   }
