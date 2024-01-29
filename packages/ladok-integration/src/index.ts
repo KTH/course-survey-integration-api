@@ -12,6 +12,9 @@ export async function getCourseRoundInformation(ladokUid: string) {
   return {
     name: kurstillfalle.Benamning,
     courseCode: kurstillfalle.Utbildningskod,
+    courseInstanceCode: kurstillfalle.Kurstillfalleskod,
+    startDate: kurstillfalle.Startdatum,
+    endDate: kurstillfalle.Slutdatum,
     organisation: organisation.school,
     organisationUnit: organisation.department,
     credits: kurstillfalle.Omfattning,
@@ -19,6 +22,7 @@ export async function getCourseRoundInformation(ladokUid: string) {
       code: m.Utbildningskod,
       name: m.Benamning,
       credits: m.Omfattning,
+      gradingScheme: getGradingScheme(m.BetygsskalaID),
     })),
 
     // TODO: Extract the information from kurstillfalle.BetygsskalaID
