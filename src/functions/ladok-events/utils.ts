@@ -1,5 +1,5 @@
-import { TUgUser } from "ug-integration";
-import { TCourseUser } from "../interface";
+import { TUgUser, TUgSchool } from "ug-integration";
+import { TCourseUser, TOrgEntity } from "../interface";
 
 export function _convert(ugUser: TUgUser): TCourseUser {
   const email = ugUser.email;
@@ -28,4 +28,31 @@ export function convertUgToCourseUserArr(ugUser: (TUgUser | undefined)[] | undef
     return (ugUser.filter(o => o) as TUgUser[]).map(_convert);
   }
   return [];
+}
+
+export function convertUgSchoolToOrgEntity(ugSchool: TUgSchool | undefined, schoolCode: string, lang: string): TOrgEntity {
+  return {
+    displayName: (lang === "en" ? ugSchool?.name_en : ugSchool?.name_sv) ?? '',
+    displayCode: schoolCode.toUpperCase(),
+    kthId: ugSchool?.kthid ?? '',
+  };
+}
+
+export function convertLadokModuleToCourseModule(ladokModule: any, lang: string): any {
+  const gradingDistribution = ladokModule.gradingScheme?.grades?.reduce((val: any, curr: any) => {
+    return {
+      ...val,
+      [curr.code]: -1,
+    };
+  }, {});
+
+  return {
+    _reportedResults: {},
+    code: ladokModule.code,
+    name: ladokModule.name?.[lang],
+    credits: ladokModule.credits,
+    gradingScheme: Object.keys(gradingDistribution ?? {}),
+    nrofReportedResults: 0, // TODO: Calculated field
+    gradingDistribution, // TODO: Calculated field
+  };
 }

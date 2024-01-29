@@ -4,10 +4,23 @@ import { paths, components } from "../__generated__/_interface";
 // in the root of the project.
 
 // ## Entities
-export type TCourseRound = components["schemas"]["CourseRound"];
+export type TCourseRound = components["schemas"]["CourseRound"] & {
+  /**
+   * Add each reported result using composite key to allow for updates.
+   * key: `TBD`
+   */
+  _reportedResults?: { [index: string]: string };
+  _gradingScheme: string[]; // Support to calculate grading distribution, currently not shown in report
+};
 export type TStudentParticipation = components["schemas"]["StudentParticipation"];
 export type TProgramRound = components["schemas"]["ProgramRound"];
-export type TCourseModule = components["schemas"]["CourseModule"];
+export type TCourseModule = components["schemas"]["CourseModule"] & {
+  /**
+   * Add each reported result using composite key to allow for updates.
+   * key: `TBD`
+   */
+  _reportedResults?: { [index: string]: string };
+};
 export type TCourseUser = components["schemas"]["CourseUser"];
 export type TOrgEntity = components["schemas"]["OrgEntity"];
 

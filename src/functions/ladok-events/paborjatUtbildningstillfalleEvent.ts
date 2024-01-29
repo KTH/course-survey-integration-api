@@ -1,11 +1,11 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
-import { getUgCourseResponsibleAndTeachers, getUgUser } from "ug-integration";
+import { getUgCourseResponsibleAndTeachers, getUgSchool, getUgUser } from "ug-integration";
 import { ServiceBus, isValidEvent, Database } from "../utils";
 import { TCourseRound, TCourseUser, TOrgEntity } from "../interface";
 import { getCourseInformation } from "kopps-integration";
 import { getCourseRoundInformation } from "ladok-integration";
-import { convertUgToCourseUser, convertUgToCourseUserArr } from "./utils";
+import { convertLadokModuleToCourseModule, convertUgSchoolToOrgEntity, convertUgToCourseUser, convertUgToCourseUserArr } from "./utils";
 
 export type TPaborjatUtbildningstillfalleEvent = {
   PaborjandeDatum: string, // "2021-01-01",
@@ -49,7 +49,7 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
   const ladokCourseRoundInfo = await getCourseRoundInformation(utbildningstillfalleUid);
 
   const courseCode = ladokCourseRoundInfo.courseCode;
-  const courseYear = message.PaborjandeDatum.slice(0, 4); // Get the year from the date
+  const courseYear = ladokCourseRoundInfo.startDate.slice(0, 4);
   const courseRoundCode = koppsInfo?.round?.periods?.[0]; // TODO: We should use new period code (nnnnn)
 
   // TODO: Should we cache these values? For how long?
@@ -63,33 +63,47 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
     courseTeachersKthIds?.map(async (kthId: string) => await getUgUser(kthId))
   );
 
+  const schoolCode = ladokCourseRoundInfo?.organisation?.code;
+  const tmpUgSchool = await getUgSchool(schoolCode);
+
   const courseResponsible = convertUgToCourseUser(tmpUgCourseResponsible);
   const courseTeachers = convertUgToCourseUserArr(tmpUgCourseTeachers);
-  
+  const organization = convertUgSchoolToOrgEntity(tmpUgSchool, schoolCode, language);
+  const modules = ladokCourseRoundInfo?.modules?.map((m) => convertLadokModuleToCourseModule(m, language));
+
+  const gradingDistribution = ladokCourseRoundInfo.gradingScheme?.grades?.reduce((val: any, curr: any) => {
+    return {
+      ...val,
+      [curr.code]: -1,
+    };
+  }, {});
+
   const doc: TCourseRound = {
+    _reportedResults: {},
+    _gradingScheme: Object.keys(gradingDistribution ?? {}),
     id: utbildningstillfalleUid,
     ladokCourseId: utbildningsUid,
     ladokCourseRoundId: utbildningstillfalleUid,
-    canvasSisId: 'TBD',
+    canvasSisId: utbildningstillfalleUid, // I deduced this by looking at the Event Relationship diagram, not yet verified in Canvas
     name: koppsInfo?.course.name[language],
     courseCode: ladokCourseRoundInfo?.courseCode,
     language: language,
-    canceled: false,
-    endDate: 'TBD',
-    displayYear: 'TBD',
-    organization: {} as TOrgEntity,
+    canceled: false, // TODO: Make sure we set this properly
+    endDate: ladokCourseRoundInfo?.endDate,
+    displayYear: courseYear,
+    organization,
     institution: {} as TOrgEntity,
     courseGoal: koppsInfo?.syllabus.goals,
-    period: 'P1',
+    period: 'P1', // TODO: Where does this come from?
     credits: ladokCourseRoundInfo?.credits.toString(),
-    courseExaminor: {} as TCourseUser,
+    courseExaminor: {} as TCourseUser, // TODO: Get this from Ladok (I believe)
     courseResponsible, // From UG
     courseTeachers, // From UG
-    nrofRegisteredStudents: 1,
-    nrofReportedResults: 0,
-    gradingDistribution: {},
+    nrofRegisteredStudents: 1, // TODO: Get this StudentParticipation
+    nrofReportedResults: -1, // TODO: Calculated field
+    gradingDistribution, // TODO: Calculated field
     programs: [],
-    modules: [],
+    modules,
   }
   // 2. Get more course info from KOPPS API
   // 3. Get more course info from LADOK API
