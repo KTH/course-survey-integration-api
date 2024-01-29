@@ -1,5 +1,6 @@
 import {
   getUgCourseResponsibleAndTeachers,
+  getUgSchool,
   getUgUser,
 } from "../src/index";
 
@@ -21,5 +22,12 @@ describe("Test that your credential has proper permissions", () => {
     expect(res?.givenName).toBeDefined();
     expect(res?.surname).toBeDefined();
     expect(res?.kthid).toBeDefined();
+  });
+  
+  test("can get school", async () => {
+    const res = await getUgSchool("eecs")
+    expect(res?.kthid).toBeDefined();
+    // expect(res?.name_en).toBeDefined();
+    // expect(res?.name_sv).toBeDefined();
   });
 });
