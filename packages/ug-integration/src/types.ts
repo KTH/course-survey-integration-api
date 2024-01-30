@@ -25,3 +25,12 @@ export const UgUser = z.object({
   givenName: z.string(),
   surname: z.string(),
 });
+
+export const UgSchool = z.object({
+  name: z.string(),
+  kthid: z.string(),
+  description: z.object({
+    sv: z.string().optional(),
+    en: z.string().optional(),
+  })
+});

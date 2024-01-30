@@ -27,8 +27,6 @@ export class UgIntegrationMock {
   }
 }
 
-
-
 export async function getUgCourseResponsibleAndTeachers(courseCode: string, roundYear: string, roundCode: string | number): Promise<TUgCourseResponsibleAndTeachers | []> {
   return Promise.resolve(
     _mockedValues.getUgCourseResponsibleAndTeachers[[courseCode, roundYear, roundCode].join('-')]
@@ -39,4 +37,8 @@ export async function getUgCourseResponsibleAndTeachers(courseCode: string, roun
 export async function getUgUser(kthId: string | undefined): Promise<TUgUser | undefined>  {
   if (kthId === undefined) return;
   return Promise.resolve(_mockedValues.getUgUser[kthId]);
+}
+
+export async function getUgSchool(schoolCode: string): Promise<any> {
+  return Promise.resolve(_mockedValues.getUgUser[schoolCode]);
 }

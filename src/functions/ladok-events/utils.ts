@@ -30,9 +30,9 @@ export function convertUgToCourseUserArr(ugUser: (TUgUser | undefined)[] | undef
   return [];
 }
 
-export function convertUgSchoolToOrgEntity(ugSchool: TUgSchool | undefined, schoolCode: string, lang: string): TOrgEntity {
+export function convertUgSchoolToOrgEntity(ugSchool: TUgSchool | undefined, schoolCode: string, lang: 'en' | 'sv'): TOrgEntity {
   return {
-    displayName: (lang === "en" ? ugSchool?.name_en : ugSchool?.name_sv) ?? '',
+    displayName: ugSchool?.description[lang] ?? '',
     displayCode: schoolCode.toUpperCase(),
     kthId: ugSchool?.kthid ?? '',
   };

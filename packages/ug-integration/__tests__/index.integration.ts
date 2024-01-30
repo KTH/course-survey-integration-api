@@ -27,7 +27,7 @@ describe("Test that your credential has proper permissions", () => {
   test("can get school", async () => {
     const res = await getUgSchool("eecs")
     expect(res?.kthid).toBeDefined();
-    // expect(res?.name_en).toBeDefined();
-    // expect(res?.name_sv).toBeDefined();
+    expect(res?.description).toBeDefined();
+    expect(res?.description.sv ?? res?.description.en).toBeDefined();
   });
 });

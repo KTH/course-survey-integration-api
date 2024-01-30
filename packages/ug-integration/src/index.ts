@@ -89,9 +89,12 @@ export async function getUgUser(kthId: string | undefined): Promise<TUgUser | u
 }
 
 export type TUgSchool = {
+  name: string;
   kthid: string;
-  name_en: string;
-  name_sv: string;
+  description: {
+    en?: string;
+    sv?: string;
+  };
 }
 
 export async function getUgSchool(schoolCode: string | undefined): Promise<TUgSchool | undefined>  {
@@ -101,7 +104,7 @@ export async function getUgSchool(schoolCode: string | undefined): Promise<TUgS
     (await ugClient
       .get<TUgSchool[]>(
         // `groups?$filter=name eq 'edu.courses.SF.SF1625.20222'`
-        `groups?$filter=name eq 'edu.school.${schoolCode}'`
+        `groups?$filter=name eq 'pa.org.${schoolCode.toUpperCase()}'`
       )
       .catch(ugClientGetErrorHandler)) ?? <any>{};
 
