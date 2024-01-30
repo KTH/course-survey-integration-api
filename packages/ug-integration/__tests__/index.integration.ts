@@ -2,13 +2,17 @@ import {
   getUgCourseResponsibleAndTeachers,
   getUgSchool,
   getUgUser,
+  getUgUserFromLadokId,
 } from "../src/index";
 
 describe("Test that your credential has proper permissions", () => {
-
   test("can get course responsible and teacher", async () => {
-    const [ responsible, teachers ] = await getUgCourseResponsibleAndTeachers("SF1625", "2022", "2");
-    
+    const [responsible, teachers] = await getUgCourseResponsibleAndTeachers(
+      "SF1625",
+      "2022",
+      "2",
+    );
+
     expect(responsible?.startsWith("u1")).toEqual(true);
     expect(responsible?.length).toEqual(8);
 
@@ -17,7 +21,17 @@ describe("Test that your credential has proper permissions", () => {
   });
 
   test("can get user", async () => {
-    const res = await getUgUser("u1famwov")
+    const res = await getUgUser("u1famwov");
+    expect(res?.email).toBeDefined();
+    expect(res?.givenName).toBeDefined();
+    expect(res?.surname).toBeDefined();
+    expect(res?.kthid).toBeDefined();
+  });
+
+  test("can get user from Ladok UID", async () => {
+    const res = await getUgUserFromLadokId(
+      "5cbe0fe1-6317-11ec-b965-d92444244ba1",
+    );
     expect(res?.email).toBeDefined();
     expect(res?.givenName).toBeDefined();
     expect(res?.surname).toBeDefined();
