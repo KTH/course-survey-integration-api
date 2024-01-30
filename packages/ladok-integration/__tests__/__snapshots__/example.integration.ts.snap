@@ -47,3 +47,13 @@ exports[`Get information from a course round example from documentation 1`] = `
   },
 }
 `;
+
+exports[`Get information from a program participation example from documentation 1`] = `
+{
+  "code": "CSAMH",
+  "name": {
+    "en": "Degree Programme in Civil Engineering and Urban Management",
+    "sv": "Civilingenjörsutbildning i samhällsbyggnad",
+  },
+}
+`;

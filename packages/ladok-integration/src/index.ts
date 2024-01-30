@@ -1,4 +1,10 @@
-import { getKursinstans, getKurstillfalle, getOrganisation } from "./api";
+import {
+  getKursinstans,
+  getKurstillfalle,
+  getKurstillfallesdeltagande,
+  getOrganisation,
+  getStudiestruktur,
+} from "./api";
 import { getGradingScheme, parseOrganisation } from "./utils";
 
 type TMultiLang = {
@@ -64,4 +70,41 @@ export async function getCourseRoundInformation(ladokUid: string): Promise<TGetC
     // TODO: Extract the information from kurstillfalle.BetygsskalaID
     gradingScheme: getGradingScheme(kurstillfalle.BetygsskalaID),
   };
+}
+
+/**
+ * Get all programs that include the course round where a student is participating
+ * Returns null if:
+ * - the course round is not part of any program
+ * - the student is not taking the course round as part of any program
+ */
+export async function getProgramParticipation(
+  studentUID: string,
+  courseRoundUID: string,
+) {
+  const allaDeltagande = await getKurstillfallesdeltagande(studentUID);
+  const deltagande = allaDeltagande.Tillfallesdeltaganden.find(
+    (t) => t.Utbildningsinformation.UtbildningstillfalleUID === courseRoundUID,
+  );
+
+  if (!deltagande?.Studiestrukturreferens) {
+    return null;
+  }
+
+  if (deltagande.Studiestrukturreferens) {
+    const allaStruktur = await getStudiestruktur(studentUID);
+    const struktur = allaStruktur.Studiestrukturer.find(
+      (s) => s.Referens === deltagande.Studiestrukturreferens,
+    );
+
+    if (!struktur) {
+      // This is an error.
+      return null;
+    }
+
+    return {
+      code: struktur.Utbildningsinformation.Utbildningskod,
+      name: struktur.Utbildningsinformation.Benamning,
+    };
+  }
 }

@@ -60,3 +60,29 @@ export const LadokOrganisation = z.object({
   }),
   Organisationskod: z.string(),
 });
+
+export const Kurstillfallesdeltagande = z.object({
+  Tillfallesdeltaganden: z.array(
+    z.object({
+      Studiestrukturreferens: z.optional(z.string()),
+      Utbildningsinformation: z.object({
+        UtbildningstillfalleUID: z.string(),
+      }),
+    }),
+  ),
+});
+
+export const Studiestruktur = z.object({
+  Studiestrukturer: z.array(
+    z.object({
+      Referens: z.string(),
+      Utbildningsinformation: z.object({
+        Utbildningskod: z.string(),
+        Benamning: z.object({
+          sv: z.string(),
+          en: z.string(),
+        }),
+      }),
+    }),
+  ),
+});
