@@ -306,7 +306,7 @@ components:
                     type: string
                 semester:
                     type: string
-                startPeriod:
+                startTerm:
                     type: string
                     description: Year and term when program round started
                 name:
