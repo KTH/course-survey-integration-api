@@ -1,13 +1,13 @@
-import { TUgCourseResponsibleAndTeachers, TUgUser } from ".";
-
-
+import { TUgCourseResponsibleAndTeachers, TUgSchool, TUgUser } from ".";
 
 const _mockedValues: {
   getUgCourseResponsibleAndTeachers: Record<string, TUgCourseResponsibleAndTeachers>;
   getUgUser: Record<string, TUgUser>;
+  getUgSchool: Record<string, TUgSchool>;
 } = {
   getUgCourseResponsibleAndTeachers: {},
   getUgUser: {},
+  getUgSchool: {},
 };
 
 export class UgIntegrationMock {
@@ -39,6 +39,6 @@ export async function getUgUser(kthId: string | undefined): Promise<TUgUser | u
   return Promise.resolve(_mockedValues.getUgUser[kthId]);
 }
 
-export async function getUgSchool(schoolCode: string): Promise<any> {
-  return Promise.resolve(_mockedValues.getUgUser[schoolCode]);
+export async function getUgSchool(schoolCode: string): Promise<TUgSchool | undefined> {
+  return Promise.resolve(_mockedValues.getUgSchool[schoolCode]);
 }
