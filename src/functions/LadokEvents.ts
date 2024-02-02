@@ -5,6 +5,7 @@ import paborjadUtbildningEvent from "./ladok-events/paborjatUtbildningstillfalle
 import registreringEvent from "./ladok-events/registreringEvent";
 import resultatPaHelKursAttesteratEvent from "./ladok-events/resultatPaHelKursAttesteratEvent";
 import resultatPaModulAttesteratEvent from "./ladok-events/resultatPaModulAttesteratEvent";
+import attesteratResultatMakuleratEvent from "./ladok-events/attesteratResultatMakuleratEvent";
 
 const {
   LADOK3_FEED_SERVICE_BUS_TOPIC_NAME = "course-survey-integration-api-ref"
@@ -50,3 +51,9 @@ app.serviceBusTopic('ResultatPaHelKursAttesterat', {
   ...resultatPaHelKursAttesteratEvent,
   subscriptionName: 'resultat-pa-hel-kurs-attesterat',
 });
+
+// app.serviceBusTopic('AttesteratResultatMakulerat', {
+//   ...sharedProps,
+//   ...attesteratResultatMakuleratEvent,
+//   subscriptionName: 'csia-attesterat-resultat-makulerat',
+// });
