@@ -9,7 +9,6 @@ export type TCourseRound = components["schemas"]["CourseRound"] & {
    * Add each reported result using composite key to allow for updates.
    * key: `TBD`
    */
-  _reportedResults?: { [index: string]: string };
   _gradingScheme: string[]; // Support to calculate grading distribution, currently not shown in report
 };
 export type TStudentParticipation = components["schemas"]["StudentParticipation"];
@@ -48,3 +47,15 @@ export type PathCourseRoundStudentList = paths["/course-round/{ladokRoundId}/stu
 export type APICourseRoundStudentListErrType = TAPIErrType;
 export type APICourseRoundStudentList = TStudentParticipation[];
 
+export type TReportedResult = {
+  parentId: string; // UtbildningsinstansUID
+  studentId: string; // StudentUID
+  desicionId: string; // BeslutUID
+  result: string; // Calculated from BetygsgradID and BetygsskalaID
+  metaData: {
+    HandelseUID: string;
+    BetygsgradID: string;
+    BetygsskalaID: string;
+    ResultatUID: string;
+  }
+}

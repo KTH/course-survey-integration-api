@@ -78,8 +78,7 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
     };
   }, {});
 
-  const doc: TCourseRound = {
-    _reportedResults: {},
+  const doc: Omit<TCourseRound, 'nrofRegisteredStudents' | 'nrofReportedResults'> = {
     _gradingScheme: Object.keys(gradingDistribution ?? {}),
     id: utbildningstillfalleUid,
     ladokCourseId: utbildningsUid,
@@ -87,7 +86,7 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
     canvasSisId: utbildningstillfalleUid, // I deduced this by looking at the Event Relationship diagram, not yet verified in Canvas
     name: koppsInfo?.course.name[language],
     courseCode: ladokCourseRoundInfo?.courseCode,
-    language: language,
+    language,
     canceled: false, // TODO: Make sure we set this properly
     endDate: ladokCourseRoundInfo?.endDate,
     displayYear: courseYear,
@@ -99,9 +98,9 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
     courseExaminor: {} as TCourseUser, // TODO: Get this from Ladok (I believe)
     courseResponsible, // From UG
     courseTeachers, // From UG
-    nrofRegisteredStudents: 1, // TODO: Get this StudentParticipation
-    nrofReportedResults: -1, // TODO: Calculated field
-    gradingDistribution, // TODO: Calculated field
+    // nrofRegisteredStudents: -1, // TODO: Convert to calculated field, get from TStudentParticipation
+    // nrofReportedResults: -1, // TODO: Convert to calculated field, get from TReportedResult
+    gradingDistribution, // TODO: Convert to calculated field
     programs: [],
     modules,
   }
