@@ -17,32 +17,32 @@ app.serviceBusTopic('Registrering', {
   subscriptionName: 'csia-registrering',
 });
 
-app.serviceBusTopic('PaborjatUtbildningstillfalleEvent', {
-  ...sharedProps,
-  ...paborjadUtbildningEvent,
-  subscriptionName: 'csia-paborjad-utbildning', // TODO: Rename this to paborjat-utbildningstillfalle
-});
+// app.serviceBusTopic('PaborjatUtbildningstillfalleEvent', {
+//   ...sharedProps,
+//   ...paborjadUtbildningEvent,
+//   subscriptionName: 'csia-paborjat-utbildningstillfalle',
+// });
 
-app.serviceBusTopic('KurstillfälleTillStatus', {
-  ...sharedProps,
-  ...kurstillfalleTillStatusEvent,
-  subscriptionName: 'csia-kurstillfalle-till-status',
-});
+// app.serviceBusTopic('KurstillfälleTillStatus', {
+//   ...sharedProps,
+//   ...kurstillfalleTillStatusEvent,
+//   subscriptionName: 'csia-kurstillfalle-till-status',
+// });
 
-app.serviceBusTopic('ModuleTillStatus', {
-  ...sharedProps,
-  ...modulTillStatusEvent,
-  subscriptionName: 'csia-modul-till-status',
-});
+// app.serviceBusTopic('ModuleTillStatus', {
+//   ...sharedProps,
+//   ...modulTillStatusEvent,
+//   subscriptionName: 'csia-modul-till-status',
+// });
 
-app.serviceBusTopic('ResultatPaModulAttesterat', {
-  ...sharedProps,
-  ...resultatPaModulAttesteratEvent,
-  subscriptionName: 'csia-resultat-pa-modul-attesterat',
-});
+// app.serviceBusTopic('ResultatPaModulAttesterat', {
+//   ...sharedProps,
+//   ...resultatPaModulAttesteratEvent,
+//   subscriptionName: 'csia-resultat-pa-modul-attesterat',
+// });
 
-app.serviceBusTopic('ResultatPaHelKursAttesterat', {
-  ...sharedProps,
-  ...resultatPaHelKursAttesteratEvent,
-  subscriptionName: 'csia-resultat-pa-hel-kurs-attesterat',
-});
+// app.serviceBusTopic('ResultatPaHelKursAttesterat', {
+//   ...sharedProps,
+//   ...resultatPaHelKursAttesteratEvent,
+//   subscriptionName: 'csia-resultat-pa-hel-kurs-attesterat',
+// });
