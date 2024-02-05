@@ -88,8 +88,6 @@ export function getTermFromDate(date: string) {
   const REGEX = /(\d\d\d\d)\-(\d\d)\-(\d\d)/;
   const m = date.match(REGEX);
 
-  console.log(date, m);
-
   assert(m !== null, "Error!!1");
 
   const year = m[1];
@@ -111,4 +109,31 @@ export function diffTerms(t1: string, t2: string) {
   const tDiff = parseInt(t1.slice(-1), 10) - parseInt(t2.slice(-1), 10);
 
   return yDiff * 2 + tDiff;
+}
+
+/**
+ * Given the reference of a "Studiestruktur" and a tree with "Studiestruktur",
+ * find the leaf in the structure with the reference
+ *
+ * Returns an array of the path from the root to the found leaf
+ */
+export function findStudiestruktur<T extends { Referens: string; Barn: T[] }>(
+  ref: string,
+  struktur: T[],
+): T[] {
+  for (const leaf of struktur) {
+    if (leaf.Referens === ref) {
+      return [leaf];
+    }
+
+    if (leaf.Barn) {
+      const subStructure = findStudiestruktur(ref, leaf.Barn);
+
+      if (subStructure.length > 0) {
+        return [leaf, ...subStructure];
+      }
+    }
+  }
+
+  return [];
 }
