@@ -1,9 +1,27 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
-import { ServiceBus, isValidEvent, Database } from "../utils";
-import { TProgramRound, TStudentParticipation } from "../interface";
-import { getUgUser, getUgUserFromLadokId } from "ug-integration";
+import { ServiceBus, Database } from "../utils";
+import { getUgUserFromLadokId } from "ug-integration";
 import assert from "node:assert";
+import {
+  ProgramParticipation,
+  getProgramParticipation,
+} from "ladok-integration";
+
+/** Information about student participation as stored in the Database */
+export type DatabaseStudentParticipation = {
+  id: string;
+  ladokStudentId: string;
+  ladokCourseId: string;
+  ladokCourseRoundId: string;
+
+  canvasSisId: string;
+  name: string;
+  email: string;
+  roles: ["student"];
+  locations: string[];
+  programRound: ProgramParticipation;
+};
 
 export type TRegistreringEvent = {
   Omfattningsvarde: string; // "10.0",
@@ -37,7 +55,7 @@ export async function handler(
   context.log(`RegistreringEvent: ${ladokCourseRoundId} ${ladokStudentId}`);
 
   const id = `${ladokStudentId}.${ladokCourseRoundId}`;
-  const studentParticipation: TStudentParticipation = await db.fetchById(
+  const studentParticipation: DatabaseStudentParticipation = await db.fetchById(
     id,
     "StudentParticipation",
   );
@@ -48,12 +66,16 @@ export async function handler(
     return;
   }
 
-  // const studentInfo = ???;
   const ugUser = await getUgUserFromLadokId(ladokStudentId);
   assert(ugUser !== undefined, "");
 
+  const programParticipation = await getProgramParticipation(
+    ladokStudentId,
+    ladokCourseRoundId,
+  );
+
   // 1. Create a StudentParticipation object
-  const doc: TStudentParticipation = {
+  const doc: DatabaseStudentParticipation = {
     id,
     ladokStudentId,
     ladokCourseId,
@@ -64,10 +86,11 @@ export async function handler(
     name: `${ugUser.givenName} ${ugUser.surname}`,
     /** Format: email */
     email: ugUser?.email,
-    roles: ["TBD"],
+    roles: ["student"],
     locations: [],
-    program: {} as TProgramRound,
+    programRound: programParticipation,
   };
+
   // 2. Get more student info from UG REST API
   // 3. Persist in DB
   await db.insert(doc, "StudentParticipation");
