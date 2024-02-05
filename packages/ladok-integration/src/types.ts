@@ -92,7 +92,7 @@ const StudiestrukturBase = z.object({
   }),
 });
 
-type TStudiestruktur = z.infer<typeof StudiestrukturBase> & {
+export type TStudiestruktur = z.infer<typeof StudiestrukturBase> & {
   Barn: TStudiestruktur[];
 };
 
