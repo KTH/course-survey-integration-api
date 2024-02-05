@@ -8,41 +8,41 @@ import resultatPaModulAttesteratEvent from "./ladok-events/resultatPaModulAttest
 
 const sharedProps = {
   connection: 'LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING',
-  topicName: 'ladok3-feed',
+  topicName: 'course-survey-integration-api-ref',
 }
 
 app.serviceBusTopic('Registrering', {
   ...sharedProps,
   ...registreringEvent,
-  subscriptionName: 'csia-registrering',
+  subscriptionName: 'registrering',
 });
 
-// app.serviceBusTopic('PaborjatUtbildningstillfalleEvent', {
-//   ...sharedProps,
-//   ...paborjadUtbildningEvent,
-//   subscriptionName: 'csia-paborjat-utbildningstillfalle',
-// });
+app.serviceBusTopic('PaborjatUtbildningstillfalleEvent', {
+  ...sharedProps,
+  ...paborjadUtbildningEvent,
+  subscriptionName: 'paborjat-utbildningstillfalle',
+});
 
-// app.serviceBusTopic('KurstillfälleTillStatus', {
-//   ...sharedProps,
-//   ...kurstillfalleTillStatusEvent,
-//   subscriptionName: 'csia-kurstillfalle-till-status',
-// });
+app.serviceBusTopic('KurstillfälleTillStatus', {
+  ...sharedProps,
+  ...kurstillfalleTillStatusEvent,
+  subscriptionName: 'kurstillfalle-till-status',
+});
 
-// app.serviceBusTopic('ModuleTillStatus', {
-//   ...sharedProps,
-//   ...modulTillStatusEvent,
-//   subscriptionName: 'csia-modul-till-status',
-// });
+app.serviceBusTopic('ModuleTillStatus', {
+  ...sharedProps,
+  ...modulTillStatusEvent,
+  subscriptionName: 'modul-till-status',
+});
 
-// app.serviceBusTopic('ResultatPaModulAttesterat', {
-//   ...sharedProps,
-//   ...resultatPaModulAttesteratEvent,
-//   subscriptionName: 'csia-resultat-pa-modul-attesterat',
-// });
+app.serviceBusTopic('ResultatPaModulAttesterat', {
+  ...sharedProps,
+  ...resultatPaModulAttesteratEvent,
+  subscriptionName: 'resultat-pa-modul-attesterat',
+});
 
-// app.serviceBusTopic('ResultatPaHelKursAttesterat', {
-//   ...sharedProps,
-//   ...resultatPaHelKursAttesteratEvent,
-//   subscriptionName: 'csia-resultat-pa-hel-kurs-attesterat',
-// });
+app.serviceBusTopic('ResultatPaHelKursAttesterat', {
+  ...sharedProps,
+  ...resultatPaHelKursAttesteratEvent,
+  subscriptionName: 'resultat-pa-hel-kurs-attesterat',
+});
