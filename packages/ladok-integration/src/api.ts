@@ -80,7 +80,6 @@ export async function getOrganisation(organisationUID: string) {
   );
 }
 
-//
 export async function getKurstillfallesdeltagande(studentUID: string) {
   return typedGet(
     `studiedeltagande/tillfallesdeltagande/kurstillfallesdeltagande/student/${studentUID}`,
