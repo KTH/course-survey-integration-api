@@ -120,17 +120,19 @@ export function diffTerms(t1: string, t2: string) {
 export function findStudiestruktur<T extends { Referens: string; Barn: T[] }>(
   ref: string,
   struktur: T[],
-): T[] {
+): Omit<T, "Barn">[] {
   for (const leaf of struktur) {
+    const { Barn, ...other } = leaf;
+
     if (leaf.Referens === ref) {
-      return [leaf];
+      return [other];
     }
 
-    if (leaf.Barn) {
+    if (leaf.Barn.length > 0) {
       const subStructure = findStudiestruktur(ref, leaf.Barn);
 
       if (subStructure.length > 0) {
-        return [leaf, ...subStructure];
+        return [other, ...subStructure];
       }
     }
   }
