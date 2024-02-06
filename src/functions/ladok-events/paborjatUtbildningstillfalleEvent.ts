@@ -26,7 +26,7 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
 
   const utbildningstillfalleUid = message.UtbildningstillfalleUID;
   const utbildningsUid = message.UtbildningUID;
-  context.log(`PaborjadUtbildningEvent: ${utbildningstillfalleUid}`);
+  context.log(`PaborjatUtbildningstillfalleEvent: ${utbildningstillfalleUid}`);
   // 1. Create a CourseRound object
   const courseRound: TCourseRound = await db.fetchById(utbildningstillfalleUid, "CourseRound");
 
@@ -63,7 +63,7 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
     courseTeachersKthIds?.map(async (kthId: string) => await getUgUser(kthId))
   );
 
-  const schoolCode = ladokCourseRoundInfo?.organisation?.code;
+  const schoolCode = ladokCourseRoundInfo.organisation.code;
   const tmpUgSchool = await getUgSchool(schoolCode);
 
   const courseResponsible = convertUgToCourseUser(tmpUgCourseResponsible);

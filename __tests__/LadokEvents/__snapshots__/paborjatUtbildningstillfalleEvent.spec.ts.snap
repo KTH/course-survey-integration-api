@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RegistreringEvent writes correct data to db 1`] = `
+{
+  "CourseRound": {
+    "_gradingScheme": [
+      "P",
+      "F",
+    ],
+    "canceled": false,
+    "canvasSisId": "41717c91-4028-11ee-bf53-2115569549a8",
+    "courseCode": "DD1321",
+    "courseExaminor": {},
+    "courseGoal": "The course aims to give basic knowledge of programming in F#.",
+    "courseResponsible": {
+      "email": "cr@email.com",
+      "fullName": "Course Responsible",
+      "kthUserId": "u1responsible",
+      "userName": "cr",
+    },
+    "courseTeachers": [
+      {
+        "email": "t1@email.com",
+        "fullName": "First Teacher",
+        "kthUserId": "u1teacher1",
+        "userName": "t1",
+      },
+      {
+        "email": "t2@email.com",
+        "fullName": "Second Teacher",
+        "kthUserId": "u1teacher2",
+        "userName": "t2",
+      },
+    ],
+    "credits": "7.5",
+    "displayYear": "2023",
+    "endDate": "2023-03-17",
+    "gradingDistribution": {
+      "F": -1,
+      "P": -1,
+    },
+    "id": "41717c91-4028-11ee-bf53-2115569549a8",
+    "institution": {},
+    "ladokCourseId": "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
+    "ladokCourseRoundId": "41717c91-4028-11ee-bf53-2115569549a8",
+    "language": "sv",
+    "modules": [
+      {
+        "_reportedResults": {},
+        "code": "F1",
+        "credits": 7.5,
+        "gradingDistribution": {
+          "F": -1,
+          "P": -1,
+        },
+        "gradingScheme": [
+          "P",
+          "F",
+        ],
+        "name": "Programmeringsteknik för F",
+        "nrofReportedResults": 0,
+      },
+    ],
+    "name": "Programmeringsteknik för F",
+    "organization": {
+      "displayCode": "SCI",
+      "displayName": "Skolan för datavetenskap och kommunikation",
+      "kthId": "u1school",
+    },
+    "period": "P1",
+    "programs": [],
+  },
+}
+`;

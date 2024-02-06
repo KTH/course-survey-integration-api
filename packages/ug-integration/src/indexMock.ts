@@ -25,6 +25,13 @@ export class UgIntegrationMock {
   
     mocked[kthId] = params;
   }
+
+  static getUgSchool(schoolCode: string, params: TUgSchool) {
+    const mocked = _mockedValues.getUgSchool;
+    if (mocked[schoolCode]) throw new Error(`Mock value already registered for ${schoolCode}`);
+  
+    mocked[schoolCode] = params;
+  }
 }
 
 export async function getUgCourseResponsibleAndTeachers(courseCode: string, roundYear: string, roundCode: string | number): Promise<TUgCourseResponsibleAndTeachers | []> {
