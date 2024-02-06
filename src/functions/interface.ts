@@ -49,13 +49,13 @@ export type APICourseRoundStudentList = TStudentParticipation[];
 
 export type TReportedResult = {
   parentId: string; // UtbildningsinstansUID
-  studentId: string; // StudentUID
-  desicionId: string; // BeslutUID
+  hashedStudentId: string; // StudentUID hashed
+  decision: string; // BeslutUID
   result: string; // Calculated from BetygsgradID and BetygsskalaID
   metaData: {
     HandelseUID: string;
-    BetygsgradID: string;
-    BetygsskalaID: string;
+    BetygsgradID: number;
+    BetygsskalaID: number;
     ResultatUID: string;
   }
 }

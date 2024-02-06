@@ -1,5 +1,10 @@
 import { Database, DbCollectionName } from "../../../src/functions/utils";
 
+type TQuery = {
+  query: string;
+  docs: any[];
+}
+
 export class MockDatabase implements Database {
   _result: Record<DbCollectionName, any>;
   _mockData: Record<DbCollectionName, any>;
@@ -8,8 +13,11 @@ export class MockDatabase implements Database {
   // I would have prefered narrowing keys to DbCollectionName but
   // the syntax Record<DbCollectionName, any> requires all keys
   // from DbCollectionName to be present.
+  /**
+   * @param mockData an array of objects that can be queried by .filter(), either a document or a TQuery (only used for query()).
+   */
   constructor(mockData: Record<string, any> | undefined = undefined) {
-    this._mockData = mockData ?? {} as Record<DbCollectionName, any>;
+    this._mockData = mockData ?? {} as Record<DbCollectionName, TQuery | any>;
     this._result = {} as Record<DbCollectionName, any>;
   }
 
@@ -31,6 +39,19 @@ export class MockDatabase implements Database {
     const data = this._mockData[collectionName]
     const outp = Array.isArray(data) ? data : [data];
     return outp.filter((doc: any) => doc?.[propName] === value);
+  }
+
+  /**
+   * Checks this._mockData[collectionName][JSON.stringify(query)] for a match.
+   * @param query 
+   * @param collectionName 
+   * @returns 
+   */
+  async query(query: any, collectionName: DbCollectionName): Promise<any[]> {
+    const data = this._mockData[collectionName]
+    const outp = Array.isArray(data) ? data : [data];
+    return outp.filter((res: TQuery) => res.query === JSON.stringify(query))
+      .map((res: TQuery) => res.docs);
   }
 
   async countByPropertyQuery(propName: string, value: string, collectionName: DbCollectionName): Promise<number> {

@@ -1,6 +1,8 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { Database, ServiceBus, isValidEvent } from "../utils";
+import { TReportedResult } from "../interface";
+import { hashStudentId } from "./utils";
 
 export type TResultatPaHelKursAttesteratEvent = {
   HandelseUID: string; // "1e391f8b-b44f-11ee-988f-6acd08c746d6",
@@ -18,7 +20,7 @@ export type TResultatPaHelKursAttesteratEvent = {
       BetygsgradID: number; // 131661,
       BetygsskalaID: number; // 131657,
       Examinationsdatum: string; // "2024-01-16",
-      GiltigSomSlutbetyg: true,
+      GiltigSomSlutbetyg: boolean, // true,
       OmfattningsPoang: number; // 20.0,
       PrestationsPoang: number; // 0.0,
       ResultatUID: string; // "1e391f88-b44f-11ee-988f-6acd08c746d6"
@@ -31,6 +33,37 @@ export async function handler(message: TResultatPaHelKursAttesteratEvent, contex
   if (!isValidEvent("ResultatPaHelKursAttesteradEvent", context?.triggerMetadata?.userProperties)) return;
 
   context.log(`ResultatPaHelKursAttesteradEvent: `);
+
+  const { UtbildningsinstansUID, StudentUID } = message;
+  const { BeslutUID } = message.Beslut;
+  const { BetygsgradID, BetygsskalaID, ResultatUID } = message.Resultat;
+  const hashedStudentId = await hashStudentId(StudentUID);
+
+  const doc: TReportedResult = {
+    parentId: UtbildningsinstansUID,
+    hashedStudentId,
+    decision: BeslutUID,
+    result: "string",
+    metaData: {
+      HandelseUID: message.HandelseUID,
+      BetygsgradID,
+      BetygsskalaID,
+      ResultatUID
+    }  
+  }
+
+  const res = await db.query({
+    parentId: UtbildningsinstansUID,
+    hashedStudentId,
+  }, "ReportedResult");
+  
+  if (res.length > 0) {
+    const foundDoc = res[0];
+    await db.update(foundDoc._id, doc, "ReportedResult");
+  } else {
+    await db.insert(doc, "ReportedResult");
+  }
+  await db.close();
 }
 
 export default {
