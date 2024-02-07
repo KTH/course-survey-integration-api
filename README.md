@@ -29,6 +29,31 @@ This request will be processed and once your API-access key is available, you wi
 
 In this project we use Test Driven Development (TDD). This requires you to write each test before you implement the code.
 
+
+```sh
+npm run test
+```
+
+The `test` script will allow you to write code using test fixtures (local static data files instead of network calls).
+This speeds up development and allows for consistent input data. However, if the data sources change you will need to
+update the fixtures.
+
+```sh
+npm run build
+npm run test:integration
+```
+
+The `test:integration` script runs a set of tests using fixtures for incoming events but calling external data sources.
+Make sure you have set up your env-vars for this to work.
+
+```sh
+npm run start
+```
+
+Start all functions. This will start processing messages available on the service bus subscriptions. It will also
+allow you to make calls to the API using HTTP-endpoints. 
+
+
 When integrating with data sources you:
 
 1. create a high level library abstraction specific to that data source
