@@ -5,7 +5,7 @@ Status: **Implementationsfas**
 
 - [Projektdokumentation](https://confluence.sys.kth.se/confluence/pages/viewpage.action?pageId=198838783)
 - [Arbetsdokument](https://docs.google.com/presentation/d/130XPuty8Ge5W5XzxiUvW_oG1ThBXwvA0p7lFy_mIxo4)
-- [API-specifikation](./course-survey-integration-api.spec.yml)
+- [API-specifikation](./openapi/course-survey-integration-api.spec.yml)
 
 ## Getting Started
 This API is managed by the [Azure API Management](https://azure.microsoft.com/en-us/products/api-management) service (API-M). In order to access the API you need an account in the KTH-instance of API-M. With this account you can be granted access to the API-endpoints you require.
