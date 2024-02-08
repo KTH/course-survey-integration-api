@@ -6,9 +6,13 @@ import registreringEvent from "./ladok-events/registreringEvent";
 import resultatPaHelKursAttesteratEvent from "./ladok-events/resultatPaHelKursAttesteratEvent";
 import resultatPaModulAttesteratEvent from "./ladok-events/resultatPaModulAttesteratEvent";
 
+const {
+  LADOK3_FEED_SERVICE_BUS_TOPIC_NAME = "course-survey-integration-api-ref"
+} = process.env;
+
 const sharedProps = {
   connection: 'LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING',
-  topicName: 'course-survey-integration-api-ref',
+  topicName: LADOK3_FEED_SERVICE_BUS_TOPIC_NAME,
 }
 
 app.serviceBusTopic('Registrering', {
