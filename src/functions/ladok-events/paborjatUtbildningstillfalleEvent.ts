@@ -34,12 +34,13 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
   // QUESTION: What if they change teachers during term?
   if (courseRound) {
     // Course round exists
-    let { id, ladokCourseRoundId } = courseRound;
-    // TODO: Update OpenAPI spec marking required fields so we don't need this check
-    if (ladokCourseRoundId) {
-      const nrofRegisteredStudents = db.countByPropertyQuery("ladokCourseRoundId", ladokCourseRoundId, "StudentParticipation");
-      await db.update(id!, { nrofRegisteredStudents }, "CourseRound");
-    }
+    // TODO: Should we update anything here or expect the course round info to be correct from first registration?
+    
+    // let { id, ladokCourseRoundId } = courseRound;
+    // if (ladokCourseRoundId) {
+    //   const nrofRegisteredStudents = db.countByPropertyQuery("ladokCourseRoundId", ladokCourseRoundId, "StudentParticipation");
+    //   await db.update(id!, { $set: { nrofRegisteredStudents } }, "CourseRound");
+    // }
     await db.close();
     return;
   }
