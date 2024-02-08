@@ -24,11 +24,11 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
 
   // TODO: Consider using zod to validate the message
 
-  const utbildningstillfalleUid = message.UtbildningstillfalleUID;
-  const utbildningsUid = message.UtbildningUID;
-  context.log(`PaborjatUtbildningstillfalleEvent: ${utbildningstillfalleUid}`);
+  const msgUtbildningstillfalleUid = message.UtbildningstillfalleUID;
+  const msgUtbildningsUid = message.UtbildningUID;
+  context.log(`PaborjatUtbildningstillfalleEvent: ${msgUtbildningstillfalleUid}`);
   // 1. Create a CourseRound object
-  const courseRound: TCourseRound = await db.fetchById(utbildningstillfalleUid, "CourseRound");
+  const courseRound: TCourseRound = await db.fetchById(msgUtbildningstillfalleUid, "CourseRound");
 
   // If course round already exists we don't need to do anything
   // QUESTION: What if they change teachers during term?
@@ -45,65 +45,89 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
     return;
   }
 
-  const language = "sv";
-  const koppsInfo = await getCourseInformation(utbildningstillfalleUid);
-  const ladokCourseRoundInfo = await getCourseRoundInformation(utbildningstillfalleUid);
+  const dummyLanguage = "sv";
+  const koppsInfo = await getCourseInformation(msgUtbildningstillfalleUid);
+  const ladokCourseRoundInfo = await getCourseRoundInformation(msgUtbildningstillfalleUid);
 
-  const courseCode = ladokCourseRoundInfo.courseCode;
-  const courseYear = ladokCourseRoundInfo.startDate.slice(0, 4);
-  const courseRoundCode = koppsInfo?.round?.periods?.[0]; // TODO: We should use new period code (nnnnn)
+  const ladokCourseCode = ladokCourseRoundInfo.courseCode;
+  const ladokCourseYear = ladokCourseRoundInfo.startDate.slice(0, 4);
+  const ladokCourseRoundCode = koppsInfo?.round?.periods?.[0]; // TODO: We should use new period code (nnnnn)
 
   // TODO: Should we cache these values? For how long?
   // TODO: Use live data but during development we can use hardcoded values
   const [courseResonsibleKthId, courseTeachersKthIds = []] =
-    await getUgCourseResponsibleAndTeachers("SF1625" || courseCode, "2022" || courseYear, "2" || courseRoundCode);
-
+    await getUgCourseResponsibleAndTeachers("SF1625" || ladokCourseCode, "2022" || ladokCourseYear, "2" || ladokCourseRoundCode);
   // TODO: Should we cache these values? For how long?
-  const tmpUgCourseResponsible = await getUgUser(courseResonsibleKthId);
-  const tmpUgCourseTeachers = await Promise.all(
+  const ugCourseResponsible = await getUgUser(courseResonsibleKthId);
+  const ugCourseTeachers = await Promise.all(
     courseTeachersKthIds?.map(async (kthId: string) => await getUgUser(kthId))
   );
+  const dummyCourseExaminor = { 
+    // TODO: Use proper data -- from Ladok (I believe)          <***************
+    userName: "dummyuser",
+    kthUserId: "u1dummy",
+    email: "dummy@email.com",
+    fullName: "Dummy User"
+  } as TCourseUser
 
-  const schoolCode = ladokCourseRoundInfo.organisation.code;
-  const tmpUgSchool = await getUgSchool(schoolCode);
+  const ladokSchoolCode = ladokCourseRoundInfo.organisation.code;
+  const tmpUgSchool = await getUgSchool(ladokSchoolCode);
+  const dummyInstitution = {
+    // TODO: Use proper data       <***************
+    displayName: "Dummy Institution",
+    displayCode: "DUMMY",
+    kthId: "u1dummyinst",
+  } as TOrgEntity
 
-  const courseResponsible = convertUgToCourseUser(tmpUgCourseResponsible);
-  const courseTeachers = convertUgToCourseUserArr(tmpUgCourseTeachers);
-  const organization = convertUgSchoolToOrgEntity(tmpUgSchool, schoolCode, language);
-  const modules = ladokCourseRoundInfo?.modules?.map((m) => convertLadokModuleToCourseModule(m, language));
 
-  const gradingDistribution = ladokCourseRoundInfo.gradingScheme?.grades?.reduce((val: any, curr: any) => {
+  const ladokGradingDistribution = ladokCourseRoundInfo.gradingScheme?.grades?.reduce((val: any, curr: any) => {
     return {
       ...val,
       [curr.code]: -1,
     };
   }, {});
 
-  const doc: Omit<TCourseRound, 'nrofRegisteredStudents' | 'nrofReportedResults'> = {
-    _gradingScheme: Object.keys(gradingDistribution ?? {}),
-    id: utbildningstillfalleUid,
-    ladokCourseId: utbildningsUid,
-    ladokCourseRoundId: utbildningstillfalleUid,
-    canvasSisId: utbildningstillfalleUid, // I deduced this by looking at the Event Relationship diagram, not yet verified in Canvas
-    name: koppsInfo?.course.name[language],
-    courseCode: ladokCourseRoundInfo?.courseCode,
-    language,
-    canceled: false, // TODO: Make sure we set this properly
-    endDate: ladokCourseRoundInfo?.endDate,
-    displayYear: courseYear,
-    organization,
-    institution: {} as TOrgEntity,
+  // TODO: Use proper data        <***************
+  const dummyCanceled = false;
+
+  // TODO: Use proper data -- Where does this come from?   <***************
+  const dummyPeriod = 'P1';
+
+  // TODO: Create entity types that are synced with the API response types
+  const doc: Omit<TCourseRound, 'nrofRegisteredStudents' | 'nrofReportedResults' | 'gradingDistribution' | 'programs'> = {
+    // Dummy data:
+    language: dummyLanguage,
+    canceled: dummyCanceled, 
+    institution: dummyInstitution,
+    period: dummyPeriod,
+    courseExaminor: dummyCourseExaminor,
+    // nrofRegisteredStudents: -1, // TODO: Convert to calculated field, get from TStudentParticipation <***************
+    // nrofReportedResults: -1, // TODO: Convert to calculated field, get from TReportedResult <***************
+    // gradingDistribution, // TODO: Convert to calculated field                  <***************
+    // programs: [], // TODO: Convert to calculated field                         <***************
+    
+    // Source event message:
+    id: msgUtbildningstillfalleUid,
+    ladokCourseId: msgUtbildningsUid,
+    ladokCourseRoundId: msgUtbildningstillfalleUid,
+    canvasSisId: msgUtbildningstillfalleUid, // I deduced this by looking at the Event Relationship diagram, not yet verified in Canvas
+    
+    // Source KOPPS API:
+    name: koppsInfo?.course.name[dummyLanguage],
     courseGoal: koppsInfo?.syllabus.goals,
-    period: 'P1', // TODO: Where does this come from?
+
+    // Source UG:
+    organization: convertUgSchoolToOrgEntity(tmpUgSchool, ladokSchoolCode, dummyLanguage),
+    courseResponsible: convertUgToCourseUser(ugCourseResponsible),
+    courseTeachers: convertUgToCourseUserArr(ugCourseTeachers),
+    
+    // Source LADOK REST API:
+    _gradingScheme: Object.keys(ladokGradingDistribution ?? {}),
+    courseCode: ladokCourseRoundInfo?.courseCode,
+    endDate: ladokCourseRoundInfo?.endDate,
+    displayYear: ladokCourseYear,
     credits: ladokCourseRoundInfo?.credits.toString(),
-    courseExaminor: {} as TCourseUser, // TODO: Get this from Ladok (I believe)
-    courseResponsible, // From UG
-    courseTeachers, // From UG
-    // nrofRegisteredStudents: -1, // TODO: Convert to calculated field, get from TStudentParticipation
-    // nrofReportedResults: -1, // TODO: Convert to calculated field, get from TReportedResult
-    gradingDistribution, // TODO: Convert to calculated field
-    programs: [],
-    modules,
+    modules: ladokCourseRoundInfo?.modules?.map((m) => convertLadokModuleToCourseModule(m, dummyLanguage)),
   }
   // 2. Get more course info from KOPPS API
   // 3. Get more course info from LADOK API
