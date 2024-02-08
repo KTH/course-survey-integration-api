@@ -15,33 +15,61 @@ KoppsIntegrationMock.getCourseInformation(event.message.UtbildningstillfalleUID,
 });
 
 LadokIntegrationMock.getCourseRoundInformation(event.message.UtbildningstillfalleUID, {
-  name: "Programmeringsteknik för F",
+  name: {
+    sv: "Programmeringsteknik för F",
+    en: "Programming in F",
+  },
   courseCode: "DD1321",
-  organisation: "SCI",
-  organisationUnit: "Datalogi",
-  credits: "7.5",
+  organisation: {
+    code: "SCI"
+  },
+  organisationUnit: {
+    code: "SCID",
+    name: {
+      sv: "Institutionen för datavetenskap",
+      en: "School of Computer Science"
+    }
+  },
+  courseInstanceCode: "DD1321-20221",
+  startDate: "2023-01-17",
+  endDate: "2023-03-17",
+  credits: 7.5,
   modules: [
     {
       code: "F1",
-      name: "Programmeringsteknik för F",
-      credits: "7.5",
+      name: {
+        sv: "Programmeringsteknik för F",
+        en: "Programming in F",
+      },
+      credits: 7.5,
+      gradingScheme: {
+        code: "TH",
+        grades: [
+          {
+            validFinalGrade: true,
+            code: "P",
+          },
+          {
+            validFinalGrade: false,
+            code: "F",
+          },
+        ],
+      }
     },
   ],
-  gradingScheme: [
-    {
-      code: "TH",
-      grades: [
-        {
-          validFinalGrade: true,
-          code: "P",
-        },
-        {
-          validFinalGrade: true,
-          code: "F",
-        },
-      ],
-    },
-  ],
+  gradingScheme: {
+    code: "TH",
+    grades: [
+      {
+        validFinalGrade: true,
+        code: "P",
+      },
+      {
+        validFinalGrade: false,
+        code: "F",
+      },
+    ],
+  },
 });
 
 UgIntegrationMock.getUgCourseResponsibleAndTeachers("SF1625", "2022", "2", [
@@ -69,6 +97,15 @@ UgIntegrationMock.getUgUser("u1teacher2", {
   surname: "Teacher",
 });
 
+UgIntegrationMock.getUgSchool("SCI", {
+  name: "SCI",
+  kthid: "u1school",
+  description: {
+    sv: "Skolan för datavetenskap och kommunikation",
+    en: "School of Computer Science and Communication",
+  },
+});
+
 describe("RegistreringEvent", () => {
 
   test("can be executed", async () => {
@@ -83,7 +120,7 @@ describe("RegistreringEvent", () => {
     await handler(event.message, mockContext, mockDb);
 
     expect(mockContext.log.mock.calls.length).toBe(1);
-    expect(mockContext.log.mock.lastCall[0]).toBe(`PaborjadUtbildningEvent: ${event.message.UtbildningstillfalleUID}`);
+    expect(mockContext.log.mock.lastCall[0]).toBe(`PaborjatUtbildningstillfalleEvent: ${event.message.UtbildningstillfalleUID}`);
   });
 
   test.skip("fetches course info from KOPPS", async () => {
@@ -109,7 +146,7 @@ describe("RegistreringEvent", () => {
     // TODO: We meed to mock the UG REST API
     expect(mockDb._result).toMatchSnapshot();
   });
-  
+
   test("writes correct data to db", async () => {
     const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);

@@ -5,7 +5,7 @@ Status: **Implementationsfas**
 
 - [Projektdokumentation](https://confluence.sys.kth.se/confluence/pages/viewpage.action?pageId=198838783)
 - [Arbetsdokument](https://docs.google.com/presentation/d/130XPuty8Ge5W5XzxiUvW_oG1ThBXwvA0p7lFy_mIxo4)
-- [API-specifikation](./course-survey-integration-api.spec.yml)
+- [API-specifikation](./openapi/course-survey-integration-api.spec.yml)
 
 ## Getting Started
 This API is managed by the [Azure API Management](https://azure.microsoft.com/en-us/products/api-management) service (API-M). In order to access the API you need an account in the KTH-instance of API-M. With this account you can be granted access to the API-endpoints you require.
@@ -28,6 +28,31 @@ This request will be processed and once your API-access key is available, you wi
 ## Development
 
 In this project we use Test Driven Development (TDD). This requires you to write each test before you implement the code.
+
+
+```sh
+npm run test
+```
+
+The `test` script will allow you to write code using test fixtures (local static data files instead of network calls).
+This speeds up development and allows for consistent input data. However, if the data sources change you will need to
+update the fixtures.
+
+```sh
+npm run build
+npm run test:integration
+```
+
+The `test:integration` script runs a set of tests using fixtures for incoming events but calling external data sources.
+Make sure you have set up your env-vars for this to work.
+
+```sh
+npm run start
+```
+
+Start all functions. This will start processing messages available on the service bus subscriptions. It will also
+allow you to make calls to the API using HTTP-endpoints. 
+
 
 When integrating with data sources you:
 

@@ -12,6 +12,11 @@ export const LadokKurstillfalleMoment = z.object({
 
   /** Course code */
   Utbildningskod: z.string(),
+  Kurstillfalleskod: z.string(), // I UG kommer omgångsnumret från kopps ersättas med Kurstillfalleskod
+
+  /** Availability */
+  Startdatum: z.string().trim(),
+  Slutdatum: z.string().trim(),
 
   /** Credits */
   Omfattning: z.number(),

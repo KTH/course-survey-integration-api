@@ -53,7 +53,7 @@ export function isValidEvent(eventName: string, userProperties: unknown): boolea
   return (<TLadokEventUserProperties>userProperties)?.ladok3EventType === eventName;
 }
 
-export type DbCollectionName = "StudentParticipation" | "CourseRound" | "Module" | "Program";
+export type DbCollectionName = "StudentParticipation" | "CourseRound" | "Module" | "Program" | "ReportedResult";
 
 export class Database {
   _client: MongoClient | undefined;
@@ -79,6 +79,13 @@ export class Database {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     const docs = await collection.find({ [propName]: value }).toArray();
+    return docs;
+  }
+
+  async query(query: { [key: string]: any }, collectionName: DbCollectionName): Promise<any[]> {
+    await this.connect();
+    const collection = this._client!.db().collection(collectionName);
+    const docs = await collection.find(query).toArray();
     return docs;
   }
 

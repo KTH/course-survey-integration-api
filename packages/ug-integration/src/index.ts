@@ -1,6 +1,5 @@
-import { UgUser, checkGetUgCourseResponsibleAndTeachers } from "./types";
+import { UgSchool, UgUser, checkGetUgCourseResponsibleAndTeachers } from "./types";
 import { UGRestClient, UGRestClientError } from "./ugRestClient";
-import { ZodError, ZodObject, ZodRawShape } from "zod";
 
 const {
   OAUTH_SERVER_BASE_URI,
@@ -75,7 +74,6 @@ export async function getUgUser(kthId: string | undefined): Promise<TUgUser | u
   const { data, json, statusCode } =
     (await ugClient
       .get<TUgUser[]>(
-        // `groups?$filter=name eq 'edu.courses.SF.SF1625.20222'`
         `users?$filter=kthid eq '${kthId}'`
       )
       .catch(ugClientGetErrorHandler)) ?? <any>{};
@@ -83,10 +81,39 @@ export async function getUgUser(kthId: string | undefined): Promise<TUgUser | u
   if (json === undefined) return;
 
   const outp = json.pop();
-
   // Type-check with zod, throws error if values are incorrect
   // TODO: Improve error handling to level of ladok-integration
   UgUser.parse(outp)
+
+  return outp;
+}
+
+export type TUgSchool = {
+  name: string;
+  kthid: string;
+  description: {
+    en?: string;
+    sv?: string;
+  };
+}
+
+export async function getUgSchool(schoolCode: string | undefined): Promise<TUgSchool | undefined>  {
+  if (schoolCode === undefined) return;
+
+  const { data, json, statusCode } =
+    (await ugClient
+      .get<TUgSchool[]>(
+        // `groups?$filter=name eq 'edu.courses.SF.SF1625.20222'`
+        `groups?$filter=name eq 'pa.org.${schoolCode.toUpperCase()}'`
+      )
+      .catch(ugClientGetErrorHandler)) ?? <any>{};
+
+  if (json === undefined) return;
+
+  const outp = json.pop();
+  // Type-check with zod, throws error if values are incorrect
+  // TODO: Improve error handling to level of ladok-integration
+  UgSchool.parse(outp);
 
   return outp;
 }
