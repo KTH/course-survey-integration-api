@@ -10,7 +10,12 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
     "canceled": false,
     "canvasSisId": "41717c91-4028-11ee-bf53-2115569549a8",
     "courseCode": "DD1321",
-    "courseExaminor": {},
+    "courseExaminor": {
+      "email": "dummy@email.com",
+      "fullName": "Dummy User",
+      "kthUserId": "u1dummy",
+      "userName": "dummyuser",
+    },
     "courseGoal": "The course aims to give basic knowledge of programming in F#.",
     "courseResponsible": {
       "email": "cr@email.com",
@@ -35,12 +40,12 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
     "credits": "7.5",
     "displayYear": "2023",
     "endDate": "2023-03-17",
-    "gradingDistribution": {
-      "F": -1,
-      "P": -1,
-    },
     "id": "41717c91-4028-11ee-bf53-2115569549a8",
-    "institution": {},
+    "institution": {
+      "displayCode": "DUMMY",
+      "displayName": "Dummy Institution",
+      "kthId": "u1dummyinst",
+    },
     "ladokCourseId": "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
     "ladokCourseRoundId": "41717c91-4028-11ee-bf53-2115569549a8",
     "language": "sv",
@@ -68,7 +73,6 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
       "kthId": "u1school",
     },
     "period": "P1",
-    "programs": [],
   },
 }
 `;
