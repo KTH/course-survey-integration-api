@@ -1,5 +1,5 @@
 import { HttpRequest, InvocationContext, HttpResponseInit } from "@azure/functions";
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import { TLadokEventUserProperties } from "./ladok-events/types";
 
 const IS_PROD = process.env.NODE_ENV === "production";
@@ -68,25 +68,25 @@ export class Database {
     this._client = undefined;
   }
 
-  async fetchById(id: string, collectionName: DbCollectionName): Promise<any> {
+  async fetchById<T>(id: string, collectionName: DbCollectionName): Promise<any> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
-    const doc = await collection.findOne({ _id: id });
-    return doc;
+    const doc = await collection.findOne({ id });
+    return doc as T;
   }
 
-  async queryByProperty(propName: string, value: string | object, collectionName: DbCollectionName): Promise<any[]> {
+  async queryByProperty<T>(propName: string, value: string | object, collectionName: DbCollectionName): Promise<any[]> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     const docs = await collection.find({ [propName]: value }).toArray();
-    return docs;
+    return docs as T[];
   }
 
-  async query(query: { [key: string]: any }, collectionName: DbCollectionName): Promise<any[]> {
+  async query<T>(query: { [key: string]: any }, collectionName: DbCollectionName): Promise<any[]> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     const docs = await collection.find(query).toArray();
-    return docs;
+    return docs as T[];
   }
 
   async countByPropertyQuery(propName: string, value: string, collectionName: DbCollectionName): Promise<number> {
@@ -96,15 +96,19 @@ export class Database {
     return count;
   }
 
-  async insert(doc: any, collectionName: DbCollectionName): Promise<void> {
+  async insert<T extends TBaseEntity>(doc: T, collectionName: DbCollectionName): Promise<void> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
-    await collection.insertOne({ _id: doc.id, ...doc });
+    await collection.insertOne({ ...doc });
   }
 
-  async update(id: string, partial: any, collectionName: DbCollectionName): Promise<void> {
+  async update<T extends TBaseEntity>(id: string, partial: Partial<T>, collectionName: DbCollectionName): Promise<void> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
-    await collection.updateOne({ _id: id }, partial);
+    await collection.updateOne({ id }, partial);
   }
 }
+
+type TBaseEntity = {
+  id: string;
+};

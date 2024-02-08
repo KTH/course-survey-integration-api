@@ -47,7 +47,44 @@ export type PathCourseRoundStudentList = paths["/course-round/{ladokRoundId}/stu
 export type APICourseRoundStudentListErrType = TAPIErrType;
 export type APICourseRoundStudentList = TStudentParticipation[];
 
-export type TReportedResult = {
+
+/**
+ * Domain entities stored in DB
+ */
+
+export type TCourseRoundEntity = {
+  language: TCourseRound["language"];
+  canceled: TCourseRound["canceled"] 
+  institution: TCourseRound["institution"];
+  period: TCourseRound["period"];
+  courseExaminor: TCourseRound["courseExaminor"];
+  
+  // Source event message:
+  id: TCourseRound["id"];
+  ladokCourseId: TCourseRound["ladokCourseId"];
+  ladokCourseRoundId: TCourseRound["ladokCourseRoundId"];
+  canvasSisId: TCourseRound["canvasSisId"];
+  
+  // Source KOPPS API:
+  name: TCourseRound["name"];
+  courseGoal: TCourseRound["courseGoal"];
+
+  // Source UG:
+  organization: TCourseRound["organization"];
+  courseResponsible: TCourseRound["courseResponsible"];
+  courseTeachers: TCourseRound["courseTeachers"];
+  
+  // Source LADOK REST API:
+  _gradingScheme: string[];
+  courseCode: TCourseRound["courseCode"];
+  endDate: TCourseRound["endDate"];
+  displayYear: TCourseRound["displayYear"];
+  credits: TCourseRound["credits"];
+  modules: TCourseRound["modules"];
+}
+
+export type TReportedResultEntity = {
+  id: string;
   parentId: string; // UtbildningsinstansUID
   hashedStudentId: string; // StudentUID hashed
   decision: string; // BeslutUID
