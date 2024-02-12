@@ -1,5 +1,5 @@
 import event1 from "../../__fixtures__/events/01_studiedeltagande.RegistreringEvent_1.json";
-import event2 from "../../__fixtures__/events/01_studiedeltagande.RegistreringEvent_2.json";
+import event2 from "../../__fixtures__/events/04_manuallycreated.RegistreringEvent.json";
 import appConfig, {
   handler,
 } from "../../src/functions/ladok-events/registreringEvent";
