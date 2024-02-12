@@ -98,7 +98,7 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
     // Dummy data:
     language: dummyLanguage,
     canceled: dummyCanceled, 
-    institution: dummyInstitution,
+    institution: dummyInstitution, // TODO: Exists in our ladok integration package, may have different name
     period: dummyPeriod,
     courseExaminor: dummyCourseExaminor,
     
