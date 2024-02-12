@@ -60,3 +60,48 @@ export const LadokOrganisation = z.object({
   }),
   Organisationskod: z.string(),
 });
+
+export const Kurstillfallesdeltagande = z.object({
+  Tillfallesdeltaganden: z.array(
+    z.object({
+      Studiestrukturreferens: z.optional(z.string()),
+      Utbildningsinformation: z.object({
+        UtbildningstillfalleUID: z.string(),
+        Studieperiod: z.object({
+          Startdatum: z.string(),
+        }),
+      }),
+    }),
+  ),
+});
+
+// Studiestruktur is a recursive type
+// the property "Barn" is an array of Studiestruktur
+// See: https://zod.dev/?id=recursive-types
+const StudiestrukturBase = z.object({
+  Referens: z.string(),
+  Utbildningsinformation: z.object({
+    Utbildningskod: z.string(),
+    Benamning: z.object({
+      sv: z.string(),
+      en: z.string(),
+    }),
+    Studieperiod: z.object({
+      Startdatum: z.string(),
+    }),
+  }),
+});
+
+export type TStudiestruktur = z.infer<typeof StudiestrukturBase> & {
+  Barn: TStudiestruktur[];
+};
+
+const StudiestrukturRec: z.ZodType<TStudiestruktur> = StudiestrukturBase.extend(
+  {
+    Barn: z.lazy(() => StudiestrukturRec.array()),
+  },
+);
+
+export const Studiestruktur = z.object({
+  Studiestrukturer: z.array(StudiestrukturRec),
+});

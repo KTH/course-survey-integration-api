@@ -1,21 +1,54 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`RegistreringEvent INTEGRATION handles program information correctly 1`] = `
+{
+  "StudentParticipation": {
+    "canvasSisId": "<HIDDEN>",
+    "email": "<HIDDEN>@kth.se",
+    "id": "63a138cf-f042-11eb-8cb6-0bb93b844502.83702026-7b7f-11ed-83fc-99df00a14a2f",
+    "ladokCourseId": "X",
+    "ladokCourseRoundId": "83702026-7b7f-11ed-83fc-99df00a14a2f",
+    "ladokStudentId": "63a138cf-f042-11eb-8cb6-0bb93b844502",
+    "locations": [],
+    "name": "<HIDDEN>",
+    "programRound": {
+      "code": "CSAMH",
+      "name": {
+        "en": "Degree Programme in Civil Engineering and Urban Management",
+        "sv": "Civilingenjörsutbildning i samhällsbyggnad",
+      },
+      "required": "???",
+      "specification": {
+        "code": "BBP",
+        "name": {
+          "en": "Civil Engineering and Construction Project Management",
+          "sv": "Bygg och byggprojektledning",
+        },
+      },
+      "startTerm": "20212",
+      "studyYear": 3,
+    },
+    "roles": [
+      "student",
+    ],
+  },
+}
+`;
+
 exports[`RegistreringEvent INTEGRATION writes correct data to db 1`] = `
 {
   "StudentParticipation": {
-    "canvasSisId": "TBD",
-    "email": "TBD",
+    "canvasSisId": "u19t0qf2",
+    "email": "jhsware@kth.se",
     "id": "bbcce853-4df3-11e8-a562-6ec76bb54b9f.41717c91-4028-11ee-bf53-2115569549a8",
     "ladokCourseId": "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
     "ladokCourseRoundId": "41717c91-4028-11ee-bf53-2115569549a8",
     "ladokStudentId": "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
-    "locations": [
-      "TBD",
-    ],
-    "name": "TBD",
-    "program": {},
+    "locations": [],
+    "name": "Sebastian Ware",
+    "programRound": undefined,
     "roles": [
-      "TBD",
+      "student",
     ],
   },
 }

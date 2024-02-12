@@ -4,14 +4,13 @@ import {
   LadokKursinstans,
   LadokOrganisation,
   LadokKurstillfalleMoment,
+  Kurstillfallesdeltagande,
+  Studiestruktur,
 } from "./types";
 import got, { HTTPError } from "got";
 
-const {
-  LADOK_API_BASEURL,
-  LADOK_API_PFX_BASE64,
-  LADOK_API_PFX_PASSPHRASE,
-} = process.env;
+const { LADOK_API_BASEURL, LADOK_API_PFX_BASE64, LADOK_API_PFX_PASSPHRASE } =
+  process.env;
 
 const gotClient = got.extend({
   prefixUrl: LADOK_API_BASEURL,
@@ -22,15 +21,17 @@ const gotClient = got.extend({
     Accept: [
       "application/vnd.ladok-resultat+json",
       "application/vnd.ladok-kataloginformation+json",
+      "application/vnd.ladok-studiedeltagande+json",
     ].join(","),
   },
   responseType: "json",
-  https: (LADOK_API_PFX_BASE64 && LADOK_API_PFX_PASSPHRASE)
-    ? {
-      pfx: Buffer.from(LADOK_API_PFX_BASE64 as string, "base64"),
-      passphrase: LADOK_API_PFX_PASSPHRASE,
-    }
-    : undefined,
+  https:
+    LADOK_API_PFX_BASE64 && LADOK_API_PFX_PASSPHRASE
+      ? {
+          pfx: Buffer.from(LADOK_API_PFX_BASE64 as string, "base64"),
+          passphrase: LADOK_API_PFX_PASSPHRASE,
+        }
+      : undefined,
 });
 
 function errorHandler(endpoint: string, error: unknown): never {
@@ -52,6 +53,12 @@ function typedGet<T extends ZodRawShape>(endpoint: string, type: ZodObject<T>) {
     .catch((err) => errorHandler(endpoint, err));
 }
 
+export async function getCurrentUser() {
+  return gotClient
+    .get("kataloginformation/anvandare/autentiserad")
+    .then((r) => r.body);
+}
+
 export async function getKurstillfalle(kurstillfalleUID: string) {
   return typedGet(
     `resultat/kurstillfalle/${kurstillfalleUID}/moment`,
@@ -70,5 +77,19 @@ export async function getOrganisation(organisationUID: string) {
   return typedGet(
     `kataloginformation/organisation/${organisationUID}`,
     LadokOrganisation,
+  );
+}
+
+export async function getKurstillfallesdeltagande(studentUID: string) {
+  return typedGet(
+    `studiedeltagande/tillfallesdeltagande/kurstillfallesdeltagande/student/${studentUID}`,
+    Kurstillfallesdeltagande,
+  );
+}
+
+export async function getStudiestruktur(studentUID: string) {
+  return typedGet(
+    `studiedeltagande/studiestruktur/student/${studentUID}`,
+    Studiestruktur,
   );
 }
