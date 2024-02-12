@@ -1,0 +1,157 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Get information from a course round example from documentation 1`] = `
+{
+  "courseCode": "DD2380",
+  "courseInstanceCode": "51210",
+  "credits": 6,
+  "endDate": "2023-10-27",
+  "gradingScheme": {
+    "code": "AF",
+    "grades": [
+      {
+        "code": "A",
+        "validFinalGrade": true,
+      },
+      {
+        "code": "B",
+        "validFinalGrade": true,
+      },
+      {
+        "code": "C",
+        "validFinalGrade": true,
+      },
+      {
+        "code": "D",
+        "validFinalGrade": true,
+      },
+      {
+        "code": "E",
+        "validFinalGrade": true,
+      },
+      {
+        "code": "FX",
+        "validFinalGrade": false,
+      },
+      {
+        "code": "F",
+        "validFinalGrade": false,
+      },
+    ],
+  },
+  "modules": [
+    {
+      "code": "LAB2",
+      "credits": 4,
+      "gradingScheme": {
+        "code": "AF",
+        "grades": [
+          {
+            "code": "A",
+            "validFinalGrade": true,
+          },
+          {
+            "code": "B",
+            "validFinalGrade": true,
+          },
+          {
+            "code": "C",
+            "validFinalGrade": true,
+          },
+          {
+            "code": "D",
+            "validFinalGrade": true,
+          },
+          {
+            "code": "E",
+            "validFinalGrade": true,
+          },
+          {
+            "code": "FX",
+            "validFinalGrade": false,
+          },
+          {
+            "code": "F",
+            "validFinalGrade": false,
+          },
+        ],
+      },
+      "name": {
+        "en": "Laboratory work",
+        "sv": "Laborationer",
+      },
+    },
+    {
+      "code": "RAP1",
+      "credits": 0.5,
+      "gradingScheme": {
+        "code": "PF",
+        "grades": [
+          {
+            "code": "P",
+            "validFinalGrade": true,
+          },
+          {
+            "code": "F",
+            "validFinalGrade": false,
+          },
+        ],
+      },
+      "name": {
+        "en": "Report",
+        "sv": "Rapport",
+      },
+    },
+    {
+      "code": "TEN2",
+      "credits": 1.5,
+      "gradingScheme": {
+        "code": "PF",
+        "grades": [
+          {
+            "code": "P",
+            "validFinalGrade": true,
+          },
+          {
+            "code": "F",
+            "validFinalGrade": false,
+          },
+        ],
+      },
+      "name": {
+        "en": "Written exam",
+        "sv": "Skriftlig tentamen",
+      },
+    },
+  ],
+  "name": {
+    "en": "Artificial Intelligence",
+    "sv": "Artificiell intelligens",
+  },
+  "organisation": {
+    "code": "EECS",
+  },
+  "organisationUnit": {
+    "code": "JR",
+    "name": {
+      "en": "Intelligent Systems",
+      "sv": "Intelligenta system",
+    },
+  },
+  "startDate": "2023-08-28",
+}
+`;
+
+exports[`Get information from a program participation example from documentation 1`] = `
+{
+  "code": "CSAMH",
+  "name": {
+    "en": "Degree Programme in Civil Engineering and Urban Management",
+    "sv": "Civilingenjörsutbildning i samhällsbyggnad",
+  },
+  "required": "???",
+  "specification": undefined,
+  "startTerm": "20212",
+  "studyYear": 1,
+}
+`;
