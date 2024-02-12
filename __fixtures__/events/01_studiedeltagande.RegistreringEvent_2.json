@@ -1,0 +1,41 @@
+{
+  "_id": {
+    "$oid": "6571d633d8d5738207d00afa"
+  },
+  "ladok3EventType": "se.ladok.schemas.studiedeltagande.RegistreringEvent",
+  "ladok3Username": "jhsware@kth.se",
+  "message": {
+    "Omfattningsvarde": "X",
+    "Studieavgiftsbetalning": "X",
+    "StudieperiodSlut": "X",
+    "StudieperiodStart": "X",
+    "ArAnpassad": false,
+    "HandelseUID": "X",
+    "EventContext": {
+      "AnvandareUID": "X",
+      "Anvandarnamn": "x",
+      "LarosateID": 29
+    },
+    "KursUID": "X",
+    "KurstillfalleUID": "83702026-7b7f-11ed-83fc-99df00a14a2f",
+    "Period": -1,
+    "RegistreringUID": "X",
+    "StudentUID": "63a138cf-f042-11eb-8cb6-0bb93b844502",
+    "TillfallesantagningUID": "X",
+    "UtbildningsinstansUID": "X"
+  },
+  "userProps": {
+    "ladok3AtomEntryId": "X",
+    "ladok3Username": "jhsware@kth.se",
+    "ladok3IsLastFeed": true,
+    "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/317122",
+    "content_HYPHEN_Type": "application/json",
+    "ladok3AtomEntryUpdated": "2023-12-07T15:11:48.836",
+    "ladok3EventType": "se.ladok.schemas.studiedeltagande.RegistreringEvent",
+    "traceparent": "X",
+    "ladok3AtomEntryIndexInFeed": 0,
+    "ladok3EventId": "X",
+    "ladok3MessageType": "ladok3Event",
+    "ladok3MessageSequenceNumber": 27
+  }
+}
