@@ -60,7 +60,7 @@ export async function handler(message: TResultatPaHelKursAttesteratEvent, contex
   
   if (res.length > 0) {
     const foundDoc = res[0];
-    await db.update(foundDoc._id, doc, "ReportedResult");
+    await db.update<TReportedResultEntity>(foundDoc._id, doc, "ReportedResult");
   } else {
     await db.insert<TReportedResultEntity>(doc, "ReportedResult");
   }

@@ -1,6 +1,7 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext, TLadokAttributvarde } from "./types";
 import { Database, ServiceBus, isValidEvent } from "../utils";
+import { TCourseRoundEntity } from "../interface";
 
 export type TKurstillfalleTillStatusEvent = {
   HandelseUID: string, // "7c2e425f-9507-11ee-a0ce-a9a57d284dbd",
@@ -72,7 +73,7 @@ export async function handler(message: TKurstillfalleTillStatusEvent, context: I
     // 2. Update status
     // 3. Persist in DB
   
-    await db.update(courseRound.id!, { status }, "CourseRound");
+    await db.update<TCourseRoundEntity>(courseRound.id!, { canceled: status === -1 }, "CourseRound");
   } finally {
     await db.close();
   }

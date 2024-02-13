@@ -1,7 +1,8 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokAttributvarde, TLadokEventContext } from "./types";
 import { Database, ServiceBus, isValidEvent } from "../utils";
-import { TCourseModule, TCourseRound } from "../interface";
+import { TCourseModule, TCourseRound, TCourseRoundEntity, TCourseRoundModuleEntity } from "../interface";
+import { getGradingScheme } from "ladok-integration";
 
 export type TModulTillStatusEvent = {
   HandelseUID: string, // "6b79e669-9505-11ee-a0ce-a9a57d284dbd",
@@ -78,6 +79,18 @@ export type TModulTillStatusEvent = {
 
 const STATUS_ACTIVE = 2;
 
+function convertBenamningToName(inp: TModulTillStatusEvent["Benamningar"]["Benamning"], lang: "en" | "sv") {
+  return inp.reduce<string | undefined>((prev, curr) => {
+    if (prev) return prev;
+    if (curr["Sprakkod"] === lang) return curr["Text"];
+  }, undefined);
+}
+
+function convertBetygsskalaToGradingScheme(id: number): string[] {
+  const gradingScheme = getGradingScheme(id);
+  return gradingScheme.grades.map((grade) => grade.code);
+}
+
 export async function handler(message: TModulTillStatusEvent, context: InvocationContext, db: Database): Promise<void> {
   if (!isValidEvent("se.ladok.schemas.utbildningsinformation.ModulTillStatusEvent", context?.triggerMetadata?.userProperties)) return;
 
@@ -87,22 +100,27 @@ export async function handler(message: TModulTillStatusEvent, context: Invocatio
   context.log(`ModulTillStatusEvent: ${courseRoundId} ${moduleId} ${status}`);
 
   try {
-      const courseRound: TCourseRound = await db.fetchById(courseRoundId, "CourseRound");
+      const courseRound: TCourseRoundEntity = await db.fetchById(courseRoundId, "CourseRound");
+      const language = courseRound.language;
       let updatedModules;
       if (status === STATUS_ACTIVE) {
         // Add if not exists
-        if (!courseRound.modules?.find((module: TCourseModule) => module.id === moduleId)) {
-          const newModule = {
+        if (!courseRound.modules?.find((module: TCourseRoundModuleEntity) => module.id === moduleId)) {
+          const newModule: TCourseRoundModuleEntity = {
             id: moduleId,
+            code: message.Utbildningskod,
+            name: convertBenamningToName(message.Benamningar.Benamning, language) ?? "",
+            credits: message.Omfattningsvarde,
+            gradingScheme: convertBetygsskalaToGradingScheme(message.BetygsskalaID),
           }
           updatedModules = [...courseRound.modules ?? [], newModule];
         }
       } else {
         // Remove if exists
         // TODO: Add moduleId to Module interface
-        updatedModules = courseRound.modules.filter((module: TCourseModule) => module.id !== moduleId);
+        updatedModules = courseRound.modules.filter((module: TCourseRoundModuleEntity) => module.id !== moduleId);
       }
-      await db.update(courseRound.id!, { modules: updatedModules }, "CourseRound");
+      await db.update<TCourseRoundEntity>(courseRound.id!, { modules: updatedModules }, "CourseRound");
       // 1. Fetch CourseRound from DB
       // 2. Update status
       // 3. Persist in DB
