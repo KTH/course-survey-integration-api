@@ -1,4 +1,3 @@
-import assert from "node:assert";
 import {
   getKursinstans,
   getKurstillfalle,
@@ -13,6 +12,8 @@ import {
   getTermFromDate,
   parseOrganisation,
 } from "./utils";
+
+export { getGradingScheme } from "./utils";
 
 export type ProgramParticipation =
   | undefined

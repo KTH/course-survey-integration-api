@@ -1,7 +1,7 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { Database, ServiceBus, isValidEvent } from "../utils";
-import { TReportedResult } from "../interface";
+import { TReportedResultEntity } from "../interface";
 import { hashStudentId } from "./utils";
 
 export type TResultatPaModulAttesteratEvent = {
@@ -39,7 +39,8 @@ export async function handler(message: TResultatPaModulAttesteratEvent, context:
   const { BetygsgradID, BetygsskalaID, ResultatUID } = message.Resultat;
   const hashedStudentId = await hashStudentId(StudentUID);
 
-  const doc: TReportedResult = {
+  const doc: TReportedResultEntity = {
+    id: `${UtbildningsinstansUID}-${hashedStudentId}`,
     parentId: UtbildningsinstansUID,
     hashedStudentId,
     decision: BeslutUID,
@@ -59,9 +60,9 @@ export async function handler(message: TResultatPaModulAttesteratEvent, context:
   
   if (res.length > 0) {
     const foundDoc = res[0];
-    await db.update(foundDoc._id, doc, "ReportedResult");
+    await db.update<TReportedResultEntity>(foundDoc._id, doc, "ReportedResult");
   } else {
-    await db.insert(doc, "ReportedResult");
+    await db.insert<TReportedResultEntity>(doc, "ReportedResult");
   }
   await db.close();
 }

@@ -4,11 +4,11 @@ import { TCourseUser, TOrgEntity } from "../interface";
 
 export function _convert(ugUser: TUgUser): TCourseUser {
   const email = ugUser.email;
-  const userName = email?.split('@')[0];
+  const userName = email.split('@')[0];
   const kthUserId = ugUser.kthid;
   const fullName = [
-    ugUser.givenName ?? '',
-    ugUser.surname ?? ''
+    ugUser.givenName,
+    ugUser.surname,
   ].join(' ').trim();
 
   return {

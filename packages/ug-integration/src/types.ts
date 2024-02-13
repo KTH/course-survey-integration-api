@@ -20,17 +20,17 @@ export function checkGetUgCourseResponsibleAndTeachers(val: Array<any>): void {
 }
 
 export const UgUser = z.object({
-  email: z.string(),
-  kthid: z.string(),
-  givenName: z.string(),
-  surname: z.string(),
+  email: z.string().min(1),
+  kthid: z.string().min(1),
+  givenName: z.string().min(1),
+  surname: z.string().min(1),
 });
 
 export const UgSchool = z.object({
-  name: z.string(),
-  kthid: z.string(),
+  name: z.string().min(1),
+  kthid: z.string().min(1),
   description: z.object({
     sv: z.string().optional(),
     en: z.string().optional(),
-  })
-});
+  }).required(),
+}).required();

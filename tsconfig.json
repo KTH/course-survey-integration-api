@@ -20,5 +20,6 @@
     "outDir": "__tests__/LadokEvents/dist",
     "rootDir": ".",
     "sourceMap": true,
-  }
+  },
+  "include": ["src"],
 }

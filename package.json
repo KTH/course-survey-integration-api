@@ -6,7 +6,7 @@
   "main": "dist/functions/*.js",
   "scripts": {
     "build": "npm run build:libs && npm run build:functions",
-    "build:functions": "tsc src/**/*.ts --outDir dist --sourceMap --declaration",
+    "build:functions": "tsc --outDir dist --sourceMap --declaration",
     "build:libs": "npm run build --workspaces --if-present",
     "clean": "rimraf dist",
     "watch": "tsc --sourceMap --watch --outDir dist",

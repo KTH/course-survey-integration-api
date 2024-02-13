@@ -2,7 +2,7 @@ import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { getUgCourseResponsibleAndTeachers, getUgSchool, getUgUser } from "ug-integration";
 import { ServiceBus, isValidEvent, Database } from "../utils";
-import { TCourseRound, TCourseUser, TOrgEntity } from "../interface";
+import { TCourseRound, TCourseRoundEntity, TCourseUser, TOrgEntity } from "../interface";
 import { getCourseInformation } from "kopps-integration";
 import { getCourseRoundInformation } from "ladok-integration";
 import { convertLadokModuleToCourseModule, convertUgSchoolToOrgEntity, convertUgToCourseUser, convertUgToCourseUserArr } from "./utils";
@@ -32,9 +32,9 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
 
   // If course round already exists we don't need to do anything
   // QUESTION: What if they change teachers during term?
+  // QUESTION: Should we update anything here or expect the course round info to be correct from first registration?
   if (courseRound) {
     // Course round exists
-    // TODO: Should we update anything here or expect the course round info to be correct from first registration?
     
     // let { id, ladokCourseRoundId } = courseRound;
     // if (ladokCourseRoundId) {
@@ -94,17 +94,13 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
   const dummyPeriod = 'P1';
 
   // TODO: Create entity types that are synced with the API response types
-  const doc: Omit<TCourseRound, 'nrofRegisteredStudents' | 'nrofReportedResults' | 'gradingDistribution' | 'programs'> = {
+  const doc: TCourseRoundEntity = {
     // Dummy data:
     language: dummyLanguage,
     canceled: dummyCanceled, 
-    institution: dummyInstitution,
+    institution: dummyInstitution, // TODO: Exists in our ladok integration package, may have different name
     period: dummyPeriod,
     courseExaminor: dummyCourseExaminor,
-    // nrofRegisteredStudents: -1, // TODO: Convert to calculated field, get from TStudentParticipation <***************
-    // nrofReportedResults: -1, // TODO: Convert to calculated field, get from TReportedResult <***************
-    // gradingDistribution, // TODO: Convert to calculated field                  <***************
-    // programs: [], // TODO: Convert to calculated field                         <***************
     
     // Source event message:
     id: msgUtbildningstillfalleUid,

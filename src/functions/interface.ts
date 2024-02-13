@@ -13,13 +13,7 @@ export type TCourseRound = components["schemas"]["CourseRound"] & {
 };
 export type TStudentParticipation = components["schemas"]["StudentParticipation"];
 export type TProgramRound = components["schemas"]["ProgramRound"];
-export type TCourseModule = components["schemas"]["CourseModule"] & {
-  /**
-   * Add each reported result using composite key to allow for updates.
-   * key: `TBD`
-   */
-  _reportedResults?: { [index: string]: string };
-};
+export type TCourseModule = components["schemas"]["CourseModule"];
 export type TCourseUser = components["schemas"]["CourseUser"];
 export type TOrgEntity = components["schemas"]["OrgEntity"];
 
@@ -47,7 +41,51 @@ export type PathCourseRoundStudentList = paths["/course-round/{ladokRoundId}/stu
 export type APICourseRoundStudentListErrType = TAPIErrType;
 export type APICourseRoundStudentList = TStudentParticipation[];
 
-export type TReportedResult = {
+/**
+ * Domain entities stored in DB
+ */
+
+export type TCourseRoundModuleEntity = {
+  id: TCourseModule["id"];
+  code: TCourseModule["code"];
+  name: TCourseModule["name"];
+  credits: TCourseModule["credits"];
+  gradingScheme: TCourseModule["gradingScheme"];
+}
+
+export type TCourseRoundEntity = {
+  language: TCourseRound["language"];
+  canceled: TCourseRound["canceled"] 
+  institution: TCourseRound["institution"];
+  period: TCourseRound["period"];
+  courseExaminor: TCourseRound["courseExaminor"];
+  
+  // Source event message:
+  id: TCourseRound["id"];
+  ladokCourseId: TCourseRound["ladokCourseId"];
+  ladokCourseRoundId: TCourseRound["ladokCourseRoundId"];
+  canvasSisId: TCourseRound["canvasSisId"];
+  
+  // Source KOPPS API:
+  name: TCourseRound["name"];
+  courseGoal: TCourseRound["courseGoal"];
+
+  // Source UG:
+  organization: TCourseRound["organization"];
+  courseResponsible: TCourseRound["courseResponsible"];
+  courseTeachers: TCourseRound["courseTeachers"];
+  
+  // Source LADOK REST API:
+  _gradingScheme: string[];
+  courseCode: TCourseRound["courseCode"];
+  endDate: TCourseRound["endDate"];
+  displayYear: TCourseRound["displayYear"];
+  credits: TCourseRound["credits"];
+  modules: TCourseRoundModuleEntity[];
+}
+
+export type TReportedResultEntity = {
+  id: string;
   parentId: string; // UtbildningsinstansUID
   hashedStudentId: string; // StudentUID hashed
   decision: string; // BeslutUID

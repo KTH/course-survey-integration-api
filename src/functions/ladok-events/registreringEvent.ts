@@ -2,7 +2,8 @@ import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { ServiceBus, Database } from "../utils";
 import { getUgUserFromLadokId } from "ug-integration";
-import assert from "node:assert";
+import { strict as assert } from 'node:assert';
+
 import {
   ProgramParticipation,
   getProgramParticipation,
