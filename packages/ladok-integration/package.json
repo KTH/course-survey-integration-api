@@ -7,8 +7,8 @@
   "source": "src/index.ts",
   "scripts": {
     "build": "tsc src/*.ts --outDir dist --sourceMap --declaration",
-    "test:unit": "jest __tests__/*.spec.ts",
-    "test": "npm run test:unit"
+    "test": "npm run build && npm run test:unit",
+    "test:unit": "jest __tests__/*.spec.ts"
   },
   "dependencies": {
     "got": "^11.8.6",
