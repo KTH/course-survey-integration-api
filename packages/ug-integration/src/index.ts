@@ -1,8 +1,4 @@
-import {
-  UgSchool,
-  UgUser,
-  checkGetUgCourseResponsibleAndTeachers,
-} from "./types";
+import { UgGroups, UgSchool, UgUser } from "./types";
 import { UGRestClient, UGRestClientError } from "./ugRestClient";
 
 const {
@@ -24,48 +20,54 @@ export type TUgCourseResponsibleAndTeachers = [
   courseTeachers: string[],
 ];
 
-export async function getUgCourseResponsibleAndTeachers(
-  courseCode: string,
-  roundYear: string,
-  roundCode: string | number,
-): Promise<TUgCourseResponsibleAndTeachers | []> {
-  const prefix = courseCode.slice(0, 2);
-  const path = `edu.courses.${prefix}.${courseCode}.${roundYear}${roundCode}`;
-
-  // The course can have several parallel sections so we need to get all of them
-  // Example: edu.courses.SF.SF1625.20222
-
-  // TODO: I can't get the subgroups from the query so I can't iterate over the sections
+export async function getUgMembers(groupName: string) {
   const { data, json, statusCode } = await ugClient
-    .get<any[]>(
-      `groups?$filter=startswith(name,'${path}')`, // &$expand=Subgroups
-    )
+    .get<any[]>(`groups?$filter=name eq '${groupName}'`)
     .catch(ugClientGetErrorHandler);
+
   if (statusCode !== 200) {
     throw new Error(`UGRestClient: ${statusCode} ${data}`);
   }
 
-  if (json === undefined) return [];
+  const groups = UgGroups.parse(json);
 
-  const courseResonsible = json
-    .filter((group: any) => group.name.endsWith("courseresponsible"))
-    .reduce(
-      (val: string | undefined, curr: any) => val ?? curr.members.pop(),
-      undefined,
+  if (groups.length !== 1) {
+    throw new Error(
+      `UGRestClient: there are ${groups.length} groups with name [${groupName}]`,
     );
-  const courseTeachers = json
-    .filter((group: any) => group.name.endsWith("teachers"))
-    .reduce((val: string[], curr: any) => {
-      // Add only unique values
-      return [...val, ...curr.members.filter((m: any) => !val.includes(m))];
-    }, []);
+  }
 
-  // This will throw if values are incorrect
-  // TODO: Investigate if zod can be used here too
-  // TODO: Improve error handling to level of ladok-integration
-  checkGetUgCourseResponsibleAndTeachers([courseResonsible, courseTeachers]);
+  return groups[0].members;
+}
 
-  return [courseResonsible, courseTeachers];
+export async function getUgCourseResponsible(
+  courseCode: string,
+  roundYear: string,
+  roundCode: string,
+) {
+  const prefix = courseCode.slice(0, 2);
+  const path = `edu.courses.${prefix}.${courseCode}.${roundYear}.${roundCode}.courseresponsible`;
+
+  return getUgMembers(path);
+}
+
+export async function getUgTeachers(
+  courseCode: string,
+  roundYear: string,
+  roundCode: string,
+) {
+  const prefix = courseCode.slice(0, 2);
+  const path = `edu.courses.${prefix}.${courseCode}.${roundYear}.${roundCode}.teachers`;
+
+  return getUgMembers(path);
+}
+
+/** Return the KTH ID of examiners for a course */
+export async function getUgExaminers(courseCode: string): Promise<string[]> {
+  const prefix = courseCode.slice(0, 2);
+  const path = `edu.courses.${prefix}.${courseCode}.examiner`;
+
+  return getUgMembers(path);
 }
 
 export type TUgUser = {
