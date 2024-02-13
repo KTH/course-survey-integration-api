@@ -3,7 +3,7 @@
     /* Language and Environment */
     "target": "es2020" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     /* Modules */
-    "module": "commonjs" /* Specify what module code is generated. */,
+    "module": "CommonJS" /* Specify what module code is generated. */,
     "resolveJsonModule": true /* Enable importing .json files. */,
     /* JavaScript Support */
     /* Emit */
