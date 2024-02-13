@@ -11,12 +11,12 @@ export const LadokKurstillfalleMoment = z.object({
   }),
 
   /** Course code */
-  Utbildningskod: z.string(),
-  Kurstillfalleskod: z.string(), // I UG kommer omgångsnumret från kopps ersättas med Kurstillfalleskod
+  Utbildningskod: z.string().min(1),
+  Kurstillfalleskod: z.string().min(1), // I UG kommer omgångsnumret från kopps ersättas med Kurstillfalleskod
 
   /** Availability */
-  Startdatum: z.string().trim(),
-  Slutdatum: z.string().trim(),
+  Startdatum: z.string().trim().min(1),
+  Slutdatum: z.string().trim().min(1),
 
   /** Credits */
   Omfattning: z.number(),
@@ -29,7 +29,7 @@ export const LadokKurstillfalleMoment = z.object({
   IngaendeMoment: z.array(
     z.object({
       /** Code */
-      Utbildningskod: z.string(),
+      Utbildningskod: z.string().min(1),
 
       /** Name */
       Benamning: z.object({
@@ -46,11 +46,11 @@ export const LadokKurstillfalleMoment = z.object({
   ),
 
   /** ID of the "utbildningsinstans" */
-  UtbildningsinstansUID: z.string(),
+  UtbildningsinstansUID: z.string().min(1),
 });
 
 export const LadokKursinstans = z.object({
-  OrganisationUID: z.string(),
+  OrganisationUID: z.string().min(1),
 });
 
 export const LadokOrganisation = z.object({
@@ -58,7 +58,7 @@ export const LadokOrganisation = z.object({
     sv: z.string(),
     en: z.string(),
   }),
-  Organisationskod: z.string(),
+  Organisationskod: z.string().min(1),
 });
 
 export const Kurstillfallesdeltagande = z.object({
@@ -66,9 +66,9 @@ export const Kurstillfallesdeltagande = z.object({
     z.object({
       Studiestrukturreferens: z.optional(z.string()),
       Utbildningsinformation: z.object({
-        UtbildningstillfalleUID: z.string(),
+        UtbildningstillfalleUID: z.string().min(1),
         Studieperiod: z.object({
-          Startdatum: z.string(),
+          Startdatum: z.string().min(1),
         }),
       }),
     }),
@@ -79,15 +79,15 @@ export const Kurstillfallesdeltagande = z.object({
 // the property "Barn" is an array of Studiestruktur
 // See: https://zod.dev/?id=recursive-types
 const StudiestrukturBase = z.object({
-  Referens: z.string(),
+  Referens: z.string().min(1),
   Utbildningsinformation: z.object({
-    Utbildningskod: z.string(),
+    Utbildningskod: z.string().min(1),
     Benamning: z.object({
       sv: z.string(),
       en: z.string(),
     }),
     Studieperiod: z.object({
-      Startdatum: z.string(),
+      Startdatum: z.string().min(1),
     }),
   }),
 });
