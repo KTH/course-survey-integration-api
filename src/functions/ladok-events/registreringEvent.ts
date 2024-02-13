@@ -1,7 +1,7 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { ServiceBus, Database } from "../utils";
-import { getUgUserFromLadokId } from "ug-integration";
+import { getUgUserByLadokId } from "ug-integration";
 import { strict as assert } from 'node:assert';
 
 import {
@@ -67,7 +67,8 @@ export async function handler(
     return;
   }
 
-  const ugUser = await getUgUserFromLadokId(ladokStudentId);
+  const ugUser = await getUgUserByLadokId(ladokStudentId);
+  // const ugUser = await getUgUser(ladokStudentId);
   assert(ugUser !== undefined, "");
 
   const programParticipation = await getProgramParticipation(
