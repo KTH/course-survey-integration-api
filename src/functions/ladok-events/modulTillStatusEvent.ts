@@ -1,8 +1,8 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokAttributvarde, TLadokEventContext } from "./types";
 import { Database, ServiceBus, isValidEvent } from "../utils";
-import { TCourseModule, TCourseRound, TCourseRoundEntity, TCourseRoundModuleEntity } from "../interface";
-import { getGradingScheme } from "ladok-integration";
+import { TCourseRoundEntity, TCourseRoundModuleEntity } from "../interface";
+import { getGradingScheme } from "ladok-integration/dist/utils";
 
 export type TModulTillStatusEvent = {
   HandelseUID: string, // "6b79e669-9505-11ee-a0ce-a9a57d284dbd",

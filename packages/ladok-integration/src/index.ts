@@ -13,8 +13,6 @@ import {
   parseOrganisation,
 } from "./utils";
 
-export { getGradingScheme } from "./utils";
-
 export type ProgramParticipation =
   | undefined
   | {
