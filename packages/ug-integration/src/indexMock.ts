@@ -4,10 +4,12 @@ const _mockedValues: {
   getUgCourseResponsibleAndTeachers: Record<string, TUgCourseResponsibleAndTeachers>;
   getUgUser: Record<string, TUgUser>;
   getUgSchool: Record<string, TUgSchool>;
+  getUgUserByLadokId: Record<string, TUgUser>;
 } = {
   getUgCourseResponsibleAndTeachers: {},
   getUgUser: {},
   getUgSchool: {},
+  getUgUserByLadokId: {},
 };
 
 export class UgIntegrationMock {
@@ -32,20 +34,29 @@ export class UgIntegrationMock {
   
     mocked[schoolCode] = params;
   }
+
+  static getUgUserByLadokId(ladokId: string, params: TUgUser) {
+    const mocked = _mockedValues.getUgUserByLadokId;
+    if (mocked[ladokId]) throw new Error(`Mock value already registered for ${ladokId}`);
+  
+    mocked[ladokId] = params;
+  }
 }
 
 export async function getUgCourseResponsibleAndTeachers(courseCode: string, roundYear: string, roundCode: string | number): Promise<TUgCourseResponsibleAndTeachers | []> {
-  return Promise.resolve(
-    _mockedValues.getUgCourseResponsibleAndTeachers[[courseCode, roundYear, roundCode].join('-')]
-    ?? [ undefined, [] ]
-  );
+  return _mockedValues.getUgCourseResponsibleAndTeachers[[courseCode, roundYear, roundCode].join('-')]
+    ?? [ undefined, [] ];
 }
 
 export async function getUgUser(kthId: string | undefined): Promise<TUgUser | undefined>  {
   if (kthId === undefined) return;
-  return Promise.resolve(_mockedValues.getUgUser[kthId]);
+  return _mockedValues.getUgUser[kthId];
 }
 
 export async function getUgSchool(schoolCode: string): Promise<TUgSchool | undefined> {
-  return Promise.resolve(_mockedValues.getUgSchool[schoolCode]);
+  return _mockedValues.getUgSchool[schoolCode];
+}
+
+export async function getUgUserByLadokId(ladokId: string): Promise<TUgUser | undefined> {
+  return _mockedValues.getUgUserByLadokId[ladokId];
 }
