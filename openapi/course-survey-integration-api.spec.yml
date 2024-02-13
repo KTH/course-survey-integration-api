@@ -125,9 +125,111 @@ components:
         application/json:
           schema:
             type: object
+            required:
+                - id
+                - ladokCourseId
+                - ladokCourseRoundId
+                - canvasSisId
+                - name
+                - courseCode
+                - language
+                # - canceled
+                - endDate
+                - displayYear
+                - organization
+                - institution
+                - courseGoal
+                - period
+                - credits
+                - courseExaminers
+                # - courseResponsible
+                - courseTeachers
+                - nrofRegisteredStudents
+                - nrofReportedResults
+                # - gradingDistribution
+                - programs
+                - modules
             properties:
-              message:
-                type: string
+                id:
+                    type: string
+                    description: "Ladok equivalent: UtbildningstillfalleUID, KurstillfalleUID"
+                ladokCourseId:
+                    type: string
+                ladokCourseRoundId:
+                    type: string
+                canvasSisId:
+                    type: string
+                    description: We currently use LADOK UID as canvasSisId (sis_course_id in Canvas API)
+                name:
+                    type: string
+                courseCode:
+                    type: string
+                    description: "utbildningskod"
+                language:
+                    type: string
+                    enum:
+                        - en
+                        - sv
+                    description: The main language used for this course. Determines the language used to generate report.
+                canceled:
+                    type: boolean
+                    description: Marked true if the course has been canceled (duh!).
+                endDate:
+                    type: string
+                    format: date
+                    description: The date when the course ends.
+                displayYear:
+                    type: string
+                    description: "The year this course round was held (YYYY). Note: there are course rounds that span multiple years and might be displayes as YYYY-YYYY"
+                organization:
+                    $ref: "#/components/schemas/OrgEntity"
+                    description: The school at KTH this course belongs to.
+                institution:
+                    $ref: "#/components/schemas/OrgEntity"
+                    description: The specific institution at a school this course is attached to.
+                courseGoal:
+                    type: string
+                    description: Long form text including linebreaks
+                period:
+                    type:
+                        string
+                    enum:
+                        - P0
+                        - P1
+                        - P2
+                        - P3
+                        - P4
+                        - P5
+                credits:
+                    type: string
+                    description: Credits awarded for this course
+                courseExaminers:
+                    $ref: "#/components/schemas/CourseUser"
+                    description: "Person who is responsible for examination (source: LADOK)."
+                courseResponsible:
+                    $ref: "#/components/schemas/CourseUser"
+                    description: "Person who is responsible for the course (source: ???)."
+                courseTeachers:
+                    type: array
+                    description: "List of teachers connected to this course (source: ???)"
+                    items:
+                        $ref: "#/components/schemas/CourseUser"
+                nrofRegisteredStudents:
+                    type: integer
+                nrofReportedResults:
+                    type: integer
+                gradingDistribution:
+                    type: object
+                    description: "Kurs, betygsfördelning" # TODO: Add an example of what this would look like
+                    additionalProperties: true
+                programs:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/ProgramRound"
+                modules:
+                    type: array
+                    items:
+                        $ref: "#/components/schemas/CourseModule"
 
   securitySchemes:
     oauth2:
@@ -139,111 +241,35 @@ components:
           scopes:
             read: read data
 
-  schemas:
-    CourseRound:
-      type: object
-      required:
-        - id
-        - ladokCourseId
-        - ladokCourseRoundId
-        - canvasSisId
-        - name
-        - courseCode
-        - language
-        # - canceled
-        - endDate
-        - displayYear
-        - organization
-        - institution
-        - courseGoal
-        - period
-        - credits
-        - courseExaminor
-        # - courseResponsible
-        - courseTeachers
-        - nrofRegisteredStudents
-        - nrofReportedResults
-        # - gradingDistribution
-        - programs
-        - modules
-      properties:
-        id:
-          type: string
-          description: "Ladok equivalent: UtbildningstillfalleUID, KurstillfalleUID"
-        ladokCourseId:
-          type: string
-        ladokCourseRoundId:
-          type: string
-        canvasSisId:
-          type: string
-          description: We currently use LADOK UID as canvasSisId (sis_course_id in Canvas API)
-        name:
-          type: string
-        courseCode:
-          type: string
-          description: "utbildningskod"
-        language:
-          type: string
-          enum:
-            - en
-            - sv
-          description: The main language used for this course. Determines the language used to generate report.
-        canceled:
-          type: boolean
-          description: Marked true if the course has been canceled (duh!).
-        endDate:
-          type: string
-          format: date
-          description: The date when the course ends.
-        displayYear:
-          type: string
-          description: "The year this course round was held (YYYY). Note: there are course rounds that span multiple years and might be displayes as YYYY-YYYY"
-        organization:
-          $ref: "#/components/schemas/OrgEntity"
-          description: The school at KTH this course belongs to.
-        institution:
-          $ref: "#/components/schemas/OrgEntity"
-          description: The specific institution at a school this course is attached to.
-        courseGoal:
-          type: string
-          description: Long form text including linebreaks
-        period:
-          type: string
-          enum:
-            - P1
-            - P2
-            - P3
-            - P4
-        credits:
-          type: string
-          description: Credits awarded for this course
-        courseExaminor:
-          $ref: "#/components/schemas/CourseUser"
-          description: "Person who is responsible for examination (source: LADOK)."
-        courseResponsible:
-          $ref: "#/components/schemas/CourseUser"
-          description: "Person who is responsible for the course (source: ???)."
-        courseTeachers:
-          type: array
-          description: "List of teachers connected to this course (source: ???)"
-          items:
-            $ref: "#/components/schemas/CourseUser"
-        nrofRegisteredStudents:
-          type: integer
-        nrofReportedResults:
-          type: integer
-        gradingDistribution:
-          type: object
-          description: "Kurs, betygsfördelning" # TODO: Add an example of what this would look like
-          additionalProperties: true
-        programs:
-          type: array
-          items:
-            $ref: "#/components/schemas/ProgramRound"
-        modules:
-          type: array
-          items:
-            $ref: "#/components/schemas/CourseModule"
+        ProgramRound:
+            type: object
+            required:
+                - code
+                - semester
+                - startPeriod
+                - name
+                - studyYear
+                - specification
+            properties:
+                code:
+                    type: string
+                semester:
+                    type: string
+                startTerm:
+                    type: string
+                    description: Year and term when program round started
+                name:
+                    type: string
+                studyYear:
+                    type: integer
+                    description: Calculate by using startPeriod and current period.
+                specification:
+                    type: string
+                required:
+                    type: string
+                    enum:
+                        - TBD
+                        - ...
 
     StudentParticipation:
       type: object

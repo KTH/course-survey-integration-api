@@ -10,7 +10,7 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
     "canceled": false,
     "canvasSisId": "41717c91-4028-11ee-bf53-2115569549a8",
     "courseCode": "DD1321",
-    "courseExaminor": {
+    "courseExaminers": {
       "email": "dummy@email.com",
       "fullName": "Dummy User",
       "kthUserId": "u1dummy",
