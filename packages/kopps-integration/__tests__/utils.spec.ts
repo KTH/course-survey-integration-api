@@ -48,6 +48,23 @@ describe("getPeriods", () => {
     expect(getPeriods(round)).toStrictEqual([2, 3]);
   });
 
+  test("works with terms that span multiple years", () => {
+    const round: KoppsCourseRoundInfo = {
+      round: {
+        courseRoundTerms: [
+          { creditsP5: 1, term: { term: 20231 } },
+          { creditsP1: 1, term: { term: 20241 } },
+          { creditsP1: 1, term: { term: 20251 } },
+          { creditsP1: 1, term: { term: 20261 } },
+        ],
+        ladokUID: "",
+        startTerm: { term: 0 },
+      },
+    };
+
+    expect(getPeriods(round)).toStrictEqual([5, 1, 1, 1]);
+  });
+
   test("order in courseRoundTerm array is ignored", () => {
     const round: KoppsCourseRoundInfo = {
       round: {
