@@ -2,7 +2,19 @@ import event from "../../__fixtures__/events/01_studiedeltagande.RegistreringEve
 import appConfig, { handler } from "../../src/functions/ladok-events/registreringEvent";
 import { MockContext } from "./utils/mockContext";
 import { MockDatabase } from "./utils/mockDatabase";
+import { UgIntegrationMock } from "ug-integration/src/indexMock";
 import studentParticipation_01 from "../../__fixtures__/entities/01_studentParticipation.json";
+
+
+UgIntegrationMock.getUgUserByLadokId(
+  "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
+  {
+    email: "email@email.com",
+    kthid: "u1dummyuser",
+    givenName: "Dummy",
+    surname: "User",
+  }
+);
 
 describe("RegistreringEvent", () => {
 
