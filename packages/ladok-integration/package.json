@@ -6,7 +6,7 @@
   "main": "dist/index.js",
   "source": "src/index.ts",
   "scripts": {
-    "build": "tsc src/*.ts --outDir dist --sourceMap --declaration",
+    "build": "tsc --outDir dist --sourceMap --declaration",
     "test": "npm run build && npm run test:unit",
     "test:unit": "jest __tests__/*.spec.ts"
   },
