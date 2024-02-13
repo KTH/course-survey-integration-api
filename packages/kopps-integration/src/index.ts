@@ -26,6 +26,11 @@ export async function getCourseInformation(ladokUid: string) {
       code: detailedInformation.course.courseCode,
     },
     round: {
+      /** Start year and term. Formatted as XXXXY */
+      startTerm: term,
+
+      /** Deprecated unique identifier for course rounds (one-digit) */
+      code: roundInformation.round.ladokRoundId,
       /**
        * Period information sorted from the "oldest" to the "latest".
        * Example: if the course round includes the periods 2023-P5, 2024-P1 and 2025-P2
