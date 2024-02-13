@@ -30,7 +30,7 @@ export const UgSchool = z.object({
   name: z.string().min(1),
   kthid: z.string().min(1),
   description: z.object({
-    sv: z.string().optional(),
-    en: z.string().optional(),
-  }).required(),
+    sv: z.string().min(1),
+    en: z.string().min(1),
+  }).partial(),
 }).required();
