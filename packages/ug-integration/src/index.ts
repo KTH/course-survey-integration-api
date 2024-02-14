@@ -1,3 +1,4 @@
+import { z } from "zod";
 import { UgGroups, UgSchool, UgUser } from "./types";
 import { UGRestClient, UGRestClientError } from "./ugRestClient";
 
@@ -15,14 +16,9 @@ const ugClient = new UGRestClient({
   clientSecret: UG_REST_API_CLIENT_SECRET ?? "",
 });
 
-export type TUgCourseResponsibleAndTeachers = [
-  courseResponsible: string,
-  courseTeachers: string[],
-];
-
 export async function getUgMembers(groupName: string) {
   const { data, json, statusCode } = await ugClient
-    .get<any[]>(`groups?$filter=name eq '${groupName}'`)
+    .get<unknown>(`groups?$filter=name eq '${groupName}'`)
     .catch(ugClientGetErrorHandler);
 
   if (statusCode !== 200) {
@@ -31,9 +27,13 @@ export async function getUgMembers(groupName: string) {
 
   const groups = UgGroups.parse(json);
 
-  if (groups.length !== 1) {
+  if (groups.length === 0) {
+    throw new Error(`UGRestClient: group [${groupName}] not found`);
+  }
+
+  if (groups.length > 1) {
     throw new Error(
-      `UGRestClient: there are ${groups.length} groups with name [${groupName}]`,
+      `UGRestClient: there are ${groups.length} groups with name [${groupName}] (expected one)`,
     );
   }
 
@@ -70,18 +70,9 @@ export async function getUgExaminers(courseCode: string): Promise<string[]> {
   return getUgMembers(path);
 }
 
-export type TUgUser = {
-  email: string;
-  kthid: string;
-  givenName: string;
-  surname: string;
-};
+export type TUgUser = z.infer<typeof UgUser>;
 
-export async function getUgUser(
-  kthId: string | undefined,
-): Promise<TUgUser | undefined> {
-  if (kthId === undefined) return;
-
+export async function getUgUser(kthId: string): Promise<TUgUser | undefined> {
   const { data, json, statusCode } = await ugClient
     .get<TUgUser[]>(`users?$filter=kthid eq '${kthId}'`)
     .catch(ugClientGetErrorHandler);
@@ -126,10 +117,8 @@ export type TUgSchool = {
 };
 
 export async function getUgSchool(
-  schoolCode: string | undefined,
+  schoolCode: string,
 ): Promise<TUgSchool | undefined> {
-  if (schoolCode === undefined) return;
-
   const { data, json, statusCode } = await ugClient
     .get<TUgSchool[]>(
       // `groups?$filter=name eq 'edu.courses.SF.SF1625.20222'`
