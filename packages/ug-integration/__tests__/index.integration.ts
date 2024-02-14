@@ -37,7 +37,7 @@ describe("Test that your credential has proper permissions", () => {
   });
 
   test("can get school", async () => {
-    const res = await getUgSchool("eecs");
+    const res = await getUgSchool("J");
     expect(res?.kthid).toBeDefined();
     expect(res?.description).toBeDefined();
     expect(res?.description?.sv ?? res?.description?.en).toBeDefined();
@@ -45,5 +45,6 @@ describe("Test that your credential has proper permissions", () => {
 
   test("can get group", async () => {
     const res = await getUgMembers("edu.courses.SF.SF1624.examiner");
+    expect(res.length).toBeGreaterThan(0);
   });
 });
