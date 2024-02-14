@@ -78,7 +78,7 @@ export type TUgUser = {
 
 export async function getUgUser(
   kthId: string | undefined,
-): Promise<TUgUser | undefined | never> {
+): Promise<TUgUser | undefined> {
   if (kthId === undefined) return;
 
   const { data, json, statusCode } =
@@ -93,7 +93,7 @@ export async function getUgUser(
 
 export async function getUgUserByLadokId(
   ladokId: string,
-): Promise<TUgUser | undefined | never> {
+): Promise<TUgUser | undefined> {
   const { data, json, statusCode } = await ugClient
     .get<TUgUser[]>(
       // `groups?$filter=name eq 'edu.courses.SF.SF1625.20222'`
@@ -127,7 +127,7 @@ export type TUgSchool = {
 
 export async function getUgSchool(
   schoolCode: string | undefined,
-): Promise<TUgSchool | undefined | never> {
+): Promise<TUgSchool | undefined> {
   if (schoolCode === undefined) return;
 
   const { data, json, statusCode } = await ugClient
