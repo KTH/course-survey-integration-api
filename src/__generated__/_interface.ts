@@ -109,13 +109,13 @@ export interface components {
       /** @description Long form text including linebreaks */
       courseGoal: string;
       /** @enum {string} */
-      period: "P1" | "P2" | "P3" | "P4";
+      period: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
       /** @description Credits awarded for this course */
       credits: string;
       /** @description Person who is responsible for examination (source: LADOK). */
-      courseExaminor: components["schemas"]["CourseUser"];
+      courseExaminers: components["schemas"]["CourseUser"][];
       /** @description Person who is responsible for the course (source: ???). */
-      courseResponsible?: components["schemas"]["CourseUser"];
+      courseResponsible?: components["schemas"]["CourseUser"][];
       /** @description List of teachers connected to this course (source: ???) */
       courseTeachers: components["schemas"]["CourseUser"][];
       nrofRegisteredStudents: number;
@@ -147,7 +147,7 @@ export interface components {
       code: string;
       semester: string;
       /** @description Year and term when program round started */
-      startPeriod: string;
+      startTerm?: string;
       name: string;
       /** @description Calculate by using startPeriod and current period. */
       studyYear: number;
