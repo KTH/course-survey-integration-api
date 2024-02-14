@@ -27,7 +27,7 @@ export async function getCourseInformation(ladokUid: string) {
     },
     round: {
       /** Start year and term. Formatted as XXXXY */
-      startTerm: term,
+      startTerm: term.toString(10),
 
       /** Deprecated unique identifier for course rounds (one-digit) */
       code: roundInformation.round.ladokRoundId,
