@@ -2,7 +2,7 @@ import {
   getUgCourseResponsibleAndTeachers,
   getUgSchool,
   getUgUser,
-  getUgUserFromLadokId,
+  getUgUserByLadokId,
 } from "../src/index";
 
 describe("Test that your credential has proper permissions", () => {
@@ -29,7 +29,7 @@ describe("Test that your credential has proper permissions", () => {
   });
 
   test("can get user from Ladok UID", async () => {
-    const res = await getUgUserFromLadokId(
+    const res = await getUgUserByLadokId(
       "5cbe0fe1-6317-11ec-b965-d92444244ba1",
     );
     expect(res?.email).toBeDefined();

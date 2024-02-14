@@ -6,7 +6,19 @@ exports[`ModulTillStatusEvent writes correct data to db 1`] = `
     "id": "e51b9585-9501-11ee-a0ce-a9a57d284dbd",
     "modules": [
       {
+        "code": "1239",
+        "credits": "10.0",
+        "gradingScheme": [
+          "A",
+          "B",
+          "C",
+          "D",
+          "E",
+          "FX",
+          "F",
+        ],
         "id": "6b741a05-9505-11ee-a0ce-a9a57d284dbd",
+        "name": "",
       },
     ],
   },

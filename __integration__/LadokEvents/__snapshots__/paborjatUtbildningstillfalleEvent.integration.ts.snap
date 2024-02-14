@@ -15,7 +15,12 @@ exports[`PaborjadUtbildningEvent writes correct data to db 1`] = `
     "canceled": false,
     "canvasSisId": "41717c91-4028-11ee-bf53-2115569549a8",
     "courseCode": "DD2380",
-    "courseExaminor": {},
+    "courseExaminor": {
+      "email": "dummy@email.com",
+      "fullName": "Dummy User",
+      "kthUserId": "u1dummy",
+      "userName": "dummyuser",
+    },
     "courseGoal": "<p>Efter godk&#228;nd kurs ska studenten kunna</p><ol><li>till&#228;mpa olika principer inom Artificiell Intelligens (AI)</li><li>v&#228;lja l&#228;mpliga verktyg och implementera effektiva l&#246;sningar p&#229; problem inom AI</li><li>integrera verktyg f&#246;r att designa datorprogram som visar olika egenskaper som f&#246;rv&#228;ntas av ett intelligent system</li><li>presentera, analysera, och ber&#228;ttiga en egen l&#246;sning p&#229; ett AI-problem</li><li>reflektera &#246;ver och diskutera g&#228;llande sociala och etiska aspekter av AI</li></ol><p>i syfte att kunna</p><ul><li>dra nytta av metoder inom artificiell intelligens&#160;vid analys, design och implementation av datorprogram</li><li>bidra till design av ett intelligent system i s&#229;v&#228;l akademiska som industriella till&#228;mpningar.</li></ul>",
     "courseResponsible": {
       "email": "kaj@kth.se",
@@ -40,17 +45,12 @@ exports[`PaborjadUtbildningEvent writes correct data to db 1`] = `
     "credits": "6",
     "displayYear": "2023",
     "endDate": "2023-10-27",
-    "gradingDistribution": {
-      "A": -1,
-      "B": -1,
-      "C": -1,
-      "D": -1,
-      "E": -1,
-      "F": -1,
-      "FX": -1,
-    },
     "id": "41717c91-4028-11ee-bf53-2115569549a8",
-    "institution": {},
+    "institution": {
+      "displayCode": "DUMMY",
+      "displayName": "Dummy Institution",
+      "kthId": "u1dummyinst",
+    },
     "ladokCourseId": "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
     "ladokCourseRoundId": "41717c91-4028-11ee-bf53-2115569549a8",
     "language": "sv",
@@ -118,7 +118,6 @@ exports[`PaborjadUtbildningEvent writes correct data to db 1`] = `
       "kthId": "u2wmqdqu",
     },
     "period": "P1",
-    "programs": [],
   },
 }
 `;

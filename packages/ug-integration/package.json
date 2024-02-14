@@ -6,8 +6,9 @@
   "source": "src/index.ts",
   "scripts": {
     "build": "tsc --outDir dist --sourceMap --declaration",
-    "test": "echo: 'No unit tests yet, try `npm run test:integration`'",
+    "test": "npm run test:unit",
     "test-credentials": "npm run test:integration",
+    "test:unit": "jest __tests__/*.spec.ts",
     "test:integration": "jest --roots ./__tests__ --testMatch '**/*.integration.ts' --config=./jest.integration.config.js --testTimeout 5000"
   },
   "devDependencies": {

@@ -37,11 +37,11 @@ export async function getUgCourseResponsibleAndTeachers(
 
   // TODO: I can't get the subgroups from the query so I can't iterate over the sections
   const { data, json, statusCode } =
-    (await ugClient
+    await ugClient
       .get<any[]>(
         `groups?$filter=startswith(name,'${path}')`, // &$expand=Subgroups
       )
-      .catch(ugClientGetErrorHandler)) ?? <any>{};
+      .catch(ugClientGetErrorHandler);
   if (statusCode !== 200) {
     throw new Error(`UGRestClient: ${statusCode} ${data}`);
   }
@@ -82,16 +82,16 @@ export async function getUgUser(
   if (kthId === undefined) return;
 
   const { data, json, statusCode } =
-    (await ugClient
+    await ugClient
       .get<TUgUser[]>(`users?$filter=kthid eq '${kthId}'`)
-      .catch(ugClientGetErrorHandler)) ?? <any>{};
+      .catch(ugClientGetErrorHandler);
 
   if (json === undefined) return;
 
   return UgUser.parse(json.pop());
 }
 
-export async function getUgUserFromLadokId(
+export async function getUgUserByLadokId(
   ladokId: string,
 ): Promise<TUgUser | undefined | never> {
   const { data, json, statusCode } = await ugClient

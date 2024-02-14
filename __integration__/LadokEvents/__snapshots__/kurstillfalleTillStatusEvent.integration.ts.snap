@@ -3,8 +3,8 @@
 exports[`ModulTillStatusEvent writes correct data to db 1`] = `
 {
   "CourseRound": {
+    "canceled": false,
     "id": "41717c91-4028-11ee-bf53-2115569549a8",
-    "status": 2,
   },
 }
 `;
