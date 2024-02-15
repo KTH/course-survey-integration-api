@@ -55,6 +55,11 @@ export function isValidEvent(eventName: string, userProperties: unknown): boolea
 
 export type DbCollectionName = "StudentParticipation" | "CourseRound" | "Module" | "Program" | "ReportedResult";
 
+export type TQueryOptions = {
+  offset?: number;
+  limit?: number;
+};
+
 export class Database {
   _client: MongoClient | undefined;
 
@@ -75,21 +80,23 @@ export class Database {
     return doc as T;
   }
 
-  async queryByProperty<T>(propName: string, value: string | object, collectionName: DbCollectionName): Promise<any[]> {
+  async queryByProperty<T>(propName: string, value: string | object, collectionName: DbCollectionName, { offset = 0, limit = 30 }: TQueryOptions = {}): Promise<any[]> {
     await this.connect();
+    const options = { skip: offset, limit};
     const collection = this._client!.db().collection(collectionName);
-    const docs = await collection.find({ [propName]: value }).toArray();
+    const docs = await collection.find({ [propName]: value }, options).toArray();
     return docs as T[];
   }
 
-  async query<T>(query: { [key: string]: any }, collectionName: DbCollectionName): Promise<any[]> {
+  async query<T>(query: { [key: string]: any }, collectionName: DbCollectionName, { offset = 0, limit = 30 }: TQueryOptions = {}): Promise<any[]> {
     await this.connect();
+    const options = { skip: offset, limit};
     const collection = this._client!.db().collection(collectionName);
-    const docs = await collection.find(query).toArray();
+    const docs = await collection.find(query, options).toArray();
     return docs as T[];
   }
 
-  async countByPropertyQuery(propName: string, value: string, collectionName: DbCollectionName): Promise<number> {
+  async countByPropertyQuery(propName: string, value: string | object, collectionName: DbCollectionName): Promise<number> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     const count = await collection.countDocuments({ [propName]: value });

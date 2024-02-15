@@ -27,16 +27,27 @@ security:
     - oauth2: []
 
 paths:
-    /course-round:
+    /course-rounds:
         get:
-            summary: Returns a list of course rounds.
-            description: The API will return any course round from this or previous term that should be surveyed. A course round might be updated and course rounds might be added to this list as time progresses during the term.
+            summary: Returns a list of course rounds pending evaluation (partial objects only).
+            description: |
+                | The API will return course rounds from this or previous term. The course round is returned as a partial object,
+                | for complete data call the details endpoint. A course round might be updated and course rounds might be added
+                | to this list as time progresses during the term. Added courses will be added to end of list. Course rounds may
+                | be removed from this list if calls are on different days.
             parameters:
                 - $ref: "#/components/parameters/PageLimit"
                 - $ref: "#/components/parameters/PageOffset"
             responses:
                 "200":
                     description: Ok
+                    headers:
+                        Pagination-Total-Count:
+                            $ref: "#/components/headers/Pagination-Total-Count"
+                        Pagination-Page-Offset:
+                            $ref: "#/components/headers/Pagination-Page-Offset"
+                        Pagination-Page-Limit:
+                            $ref: "#/components/headers/Pagination-Page-Limit"
                     content:
                         application/json:
                             schema:
@@ -48,9 +59,14 @@ paths:
                 "default":
                     $ref: "#/components/responses/default"
 
-    /course-round/{ladokRoundId}:
+    /course-rounds/{ladokRoundId}:
         get:
-            summary: Returns information about this course round.
+            summary: Returns complete information about this course round.
+            description: |
+                | This endpoint returns all information about a course round. This includes the number of registered students,
+                | the number of reported results, grading distribution, programs and modules.
+                | Note: This information needs to be updated daily from when the course has ended until the course analysis has
+                | been created.
             parameters:
                 - name: ladokRoundId
                   in: path
@@ -69,7 +85,7 @@ paths:
                 "default":
                     $ref: "#/components/responses/default"
 
-    /course-round/{ladokRoundId}/students:
+    /course-rounds/{ladokRoundId}/students:
         get:
             summary: Returns list of students belonging to the course round.
             parameters:
@@ -83,6 +99,13 @@ paths:
             responses:
                 "200":
                     description: Ok
+                    headers:
+                        Pagination-Total-Count:
+                            $ref: "#/components/headers/Pagination-Total-Count"
+                        Pagination-Page-Offset:
+                            $ref: "#/components/headers/Pagination-Page-Offset"
+                        Pagination-Page-Limit:
+                            $ref: "#/components/headers/Pagination-Page-Limit"
                     content:
                         application/json:
                             schema:
@@ -95,6 +118,23 @@ paths:
                     $ref: "#/components/responses/default"
 
 components:
+    headers:
+        Pagination-Total-Count:
+            schema:
+                type: integer
+                description: The total number of course rounds available.
+        Pagination-Page-Offset:
+            schema:
+                type: integer
+                description: The offset of the current page.
+                minimum: 0
+        Pagination-Page-Limit:
+            schema:
+                type: integer
+                description: The limit of course rounds per page.
+                minimum: 1
+                maximum: 30
+                default: 30
     parameters:
         PageLimit:
             name: limit
@@ -130,17 +170,13 @@ components:
                                 type: string
 
     securitySchemes:
-        oauth2:
-            type: oauth2
-            description: This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)
-            flows:
-                implicit: # <---- OAuth flow(authorizationCode, implicit, password or clientCredentials)
-                    authorizationUrl: https://api.example.com/oauth2/authorize
-                    scopes:
-                        read: read data
+        ApiKey:
+            type: apiKey
+            in: header
+            name: Ocp-Apim-Subscription-Key
 
     schemas:
-        CourseRound:
+        CourseRoundPartial:
             type: object
             required:
                 - id
@@ -150,7 +186,7 @@ components:
                 - name
                 - courseCode
                 - language
-                # - canceled
+                - canceled
                 - endDate
                 - displayYear
                 - organization
@@ -159,13 +195,8 @@ components:
                 - period
                 - credits
                 - courseExaminor
-                # - courseResponsible
+                - courseResponsible
                 - courseTeachers
-                - nrofRegisteredStudents
-                - nrofReportedResults
-                # - gradingDistribution
-                - programs
-                - modules
             properties:
                 id:
                     type: string
@@ -218,33 +249,48 @@ components:
                 credits:
                     type: string
                     description: Credits awarded for this course
-                courseExaminor:
-                    $ref: "#/components/schemas/CourseUser"
-                    description: "Person who is responsible for examination (source: LADOK)."
+                courseExaminors:
+                    type: array
+                    description: "List of people who are responsible for examination (source: LADOK)."
+                    items:
+                        $ref: "#/components/schemas/CourseUser"
                 courseResponsible:
-                    $ref: "#/components/schemas/CourseUser"
-                    description: "Person who is responsible for the course (source: ???)."
+                    type: array
+                    description: "List of people who are responsible for the course (source: ???)."
+                    items:
+                        $ref: "#/components/schemas/CourseUser"
                 courseTeachers:
                     type: array
                     description: "List of teachers connected to this course (source: ???)"
                     items:
                         $ref: "#/components/schemas/CourseUser"
-                nrofRegisteredStudents:
-                    type: integer
-                nrofReportedResults:
-                    type: integer
-                gradingDistribution:
-                    type: object
-                    description: "Kurs, betygsfördelning" # TODO: Add an example of what this would look like
-                    additionalProperties: true
-                programs:
-                    type: array
-                    items:
-                        $ref: "#/components/schemas/ProgramRound"
-                modules:
-                    type: array
-                    items:
-                        $ref: "#/components/schemas/CourseModule"
+        CourseRound:
+            allOf:
+                - $ref: "#/components/schemas/CourseRoundPartial"
+                - type: object
+                  required:
+                    - nrofRegisteredStudents
+                    - nrofReportedResults
+                    - gradingDistribution
+                    - programs
+                    - modules
+                  properties:
+                      nrofRegisteredStudents:
+                          type: integer
+                      nrofReportedResults:
+                          type: integer
+                      gradingDistribution:
+                          type: object
+                          description: "Kurs, betygsfördelning" # TODO: Add an example of what this would look like
+                          additionalProperties: true
+                      programs:
+                          type: array
+                          items:
+                              $ref: "#/components/schemas/ProgramRound"
+                      modules:
+                          type: array
+                          items:
+                              $ref: "#/components/schemas/CourseModule"
 
         StudentParticipation:
             type: object
@@ -330,7 +376,7 @@ components:
                 - credits
                 - gradingScheme
                 - nrofReportedResults
-                # - gradingDistribution
+                - gradingDistribution
             properties:
                 id:
                     type: string
