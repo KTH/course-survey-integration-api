@@ -36,8 +36,8 @@ export default async function handler<T extends APICourseRoundStudentList>(reque
     jsonBody: outp,
     headers: {
       "Pagination-Total-Count": total.toString(),
-      "Pagination-Page-Offset": offset.toString(),
-      "Pagination-Page-Limit": limit.toString()
+      "Pagination-Offset": offset.toString(),
+      "Pagination-Limit": limit.toString()
     }
   }
 };

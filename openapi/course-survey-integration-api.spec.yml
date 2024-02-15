@@ -42,12 +42,13 @@ paths:
                 "200":
                     description: Ok
                     headers:
+                        # UTRED: Alternativ lösning: använd link istället för pagineringsheaders
                         Pagination-Total-Count:
                             $ref: "#/components/headers/Pagination-Total-Count"
-                        Pagination-Page-Offset:
-                            $ref: "#/components/headers/Pagination-Page-Offset"
-                        Pagination-Page-Limit:
-                            $ref: "#/components/headers/Pagination-Page-Limit"
+                        Pagination-Offset:
+                            $ref: "#/components/headers/Pagination-Offset"
+                        Pagination-Limit:
+                            $ref: "#/components/headers/Pagination-Limit"
                     content:
                         application/json:
                             schema:
@@ -102,10 +103,10 @@ paths:
                     headers:
                         Pagination-Total-Count:
                             $ref: "#/components/headers/Pagination-Total-Count"
-                        Pagination-Page-Offset:
-                            $ref: "#/components/headers/Pagination-Page-Offset"
-                        Pagination-Page-Limit:
-                            $ref: "#/components/headers/Pagination-Page-Limit"
+                        Pagination-Offset:
+                            $ref: "#/components/headers/Pagination-Offset"
+                        Pagination-Limit:
+                            $ref: "#/components/headers/Pagination-Limit"
                     content:
                         application/json:
                             schema:
@@ -123,12 +124,12 @@ components:
             schema:
                 type: integer
                 description: The total number of course rounds available.
-        Pagination-Page-Offset:
+        Pagination-Offset:
             schema:
                 type: integer
-                description: The offset of the current page.
+                description: The offset of the current page in items.
                 minimum: 0
-        Pagination-Page-Limit:
+        Pagination-Limit:
             schema:
                 type: integer
                 description: The limit of course rounds per page.
@@ -142,9 +143,9 @@ components:
             description: Nrof items per page
             schema:
                 type: integer
-                minimum: 0
-                maximum: 100
-                default: 100
+                minimum: 1
+                maximum: 30
+                default: 30
             required: false
         PageOffset:
             name: offset
