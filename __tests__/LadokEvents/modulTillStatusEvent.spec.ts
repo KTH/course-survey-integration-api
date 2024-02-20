@@ -28,7 +28,7 @@ describe("RegistreringEvent", () => {
     await handler(event.message, mockContext, mockDb);
 
     expect(mockContext.log.mock.calls.length).toBe(1);
-    expect(mockContext.log.mock.lastCall[0]).toBe(`ModulTillStatusEvent: ${event.message.OverliggandeUtbildningsinstansUID} ${event.message.UtbildningsinstansUID} ${event.message.Status}`);
+    expect(mockContext.log.mock.lastCall[0]).toBe(`ModulTillStatusEvent: ${event.message.OverliggandeUtbildningsinstansUID} ${event.message.Utbildningskod} ${event.message.Status}`);
   });
   
   test.skip("writes correct data to db", async () => {

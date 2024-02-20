@@ -5,7 +5,7 @@ import { ServiceBus, isValidEvent, Database } from "../utils";
 import { TCourseRound, TCourseRoundEntity, TCourseUser, TOrgEntity } from "../interface";
 import { getCourseInformation } from "kopps-integration";
 import { getCourseRoundInformation } from "ladok-integration";
-import { convertLadokModuleToCourseModule, convertUgSchoolToOrgEntity, convertUgToCourseUser, convertUgToCourseUserArr } from "./utils";
+import { convertLadokModuleToCourseModule, convertUgSchoolToOrgEntity, convertUgToCourseUserArr } from "./utils";
 
 export type TPaborjatUtbildningstillfalleEvent = {
   PaborjandeDatum: string, // "2021-01-01",
@@ -91,19 +91,24 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
   const dummyCanceled = false;
 
   // TODO: Use proper data -- Where does this come from?   <***************
-  const dummyPeriod = 'P1';
+  const dummyPeriod = {
+    period: "P1" as any,
+    credits: "7.5hp",
+  };
 
   // TODO: Create entity types that are synced with the API response types
   const doc: TCourseRoundEntity = {
+    // Required for DB-layer to work
+    id: msgUtbildningstillfalleUid,
+
     // Dummy data:
     language: dummyLanguage,
     canceled: dummyCanceled, 
     institution: dummyInstitution, // TODO: Exists in our ladok integration package, may have different name
-    period: dummyPeriod,
-    courseExaminor: dummyCourseExaminor,
+    periods: [dummyPeriod],
+    courseExaminors: [dummyCourseExaminor],
     
     // Source event message:
-    id: msgUtbildningstillfalleUid,
     ladokCourseId: msgUtbildningsUid,
     ladokCourseRoundId: msgUtbildningstillfalleUid,
     canvasSisId: msgUtbildningstillfalleUid, // I deduced this by looking at the Event Relationship diagram, not yet verified in Canvas
@@ -114,7 +119,7 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
 
     // Source UG:
     organization: convertUgSchoolToOrgEntity(tmpUgSchool, ladokSchoolCode, dummyLanguage),
-    courseResponsible: convertUgToCourseUser(ugCourseResponsible),
+    courseResponsible: convertUgToCourseUserArr(ugCourseResponsible),
     courseTeachers: convertUgToCourseUserArr(ugCourseTeachers),
     
     // Source LADOK REST API:

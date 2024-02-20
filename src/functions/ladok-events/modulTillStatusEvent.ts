@@ -96,8 +96,9 @@ export async function handler(message: TModulTillStatusEvent, context: Invocatio
 
   const courseRoundId = message.OverliggandeUtbildningsinstansUID;
   const moduleId = message.UtbildningsinstansUID;
+  const moduleCode = message.Utbildningskod;
   const status = message.Status;
-  context.log(`ModulTillStatusEvent: ${courseRoundId} ${moduleId} ${status}`);
+  context.log(`ModulTillStatusEvent: ${courseRoundId} ${moduleCode} ${status}`);
 
   try {
       const courseRound: TCourseRoundEntity = await db.fetchById(courseRoundId, "CourseRound");
@@ -105,9 +106,8 @@ export async function handler(message: TModulTillStatusEvent, context: Invocatio
       let updatedModules;
       if (status === STATUS_ACTIVE) {
         // Add if not exists
-        if (!courseRound.modules?.find((module: TCourseRoundModuleEntity) => module.id === moduleId)) {
+        if (!courseRound.modules?.find((module: TCourseRoundModuleEntity) => module.code === moduleCode)) {
           const newModule: TCourseRoundModuleEntity = {
-            id: moduleId,
             code: message.Utbildningskod,
             name: convertBenamningToName(message.Benamningar.Benamning, language) ?? "",
             credits: message.Omfattningsvarde,
@@ -118,7 +118,7 @@ export async function handler(message: TModulTillStatusEvent, context: Invocatio
       } else {
         // Remove if exists
         // TODO: Add moduleId to Module interface
-        updatedModules = courseRound.modules.filter((module: TCourseRoundModuleEntity) => module.id !== moduleId);
+        updatedModules = courseRound.modules.filter((module: TCourseRoundModuleEntity) => module.code === moduleCode);
       }
       await db.update<TCourseRoundEntity>(courseRound.id!, { modules: updatedModules }, "CourseRound");
       // 1. Fetch CourseRound from DB

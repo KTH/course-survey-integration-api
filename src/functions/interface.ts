@@ -3,7 +3,8 @@ import { paths, components } from "../__generated__/_interface";
 // To generate the _interface.ts file, run: `npm run generate-types`
 // in the root of the project.
 
-// ## Entities
+// ## API Components
+export type TCourseRoundPartial = components["schemas"]["CourseRoundPartial"];
 export type TCourseRound = components["schemas"]["CourseRound"] & {
   /**
    * Add each reported result using composite key to allow for updates.
@@ -29,15 +30,15 @@ export type TApiError = {
 };
 
 // ## Endpoints
-export type PathCourseRoundList = paths["/course-round"];
+export type PathCourseRoundList = paths["/course-rounds"];
 export type APICourseRoundListErrType = TAPIErrType;
-export type APICourseRoundList = TCourseRound[];
+export type APICourseRoundList = TCourseRoundPartial[];
 
-export type PathCourseRound = paths["/course-round/{ladokRoundId}"];
+export type PathCourseRound = paths["/course-rounds/{ladokRoundId}"];
 export type APICourseRoundErrType = TAPIErrType;
 export type APICourseRound = TCourseRound;
 
-export type PathCourseRoundStudentList = paths["/course-round/{ladokRoundId}/students"];
+export type PathCourseRoundStudentList = paths["/course-rounds/{ladokRoundId}/students"];
 export type APICourseRoundStudentListErrType = TAPIErrType;
 export type APICourseRoundStudentList = TStudentParticipation[];
 
@@ -46,7 +47,6 @@ export type APICourseRoundStudentList = TStudentParticipation[];
  */
 
 export type TCourseRoundModuleEntity = {
-  id: TCourseModule["id"];
   code: TCourseModule["code"];
   name: TCourseModule["name"];
   credits: TCourseModule["credits"];
@@ -54,14 +54,14 @@ export type TCourseRoundModuleEntity = {
 }
 
 export type TCourseRoundEntity = {
+  id: string; // Required for DB-layer to work
   language: TCourseRound["language"];
   canceled: TCourseRound["canceled"] 
   institution: TCourseRound["institution"];
-  period: TCourseRound["period"];
-  courseExaminor: TCourseRound["courseExaminor"];
+  periods: TCourseRound["periods"];
+  courseExaminors: TCourseRound["courseExaminors"];
   
   // Source event message:
-  id: TCourseRound["id"];
   ladokCourseId: TCourseRound["ladokCourseId"];
   ladokCourseRoundId: TCourseRound["ladokCourseRoundId"];
   canvasSisId: TCourseRound["canvasSisId"];
@@ -85,7 +85,7 @@ export type TCourseRoundEntity = {
 }
 
 export type TReportedResultEntity = {
-  id: string;
+  id: string; // Required for DB-layer to work
   parentId: string; // UtbildningsinstansUID
   hashedStudentId: string; // StudentUID hashed
   decision: string; // BeslutUID
