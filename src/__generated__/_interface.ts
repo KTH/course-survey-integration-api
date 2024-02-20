@@ -152,7 +152,7 @@ export interface components {
       name: string;
       /** @description Calculate by using startPeriod and current period. */
       studyYear: number;
-      specification: string;
+      specialization: string;
       /** @enum {string} */
       required?: "TBD" | "...";
     };

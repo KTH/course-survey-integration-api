@@ -23,7 +23,7 @@ export type ProgramParticipation =
       startTerm: string;
       studyYear: number;
       required: "???";
-      specification:
+      specialization:
         | undefined
         | {
             code: string;
@@ -137,7 +137,7 @@ export async function getProgramParticipation(
     startTerm: programStartTerm,
     studyYear,
     required: "???" as "???",
-    specification: undefined,
+    specialization: undefined,
   };
 
   if (arr.length === 1) {
@@ -153,11 +153,11 @@ export async function getProgramParticipation(
   if (arr.length === 2) {
     return {
       ...programData,
-      specification: specializationData,
+      specialization: specializationData,
     };
   }
 
   throw new Error(
-    `The student [${studentUID}] participates in course round [${courseRoundUID}], which is related to a "kurspaketering" with ${arr.length} levels (expected a maximum of two: program and specification)`,
+    `The student [${studentUID}] participates in course round [${courseRoundUID}], which is related to a "kurspaketering" with ${arr.length} levels (expected a maximum of two: program and specialization)`,
   );
 }
