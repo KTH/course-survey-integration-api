@@ -110,7 +110,7 @@ export interface components {
       /** @description Long form text including linebreaks */
       courseGoal: string;
       /** @enum {string} */
-      period: "P1" | "P2" | "P3" | "P4";
+      period: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
       /** @description Credits awarded for this course */
       credits: string;
       /** @description Person who is responsible for examination (source: LADOK). */
