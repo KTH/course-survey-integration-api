@@ -34,14 +34,16 @@ export async function handler(message: TResultatPaModulAttesteratEvent, context:
 
   context.log(`ResultatPaModulAttesteradEvent: `);
 
-  const { UtbildningsinstansUID, StudentUID } = message;
+  const { KurstillfalleUID, StudentUID, UtbildningsinstansUID } = message;
   const { BeslutUID } = message.Beslut;
   const { BetygsgradID, BetygsskalaID, ResultatUID } = message.Resultat;
   const hashedStudentId = await hashStudentId(StudentUID);
 
+  const id = `${KurstillfalleUID}-${hashedStudentId}`;
   const doc: TReportedResultEntity = {
-    id: `${UtbildningsinstansUID}-${hashedStudentId}`,
-    parentId: UtbildningsinstansUID,
+    id,
+    parentId: UtbildningsinstansUID, // This matches the moduleRoundId
+    courseRoundId: KurstillfalleUID,
     hashedStudentId,
     decision: BeslutUID,
     result: "string",
@@ -54,8 +56,7 @@ export async function handler(message: TResultatPaModulAttesteratEvent, context:
   }
 
   const res = await db.query({
-    parentId: UtbildningsinstansUID,
-    studentId: StudentUID,
+    id,
   }, "ReportedResult");
   
   if (res.length > 0) {

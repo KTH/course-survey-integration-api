@@ -46,11 +46,24 @@ export type APICourseRoundStudentList = TStudentParticipation[];
  * Domain entities stored in DB
  */
 
+// This is an embedded object
 export type TCourseRoundModuleEntity = {
+  moduleRoundId: string; // Used to match with credits (TReportedResultEntity)
   code: TCourseModule["code"];
   name: TCourseModule["name"];
   credits: TCourseModule["credits"];
   gradingScheme: TCourseModule["gradingScheme"];
+}
+
+// This is an embedded object
+export type TProgramRoundEntity = {
+  code: TProgramRound["code"];
+  semester: TProgramRound["semester"];
+  startTerm: TProgramRound["startTerm"];
+  name: TProgramRound["name"];
+  studyYear: TProgramRound["studyYear"];
+  specialization?: TProgramRound["specialization"];
+  required: TProgramRound["required"];
 }
 
 export type TCourseRoundEntity = {
@@ -86,7 +99,8 @@ export type TCourseRoundEntity = {
 
 export type TReportedResultEntity = {
   id: string; // Required for DB-layer to work
-  parentId: string; // UtbildningsinstansUID
+  parentId: string; // This can belong to a module (moduleRoundId) or a course round (courseRoundId).
+  courseRoundId: string; // CourseRound.ladokCourseRoundId (UtbildningstillfalleUID)
   hashedStudentId: string; // StudentUID hashed
   decision: string; // BeslutUID
   result: string; // Calculated from BetygsgradID and BetygsskalaID
@@ -96,4 +110,16 @@ export type TReportedResultEntity = {
     BetygsskalaID: number;
     ResultatUID: string;
   }
+}
+
+export type TStudentParticipationEntity = {
+  id: string; // Required for DB-layer to work
+  parentId: string; // CourseRound.ladokCourseRoundId (UtbildningsinstansUID)
+  hashedStudentId: string; // StudentUID hashed
+  ladokCourseRoundId: string;
+  canvasSisId: string;
+  name: string;
+  email: string;
+  roles: string[];
+  program: TProgramRoundEntity
 }

@@ -334,12 +334,13 @@ components:
                 - location
                 - program
             properties:
-                ladokStudentId:
+                id:
                     type: string
-                    description: "Ladok equivalent: StudentUID"
-                ladokCourseId: # This comes from BTH-data, do we really need this?
-                    type: string
-                    description: "Ladok equivalent: UtbildningsUID, KursUID"
+                    description: "Ladok equivalent: `${StudentUID}.${KurstillfalleUID}`"
+                # ladokStudentId:
+                #     type: string
+                # ladokCourseId:
+                #     type: string
                 ladokCourseRoundId:
                     type: string
                 canvasSisId:
@@ -367,15 +368,18 @@ components:
             required:
                 - code
                 - semester
-                - startPeriod
+                - startTerm
                 - name
                 - studyYear
+                - required
             properties:
                 code:
                     type: string
-                semester:
+                    description: "Program code, e.g. 'CINTE'"
+                semester: # QUESTION: A course round can run over several semesters, how do we handle that?
                     type: string
-                startTerm:
+                    description: "The semester this program round is part of."
+                startTerm: # QUESTION: Why do we need this?
                     type: string
                     description: Year and term when program round started
                 name:

@@ -108,6 +108,7 @@ export async function handler(message: TModulTillStatusEvent, context: Invocatio
         // Add if not exists
         if (!courseRound.modules?.find((module: TCourseRoundModuleEntity) => module.code === moduleCode)) {
           const newModule: TCourseRoundModuleEntity = {
+            moduleRoundId: moduleId, // 
             code: message.Utbildningskod,
             name: convertBenamningToName(message.Benamningar.Benamning, language) ?? "",
             credits: message.Omfattningsvarde,
