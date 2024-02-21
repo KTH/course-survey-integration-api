@@ -114,9 +114,9 @@ export interface components {
       /** @description Credits awarded for this course */
       credits: string;
       /** @description Person who is responsible for examination (source: LADOK). */
-      courseExaminor: components["schemas"]["CourseUser"];
+      courseExaminers: components["schemas"]["CourseUser"][];
       /** @description Person who is responsible for the course (source: ???). */
-      courseResponsible?: components["schemas"]["CourseUser"];
+      courseResponsible: components["schemas"]["CourseUser"][];
       /** @description List of teachers connected to this course (source: ???) */
       courseTeachers: components["schemas"]["CourseUser"][];
       nrofRegisteredStudents: number;

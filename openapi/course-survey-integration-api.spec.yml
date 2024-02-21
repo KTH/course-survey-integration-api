@@ -158,8 +158,8 @@ components:
         - courseGoal
         - period
         - credits
-        - courseExaminor
-        # - courseResponsible
+        - courseExaminers
+        - courseResponsible
         - courseTeachers
         - nrofRegisteredStudents
         - nrofReportedResults
@@ -219,12 +219,16 @@ components:
         credits:
           type: string
           description: Credits awarded for this course
-        courseExaminor:
-          $ref: "#/components/schemas/CourseUser"
+        courseExaminers:
+          type: array
           description: "Person who is responsible for examination (source: LADOK)."
+          items:
+            $ref: "#/components/schemas/CourseUser"
         courseResponsible:
-          $ref: "#/components/schemas/CourseUser"
+          type: array
           description: "Person who is responsible for the course (source: ???)."
+          items:
+            $ref: "#/components/schemas/CourseUser"
         courseTeachers:
           type: array
           description: "List of teachers connected to this course (source: ???)"
