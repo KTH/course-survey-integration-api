@@ -135,7 +135,7 @@ export async function handler(
     // Dummy data:
     language: dummyLanguage,
     canceled: dummyCanceled,
-    period: `P${koppsInfo.round.periods[0]}`,
+    period: koppsInfo.round.periods[0],
     courseExaminers: examiners,
 
     // Source event message:

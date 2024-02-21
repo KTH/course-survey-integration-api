@@ -34,7 +34,7 @@ export async function getCourseInformation(ladokUid: string) {
       /**
        * Period information sorted from the "oldest" to the "latest".
        * Example: if the course round includes the periods 2023-P5, 2024-P1 and 2025-P2
-       * the function will return [5, 1, 2] in that order
+       * the function will return ["P5", "P1", "P2"] in that order
        */
       periods: getPeriods(roundInformation),
     },
