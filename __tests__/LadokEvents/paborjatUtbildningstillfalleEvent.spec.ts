@@ -78,11 +78,6 @@ LadokIntegrationMock.getCourseRoundInformation(
   },
 );
 
-UgIntegrationMock.getUgCourseResponsibleAndTeachers("SF1625", "2022", "2", [
-  "u1responsible",
-  ["u1teacher1", "u1teacher2"],
-]);
-
 UgIntegrationMock.getUgUser("u1responsible", {
   email: "cr@email.com",
   kthid: "u1responsible",
