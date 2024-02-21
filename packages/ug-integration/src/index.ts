@@ -51,7 +51,7 @@ export async function getUgCourseResponsible(
   return getUgMembers(path);
 }
 
-export async function getUgTeachers(
+export async function getUgCourseTeachers(
   courseCode: string,
   roundYear: string,
   roundCode: string,
@@ -63,7 +63,9 @@ export async function getUgTeachers(
 }
 
 /** Return the KTH ID of examiners for a course */
-export async function getUgExaminers(courseCode: string): Promise<string[]> {
+export async function getUgCourseExaminers(
+  courseCode: string,
+): Promise<string[]> {
   const prefix = courseCode.slice(0, 2);
   const path = `edu.courses.${prefix}.${courseCode}.examiner`;
 

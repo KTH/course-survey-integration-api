@@ -1,9 +1,9 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import {
-  getUgTeachers,
+  getUgCourseTeachers,
   getUgCourseResponsible,
-  getUgExaminers,
+  getUgCourseExaminers,
   getUgSchool,
   getUgUser,
 } from "ug-integration";
@@ -90,13 +90,13 @@ export async function handler(
     roundTerm,
     roundCode,
   );
-  const teachersIds = await getUgTeachers(
+  const teachersIds = await getUgCourseTeachers(
     ladokCourseCode,
     roundTerm,
     roundCode,
   );
 
-  const examinersIds = await getUgExaminers(ladokCourseCode);
+  const examinersIds = await getUgCourseExaminers(ladokCourseCode);
 
   // TODO: Should we cache these values? For how long?
   const courseResponsible = convertUgUsersToCourseUsers(
