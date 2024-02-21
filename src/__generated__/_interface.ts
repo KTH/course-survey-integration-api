@@ -3,6 +3,7 @@
  * Do not make direct changes to the file.
  */
 
+
 export interface paths {
   "/course-round": {
     /**
@@ -109,13 +110,13 @@ export interface components {
       /** @description Long form text including linebreaks */
       courseGoal: string;
       /** @enum {string} */
-      period: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
+      period: "P1" | "P2" | "P3" | "P4";
       /** @description Credits awarded for this course */
       credits: string;
       /** @description Person who is responsible for examination (source: LADOK). */
-      courseExaminers: components["schemas"]["CourseUser"][];
+      courseExaminor: components["schemas"]["CourseUser"];
       /** @description Person who is responsible for the course (source: ???). */
-      courseResponsible?: components["schemas"]["CourseUser"][];
+      courseResponsible?: components["schemas"]["CourseUser"];
       /** @description List of teachers connected to this course (source: ???) */
       courseTeachers: components["schemas"]["CourseUser"][];
       nrofRegisteredStudents: number;
