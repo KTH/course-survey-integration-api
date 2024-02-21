@@ -1,6 +1,6 @@
 import type { z } from "zod";
 import { LadokOrganisation } from "./types";
-import { strict as assert } from 'node:assert';
+import { strict as assert } from "node:assert";
 
 type LadokOrganisation = z.infer<typeof LadokOrganisation>;
 

@@ -1,4 +1,4 @@
-import { strict as assert } from 'node:assert';
+import { strict as assert } from "node:assert";
 import { IncomingHttpHeaders, IncomingMessage } from "node:http";
 import { BaseClient, Client, Issuer, TokenSet } from "openid-client";
 
@@ -83,13 +83,13 @@ export class UGRestClient {
     // We use OAuth flow "Client Credentials" to receive an access token
     // This token is then passed to UG REST API using client.requestResource.
     const issuer = (await Issuer.discover(this._authServerDiscoveryURI).catch(
-      discoverErr
+      discoverErr,
     )) as Issuer<BaseClient>;
 
     const grantTypes = issuer.metadata.grant_types_supported as string[];
     assert(
       grantTypes.find((v) => v === "client_credentials"),
-      "Auth server doesn't support client_credential grants"
+      "Auth server doesn't support client_credential grants",
     );
 
     const { Client } = issuer;
@@ -122,7 +122,7 @@ export class UGRestClient {
       .catch(getCredentialsErr)) as TokenSet;
     assert(
       typeof accessToken.access_token === "string",
-      "No access token provided by auth server"
+      "No access token provided by auth server",
     );
     this._accessTokenSet = accessToken;
 
@@ -133,7 +133,7 @@ export class UGRestClient {
     // TODO: Add error handling
     const client = (await this.getClient().catch(getClientErr)) as BaseClient;
     const accessToken = (await this.getAccessToken().catch(
-      getAccessTokenErr
+      getAccessTokenErr,
     )) as string;
     const resourceUri = `${this._resourceBaseURI}/${path}`;
     let res: { body?: Buffer } & IncomingMessage;

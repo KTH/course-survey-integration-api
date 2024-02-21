@@ -3,19 +3,19 @@ import { z } from "zod";
 // Check response data from UG
 export function checkGetUgCourseResponsibleAndTeachers(val: Array<any>): void {
   if (val.length !== 2) {
-    throw new Error(`Expected 2 values, got ${val.length}`)
+    throw new Error(`Expected 2 values, got ${val.length}`);
   }
 
   if (val[0] === undefined) {
-    throw new Error(`Course responsible is undefined`)
+    throw new Error(`Course responsible is undefined`);
   }
 
-  if (val[0].startsWith('u1') === false) {
-    throw new Error(`Course responsible is not a kthid`)
+  if (val[0].startsWith("u1") === false) {
+    throw new Error(`Course responsible is not a kthid`);
   }
 
   if (val[1] === undefined) {
-    throw new Error(`Course teachers is undefined`)
+    throw new Error(`Course teachers is undefined`);
   }
 }
 
@@ -26,11 +26,15 @@ export const UgUser = z.object({
   surname: z.string(),
 });
 
-export const UgSchool = z.object({
-  name: z.string(),
-  kthid: z.string(),
-  description: z.object({
-    sv: z.string(),
-    en: z.string(),
-  }).partial(),
-}).required();
+export const UgSchool = z
+  .object({
+    name: z.string(),
+    kthid: z.string(),
+    description: z
+      .object({
+        sv: z.string(),
+        en: z.string(),
+      })
+      .partial(),
+  })
+  .required();

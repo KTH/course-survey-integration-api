@@ -11,7 +11,8 @@ export type TCourseRound = components["schemas"]["CourseRound"] & {
    */
   _gradingScheme: string[]; // Support to calculate grading distribution, currently not shown in report
 };
-export type TStudentParticipation = components["schemas"]["StudentParticipation"];
+export type TStudentParticipation =
+  components["schemas"]["StudentParticipation"];
 export type TProgramRound = components["schemas"]["ProgramRound"];
 export type TCourseModule = components["schemas"]["CourseModule"];
 export type TCourseUser = components["schemas"]["CourseUser"];
@@ -37,7 +38,8 @@ export type PathCourseRound = paths["/course-round/{ladokRoundId}"];
 export type APICourseRoundErrType = TAPIErrType;
 export type APICourseRound = TCourseRound;
 
-export type PathCourseRoundStudentList = paths["/course-round/{ladokRoundId}/students"];
+export type PathCourseRoundStudentList =
+  paths["/course-round/{ladokRoundId}/students"];
 export type APICourseRoundStudentListErrType = TAPIErrType;
 export type APICourseRoundStudentList = TStudentParticipation[];
 
@@ -51,21 +53,21 @@ export type TCourseRoundModuleEntity = {
   name: TCourseModule["name"];
   credits: TCourseModule["credits"];
   gradingScheme: TCourseModule["gradingScheme"];
-}
+};
 
 export type TCourseRoundEntity = {
   language: TCourseRound["language"];
-  canceled: TCourseRound["canceled"] 
+  canceled: TCourseRound["canceled"];
   institution: TCourseRound["institution"];
   period: TCourseRound["period"];
   courseExaminor: TCourseRound["courseExaminor"];
-  
+
   // Source event message:
   id: TCourseRound["id"];
   ladokCourseId: TCourseRound["ladokCourseId"];
   ladokCourseRoundId: TCourseRound["ladokCourseRoundId"];
   canvasSisId: TCourseRound["canvasSisId"];
-  
+
   // Source KOPPS API:
   name: TCourseRound["name"];
   courseGoal: TCourseRound["courseGoal"];
@@ -74,7 +76,7 @@ export type TCourseRoundEntity = {
   organization: TCourseRound["organization"];
   courseResponsible: TCourseRound["courseResponsible"];
   courseTeachers: TCourseRound["courseTeachers"];
-  
+
   // Source LADOK REST API:
   _gradingScheme: string[];
   courseCode: TCourseRound["courseCode"];
@@ -82,7 +84,7 @@ export type TCourseRoundEntity = {
   displayYear: TCourseRound["displayYear"];
   credits: TCourseRound["credits"];
   modules: TCourseRoundModuleEntity[];
-}
+};
 
 export type TReportedResultEntity = {
   id: string;
@@ -95,5 +97,5 @@ export type TReportedResultEntity = {
     BetygsgradID: number;
     BetygsskalaID: number;
     ResultatUID: string;
-  }
-}
+  };
+};
