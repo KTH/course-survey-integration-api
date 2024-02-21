@@ -19,7 +19,7 @@ export function _convert(ugUser: TUgUser): TCourseUser {
 export function convertUgUsersToCourseUsers(
   ugUser: (TUgUser | undefined)[],
 ): TCourseUser[] {
-  return ugUser.filter((o): o is TUgUser => o !== undefined).map(_convert);
+  return (ugUser.filter((o) => o) as TUgUser[]).map(_convert);
 }
 
 export function convertUgSchoolToOrgEntity(
