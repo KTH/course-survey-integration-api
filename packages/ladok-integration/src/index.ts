@@ -34,14 +34,14 @@ export type ProgramParticipation =
 type TMultiLang = {
   sv?: string;
   en?: string;
-}
+};
 
 type TGradingScheme = {
   code: string;
   grades: Array<{
     validFinalGrade: boolean;
     code: string;
-  }>
+  }>;
 };
 
 export type TGetCourseRoundInformation = {
@@ -52,7 +52,7 @@ export type TGetCourseRoundInformation = {
   };
   organisationUnit: {
     code: string;
-    name: TMultiLang
+    name: TMultiLang;
   };
   courseInstanceCode: string;
   startDate: string;
@@ -62,13 +62,15 @@ export type TGetCourseRoundInformation = {
     code: string;
     name: TMultiLang;
     credits: number;
-    gradingScheme: TGradingScheme
+    gradingScheme: TGradingScheme;
   }>;
-  gradingScheme: TGradingScheme
-}
+  gradingScheme: TGradingScheme;
+};
 
 /** Get course round information from its Ladok UID */
-export async function getCourseRoundInformation(ladokUid: string): Promise<TGetCourseRoundInformation> {
+export async function getCourseRoundInformation(
+  ladokUid: string,
+): Promise<TGetCourseRoundInformation> {
   const kurstillfalle = await getKurstillfalle(ladokUid);
   const kursinstans = await getKursinstans(kurstillfalle.UtbildningsinstansUID);
   const organisation = parseOrganisation(

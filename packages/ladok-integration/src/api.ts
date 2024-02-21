@@ -1,4 +1,4 @@
-import { ZodError, ZodObject, ZodRawShape } from "zod";
+import { ZodError, ZodSchema } from "zod";
 import { ApiError, ApiSchemaError } from "./errors";
 import {
   LadokKursinstans,
@@ -6,6 +6,7 @@ import {
   LadokKurstillfalleMoment,
   Kurstillfallesdeltagande,
   Studiestruktur,
+  LadokAnvandare,
 } from "./types";
 import got, { HTTPError } from "got";
 
@@ -46,7 +47,7 @@ function errorHandler(endpoint: string, error: unknown): never {
   throw error;
 }
 
-function typedGet<T extends ZodRawShape>(endpoint: string, type: ZodObject<T>) {
+function typedGet<T>(endpoint: string, type: ZodSchema<T>): Promise<T> {
   return gotClient
     .get(endpoint)
     .then((r) => type.parse(r.body))
@@ -54,9 +55,7 @@ function typedGet<T extends ZodRawShape>(endpoint: string, type: ZodObject<T>) {
 }
 
 export async function getCurrentUser() {
-  return gotClient
-    .get("kataloginformation/anvandare/autentiserad")
-    .then((r) => r.body);
+  return typedGet("kataloginformation/anvandare/autentiserad", LadokAnvandare);
 }
 
 export async function getKurstillfalle(kurstillfalleUID: string) {

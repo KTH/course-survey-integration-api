@@ -11,7 +11,7 @@ export class MockContext implements InvocationContext {
   warn: any = undefined;
   error: any = undefined;
   options: any = undefined;
-  
+
   triggerMetadata: Record<string, unknown>;
   log: jest.Mock;
   done: jest.Mock;
@@ -19,8 +19,11 @@ export class MockContext implements InvocationContext {
     status: jest.Mock;
     body: jest.Mock;
   };
-  
-  constructor(userProperties: TLadokEventUserProperties, appConfig?: Record<string, unknown>) {
+
+  constructor(
+    userProperties: TLadokEventUserProperties,
+    appConfig?: Record<string, unknown>,
+  ) {
     this.triggerMetadata = {
       userProperties,
     };
@@ -28,9 +31,9 @@ export class MockContext implements InvocationContext {
     if (appConfig) {
       const { extraInputs = [], extraOutputs = [], ...rest } = appConfig;
       this.extraInputs = new ExtraInputs(extraInputs);
-      this.extraOutputs = new ExtraOutputs(extraOutputs);      
+      this.extraOutputs = new ExtraOutputs(extraOutputs);
     }
-    
+
     this.log = jest.fn();
     this.done = jest.fn();
     this.res = {
@@ -50,8 +53,8 @@ class ExtraOutputs {
 
   /**
    * Store the result of a function in the _result array
-   * @param outp 
-   * @param doc 
+   * @param outp
+   * @param doc
    */
   set(outp: any, doc: any) {
     const index = this._outputs?.indexOf(outp);
@@ -61,8 +64,8 @@ class ExtraOutputs {
   /**
    * Retrieve the result of a function from the _result array using the output
    * config object as key
-   * @param outp 
-   * @returns 
+   * @param outp
+   * @returns
    */
   _getResult(outp: any) {
     const index = this._outputs?.indexOf(outp);

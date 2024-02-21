@@ -5,12 +5,12 @@ import { TCourseRoundEntity, TCourseRoundModuleEntity } from "../interface";
 import { getGradingScheme } from "ladok-integration";
 
 export type TModulTillStatusEvent = {
-  HandelseUID: string, // "6b79e669-9505-11ee-a0ce-a9a57d284dbd",
-  EventContext: TLadokEventContext,
-  OrganisationUID: string, // "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
-  Status: number, // 2,
-  UtbildningUID: string, // "6b741a06-9505-11ee-a0ce-a9a57d284dbd",
-  Attributvarde: TLadokAttributvarde[],
+  HandelseUID: string; // "6b79e669-9505-11ee-a0ce-a9a57d284dbd",
+  EventContext: TLadokEventContext;
+  OrganisationUID: string; // "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
+  Status: number; // 2,
+  UtbildningUID: string; // "6b741a06-9505-11ee-a0ce-a9a57d284dbd",
+  Attributvarde: TLadokAttributvarde[];
   /*
     {
       "Grupp": 0,
@@ -43,43 +43,46 @@ export type TModulTillStatusEvent = {
       "Uid": "6b741a03-9505-11ee-a0ce-a9a57d284dbd"
     }
   */
-  UtbildningsinstansUID: string, // "6b741a05-9505-11ee-a0ce-a9a57d284dbd",
-  UtbildningstypID: number, // 4,
+  UtbildningsinstansUID: string; // "6b741a05-9505-11ee-a0ce-a9a57d284dbd",
+  UtbildningstypID: number; // 4,
   Benamningar: {
     Benamning: {
-      Sprakkod: string, // "en",
-      Text: string, // "Testmodule 1239"
-    }[]
-  },
-  EnhetID: number, // 2,
-  Omfattningsvarde: string, // "10.0",
-  StudieordningID: number, // 1,
-  UtbildningsformID: number, // 1,
-  Utbildningskod: string, // "1239",
+      Sprakkod: string; // "en",
+      Text: string; // "Testmodule 1239"
+    }[];
+  };
+  EnhetID: number; // 2,
+  Omfattningsvarde: string; // "10.0",
+  StudieordningID: number; // 1,
+  UtbildningsformID: number; // 1,
+  Utbildningskod: string; // "1239",
   Versionsinformation: {
     GiltigFranPeriodID: {
-      value: number, // 151878
-    },
-    Versionsnummer: number, // 1,
-    ArSenasteVersion: boolean, // true,
-    Uid: string, // "6b741a04-9505-11ee-a0ce-a9a57d284dbd"
-  },
-  OverliggandeUtbildningUID: string, // "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
-  OverliggandeUtbildningsinstansUID: string, // "e51b9585-9501-11ee-a0ce-a9a57d284dbd",
-  BetygsskalaID: number, // 131657,
-  TitelSkaAnges: boolean, // false,
+      value: number; // 151878
+    };
+    Versionsnummer: number; // 1,
+    ArSenasteVersion: boolean; // true,
+    Uid: string; // "6b741a04-9505-11ee-a0ce-a9a57d284dbd"
+  };
+  OverliggandeUtbildningUID: string; // "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
+  OverliggandeUtbildningsinstansUID: string; // "e51b9585-9501-11ee-a0ce-a9a57d284dbd",
+  BetygsskalaID: number; // 131657,
+  TitelSkaAnges: boolean; // false,
   Utbildningsomradesfordelning: {
     UtbildningsomradenPerOrganisation: {
-      OrganisationUID: string, // "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
-      Procent: number, // 100,
-      UtbildningsomradeID: number, // 2
-    }[]
-  }
-}
+      OrganisationUID: string; // "e842afc9-73d6-11e8-8c58-f9aa7f7e4fb6",
+      Procent: number; // 100,
+      UtbildningsomradeID: number; // 2
+    }[];
+  };
+};
 
 const STATUS_ACTIVE = 2;
 
-function convertBenamningToName(inp: TModulTillStatusEvent["Benamningar"]["Benamning"], lang: "en" | "sv") {
+function convertBenamningToName(
+  inp: TModulTillStatusEvent["Benamningar"]["Benamning"],
+  lang: "en" | "sv",
+) {
   return inp.reduce<string | undefined>((prev, curr) => {
     if (prev) return prev;
     if (curr["Sprakkod"] === lang) return curr["Text"];
@@ -91,8 +94,18 @@ function convertBetygsskalaToGradingScheme(id: number): string[] {
   return gradingScheme.grades.map((grade) => grade.code);
 }
 
-export async function handler(message: TModulTillStatusEvent, context: InvocationContext, db: Database): Promise<void> {
-  if (!isValidEvent("se.ladok.schemas.utbildningsinformation.ModulTillStatusEvent", context?.triggerMetadata?.userProperties)) return;
+export async function handler(
+  message: TModulTillStatusEvent,
+  context: InvocationContext,
+  db: Database,
+): Promise<void> {
+  if (
+    !isValidEvent(
+      "se.ladok.schemas.utbildningsinformation.ModulTillStatusEvent",
+      context?.triggerMetadata?.userProperties,
+    )
+  )
+    return;
 
   const courseRoundId = message.OverliggandeUtbildningsinstansUID;
   const moduleId = message.UtbildningsinstansUID;
@@ -100,31 +113,47 @@ export async function handler(message: TModulTillStatusEvent, context: Invocatio
   context.log(`ModulTillStatusEvent: ${courseRoundId} ${moduleId} ${status}`);
 
   try {
-      const courseRound: TCourseRoundEntity = await db.fetchById(courseRoundId, "CourseRound");
-      const language = courseRound.language;
-      let updatedModules;
-      if (status === STATUS_ACTIVE) {
-        // Add if not exists
-        if (!courseRound.modules?.find((module: TCourseRoundModuleEntity) => module.id === moduleId)) {
-          const newModule: TCourseRoundModuleEntity = {
-            id: moduleId,
-            code: message.Utbildningskod,
-            name: convertBenamningToName(message.Benamningar.Benamning, language) ?? "",
-            credits: message.Omfattningsvarde,
-            gradingScheme: convertBetygsskalaToGradingScheme(message.BetygsskalaID),
-          }
-          updatedModules = [...courseRound.modules ?? [], newModule];
-        }
-      } else {
-        // Remove if exists
-        // TODO: Add moduleId to Module interface
-        updatedModules = courseRound.modules.filter((module: TCourseRoundModuleEntity) => module.id !== moduleId);
+    const courseRound: TCourseRoundEntity = await db.fetchById(
+      courseRoundId,
+      "CourseRound",
+    );
+    const language = courseRound.language;
+    let updatedModules;
+    if (status === STATUS_ACTIVE) {
+      // Add if not exists
+      if (
+        !courseRound.modules?.find(
+          (module: TCourseRoundModuleEntity) => module.id === moduleId,
+        )
+      ) {
+        const newModule: TCourseRoundModuleEntity = {
+          id: moduleId,
+          code: message.Utbildningskod,
+          name:
+            convertBenamningToName(message.Benamningar.Benamning, language) ??
+            "",
+          credits: message.Omfattningsvarde,
+          gradingScheme: convertBetygsskalaToGradingScheme(
+            message.BetygsskalaID,
+          ),
+        };
+        updatedModules = [...(courseRound.modules ?? []), newModule];
       }
-      await db.update<TCourseRoundEntity>(courseRound.id!, { modules: updatedModules }, "CourseRound");
-      // 1. Fetch CourseRound from DB
-      // 2. Update status
-      // 3. Persist in DB
-
+    } else {
+      // Remove if exists
+      // TODO: Add moduleId to Module interface
+      updatedModules = courseRound.modules.filter(
+        (module: TCourseRoundModuleEntity) => module.id !== moduleId,
+      );
+    }
+    await db.update<TCourseRoundEntity>(
+      courseRound.id!,
+      { modules: updatedModules },
+      "CourseRound",
+    );
+    // 1. Fetch CourseRound from DB
+    // 2. Update status
+    // 3. Persist in DB
   } finally {
     await db.close();
   }
@@ -134,4 +163,4 @@ export default {
   handler: ServiceBus<TModulTillStatusEvent>(handler),
   extraInputs: undefined,
   extraOutputs: undefined,
-}
+};

@@ -4,7 +4,6 @@ import { MockContext } from "../../__tests__/LadokEvents/utils/mockContext";
 import { MockDatabase } from "../../__tests__/LadokEvents/utils/mockDatabase";
 
 describe("AttesteratResultatMakuleratEvent", () => {
-
   test("can be executed", async () => {
     const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);

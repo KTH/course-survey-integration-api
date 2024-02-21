@@ -1,4 +1,12 @@
 import { getCourseRoundInformation, getProgramParticipation } from "../src";
+import { getCurrentUser } from "../src/api";
+
+describe("Check user exists", () => {
+  test("Test that the user exist", async () => {
+    const user = await getCurrentUser();
+    expect(user.LarosateID).toEqual(29);
+  });
+});
 
 describe("Get information from a course round", () => {
   test("example from documentation", async () => {

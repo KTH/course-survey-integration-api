@@ -4,14 +4,12 @@ import { MockContext } from "../../__tests__/LadokEvents/utils/mockContext";
 import { MockDatabase } from "../../__tests__/LadokEvents/utils/mockDatabase";
 
 const DB_MOCK_INPUT = {
-  "CourseRound": {
-    "id": event.message.OverliggandeUtbildningsinstansUID,
-  }
-}
-
+  CourseRound: {
+    id: event.message.OverliggandeUtbildningsinstansUID,
+  },
+};
 
 describe("ModulTillStatusEvent", () => {
-
   test("can be executed", async () => {
     const mockDb = new MockDatabase(DB_MOCK_INPUT);
     const mockContext = new MockContext(event.userProps);

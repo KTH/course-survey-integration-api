@@ -3,7 +3,7 @@ import { Database, DbCollectionName } from "../../../src/functions/utils";
 type TQuery = {
   query: string;
   docs: any[];
-}
+};
 
 export class MockDatabase implements Database {
   _result: Record<DbCollectionName, any>;
@@ -17,7 +17,7 @@ export class MockDatabase implements Database {
    * @param mockData an array of objects that can be queried by .filter(), either a document or a TQuery (only used for query()).
    */
   constructor(mockData: Record<string, any> | undefined = undefined) {
-    this._mockData = mockData ?? {} as Record<DbCollectionName, TQuery | any>;
+    this._mockData = mockData ?? ({} as Record<DbCollectionName, TQuery | any>);
     this._result = {} as Record<DbCollectionName, any>;
   }
 
@@ -30,31 +30,40 @@ export class MockDatabase implements Database {
 
   async fetchById(id: string, collectionName: DbCollectionName): Promise<any> {
     // TODO: Read mock data
-    const data = this._mockData[collectionName]
+    const data = this._mockData[collectionName];
     const outp = Array.isArray(data) ? data : [data];
     return outp.filter((doc: any) => doc?.id === id)[0];
   }
 
-  async queryByProperty(propName: string, value: string, collectionName: DbCollectionName): Promise<any[]> {
-    const data = this._mockData[collectionName]
+  async queryByProperty(
+    propName: string,
+    value: string,
+    collectionName: DbCollectionName,
+  ): Promise<any[]> {
+    const data = this._mockData[collectionName];
     const outp = Array.isArray(data) ? data : [data];
     return outp.filter((doc: any) => doc?.[propName] === value);
   }
 
   /**
    * Checks this._mockData[collectionName][JSON.stringify(query)] for a match.
-   * @param query 
-   * @param collectionName 
-   * @returns 
+   * @param query
+   * @param collectionName
+   * @returns
    */
   async query(query: any, collectionName: DbCollectionName): Promise<any[]> {
-    const data = this._mockData[collectionName]
+    const data = this._mockData[collectionName];
     const outp = Array.isArray(data) ? data : [data];
-    return outp.filter((res: TQuery) => res.query === JSON.stringify(query))
+    return outp
+      .filter((res: TQuery) => res.query === JSON.stringify(query))
       .map((res: TQuery) => res.docs);
   }
 
-  async countByPropertyQuery(propName: string, value: string, collectionName: DbCollectionName): Promise<number> {
+  async countByPropertyQuery(
+    propName: string,
+    value: string,
+    collectionName: DbCollectionName,
+  ): Promise<number> {
     return 1;
   }
 
@@ -62,11 +71,21 @@ export class MockDatabase implements Database {
     this._result[collectionName] = doc;
   }
 
-  async update(id: string, partial: any, collectionName: DbCollectionName): Promise<void> {
+  async update(
+    id: string,
+    partial: any,
+    collectionName: DbCollectionName,
+  ): Promise<void> {
     if (id === this._result[collectionName]?.id) {
-      this._result[collectionName] = { ...this._result[collectionName], ...partial };
+      this._result[collectionName] = {
+        ...this._result[collectionName],
+        ...partial,
+      };
     } else if (id === this._mockData[collectionName]?.id) {
-      this._result[collectionName] = { ...this._mockData[collectionName], ...partial };
+      this._result[collectionName] = {
+        ...this._mockData[collectionName],
+        ...partial,
+      };
     } else {
       this._result[collectionName] = { ...partial };
     }

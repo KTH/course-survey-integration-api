@@ -1,4 +1,16 @@
 import { z } from "zod";
+
+/**
+ * Response from Ladok endpoint
+ * GET /kataloginformation/anvandare/autentiserad
+ */
+export const LadokAnvandare = z.object({
+  Anvandarnamn: z.string(),
+  Fornamn: z.string(),
+  LarosateID: z.number(),
+  Uid: z.string(),
+});
+
 /**
  * Response for Ladok endpoint
  * GET /resultat/kurstillfalle/{{kurstillfalleUID}}/moment
