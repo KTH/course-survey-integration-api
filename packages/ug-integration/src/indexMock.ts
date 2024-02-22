@@ -1,16 +1,68 @@
 import { TUgSchool, TUgUser } from ".";
 
 const _mockedValues: {
+  getUgMembers: Record<string, string[]>;
+  getUgCourseResponsible: Record<string, TUgUser>;
+  getUgCourseTeachers: Record<string, TUgUser>;
+  getUgCourseExaminers: Record<string, TUgUser>;
   getUgUser: Record<string, TUgUser>;
   getUgSchool: Record<string, TUgSchool>;
   getUgUserByLadokId: Record<string, TUgUser>;
 } = {
+  getUgMembers: {},
+  getUgCourseResponsible: {},
+  getUgCourseTeachers: {},
+  getUgCourseExaminers: {},
   getUgUser: {},
   getUgSchool: {},
   getUgUserByLadokId: {},
 };
 
 export class UgIntegrationMock {
+  static getUgMembers(groupName: string, params: string[]) {
+    const mocked = _mockedValues.getUgMembers;
+    if (mocked[groupName])
+      throw new Error(`Mock value already registered for ${groupName}`);
+
+    return mocked[groupName] = params;
+  }
+  
+  static getUgCourseResponsible(
+    courseCode: string,
+    roundYear: string,
+    roundCode: string,
+    params: string[],
+  ) {
+    const mocked = _mockedValues.getUgCourseResponsible;
+    const key = `${courseCode}-${roundYear}-${roundCode}`;
+    if (mocked[key])
+      throw new Error(`Mock value already registered for ${key}`);
+    return _mockedValues.getUgCourseResponsible[key];
+  }
+  
+  static getUgCourseTeachers(
+    courseCode: string,
+    roundYear: string,
+    roundCode: string,
+    params: string[],
+  ) {
+    const mocked = _mockedValues.getUgCourseTeachers;
+    const key = `${courseCode}-${roundYear}-${roundCode}`;
+    if (mocked[key])
+      throw new Error(`Mock value already registered for ${key}`);
+    return _mockedValues.getUgCourseTeachers[key];
+  }
+  
+  static getUgCourseExaminers(
+    courseCode: string,
+    params: string[],
+  ) {
+    const mocked = _mockedValues.getUgCourseExaminers;
+    if (mocked[courseCode])
+      throw new Error(`Mock value already registered for ${courseCode}`);
+    return _mockedValues.getUgCourseExaminers[courseCode];
+  }
+
   static getUgUser(kthId: string, params: TUgUser) {
     const mocked = _mockedValues.getUgUser;
     if (mocked[kthId])
@@ -36,6 +88,34 @@ export class UgIntegrationMock {
   }
 }
 
+export async function getUgMembers(groupName: string) {
+  return _mockedValues.getUgMembers[groupName];
+}
+
+export async function getUgCourseResponsible(
+  courseCode: string,
+  roundYear: string,
+  roundCode: string,
+) {
+  const key = `${courseCode}-${roundYear}-${roundCode}`;
+  return _mockedValues.getUgCourseResponsible[key];
+}
+
+export async function getUgCourseTeachers(
+  courseCode: string,
+  roundYear: string,
+  roundCode: string,
+) {
+  const key = `${courseCode}-${roundYear}-${roundCode}`;
+  return _mockedValues.getUgCourseTeachers[key];
+}
+
+export async function getUgCourseExaminers(
+  courseCode: string,
+) {
+  return _mockedValues.getUgCourseExaminers[courseCode];
+}
+
 export async function getUgUser(
   kthId: string | undefined,
 ): Promise<TUgUser | undefined> {
@@ -43,14 +123,14 @@ export async function getUgUser(
   return _mockedValues.getUgUser[kthId];
 }
 
+export async function getUgUserByLadokId(
+  ladokId: string,
+  ): Promise<TUgUser | undefined> {
+  return _mockedValues.getUgUserByLadokId[ladokId];
+}
+
 export async function getUgSchool(
   schoolCode: string,
 ): Promise<TUgSchool | undefined> {
   return _mockedValues.getUgSchool[schoolCode];
-}
-
-export async function getUgUserByLadokId(
-  ladokId: string,
-): Promise<TUgUser | undefined> {
-  return _mockedValues.getUgUserByLadokId[ladokId];
 }
