@@ -1,7 +1,7 @@
 import { TCourseRoundEntity } from "../../src/functions/interface"
 
 export const courseRound1: TCourseRoundEntity = {
-  id: "1",
+  id: "01-1",
   language: "sv",
   canceled: false,
   institution: {
