@@ -100,8 +100,8 @@ export type TCourseRoundEntity = {
 
 export type TReportedResultEntity = {
   id: string; // Required for DB-layer to work
-  parentId: string; // This can belong to a module (moduleRoundId) or a course round (courseRoundId).
-  courseRoundId: string; // CourseRound.ladokCourseRoundId (UtbildningstillfalleUID)
+  parentId: string; // This can belong to a module (UtbildningsinstansId = moduleRoundId) or a course (UtbildningsinstansId = courseId).
+  ladokCourseRoundId: string; // CourseRound.ladokCourseRoundId (UtbildningstillfalleUID)
   hashedStudentId: string; // StudentUID hashed
   decision: string; // BeslutUID
   result: string; // Calculated from BetygsgradID and BetygsskalaID
