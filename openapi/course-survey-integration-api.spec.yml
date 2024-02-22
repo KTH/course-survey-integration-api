@@ -363,7 +363,6 @@ components:
       type: object
       required:
         - code
-        - semester
         - startTerm
         - name
         - studyYear
@@ -372,9 +371,6 @@ components:
         code:
           type: string
           description: "Program code, e.g. 'CINTE'"
-        semester: # QUESTION: A course round can run over several semesters, how do we handle that?
-          type: string
-          description: "The semester this program round is part of."
         startTerm: # QUESTION: Why do we need this?
           type: string
           description: Year and term when program round started

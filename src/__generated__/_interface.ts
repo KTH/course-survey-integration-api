@@ -195,8 +195,6 @@ export interface components {
     ProgramRound: {
       /** @description Program code, e.g. 'CINTE' */
       code: string;
-      /** @description The semester this program round is part of. */
-      semester: string;
       /** @description Year and term when program round started */
       startTerm: string;
       name: string;
