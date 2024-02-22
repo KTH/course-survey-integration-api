@@ -10,19 +10,23 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
     "canceled": false,
     "canvasSisId": "41717c91-4028-11ee-bf53-2115569549a8",
     "courseCode": "DD1321",
-    "courseExaminers": {
-      "email": "dummy@email.com",
-      "fullName": "Dummy User",
-      "kthUserId": "u1dummy",
-      "userName": "dummyuser",
-    },
+    "courseExaminers": [
+      {
+        "email": "ex@email.com",
+        "fullName": "Course Examiner",
+        "kthUserId": "u1examiner",
+        "userName": "ex",
+      },
+    ],
     "courseGoal": "The course aims to give basic knowledge of programming in F#.",
-    "courseResponsible": {
-      "email": "cr@email.com",
-      "fullName": "Course Responsible",
-      "kthUserId": "u1responsible",
-      "userName": "cr",
-    },
+    "courseResponsible": [
+      {
+        "email": "cr@email.com",
+        "fullName": "Course Responsible",
+        "kthUserId": "u1responsible",
+        "userName": "cr",
+      },
+    ],
     "courseTeachers": [
       {
         "email": "t1@email.com",
@@ -42,9 +46,9 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
     "endDate": "2023-03-17",
     "id": "41717c91-4028-11ee-bf53-2115569549a8",
     "institution": {
-      "displayCode": "DUMMY",
-      "displayName": "Dummy Institution",
-      "kthId": "u1dummyinst",
+      "displayCode": "SCID",
+      "displayName": "",
+      "kthId": "",
     },
     "ladokCourseId": "e51b9586-9501-11ee-a0ce-a9a57d284dbd",
     "ladokCourseRoundId": "41717c91-4028-11ee-bf53-2115569549a8",

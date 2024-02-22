@@ -2,9 +2,9 @@ import { TUgSchool, TUgUser } from ".";
 
 const _mockedValues: {
   getUgMembers: Record<string, string[]>;
-  getUgCourseResponsible: Record<string, TUgUser>;
-  getUgCourseTeachers: Record<string, TUgUser>;
-  getUgCourseExaminers: Record<string, TUgUser>;
+  getUgCourseResponsible: Record<string, string[]>;
+  getUgCourseTeachers: Record<string, string[]>;
+  getUgCourseExaminers: Record<string, string[]>;
   getUgUser: Record<string, TUgUser>;
   getUgSchool: Record<string, TUgSchool>;
   getUgUserByLadokId: Record<string, TUgUser>;
@@ -37,7 +37,7 @@ export class UgIntegrationMock {
     const key = `${courseCode}-${roundYear}-${roundCode}`;
     if (mocked[key])
       throw new Error(`Mock value already registered for ${key}`);
-    return _mockedValues.getUgCourseResponsible[key];
+    mocked[key] = params;
   }
   
   static getUgCourseTeachers(
@@ -50,7 +50,7 @@ export class UgIntegrationMock {
     const key = `${courseCode}-${roundYear}-${roundCode}`;
     if (mocked[key])
       throw new Error(`Mock value already registered for ${key}`);
-    return _mockedValues.getUgCourseTeachers[key];
+    mocked[key] = params;
   }
   
   static getUgCourseExaminers(
@@ -60,7 +60,7 @@ export class UgIntegrationMock {
     const mocked = _mockedValues.getUgCourseExaminers;
     if (mocked[courseCode])
       throw new Error(`Mock value already registered for ${courseCode}`);
-    return _mockedValues.getUgCourseExaminers[courseCode];
+    mocked[courseCode] = params;
   }
 
   static getUgUser(kthId: string, params: TUgUser) {
