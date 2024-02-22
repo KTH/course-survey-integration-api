@@ -14,6 +14,8 @@ KoppsIntegrationMock.getCourseInformation(
     courseCode: "DD1321",
     periods: ["P1"],
     goals: "The course aims to give basic knowledge of programming in F#.",
+    startTerm: "20221",
+    code: "51210",
   },
 );
 
@@ -35,7 +37,7 @@ LadokIntegrationMock.getCourseRoundInformation(
         en: "School of Computer Science",
       },
     },
-    courseInstanceCode: "DD1321-20221",
+    courseInstanceCode: "51210",
     startDate: "2023-01-17",
     endDate: "2023-03-17",
     credits: 7.5,
@@ -78,16 +80,18 @@ LadokIntegrationMock.getCourseRoundInformation(
   },
 );
 
-UgIntegrationMock.getUgCourseResponsibleAndTeachers("SF1625", "2022", "2", [
-  "u1responsible",
-  ["u1teacher1", "u1teacher2"],
-]);
-
 UgIntegrationMock.getUgUser("u1responsible", {
   email: "cr@email.com",
   kthid: "u1responsible",
   givenName: "Course",
   surname: "Responsible",
+});
+
+UgIntegrationMock.getUgUser("u1examiner", {
+  email: "ex@email.com",
+  kthid: "u1examiner",
+  givenName: "Course",
+  surname: "Examiner",
 });
 
 UgIntegrationMock.getUgUser("u1teacher1", {
@@ -112,6 +116,15 @@ UgIntegrationMock.getUgSchool("SCI", {
     en: "School of Computer Science and Communication",
   },
 });
+
+UgIntegrationMock.getUgCourseResponsible("DD1321", "20221", "51210", ["u1responsible"]);
+
+UgIntegrationMock.getUgCourseExaminers("DD1321", ["u1examiner"]);
+
+UgIntegrationMock.getUgCourseTeachers("DD1321", "20221", "51210", [
+  "u1teacher1",
+  "u1teacher2",
+]);
 
 describe("RegistreringEvent", () => {
   test("can be executed", async () => {

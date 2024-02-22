@@ -1,5 +1,6 @@
 import {
-  getUgCourseResponsibleAndTeachers,
+  getUgCourseResponsible,
+  getUgMembers,
   getUgSchool,
   getUgUser,
   getUgUserByLadokId,
@@ -7,17 +8,14 @@ import {
 
 describe("Test that your credential has proper permissions", () => {
   test("can get course responsible and teacher", async () => {
-    const [responsible, teachers] = await getUgCourseResponsibleAndTeachers(
-      "SF1625",
-      "2022",
-      "2",
-    );
+    const responsible = await getUgCourseResponsible("SF1625", "20241", "1");
+    const teachers = await getUgCourseResponsible("SF1625", "20241", "1");
 
-    expect(responsible?.startsWith("u1")).toEqual(true);
-    expect(responsible?.length).toEqual(8);
+    expect(responsible[0].startsWith("u1")).toEqual(true);
+    expect(responsible.length).toEqual(1);
 
-    expect(teachers?.length).toBeGreaterThan(0);
-    expect(teachers?.[0]?.startsWith("u1")).toEqual(true);
+    expect(teachers.length).toBeGreaterThan(0);
+    expect(teachers[0].startsWith("u1")).toEqual(true);
   });
 
   test("can get user", async () => {
@@ -39,9 +37,14 @@ describe("Test that your credential has proper permissions", () => {
   });
 
   test("can get school", async () => {
-    const res = await getUgSchool("eecs");
+    const res = await getUgSchool("J");
     expect(res?.kthid).toBeDefined();
     expect(res?.description).toBeDefined();
     expect(res?.description?.sv ?? res?.description?.en).toBeDefined();
+  });
+
+  test("can get group", async () => {
+    const res = await getUgMembers("edu.courses.SF.SF1624.examiner");
+    expect(res.length).toBeGreaterThan(0);
   });
 });
