@@ -391,9 +391,6 @@ components:
         required:
           type: string
           description: "Determines if taking this course is mandatory or not for this program."
-          enum:
-            - mandatory? # TODO: Figure out what the enum values really are
-            - ...
 
     CourseModule:
       type: object

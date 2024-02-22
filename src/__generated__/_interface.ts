@@ -206,11 +206,8 @@ export interface components {
         /** @description Name of the specialization in tutoring language. */
         name?: string;
       };
-      /**
-       * @description Determines if taking this course is mandatory or not for this program.
-       * @enum {string}
-       */
-      required: "mandatory?" | "...";
+      /** @description Determines if taking this course is mandatory or not for this program. */
+      required: string;
     };
     CourseModule: {
       code: string;
