@@ -13,10 +13,10 @@ export const UgSchool = z
     kthid: z.string().min(1),
     description: z
       .object({
-        sv: z.string().optional(),
-        en: z.string().optional(),
+        sv: z.string(),
+        en: z.string(),
       })
-      .required(),
+      .partial(),
   })
   .required();
 
@@ -26,10 +26,10 @@ export const UgGroups = z.array(
     kthid: z.string().min(1),
     description: z
       .object({
-        sv: z.string().optional(),
-        en: z.string().optional(),
+        sv: z.string(),
+        en: z.string(),
       })
-      .required(),
+      .partial(),
     members: z.array(z.string()),
   }),
 );
