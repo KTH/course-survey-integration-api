@@ -72,7 +72,7 @@ export type TCourseRoundEntity = {
   canceled: TCourseRound["canceled"] 
   institution: TCourseRound["institution"];
   periods: TCourseRound["periods"];
-  courseExaminors: TCourseRound["courseExaminors"];
+  courseExaminers: TCourseRound["courseExaminers"];
   
   // Source event message:
   ladokCourseId: TCourseRound["ladokCourseId"];

@@ -62,7 +62,7 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
   const ugCourseTeachers = await Promise.all(
     courseTeachersKthIds?.map(async (kthId: string) => await getUgUser(kthId))
   );
-  const dummyCourseExaminor = { 
+  const dummyCourseExaminer = { 
     // TODO: Use proper data -- from Ladok (I believe)          <***************
     userName: "dummyuser",
     kthUserId: "u1dummy",
@@ -106,7 +106,7 @@ export async function handler(message: TPaborjatUtbildningstillfalleEvent, conte
     canceled: dummyCanceled, 
     institution: dummyInstitution, // TODO: Exists in our ladok integration package, may have different name
     periods: [dummyPeriod],
-    courseExaminors: [dummyCourseExaminor],
+    courseExaminers: [dummyCourseExaminer],
     
     // Source event message:
     ladokCourseId: msgUtbildningsUid,

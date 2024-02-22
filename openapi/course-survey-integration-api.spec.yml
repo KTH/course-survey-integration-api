@@ -195,7 +195,7 @@ components:
                 - courseGoal
                 - period
                 - credits
-                - courseExaminor
+                - courseExaminers
                 - courseResponsible
                 - courseTeachers
             properties:
@@ -263,9 +263,9 @@ components:
                 credits:
                     type: string
                     description: "Total credits awarded for this course."
-                courseExaminors:
+                courseExaminers:
                     type: array
-                    description: "List of examinors for this _course_."
+                    description: "List of examiners for this _course_."
                     items:
                         $ref: "#/components/schemas/CourseUser"
                 courseResponsible:

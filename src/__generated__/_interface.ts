@@ -142,8 +142,8 @@ export interface components {
         })[];
       /** @description Total credits awarded for this course. */
       credits: string;
-      /** @description List of examinors for this _course_. */
-      courseExaminors?: components["schemas"]["CourseUser"][];
+      /** @description List of examiners for this _course_. */
+      courseExaminers: components["schemas"]["CourseUser"][];
       /** @description List of course responsible for this course round. */
       courseResponsible: components["schemas"]["CourseUser"][];
       /** @description List of teachers of this course round. */
@@ -180,10 +180,8 @@ export interface components {
       modules: components["schemas"]["CourseModule"][];
     };
     StudentParticipation: {
-      /** @description Ladok equivalent: StudentUID */
-      ladokStudentId: string;
-      /** @description Ladok equivalent: UtbildningsUID, KursUID */
-      ladokCourseId: string;
+      /** @description Ladok equivalent: `${StudentUID}.${KurstillfalleUID}` */
+      id?: string;
       ladokCourseRoundId: string;
       /** @description We currently use kthUserId as canvasSisId */
       canvasSisId: string;
@@ -196,10 +194,12 @@ export interface components {
       program: components["schemas"]["ProgramRound"];
     };
     ProgramRound: {
+      /** @description Program code, e.g. 'CINTE' */
       code: string;
+      /** @description The semester this program round is part of. */
       semester: string;
       /** @description Year and term when program round started */
-      startTerm?: string;
+      startTerm: string;
       name: string;
       /** @description Calculate by using startPeriod and current period. */
       studyYear: number;
@@ -213,7 +213,7 @@ export interface components {
        * @description Determines if taking this course is mandatory or not for this program.
        * @enum {string}
        */
-      required?: "mandatory?" | "...";
+      required: "mandatory?" | "...";
     };
     CourseModule: {
       code: string;
