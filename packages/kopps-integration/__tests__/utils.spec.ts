@@ -14,6 +14,7 @@ describe("getPeriods", () => {
           { creditsP0: 1, creditsP1: 2, term: { term: 20232 } },
         ],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
@@ -26,6 +27,7 @@ describe("getPeriods", () => {
       round: {
         courseRoundTerms: [],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
@@ -41,6 +43,7 @@ describe("getPeriods", () => {
           { creditsP3: 1, term: { term: 20232 } },
         ],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
@@ -58,6 +61,7 @@ describe("getPeriods", () => {
           { creditsP1: 1, term: { term: 20261 } },
         ],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
@@ -73,6 +77,7 @@ describe("getPeriods", () => {
           { creditsP2: 2, term: { term: 20231 } },
         ],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
@@ -89,6 +94,7 @@ describe("getPeriods", () => {
           { creditsP0: 1, term: { term: 20232 } },
         ],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
@@ -106,6 +112,7 @@ describe("getPeriods", () => {
           { creditsP0: 1, term: { term: 20232 } },
         ],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
