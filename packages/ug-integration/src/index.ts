@@ -21,53 +21,60 @@ export async function getUgMembers(groupName: string) {
     .get<unknown>(`groups?$filter=name eq '${groupName}'`)
     .catch(ugClientGetErrorHandler);
 
-  export async function getUgCourseResponsibleAndTeachers(
-    courseCode: string,
-    roundYear: string,
-    roundCode: string | number,
-  ): Promise<TUgCourseResponsibleAndTeachers | []> {
-    const prefix = courseCode.slice(0, 2);
-    const path = `edu.courses.${prefix}.${courseCode}.${roundYear}${roundCode}`;
-
-    // The course can have several parallel sections so we need to get all of them
-    // Example: edu.courses.SF.SF1625.20222
-
-    // TODO: I can't get the subgroups from the query so I can't iterate over the sections
-    const { data, json, statusCode } = await ugClient
-      .get<any[]>(
-        `groups?$filter=startswith(name,'${path}')`, // &$expand=Subgroups
-      )
-      .catch(ugClientGetErrorHandler);
-    if (statusCode !== 200) {
-      throw new Error(`UGRestClient: ${statusCode} ${data}`);
-    }
-
-    const groups = UgGroups.parse(json);
-
-    if (groups.length === 0) {
-      throw new Error(`UGRestClient: group [${groupName}] not found`);
-    }
-
-    if (groups.length > 1) {
-      throw new Error(
-        `UGRestClient: there are ${groups.length} groups with name [${groupName}] (expected one)`,
-      );
-    }
-
-    return groups[0].members;
+  if (statusCode !== 200) {
+    throw new Error(`UGRestClient: ${statusCode} ${data}`);
   }
 
-  export async function getUgCourseResponsible(
-    courseCode: string,
-    roundYear: string,
-    roundCode: string,
-  ) {
-    const prefix = courseCode.slice(0, 2);
-    const path = `edu.courses.${prefix}.${courseCode}.${roundYear}.${roundCode}.courseresponsible`;
+  const groups = UgGroups.parse(json);
 
-    return getUgMembers(path);
+  if (groups.length === 0) {
+    throw new Error(`UGRestClient: group [${groupName}] not found`);
   }
 
+  if (groups.length > 1) {
+    throw new Error(
+      `UGRestClient: there are ${groups.length} groups with name [${groupName}] (expected one)`,
+    );
+  }
+
+  return groups[0].members;
+}
+
+export async function getUgCourseResponsible(
+  courseCode: string,
+  roundYear: string,
+  roundCode: string,
+) {
+  const prefix = courseCode.slice(0, 2);
+  const path = `edu.courses.${prefix}.${courseCode}.${roundYear}.${roundCode}.courseresponsible`;
+
+  return getUgMembers(path);
+}
+
+export async function getUgCourseTeachers(
+  courseCode: string,
+  roundYear: string,
+  roundCode: string,
+) {
+  const prefix = courseCode.slice(0, 2);
+  const path = `edu.courses.${prefix}.${courseCode}.${roundYear}.${roundCode}.teachers`;
+
+  return getUgMembers(path);
+}
+
+/** Return the KTH ID of examiners for a course */
+export async function getUgCourseExaminers(
+  courseCode: string,
+): Promise<string[]> {
+  const prefix = courseCode.slice(0, 2);
+  const path = `edu.courses.${prefix}.${courseCode}.examiner`;
+
+  return getUgMembers(path);
+}
+
+export type TUgUser = z.infer<typeof UgUser>;
+
+export async function getUgUser(kthId: string): Promise<TUgUser | undefined> {
   const { data, json, statusCode } = await ugClient
     .get<TUgUser[]>(`users?$filter=kthid eq '${kthId}'`)
     .catch(ugClientGetErrorHandler);
