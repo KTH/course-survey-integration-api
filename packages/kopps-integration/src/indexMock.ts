@@ -7,6 +7,8 @@ type TParams = {
   courseCode: string;
   periods: ReturnType<typeof getPeriods>;
   goals: string;
+  startTerm: string;
+  code: string;
 };
 
 const _mockedValues: Record<string, TParams> = {};
@@ -20,8 +22,10 @@ export class KoppsIntegrationMock {
   }
 }
 
-export async function getCourseInformation(ladokUid: string) {
-  const { title, titleOther, courseCode, periods, goals } =
+export async function getCourseInformation(
+  ladokUid: string,
+): Promise<ReturnType<typeof origGetCourseInformation>> {
+  const { title, titleOther, courseCode, periods, goals, startTerm, code } =
     _mockedValues[ladokUid];
   return {
     course: {
