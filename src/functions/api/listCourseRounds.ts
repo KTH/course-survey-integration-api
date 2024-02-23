@@ -48,6 +48,15 @@ export default async function handler<T extends APICourseRoundList>(
       { offset, limit },
     );
 
+    // TODO: Make sure we have a stable sort order
+    // NOTE: If you call on different dates you will get different results
+    const courseRounds: TCourseRoundEntity[] = await db.queryByProperty(
+      "endDate",
+      { $lt: selectionEndDate, $gt: selectionStartDate },
+      "CourseRound",
+      { offset, limit },
+    );
+
     // TODO: Fix this
     outp = courseRounds;
   } finally {

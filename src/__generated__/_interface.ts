@@ -133,11 +133,11 @@ export interface components {
        * | and all credits for the course. In the future we might specify all periods and spread
        * | the credits accross them.
        */
-      periods: {
+      periods?: {
         /** @enum {string} */
-        period: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
+        period?: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
         /** @description Credits awarded for this period. */
-        credits: string;
+        credits?: string;
       }[];
       /** @description Total credits awarded for this course. */
       credits: string;

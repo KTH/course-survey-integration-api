@@ -10,8 +10,8 @@ info:
   # Swagger editor -- https://editor.swagger.io/ or https://editor-next.swagger.io/
   # To better understand OpenAPI you can look at these:
   # OpenAPI tutorial -- https://support.smartbear.com/swaggerhub/docs/en/get-started/openapi-3-0-tutorial.html
-  # OpenAPA how-to -- https://swagger.io/docs/specification/basic-structure/
-  # OpenAPI spec -- https://swagger.io/specification/
+  # OpenAPA how-to -- https://swagger.io/docs/specialization/basic-structure/
+  # OpenAPI spec -- https://swagger.io/specialization/
   contact:
     name: E-lärande, KTH IT
     url: https://intra.kth.se/utbildning/e-larande/kontakt-och-support/kontakt-e-larande-1.836575
@@ -319,7 +319,6 @@ components:
     StudentParticipation:
       type: object
       required:
-        - id
         - ladokStudentId
         - ladokCourseId
         - ladokCourseRoundId

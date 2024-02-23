@@ -1,20 +1,23 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import {
-  getUgCourseTeachers,
-  getUgCourseResponsible,
-  getUgCourseExaminers,
+  getUgCourseResponsibleAndTeachers,
   getUgSchool,
   getUgUser,
 } from "ug-integration";
 import { ServiceBus, isValidEvent, Database } from "../utils";
-import { TCourseRound, TCourseRoundEntity } from "../interface";
+import {
+  TCourseRound,
+  TCourseRoundEntity,
+  TCourseUser,
+  TOrgEntity,
+} from "../interface";
 import { getCourseInformation } from "kopps-integration";
 import { getCourseRoundInformation } from "ladok-integration";
 import {
   convertLadokModuleToCourseModule,
   convertUgSchoolToOrgEntity,
-  convertUgUsersToCourseUsers,
+  convertUgToCourseUserArr,
 } from "./utils";
 
 export type TPaborjatUtbildningstillfalleEvent = {
@@ -85,36 +88,34 @@ export async function handler(
 
   // TODO: Should we cache these values? For how long?
   // TODO: Use live data but during development we can use hardcoded values
-  const courseResponsibleIds = await getUgCourseResponsible(
-    ladokCourseCode,
-    roundTerm,
-    roundCode,
-  );
-  const teachersIds = await getUgCourseTeachers(
-    ladokCourseCode,
-    roundTerm,
-    roundCode,
-  );
-
-  const examinersIds = await getUgCourseExaminers(ladokCourseCode);
-
+  const [courseResonsibleKthId, courseTeachersKthIds = []] =
+    await getUgCourseResponsibleAndTeachers(
+      "SF1625" || ladokCourseCode,
+      "2022" || ladokCourseYear,
+      "2" || ladokCourseRoundCode,
+    );
   // TODO: Should we cache these values? For how long?
-  const courseResponsible = convertUgUsersToCourseUsers(
-    await Promise.all(courseResponsibleIds.map(getUgUser)),
+  const ugCourseResponsible = await getUgUser(courseResonsibleKthId);
+  const ugCourseTeachers = await Promise.all(
+    courseTeachersKthIds?.map(async (kthId: string) => await getUgUser(kthId)),
   );
-
-  const teachers = convertUgUsersToCourseUsers(
-    await Promise.all(teachersIds.map(getUgUser)),
-  );
-
-  const examiners = convertUgUsersToCourseUsers(
-    await Promise.all(examinersIds.map(getUgUser)),
-  );
+  const dummyCourseExaminer = {
+    // TODO: Use proper data -- from Ladok (I believe)          <***************
+    userName: "dummyuser",
+    kthUserId: "u1dummy",
+    email: "dummy@email.com",
+    fullName: "Dummy User",
+  } as TCourseUser;
 
   const ladokSchoolCode = ladokCourseRoundInfo.organisation.code;
   const ladokInsitutionCode = ladokCourseRoundInfo.organisationUnit.code;
   const tmpUgSchool = await getUgSchool(ladokSchoolCode);
-  const tmpUgInstitution = await getUgSchool(ladokInsitutionCode);
+  const dummyInstitution = {
+    // TODO: Use proper data       <***************
+    displayName: "Dummy Institution",
+    displayCode: "DUMMY",
+    kthId: "u1dummyinst",
+  } as TOrgEntity;
 
   const ladokGradingDistribution =
     ladokCourseRoundInfo.gradingScheme?.grades?.reduce(
