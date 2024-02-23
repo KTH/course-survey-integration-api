@@ -65,12 +65,7 @@ export async function handler(
     },
   };
 
-  const res = await db.query(
-    {
-      id,
-    },
-    "ReportedResult",
-  );
+  const res = await db.fetchById(id, "ReportedResult");
 
   if (res.length > 0) {
     const foundDoc = res[0];
