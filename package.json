@@ -9,6 +9,7 @@
     "build:functions": "tsc --outDir dist --sourceMap --declaration",
     "build:libs": "npm run build --workspaces --if-present",
     "clean": "rimraf dist",
+    "format": "prettier --write .",
     "watch": "tsc --sourceMap --watch --outDir dist",
     "prepare": "npm run build && npm run test",
     "prestart": "npm run clean && npm run build",
