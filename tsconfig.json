@@ -14,12 +14,12 @@
     /* Type Checking */
     "strict": true /* Enable all strict type-checking options. */,
     /* Completeness */
-    "skipLibCheck": true, /* Skip type checking all .d.ts files. */
+    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
 
     // Options from original function tsconfig.json
     "outDir": "__tests__/LadokEvents/dist",
     "rootDir": ".",
-    "sourceMap": true,
+    "sourceMap": true
   },
-  "include": ["src"],
+  "include": ["src"]
 }

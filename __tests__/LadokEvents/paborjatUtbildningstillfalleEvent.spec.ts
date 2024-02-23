@@ -6,74 +6,81 @@ import { MockDatabase } from "./utils/mockDatabase";
 import { KoppsIntegrationMock } from "kopps-integration/src/indexMock";
 import { LadokIntegrationMock } from "ladok-integration/src/indexMock";
 
-KoppsIntegrationMock.getCourseInformation(event.message.UtbildningstillfalleUID, {
-  title: "Programmeringsteknik för F",
-  titleOther: "Programming in F",
-  courseCode: "DD1321",
-  periods: ["P1"],
-  goals: "The course aims to give basic knowledge of programming in F#.",
-});
+KoppsIntegrationMock.getCourseInformation(
+  event.message.UtbildningstillfalleUID,
+  {
+    title: "Programmeringsteknik för F",
+    titleOther: "Programming in F",
+    courseCode: "DD1321",
+    periods: ["P1"],
+    goals: "The course aims to give basic knowledge of programming in F#.",
+  },
+);
 
-LadokIntegrationMock.getCourseRoundInformation(event.message.UtbildningstillfalleUID, {
-  name: {
-    sv: "Programmeringsteknik för F",
-    en: "Programming in F",
-  },
-  courseCode: "DD1321",
-  organisation: {
-    code: "SCI"
-  },
-  organisationUnit: {
-    code: "SCID",
+LadokIntegrationMock.getCourseRoundInformation(
+  event.message.UtbildningstillfalleUID,
+  {
     name: {
-      sv: "Institutionen för datavetenskap",
-      en: "School of Computer Science"
-    }
-  },
-  courseInstanceCode: "DD1321-20221",
-  startDate: "2023-01-17",
-  endDate: "2023-03-17",
-  credits: 7.5,
-  modules: [
-    {
-      code: "F1",
-      name: {
-        sv: "Programmeringsteknik för F",
-        en: "Programming in F",
-      },
-      credits: 7.5,
-      gradingScheme: {
-        code: "TH",
-        grades: [
-          {
-            validFinalGrade: true,
-            code: "P",
-          },
-          {
-            validFinalGrade: false,
-            code: "F",
-          },
-        ],
-      }
+      sv: "Programmeringsteknik för F",
+      en: "Programming in F",
     },
-  ],
-  gradingScheme: {
-    code: "TH",
-    grades: [
-      {
-        validFinalGrade: true,
-        code: "P",
+    courseCode: "DD1321",
+    organisation: {
+      code: "SCI",
+    },
+    organisationUnit: {
+      code: "SCID",
+      name: {
+        sv: "Institutionen för datavetenskap",
+        en: "School of Computer Science",
       },
+    },
+    courseInstanceCode: "DD1321-20221",
+    startDate: "2023-01-17",
+    endDate: "2023-03-17",
+    credits: 7.5,
+    modules: [
       {
-        validFinalGrade: false,
-        code: "F",
+        code: "F1",
+        name: {
+          sv: "Programmeringsteknik för F",
+          en: "Programming in F",
+        },
+        credits: 7.5,
+        gradingScheme: {
+          code: "TH",
+          grades: [
+            {
+              validFinalGrade: true,
+              code: "P",
+            },
+            {
+              validFinalGrade: false,
+              code: "F",
+            },
+          ],
+        },
       },
     ],
+    gradingScheme: {
+      code: "TH",
+      grades: [
+        {
+          validFinalGrade: true,
+          code: "P",
+        },
+        {
+          validFinalGrade: false,
+          code: "F",
+        },
+      ],
+    },
   },
-});
+);
 
 UgIntegrationMock.getUgCourseResponsibleAndTeachers("SF1625", "2022", "2", [
-  "u1responsible", ["u1teacher1", "u1teacher2"],
+  "u1responsible",
+  ["u1teacher1", "u1teacher2"],
 ]);
 
 UgIntegrationMock.getUgUser("u1responsible", {
@@ -107,7 +114,6 @@ UgIntegrationMock.getUgSchool("SCI", {
 });
 
 describe("RegistreringEvent", () => {
-
   test("can be executed", async () => {
     const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
@@ -120,7 +126,9 @@ describe("RegistreringEvent", () => {
     await handler(event.message, mockContext, mockDb);
 
     expect(mockContext.log.mock.calls.length).toBe(1);
-    expect(mockContext.log.mock.lastCall[0]).toBe(`PaborjatUtbildningstillfalleEvent: ${event.message.UtbildningstillfalleUID}`);
+    expect(mockContext.log.mock.lastCall[0]).toBe(
+      `PaborjatUtbildningstillfalleEvent: ${event.message.UtbildningstillfalleUID}`,
+    );
   });
 
   test.skip("fetches course info from KOPPS", async () => {

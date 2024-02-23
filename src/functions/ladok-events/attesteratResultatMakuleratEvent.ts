@@ -19,11 +19,21 @@ export type TAttesteratResultatMakuleratEvent = {
   UtbildningsgrundtypID: number; // 1,
   UtbildningsinstansUID: string; // "715b159a-b536-11ee-aef4-bd1cad394d29",
   HandelseUID: string; // "5c6e3eab-b5de-11ee-988f-6acd08c746d6",
-  EventContext: TLadokEventContext
-}
+  EventContext: TLadokEventContext;
+};
 
-export async function handler(message: TAttesteratResultatMakuleratEvent, context: InvocationContext, db: Database): Promise<void> {
-  if (!isValidEvent("AttesteratResultatMakuleratEvent", context?.triggerMetadata?.userProperties)) return;
+export async function handler(
+  message: TAttesteratResultatMakuleratEvent,
+  context: InvocationContext,
+  db: Database,
+): Promise<void> {
+  if (
+    !isValidEvent(
+      "AttesteratResultatMakuleratEvent",
+      context?.triggerMetadata?.userProperties,
+    )
+  )
+    return;
 
   context.log(`AttesteratResultatMakuleratEvent: `);
 }
@@ -33,4 +43,4 @@ export default {
   // input binding doesn't support cosmos document store yet
   // extraInputs: [cosmosInput],
   // extraOutputs: [cosmosOutput],
-}
+};

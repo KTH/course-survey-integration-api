@@ -1,47 +1,46 @@
 {
-    "ladok3EventType": "se.ladok.schemas.resultat.ResultatPaModulAttesteratEvent",
-    "ladok3Username": "emilsten@kth.se",
-    "message": {
-        "HandelseUID": "a7a202ee-b140-11ee-816b-5383fced4224",
-        "EventContext": {
-            "AnvandareUID": "34b1ff17-603e-11e9-9dcc-b1e66e1540b0",
-            "Anvandarnamn": "emilsten@kth.se",
-            "LarosateID": 29
-        },
-        "Beslut": {
-            "BeslutUID": "34b1ff17-603e-11e9-9dcc-b1e66e1540b0",
-            "Beslutsdatum": "2024-01-12",
-            "Beslutsfattare": "Emil Stenberg (IT)",
-            "BeslutsfattareUID": "34b1ff17-603e-11e9-9dcc-b1e66e1540b0"
-        },
-        "KursUID": "60153726-b135-11ee-bf6a-e2af0a9345af",
-        "KursinstansUID": "60153725-b135-11ee-bf6a-e2af0a9345af",
-        "KurstillfalleUID": "b8f26756-b139-11ee-bf6a-e2af0a9345af",
-        "Resultat": {
-            "BetygsgradID": 131697,
-            "BetygsskalaID": 131657,
-            "Examinationsdatum": "2023-03-01",
-            "GiltigSomSlutbetyg": false,
-            "OmfattningsPoang": 20.0,
-            "PrestationsPoang": 20.0,
-            "ResultatUID": "a834b510-b13a-11ee-816b-5383fced4224"
-        },
-        "StudentUID": "4ff5969a-0e54-11ed-8f4d-87c157374df8",
-        "UtbildningsinstansUID": "3d34baaf-b136-11ee-bf6a-e2af0a9345af"
+  "ladok3EventType": "se.ladok.schemas.resultat.ResultatPaModulAttesteratEvent",
+  "ladok3Username": "emilsten@kth.se",
+  "message": {
+    "HandelseUID": "a7a202ee-b140-11ee-816b-5383fced4224",
+    "EventContext": {
+      "AnvandareUID": "34b1ff17-603e-11e9-9dcc-b1e66e1540b0",
+      "Anvandarnamn": "emilsten@kth.se",
+      "LarosateID": 29
     },
-    "userProps": {
-        "ladok3AtomEntryId": "a8bc9b6f-b140-11ee-bd02-33aa2f734e59",
-        "ladok3Username": "emilsten@kth.se",
-        "ladok3IsLastFeed": true,
-        "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/318876",
-        "content_HYPHEN_Type": "application/json",
-        "ladok3AtomEntryUpdated": "2024-01-12T12:49:34.351",
-        "ladok3EventType": "se.ladok.schemas.resultat.ResultatPaModulAttesteratEvent",
-        "traceparent": "00-cb2362a955945b0f7f908c10b04218ce-1524aedb87b35d20-01",
-        "ladok3AtomEntryIndexInFeed": 0,
-        "ladok3EventId": "a7a202ee-b140-11ee-816b-5383fced4224",
-        "ladok3MessageType": "ladok3Event",
-        "ladok3MessageSequenceNumber": 74911
-
-    }
+    "Beslut": {
+      "BeslutUID": "34b1ff17-603e-11e9-9dcc-b1e66e1540b0",
+      "Beslutsdatum": "2024-01-12",
+      "Beslutsfattare": "Emil Stenberg (IT)",
+      "BeslutsfattareUID": "34b1ff17-603e-11e9-9dcc-b1e66e1540b0"
+    },
+    "KursUID": "60153726-b135-11ee-bf6a-e2af0a9345af",
+    "KursinstansUID": "60153725-b135-11ee-bf6a-e2af0a9345af",
+    "KurstillfalleUID": "b8f26756-b139-11ee-bf6a-e2af0a9345af",
+    "Resultat": {
+      "BetygsgradID": 131697,
+      "BetygsskalaID": 131657,
+      "Examinationsdatum": "2023-03-01",
+      "GiltigSomSlutbetyg": false,
+      "OmfattningsPoang": 20.0,
+      "PrestationsPoang": 20.0,
+      "ResultatUID": "a834b510-b13a-11ee-816b-5383fced4224"
+    },
+    "StudentUID": "4ff5969a-0e54-11ed-8f4d-87c157374df8",
+    "UtbildningsinstansUID": "3d34baaf-b136-11ee-bf6a-e2af0a9345af"
+  },
+  "userProps": {
+    "ladok3AtomEntryId": "a8bc9b6f-b140-11ee-bd02-33aa2f734e59",
+    "ladok3Username": "emilsten@kth.se",
+    "ladok3IsLastFeed": true,
+    "ladok3AtomFeed": "https://api.integrationstest.ladok.se:443/uppfoljning/feed/318876",
+    "content_HYPHEN_Type": "application/json",
+    "ladok3AtomEntryUpdated": "2024-01-12T12:49:34.351",
+    "ladok3EventType": "se.ladok.schemas.resultat.ResultatPaModulAttesteratEvent",
+    "traceparent": "00-cb2362a955945b0f7f908c10b04218ce-1524aedb87b35d20-01",
+    "ladok3AtomEntryIndexInFeed": 0,
+    "ladok3EventId": "a7a202ee-b140-11ee-816b-5383fced4224",
+    "ladok3MessageType": "ladok3Event",
+    "ladok3MessageSequenceNumber": 74911
+  }
 }

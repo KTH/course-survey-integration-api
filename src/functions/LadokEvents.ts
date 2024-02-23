@@ -8,48 +8,48 @@ import resultatPaModulAttesteratEvent from "./ladok-events/resultatPaModulAttest
 import attesteratResultatMakuleratEvent from "./ladok-events/attesteratResultatMakuleratEvent";
 
 const {
-  LADOK3_FEED_SERVICE_BUS_TOPIC_NAME = "course-survey-integration-api-ref"
+  LADOK3_FEED_SERVICE_BUS_TOPIC_NAME = "course-survey-integration-api-ref",
 } = process.env;
 
 const sharedProps = {
-  connection: 'LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING',
+  connection: "LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING",
   topicName: LADOK3_FEED_SERVICE_BUS_TOPIC_NAME,
-}
+};
 
-app.serviceBusTopic('Registrering', {
+app.serviceBusTopic("Registrering", {
   ...sharedProps,
   ...registreringEvent,
-  subscriptionName: 'registrering',
+  subscriptionName: "registrering",
 });
 
-app.serviceBusTopic('PaborjatUtbildningstillfalleEvent', {
+app.serviceBusTopic("PaborjatUtbildningstillfalleEvent", {
   ...sharedProps,
   ...paborjadUtbildningEvent,
-  subscriptionName: 'paborjat-utbildningstillfalle',
+  subscriptionName: "paborjat-utbildningstillfalle",
 });
 
-app.serviceBusTopic('KurstillfälleTillStatus', {
+app.serviceBusTopic("KurstillfälleTillStatus", {
   ...sharedProps,
   ...kurstillfalleTillStatusEvent,
-  subscriptionName: 'kurstillfalle-till-status',
+  subscriptionName: "kurstillfalle-till-status",
 });
 
-app.serviceBusTopic('ModuleTillStatus', {
+app.serviceBusTopic("ModuleTillStatus", {
   ...sharedProps,
   ...modulTillStatusEvent,
-  subscriptionName: 'modul-till-status',
+  subscriptionName: "modul-till-status",
 });
 
-app.serviceBusTopic('ResultatPaModulAttesterat', {
+app.serviceBusTopic("ResultatPaModulAttesterat", {
   ...sharedProps,
   ...resultatPaModulAttesteratEvent,
-  subscriptionName: 'resultat-pa-modul-attesterat',
+  subscriptionName: "resultat-pa-modul-attesterat",
 });
 
-app.serviceBusTopic('ResultatPaHelKursAttesterat', {
+app.serviceBusTopic("ResultatPaHelKursAttesterat", {
   ...sharedProps,
   ...resultatPaHelKursAttesteratEvent,
-  subscriptionName: 'resultat-pa-hel-kurs-attesterat',
+  subscriptionName: "resultat-pa-hel-kurs-attesterat",
 });
 
 // app.serviceBusTopic('AttesteratResultatMakulerat', {
