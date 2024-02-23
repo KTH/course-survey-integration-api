@@ -142,7 +142,7 @@ export async function handler(
     // N
     periods: [{
       period: koppsInfo.round.periods[0],
-      credits: ladokCourseRoundInfo?.credits.toString(),
+      credits: `${ladokCourseRoundInfo?.credits} hp`,
     }],
 
     // Source event message:
@@ -175,7 +175,7 @@ export async function handler(
     courseCode: ladokCourseRoundInfo?.courseCode,
     endDate: ladokCourseRoundInfo?.endDate,
     displayYear: ladokCourseYear,
-    credits: ladokCourseRoundInfo?.credits.toString(),
+    credits: `${ladokCourseRoundInfo?.credits} hp`,
     modules: ladokCourseRoundInfo?.modules?.map((m) =>
       convertLadokModuleToCourseModule(m, dummyLanguage),
     ),

@@ -14,11 +14,8 @@ KoppsIntegrationMock.getCourseInformation(
     courseCode: "DD1321",
     periods: ["P1"],
     goals: "The course aims to give basic knowledge of programming in F#.",
-<<<<<<< HEAD
-=======
     startTerm: "20221",
     code: "51210",
->>>>>>> ba1856363d8adb07bb649079e7e407a0d953efb2
   },
 );
 
@@ -40,11 +37,7 @@ LadokIntegrationMock.getCourseRoundInformation(
         en: "School of Computer Science",
       },
     },
-<<<<<<< HEAD
-    courseInstanceCode: "DD1321-20221",
-=======
     courseInstanceCode: "51210",
->>>>>>> ba1856363d8adb07bb649079e7e407a0d953efb2
     startDate: "2023-01-17",
     endDate: "2023-03-17",
     credits: 7.5,
@@ -86,14 +79,6 @@ LadokIntegrationMock.getCourseRoundInformation(
     },
   },
 );
-<<<<<<< HEAD
-
-UgIntegrationMock.getUgCourseResponsibleAndTeachers("SF1625", "2022", "2", [
-  "u1responsible",
-  ["u1teacher1", "u1teacher2"],
-]);
-=======
->>>>>>> ba1856363d8adb07bb649079e7e407a0d953efb2
 
 UgIntegrationMock.getUgUser("u1responsible", {
   email: "cr@email.com",
