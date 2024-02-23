@@ -49,7 +49,7 @@ export async function handler(
   const { BetygsgradID, BetygsskalaID, ResultatUID } = message.Resultat;
   const hashedStudentId = await hashStudentId(StudentUID);
 
-  const id = `${KurstillfalleUID}-${hashedStudentId}`;
+  const id = `${UtbildningsinstansUID}-${hashedStudentId}`;
   const doc: TReportedResultEntity = {
     id,
     parentId: UtbildningsinstansUID, // This matches the courseRoundId and is used to distinguish between course result and module result
@@ -65,10 +65,8 @@ export async function handler(
     },
   };
 
-  const res = await db.query(
-    {
-      id,
-    },
+  const res = await db.fetchById(
+    id,
     "ReportedResult",
   );
 

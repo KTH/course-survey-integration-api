@@ -135,7 +135,7 @@ export class Database {
 
   async countByPropertyQuery(
     propName: string,
-    value: string | object,
+    value: string | Record<string, unknown>,
     collectionName: DbCollectionName,
   ): Promise<number> {
     await this.connect();

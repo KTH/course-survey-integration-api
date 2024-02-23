@@ -1,23 +1,20 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import {
-  getUgCourseResponsibleAndTeachers,
+  getUgCourseTeachers,
+  getUgCourseResponsible,
+  getUgCourseExaminers,
   getUgSchool,
   getUgUser,
 } from "ug-integration";
 import { ServiceBus, isValidEvent, Database } from "../utils";
-import {
-  TCourseRound,
-  TCourseRoundEntity,
-  TCourseUser,
-  TOrgEntity,
-} from "../interface";
+import { TCourseRound, TCourseRoundEntity } from "../interface";
 import { getCourseInformation } from "kopps-integration";
 import { getCourseRoundInformation } from "ladok-integration";
 import {
   convertLadokModuleToCourseModule,
   convertUgSchoolToOrgEntity,
-  convertUgToCourseUserArr,
+  convertUgUsersToCourseUsers,
 } from "./utils";
 
 export type TPaborjatUtbildningstillfalleEvent = {
@@ -80,38 +77,44 @@ export async function handler(
   );
 
   const ladokCourseCode = ladokCourseRoundInfo.courseCode;
+  const roundTerm = koppsInfo.round.startTerm;
   const ladokCourseYear = ladokCourseRoundInfo.startDate.slice(0, 4);
-  const ladokCourseRoundCode = koppsInfo?.round?.periods?.[0]; // TODO: We should use new period code (nnnnn)
+
+  // Note: this uses the "old" round code format
+  const roundCode = koppsInfo.round.code;
 
   // TODO: Should we cache these values? For how long?
   // TODO: Use live data but during development we can use hardcoded values
-  const [courseResonsibleKthId, courseTeachersKthIds = []] =
-    await getUgCourseResponsibleAndTeachers(
-      "SF1625" || ladokCourseCode,
-      "2022" || ladokCourseYear,
-      "2" || ladokCourseRoundCode,
-    );
-  // TODO: Should we cache these values? For how long?
-  const ugCourseResponsible = await getUgUser(courseResonsibleKthId);
-  const ugCourseTeachers = await Promise.all(
-    courseTeachersKthIds?.map(async (kthId: string) => await getUgUser(kthId)),
+  const courseResponsibleIds = await getUgCourseResponsible(
+    ladokCourseCode,
+    roundTerm,
+    roundCode,
   );
-  const dummyCourseExaminer = {
-    // TODO: Use proper data -- from Ladok (I believe)          <***************
-    userName: "dummyuser",
-    kthUserId: "u1dummy",
-    email: "dummy@email.com",
-    fullName: "Dummy User",
-  } as TCourseUser;
+  const teachersIds = await getUgCourseTeachers(
+    ladokCourseCode,
+    roundTerm,
+    roundCode,
+  );
+
+  const examinersIds = await getUgCourseExaminers(ladokCourseCode);
+
+  // TODO: Should we cache these values? For how long?
+  const courseResponsible = convertUgUsersToCourseUsers(
+    await Promise.all(courseResponsibleIds.map(getUgUser)),
+  );
+
+  const teachers = convertUgUsersToCourseUsers(
+    await Promise.all(teachersIds.map(getUgUser)),
+  );
+
+  const examiners = convertUgUsersToCourseUsers(
+    await Promise.all(examinersIds.map(getUgUser)),
+  );
 
   const ladokSchoolCode = ladokCourseRoundInfo.organisation.code;
+  const ladokInsitutionCode = ladokCourseRoundInfo.organisationUnit.code;
   const tmpUgSchool = await getUgSchool(ladokSchoolCode);
-  const dummyInstitution = {
-    // TODO: Use proper data       <***************
-    displayName: "Dummy Institution",
-    displayCode: "DUMMY",
-    kthId: "u1dummyinst",
-  } as TOrgEntity;
+  const tmpUgInstitution = await getUgSchool(ladokInsitutionCode);
 
   const ladokGradingDistribution =
     ladokCourseRoundInfo.gradingScheme?.grades?.reduce(
@@ -127,12 +130,6 @@ export async function handler(
   // TODO: Use proper data        <***************
   const dummyCanceled = false;
 
-  // TODO: Use proper data -- Where does this come from?   <***************
-  const dummyPeriod = {
-    period: "P1" as any,
-    credits: "7.5hp",
-  };
-
   // TODO: Create entity types that are synced with the API response types
   const doc: TCourseRoundEntity = {
     // Required for DB-layer to work
@@ -141,9 +138,12 @@ export async function handler(
     // Dummy data:
     language: dummyLanguage,
     canceled: dummyCanceled,
-    institution: dummyInstitution, // TODO: Exists in our ladok integration package, may have different name
-    periods: [dummyPeriod],
-    courseExaminers: [dummyCourseExaminer],
+    
+    // N
+    periods: [{
+      period: koppsInfo.round.periods[0],
+      credits: ladokCourseRoundInfo?.credits.toString(),
+    }],
 
     // Source event message:
     ladokCourseId: msgUtbildningsUid,
@@ -160,8 +160,15 @@ export async function handler(
       ladokSchoolCode,
       dummyLanguage,
     ),
-    courseResponsible: convertUgToCourseUserArr(ugCourseResponsible),
-    courseTeachers: convertUgToCourseUserArr(ugCourseTeachers),
+
+    institution: convertUgSchoolToOrgEntity(
+      tmpUgInstitution,
+      ladokInsitutionCode,
+      dummyLanguage,
+    ),
+    courseResponsible: courseResponsible,
+    courseExaminers: examiners,
+    courseTeachers: teachers,
 
     // Source LADOK REST API:
     _gradingScheme: Object.keys(ladokGradingDistribution ?? {}),

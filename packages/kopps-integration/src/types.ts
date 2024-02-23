@@ -24,6 +24,9 @@ export interface KoppsCourseRoundInfo {
     /** course round ID */
     ladokUID: string;
 
+    /** Old "round ID" (single digit) */
+    ladokRoundId: string;
+
     /**
      * An object containing the number of credits per period. It includes
      * also information about start and end weeks per period

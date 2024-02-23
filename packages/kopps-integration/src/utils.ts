@@ -5,20 +5,23 @@ import type {
   KoppsSyllabus,
 } from "./types";
 
+const PERIODS = ["P0", "P1", "P2", "P3", "P4", "P5"] as const;
+type Periods = (typeof PERIODS)[number];
+
 /**
  * Return the periods in a round object. Periods are sorted from oldest to
  * latest by the term where the period belongs.
  */
 export function getPeriods(roundObject: KoppsCourseRoundInfo) {
-  const periods: (0 | 1 | 2 | 3 | 4 | 5)[] = [];
+  const periods: Periods[] = [];
   const sortedTerms = roundObject.round.courseRoundTerms.sort(
     (t1, t2) => t1.term.term - t2.term.term,
   );
 
   for (const c of sortedTerms) {
     // Add the number to the "periods" array if the number of credits is higher than 0
-    for (const p of [0, 1, 2, 3, 4, 5] as const) {
-      const numberOfCredits = c[`creditsP${p}`];
+    for (const p of PERIODS) {
+      const numberOfCredits = c[`credits${p}`];
       if (numberOfCredits && numberOfCredits > 0) {
         periods.push(p);
       }

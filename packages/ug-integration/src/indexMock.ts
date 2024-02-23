@@ -1,33 +1,66 @@
-import { TUgCourseResponsibleAndTeachers, TUgSchool, TUgUser } from ".";
+import { TUgSchool, TUgUser } from ".";
 
 const _mockedValues: {
-  getUgCourseResponsibleAndTeachers: Record<
-    string,
-    TUgCourseResponsibleAndTeachers
-  >;
+  getUgMembers: Record<string, string[]>;
+  getUgCourseResponsible: Record<string, string[]>;
+  getUgCourseTeachers: Record<string, string[]>;
+  getUgCourseExaminers: Record<string, string[]>;
   getUgUser: Record<string, TUgUser>;
   getUgSchool: Record<string, TUgSchool>;
   getUgUserByLadokId: Record<string, TUgUser>;
 } = {
-  getUgCourseResponsibleAndTeachers: {},
+  getUgMembers: {},
+  getUgCourseResponsible: {},
+  getUgCourseTeachers: {},
+  getUgCourseExaminers: {},
   getUgUser: {},
   getUgSchool: {},
   getUgUserByLadokId: {},
 };
 
 export class UgIntegrationMock {
-  static getUgCourseResponsibleAndTeachers(
+  static getUgMembers(groupName: string, params: string[]) {
+    const mocked = _mockedValues.getUgMembers;
+    if (mocked[groupName])
+      throw new Error(`Mock value already registered for ${groupName}`);
+
+    return mocked[groupName] = params;
+  }
+  
+  static getUgCourseResponsible(
     courseCode: string,
     roundYear: string,
-    roundCode: string | number,
-    params: TUgCourseResponsibleAndTeachers,
+    roundCode: string,
+    params: string[],
   ) {
-    const key = [courseCode, roundYear, roundCode].join("-");
-    const mocked = _mockedValues.getUgCourseResponsibleAndTeachers;
+    const mocked = _mockedValues.getUgCourseResponsible;
+    const key = `${courseCode}-${roundYear}-${roundCode}`;
     if (mocked[key])
       throw new Error(`Mock value already registered for ${key}`);
-
     mocked[key] = params;
+  }
+  
+  static getUgCourseTeachers(
+    courseCode: string,
+    roundYear: string,
+    roundCode: string,
+    params: string[],
+  ) {
+    const mocked = _mockedValues.getUgCourseTeachers;
+    const key = `${courseCode}-${roundYear}-${roundCode}`;
+    if (mocked[key])
+      throw new Error(`Mock value already registered for ${key}`);
+    mocked[key] = params;
+  }
+  
+  static getUgCourseExaminers(
+    courseCode: string,
+    params: string[],
+  ) {
+    const mocked = _mockedValues.getUgCourseExaminers;
+    if (mocked[courseCode])
+      throw new Error(`Mock value already registered for ${courseCode}`);
+    mocked[courseCode] = params;
   }
 
   static getUgUser(kthId: string, params: TUgUser) {
@@ -55,16 +88,32 @@ export class UgIntegrationMock {
   }
 }
 
-export async function getUgCourseResponsibleAndTeachers(
+export async function getUgMembers(groupName: string) {
+  return _mockedValues.getUgMembers[groupName];
+}
+
+export async function getUgCourseResponsible(
   courseCode: string,
   roundYear: string,
-  roundCode: string | number,
-): Promise<TUgCourseResponsibleAndTeachers | []> {
-  return (
-    _mockedValues.getUgCourseResponsibleAndTeachers[
-      [courseCode, roundYear, roundCode].join("-")
-    ] ?? [undefined, []]
-  );
+  roundCode: string,
+) {
+  const key = `${courseCode}-${roundYear}-${roundCode}`;
+  return _mockedValues.getUgCourseResponsible[key];
+}
+
+export async function getUgCourseTeachers(
+  courseCode: string,
+  roundYear: string,
+  roundCode: string,
+) {
+  const key = `${courseCode}-${roundYear}-${roundCode}`;
+  return _mockedValues.getUgCourseTeachers[key];
+}
+
+export async function getUgCourseExaminers(
+  courseCode: string,
+) {
+  return _mockedValues.getUgCourseExaminers[courseCode];
 }
 
 export async function getUgUser(
@@ -74,14 +123,14 @@ export async function getUgUser(
   return _mockedValues.getUgUser[kthId];
 }
 
+export async function getUgUserByLadokId(
+  ladokId: string,
+  ): Promise<TUgUser | undefined> {
+  return _mockedValues.getUgUserByLadokId[ladokId];
+}
+
 export async function getUgSchool(
   schoolCode: string,
 ): Promise<TUgSchool | undefined> {
   return _mockedValues.getUgSchool[schoolCode];
-}
-
-export async function getUgUserByLadokId(
-  ladokId: string,
-): Promise<TUgUser | undefined> {
-  return _mockedValues.getUgUserByLadokId[ladokId];
 }

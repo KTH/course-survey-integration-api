@@ -16,21 +16,10 @@ export function _convert(ugUser: TUgUser): TCourseUser {
   };
 }
 
-// Not used any more
-// export function convertUgToCourseUser(ugUser: TUgUser | undefined): TCourseUser | undefined {
-//   if (ugUser === undefined) return undefined;
-//   return _convert(ugUser);
-// }
-
-export function convertUgToCourseUserArr(
-  ugUser: (TUgUser | undefined)[] | TUgUser | undefined,
+export function convertUgUsersToCourseUsers(
+  ugUser: (TUgUser | undefined)[],
 ): TCourseUser[] {
-  if (Array.isArray(ugUser)) {
-    return (ugUser.filter((o) => o) as TUgUser[]).map(_convert);
-  } else if (ugUser) {
-    return [_convert(ugUser)];
-  }
-  return [];
+  return (ugUser.filter((o) => o) as TUgUser[]).map(_convert);
 }
 
 export function convertUgSchoolToOrgEntity(

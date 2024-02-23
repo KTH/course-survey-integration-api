@@ -3,6 +3,7 @@
  * Do not make direct changes to the file.
  */
 
+
 export interface paths {
   "/course-rounds": {
     /**
@@ -133,12 +134,12 @@ export interface components {
        * | and all credits for the course. In the future we might specify all periods and spread
        * | the credits accross them.
        */
-      periods?: {
-        /** @enum {string} */
-        period?: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
-        /** @description Credits awarded for this period. */
-        credits?: string;
-      }[];
+      periods: ({
+          /** @enum {string} */
+          period: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
+          /** @description Credits awarded for this period. */
+          credits: string;
+        })[];
       /** @description Total credits awarded for this course. */
       credits: string;
       /** @description List of examiners for this _course_. */
@@ -180,7 +181,7 @@ export interface components {
     };
     StudentParticipation: {
       /** @description Ladok equivalent: `${StudentUID}.${KurstillfalleUID}` */
-      id?: string;
+      id: string;
       ladokCourseRoundId: string;
       /** @description We currently use kthUserId as canvasSisId */
       canvasSisId: string;
@@ -279,9 +280,9 @@ export interface components {
     };
   };
   parameters: {
-    /** @description Nrof items per page */
+    /** @description Nrof items per call */
     PageLimit?: number;
-    /** @description Start on page (zero based) */
+    /** @description Start at item offset (zero based) */
     PageOffset?: number;
   };
   requestBodies: never;

@@ -14,11 +14,12 @@ describe("getPeriods", () => {
           { creditsP0: 1, creditsP1: 2, term: { term: 20232 } },
         ],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
 
-    expect(getPeriods(round)).toStrictEqual([0, 1]);
+    expect(getPeriods(round)).toStrictEqual(["P0", "P1"]);
   });
 
   test("works with no terms", () => {
@@ -26,6 +27,7 @@ describe("getPeriods", () => {
       round: {
         courseRoundTerms: [],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
@@ -41,11 +43,30 @@ describe("getPeriods", () => {
           { creditsP3: 1, term: { term: 20232 } },
         ],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
 
-    expect(getPeriods(round)).toStrictEqual([2, 3]);
+    expect(getPeriods(round)).toStrictEqual(["P2", "P3"]);
+  });
+
+  test("works with terms that span multiple years", () => {
+    const round: KoppsCourseRoundInfo = {
+      round: {
+        courseRoundTerms: [
+          { creditsP5: 1, term: { term: 20231 } },
+          { creditsP1: 1, term: { term: 20241 } },
+          { creditsP1: 1, term: { term: 20251 } },
+          { creditsP1: 1, term: { term: 20261 } },
+        ],
+        ladokUID: "",
+        ladokRoundId: "",
+        startTerm: { term: 0 },
+      },
+    };
+
+    expect(getPeriods(round)).toStrictEqual(["P5", "P1", "P1", "P1"]);
   });
 
   test("order in courseRoundTerm array is ignored", () => {
@@ -56,12 +77,13 @@ describe("getPeriods", () => {
           { creditsP2: 2, term: { term: 20231 } },
         ],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
 
     // Note: "2" must come before "3"
-    expect(getPeriods(round)).toStrictEqual([2, 3]);
+    expect(getPeriods(round)).toStrictEqual(["P2", "P3"]);
   });
 
   test("periods are sorted by term", () => {
@@ -72,13 +94,14 @@ describe("getPeriods", () => {
           { creditsP0: 1, term: { term: 20232 } },
         ],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
 
     // P5 should come first because term is 20231
     // P0 should come after because term is 20232
-    expect(getPeriods(round)).toStrictEqual([5, 0]);
+    expect(getPeriods(round)).toStrictEqual(["P5", "P0"]);
   });
 
   test("periods with 0 credits are ignored", () => {
@@ -89,11 +112,12 @@ describe("getPeriods", () => {
           { creditsP0: 1, term: { term: 20232 } },
         ],
         ladokUID: "",
+        ladokRoundId: "",
         startTerm: { term: 0 },
       },
     };
 
-    expect(getPeriods(round)).toStrictEqual([4, 0]);
+    expect(getPeriods(round)).toStrictEqual(["P4", "P0"]);
   });
 });
 
