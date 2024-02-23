@@ -24,9 +24,9 @@ export class UgIntegrationMock {
     if (mocked[groupName])
       throw new Error(`Mock value already registered for ${groupName}`);
 
-    return mocked[groupName] = params;
+    return (mocked[groupName] = params);
   }
-  
+
   static getUgCourseResponsible(
     courseCode: string,
     roundYear: string,
@@ -39,7 +39,7 @@ export class UgIntegrationMock {
       throw new Error(`Mock value already registered for ${key}`);
     mocked[key] = params;
   }
-  
+
   static getUgCourseTeachers(
     courseCode: string,
     roundYear: string,
@@ -52,11 +52,8 @@ export class UgIntegrationMock {
       throw new Error(`Mock value already registered for ${key}`);
     mocked[key] = params;
   }
-  
-  static getUgCourseExaminers(
-    courseCode: string,
-    params: string[],
-  ) {
+
+  static getUgCourseExaminers(courseCode: string, params: string[]) {
     const mocked = _mockedValues.getUgCourseExaminers;
     if (mocked[courseCode])
       throw new Error(`Mock value already registered for ${courseCode}`);
@@ -110,9 +107,7 @@ export async function getUgCourseTeachers(
   return _mockedValues.getUgCourseTeachers[key];
 }
 
-export async function getUgCourseExaminers(
-  courseCode: string,
-) {
+export async function getUgCourseExaminers(courseCode: string) {
   return _mockedValues.getUgCourseExaminers[courseCode];
 }
 
@@ -125,7 +120,7 @@ export async function getUgUser(
 
 export async function getUgUserByLadokId(
   ladokId: string,
-  ): Promise<TUgUser | undefined> {
+): Promise<TUgUser | undefined> {
   return _mockedValues.getUgUserByLadokId[ladokId];
 }
 

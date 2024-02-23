@@ -117,7 +117,9 @@ UgIntegrationMock.getUgSchool("SCI", {
   },
 });
 
-UgIntegrationMock.getUgCourseResponsible("DD1321", "20221", "51210", ["u1responsible"]);
+UgIntegrationMock.getUgCourseResponsible("DD1321", "20221", "51210", [
+  "u1responsible",
+]);
 
 UgIntegrationMock.getUgCourseExaminers("DD1321", ["u1examiner"]);
 

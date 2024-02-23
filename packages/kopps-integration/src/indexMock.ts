@@ -22,7 +22,9 @@ export class KoppsIntegrationMock {
   }
 }
 
-export async function getCourseInformation(ladokUid: string): Promise<ReturnType<typeof origGetCourseInformation>> {
+export async function getCourseInformation(
+  ladokUid: string,
+): Promise<ReturnType<typeof origGetCourseInformation>> {
   const { title, titleOther, courseCode, periods, goals, startTerm, code } =
     _mockedValues[ladokUid];
   return {
