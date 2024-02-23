@@ -40,7 +40,7 @@ exports[`PaborjadUtbildningEvent writes correct data to db 1`] = `
         "userName": "jeskla",
       },
     ],
-    "credits": "6",
+    "credits": "6 hp",
     "displayYear": "2023",
     "endDate": "2023-10-27",
     "id": "41717c91-4028-11ee-bf53-2115569549a8",
@@ -115,7 +115,12 @@ exports[`PaborjadUtbildningEvent writes correct data to db 1`] = `
       "displayName": "EECS SKOLAN",
       "kthId": "u2wmqdqu",
     },
-    "period": "P1",
+    "periods": [
+      {
+        "credits": "6 hp",
+        "period": "P1",
+      },
+    ],
   },
 }
 `;

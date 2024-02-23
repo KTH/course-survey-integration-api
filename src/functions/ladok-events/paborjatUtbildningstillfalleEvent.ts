@@ -132,14 +132,22 @@ export async function handler(
 
   // TODO: Create entity types that are synced with the API response types
   const doc: TCourseRoundEntity = {
+    // Required for DB-layer to work
+    id: msgUtbildningstillfalleUid,
+
     // Dummy data:
     language: dummyLanguage,
     canceled: dummyCanceled,
-    period: koppsInfo.round.periods[0],
-    courseExaminers: examiners,
+
+    // N
+    periods: [
+      {
+        period: koppsInfo.round.periods[0],
+        credits: `${ladokCourseRoundInfo?.credits} hp`,
+      },
+    ],
 
     // Source event message:
-    id: msgUtbildningstillfalleUid,
     ladokCourseId: msgUtbildningsUid,
     ladokCourseRoundId: msgUtbildningstillfalleUid,
     canvasSisId: msgUtbildningstillfalleUid, // I deduced this by looking at the Event Relationship diagram, not yet verified in Canvas
@@ -161,6 +169,7 @@ export async function handler(
       dummyLanguage,
     ),
     courseResponsible: courseResponsible,
+    courseExaminers: examiners,
     courseTeachers: teachers,
 
     // Source LADOK REST API:
@@ -168,7 +177,7 @@ export async function handler(
     courseCode: ladokCourseRoundInfo?.courseCode,
     endDate: ladokCourseRoundInfo?.endDate,
     displayYear: ladokCourseYear,
-    credits: ladokCourseRoundInfo?.credits.toString(),
+    credits: `${ladokCourseRoundInfo?.credits} hp`,
     modules: ladokCourseRoundInfo?.modules?.map((m) =>
       convertLadokModuleToCourseModule(m, dummyLanguage),
     ),

@@ -28,7 +28,7 @@ describe("RegistreringEvent", () => {
 
     expect(mockContext.log.mock.calls.length).toBe(1);
     expect(mockContext.log.mock.lastCall[0]).toBe(
-      `ModulTillStatusEvent: ${event.message.OverliggandeUtbildningsinstansUID} ${event.message.UtbildningsinstansUID} ${event.message.Status}`,
+      `ModulTillStatusEvent: ${event.message.OverliggandeUtbildningsinstansUID} ${event.message.Utbildningskod} ${event.message.Status}`,
     );
   });
 

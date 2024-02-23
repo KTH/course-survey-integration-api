@@ -4,10 +4,13 @@
  */
 
 export interface paths {
-  "/course-round": {
+  "/course-rounds": {
     /**
-     * Returns a list of course rounds.
-     * @description The API will return any course round from this or previous term that should be surveyed. A course round might be updated and course rounds might be added to this list as time progresses during the term.
+     * Returns a list of course rounds pending evaluation (partial objects only).
+     * @description | The API will return course rounds from this or previous term. The course round is returned as a partial object,
+     * | for complete data call the details endpoint. A course round might be updated and course rounds might be added
+     * | to this list as time progresses during the term. Added courses will be added to end of list. Course rounds may
+     * | be removed from this list if calls are on different days.
      */
     get: {
       parameters: {
@@ -19,8 +22,13 @@ export interface paths {
       responses: {
         /** @description Ok */
         200: {
+          headers: {
+            "Pagination-Total-Count": components["headers"]["Pagination-Total-Count"];
+            "Pagination-Offset": components["headers"]["Pagination-Offset"];
+            "Pagination-Limit": components["headers"]["Pagination-Limit"];
+          };
           content: {
-            "application/json": components["schemas"]["CourseRound"][];
+            "application/json": components["schemas"]["CourseRoundPartial"][];
           };
         };
         401: components["responses"]["401"];
@@ -28,8 +36,14 @@ export interface paths {
       };
     };
   };
-  "/course-round/{ladokRoundId}": {
-    /** Returns information about this course round. */
+  "/course-rounds/{ladokRoundId}": {
+    /**
+     * Returns complete information about this course round.
+     * @description | This endpoint returns all information about a course round. This includes the number of registered students,
+     * | the number of reported results, grading distribution, programs and modules.
+     * | Note: This information needs to be updated daily from when the course has ended until the course analysis has
+     * | been created.
+     */
     get: {
       parameters: {
         path: {
@@ -48,7 +62,7 @@ export interface paths {
       };
     };
   };
-  "/course-round/{ladokRoundId}/students": {
+  "/course-rounds/{ladokRoundId}/students": {
     /** Returns list of students belonging to the course round. */
     get: {
       parameters: {
@@ -63,6 +77,11 @@ export interface paths {
       responses: {
         /** @description Ok */
         200: {
+          headers: {
+            "Pagination-Total-Count": components["headers"]["Pagination-Total-Count"];
+            "Pagination-Offset": components["headers"]["Pagination-Offset"];
+            "Pagination-Limit": components["headers"]["Pagination-Limit"];
+          };
           content: {
             "application/json": components["schemas"]["StudentParticipation"][];
           };
@@ -78,60 +97,90 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    CourseRound: {
+    CourseRoundPartial: {
       /** @description Ladok equivalent: UtbildningstillfalleUID, KurstillfalleUID */
-      id: string;
-      ladokCourseId: string;
       ladokCourseRoundId: string;
-      /** @description We currently use LADOK UID as canvasSisId (sis_course_id in Canvas API) */
+      /** @description Ladok equivalent: UtbildningsUID, KursUID */
+      ladokCourseId: string;
+      /** @description This property is called sis_section_id in Canvas API. (Equivalent to ladokCourseRoundId) */
       canvasSisId: string;
+      /** @description Name in tutoring language. */
       name: string;
-      /** @description utbildningskod */
+      /** @description This is the _course_ code and originates from Ladok. */
       courseCode: string;
       /**
-       * @description The main language used for this course. Determines the language used to generate report.
+       * @description The tutoring language for this course round. Determines the language used to generate report.
        * @enum {string}
        */
       language: "en" | "sv";
-      /** @description Marked true if the course has been canceled (duh!). */
-      canceled?: boolean;
+      /** @description Marked true if the course round has been canceled (duh!). */
+      canceled: boolean;
       /**
        * Format: date
-       * @description The date when the course ends.
+       * @description The date when the course round ends.
        */
       endDate: string;
-      /** @description The year this course round was held (YYYY). Note: there are course rounds that span multiple years and might be displayes as YYYY-YYYY */
+      /** @description The year this course round was held (YYYY). Note: there are course rounds that span multiple years and might be displayed as YYYY-YYYY */
       displayYear: string;
-      /** @description The school at KTH this course belongs to. */
+      /** @description The school at KTH this course round belongs to. */
       organization: components["schemas"]["OrgEntity"];
-      /** @description The specific institution at a school this course is attached to. */
+      /** @description The specific institution at a school this course round is attached to. */
       institution: components["schemas"]["OrgEntity"];
-      /** @description Long form text including linebreaks */
+      /** @description This freetext entry explains the goal of the course. Includes linebreaks. */
       courseGoal: string;
-      /** @enum {string} */
-      period: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
-      /** @description Credits awarded for this course */
+      /**
+       * @description | List of periods this course round runs for. Currently we only return the start period
+       * | and all credits for the course. In the future we might specify all periods and spread
+       * | the credits accross them.
+       */
+      periods: {
+        /** @enum {string} */
+        period: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
+        /** @description Credits awarded for this period. */
+        credits: string;
+      }[];
+      /** @description Total credits awarded for this course. */
       credits: string;
-      /** @description Person who is responsible for examination (source: LADOK). */
+      /** @description List of examiners for this _course_. */
       courseExaminers: components["schemas"]["CourseUser"][];
-      /** @description Person who is responsible for the course (source: ???). */
+      /** @description List of course responsible for this course round. */
       courseResponsible: components["schemas"]["CourseUser"][];
-      /** @description List of teachers connected to this course (source: ???) */
+      /** @description List of teachers of this course round. */
       courseTeachers: components["schemas"]["CourseUser"][];
-      nrofRegisteredStudents: number;
-      nrofReportedResults: number;
-      /** @description Kurs, betygsfördelning */
-      gradingDistribution?: {
+    };
+    CourseRound: components["schemas"]["CourseRoundPartial"] & {
+      /** @description Number of students registered for this course round. */
+      totalRegisteredStudents: number;
+      /** @description Number of students with reported results for this course round. */
+      totalReportedResults: number;
+      /**
+       * @description Kurs, betygsfördelning
+       * @example [
+       *   {
+       *     "A": 3,
+       *     "B": 25,
+       *     "C": 15,
+       *     "D": 3,
+       *     "E": 0,
+       *     "F": 2
+       *   },
+       *   {
+       *     "P": 45,
+       *     "F": 3
+       *   }
+       * ]
+       */
+      gradingDistribution: {
         [key: string]: unknown;
       };
+      /** @description List of programs this course round is part of according to registered students. */
       programs: components["schemas"]["ProgramRound"][];
+      /** @description List of modules that are part of this course round, including grading distribution etc. */
       modules: components["schemas"]["CourseModule"][];
     };
     StudentParticipation: {
       /** @description Ladok equivalent: `${StudentUID}.${KurstillfalleUID}` */
       id: string;
-      ladokStudentId: string;
-      ladokCourseId: string;
       ladokCourseRoundId: string;
       /** @description We currently use kthUserId as canvasSisId */
       canvasSisId: string;
@@ -139,35 +188,57 @@ export interface components {
       name: string;
       /** Format: email */
       email: string;
-      roles: ("TBD" | "...")[];
-      locations: string[];
+      roles: "student"[];
+      location: string;
       program: components["schemas"]["ProgramRound"];
     };
     ProgramRound: {
+      /** @description Program code, e.g. 'CINTE' */
       code: string;
+      /** @description The semester this program round is part of. */
       semester: string;
       /** @description Year and term when program round started */
-      startTerm?: string;
+      startTerm: string;
       name: string;
       /** @description Calculate by using startPeriod and current period. */
       studyYear: number;
-      specification: string;
-      /** @enum {string} */
-      required?: "TBD" | "...";
+      /** @description Specialization of the program (inriktning på svenska). This is omitted if connection belongs to the base program. */
+      specialization?: {
+        code?: string;
+        /** @description Name of the specialization in tutoring language. */
+        name?: string;
+      };
+      /**
+       * @description Determines if taking this course is mandatory or not for this program.
+       * @enum {string}
+       */
+      required: "mandatory?" | "...";
     };
     CourseModule: {
-      /** @description Ladok UID for module instance (UtbildningsinstansUID?) */
-      id?: string;
       code: string;
       name: string;
       /** @description Credits awarded for this module. */
       credits: string;
       gradingScheme: string[];
-      nrofReportedResults: number;
-      /** @description Moment, betygsfördelning */
-      gradingDistribution?: {
-        [key: string]: unknown;
-      };
+      totalReportedResults: number;
+      /**
+       * @description Moment, betygsfördelning
+       * @example [
+       *   {
+       *     "A": 3,
+       *     "B": 25,
+       *     "C": 15,
+       *     "D": 3,
+       *     "E": 0,
+       *     "F": 2
+       *   },
+       *   {
+       *     "P": 45,
+       *     "F": 3
+       *   }
+       * ]
+       */
+      gradingDistribution: Record<string, never>;
     };
     CourseUser: {
       /** @description This is the username used to log in to KTH SSO. */
@@ -179,9 +250,15 @@ export interface components {
       fullName: string;
     };
     OrgEntity: {
-      /** @description The name of the organization entity to be displayed in report. */
+      /** @description The name of the organization entity to be displayed in report in the tutoring language. */
       displayName: string;
-      /** @description KTH-specific code used for organization entity. */
+      /**
+       * @description KTH-specific code used for organization entity.
+       * @example [
+       *   "EECS",
+       *   "EECS/JA"
+       * ]
+       */
       displayCode: string;
       /** @description The unique identifier used by the federated login server to refer to the organization entity. */
       kthId: string;
@@ -202,13 +279,17 @@ export interface components {
     };
   };
   parameters: {
-    /** @description Nrof items per page */
+    /** @description Nrof items per call */
     PageLimit?: number;
-    /** @description Start on page (zero based) */
+    /** @description Start at item offset (zero based) */
     PageOffset?: number;
   };
   requestBodies: never;
-  headers: never;
+  headers: {
+    "Pagination-Total-Count": number;
+    "Pagination-Offset": number;
+    "Pagination-Limit": number;
+  };
   pathItems: never;
 }
 

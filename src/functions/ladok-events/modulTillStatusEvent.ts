@@ -109,8 +109,9 @@ export async function handler(
 
   const courseRoundId = message.OverliggandeUtbildningsinstansUID;
   const moduleId = message.UtbildningsinstansUID;
+  const moduleCode = message.Utbildningskod;
   const status = message.Status;
-  context.log(`ModulTillStatusEvent: ${courseRoundId} ${moduleId} ${status}`);
+  context.log(`ModulTillStatusEvent: ${courseRoundId} ${moduleCode} ${status}`);
 
   try {
     const courseRound: TCourseRoundEntity = await db.fetchById(
@@ -123,11 +124,11 @@ export async function handler(
       // Add if not exists
       if (
         !courseRound.modules?.find(
-          (module: TCourseRoundModuleEntity) => module.id === moduleId,
+          (module: TCourseRoundModuleEntity) => module.code === moduleCode,
         )
       ) {
         const newModule: TCourseRoundModuleEntity = {
-          id: moduleId,
+          moduleRoundId: moduleId, //
           code: message.Utbildningskod,
           name:
             convertBenamningToName(message.Benamningar.Benamning, language) ??
@@ -143,7 +144,7 @@ export async function handler(
       // Remove if exists
       // TODO: Add moduleId to Module interface
       updatedModules = courseRound.modules.filter(
-        (module: TCourseRoundModuleEntity) => module.id !== moduleId,
+        (module: TCourseRoundModuleEntity) => module.code === moduleCode,
       );
     }
     await db.update<TCourseRoundEntity>(

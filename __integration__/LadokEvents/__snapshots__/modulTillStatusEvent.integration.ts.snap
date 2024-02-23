@@ -17,7 +17,7 @@ exports[`ModulTillStatusEvent writes correct data to db 1`] = `
           "FX",
           "F",
         ],
-        "id": "6b741a05-9505-11ee-a0ce-a9a57d284dbd",
+        "moduleRoundId": "6b741a05-9505-11ee-a0ce-a9a57d284dbd",
         "name": "",
       },
     ],

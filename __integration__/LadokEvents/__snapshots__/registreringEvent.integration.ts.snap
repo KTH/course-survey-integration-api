@@ -18,7 +18,7 @@ exports[`RegistreringEvent INTEGRATION handles program information correctly 1`]
         "sv": "Civilingenjörsutbildning i samhällsbyggnad",
       },
       "required": "???",
-      "specification": {
+      "specialization": {
         "code": "BBP",
         "name": {
           "en": "Civil Engineering and Construction Project Management",

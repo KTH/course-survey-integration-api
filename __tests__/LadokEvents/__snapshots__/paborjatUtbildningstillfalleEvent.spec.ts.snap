@@ -41,7 +41,7 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
         "userName": "t2",
       },
     ],
-    "credits": "7.5",
+    "credits": "7.5 hp",
     "displayYear": "2023",
     "endDate": "2023-03-17",
     "id": "41717c91-4028-11ee-bf53-2115569549a8",
@@ -76,7 +76,12 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
       "displayName": "Skolan för datavetenskap och kommunikation",
       "kthId": "u1school",
     },
-    "period": "P1",
+    "periods": [
+      {
+        "credits": "7.5 hp",
+        "period": "P1",
+      },
+    ],
   },
 }
 `;

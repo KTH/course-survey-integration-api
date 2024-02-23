@@ -3,7 +3,8 @@ import { paths, components } from "../__generated__/_interface";
 // To generate the _interface.ts file, run: `npm run generate-types`
 // in the root of the project.
 
-// ## Entities
+// ## API Components
+export type TCourseRoundPartial = components["schemas"]["CourseRoundPartial"];
 export type TCourseRound = components["schemas"]["CourseRound"] & {
   /**
    * Add each reported result using composite key to allow for updates.
@@ -30,16 +31,16 @@ export type TApiError = {
 };
 
 // ## Endpoints
-export type PathCourseRoundList = paths["/course-round"];
+export type PathCourseRoundList = paths["/course-rounds"];
 export type APICourseRoundListErrType = TAPIErrType;
-export type APICourseRoundList = TCourseRound[];
+export type APICourseRoundList = TCourseRoundPartial[];
 
-export type PathCourseRound = paths["/course-round/{ladokRoundId}"];
+export type PathCourseRound = paths["/course-rounds/{ladokRoundId}"];
 export type APICourseRoundErrType = TAPIErrType;
 export type APICourseRound = TCourseRound;
 
 export type PathCourseRoundStudentList =
-  paths["/course-round/{ladokRoundId}/students"];
+  paths["/course-rounds/{ladokRoundId}/students"];
 export type APICourseRoundStudentListErrType = TAPIErrType;
 export type APICourseRoundStudentList = TStudentParticipation[];
 
@@ -47,23 +48,35 @@ export type APICourseRoundStudentList = TStudentParticipation[];
  * Domain entities stored in DB
  */
 
+// This is an embedded object
 export type TCourseRoundModuleEntity = {
-  id: TCourseModule["id"];
+  moduleRoundId: string; // Used to match with credits (TReportedResultEntity)
   code: TCourseModule["code"];
   name: TCourseModule["name"];
   credits: TCourseModule["credits"];
   gradingScheme: TCourseModule["gradingScheme"];
 };
 
+// This is an embedded object
+export type TProgramRoundEntity = {
+  code: TProgramRound["code"];
+  semester: TProgramRound["semester"];
+  startTerm: TProgramRound["startTerm"];
+  name: TProgramRound["name"];
+  studyYear: TProgramRound["studyYear"];
+  specialization?: TProgramRound["specialization"];
+  required: TProgramRound["required"];
+};
+
 export type TCourseRoundEntity = {
+  id: string; // Required for DB-layer to work
   language: TCourseRound["language"];
   canceled: TCourseRound["canceled"];
   institution: TCourseRound["institution"];
-  period: TCourseRound["period"];
+  periods: TCourseRound["periods"];
   courseExaminers: TCourseRound["courseExaminers"];
 
   // Source event message:
-  id: TCourseRound["id"];
   ladokCourseId: TCourseRound["ladokCourseId"];
   ladokCourseRoundId: TCourseRound["ladokCourseRoundId"];
   canvasSisId: TCourseRound["canvasSisId"];
@@ -87,8 +100,9 @@ export type TCourseRoundEntity = {
 };
 
 export type TReportedResultEntity = {
-  id: string;
-  parentId: string; // UtbildningsinstansUID
+  id: string; // Required for DB-layer to work
+  parentId: string; // This can belong to a module (moduleRoundId) or a course round (courseRoundId).
+  courseRoundId: string; // CourseRound.ladokCourseRoundId (UtbildningstillfalleUID)
   hashedStudentId: string; // StudentUID hashed
   decision: string; // BeslutUID
   result: string; // Calculated from BetygsgradID and BetygsskalaID
@@ -98,4 +112,16 @@ export type TReportedResultEntity = {
     BetygsskalaID: number;
     ResultatUID: string;
   };
+};
+
+export type TStudentParticipationEntity = {
+  id: string; // Required for DB-layer to work
+  parentId: string; // CourseRound.ladokCourseRoundId (UtbildningsinstansUID)
+  hashedStudentId: string; // StudentUID hashed
+  ladokCourseRoundId: string;
+  canvasSisId: string;
+  name: string;
+  email: string;
+  roles: string[];
+  program: TProgramRoundEntity;
 };

@@ -70,12 +70,12 @@ export default async function handler<T extends APICourseRound>(
   if (!outp) {
     return {
       status: 404,
-      body: JSON.stringify({ error: "Not found" }),
+      jsonBody: { error: "Not found" },
     };
   }
 
   return {
     status: 200,
-    body: JSON.stringify(outp),
+    jsonBody: outp,
   };
 }

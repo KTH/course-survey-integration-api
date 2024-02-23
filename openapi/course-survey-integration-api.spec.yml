@@ -24,33 +24,50 @@ servers:
     description: Staging URL
 
 security:
-  - oauth2: []
+  - ApiKeyAuth: []
 
 paths:
-  /course-round:
+  /course-rounds:
     get:
-      summary: Returns a list of course rounds.
-      description: The API will return any course round from this or previous term that should be surveyed. A course round might be updated and course rounds might be added to this list as time progresses during the term.
+      summary: Returns a list of course rounds pending evaluation (partial objects only).
+      description: |
+        | The API will return course rounds from this or previous term. The course round is returned as a partial object,
+        | for complete data call the details endpoint. A course round might be updated and course rounds might be added
+        | to this list as time progresses during the term. Added courses will be added to end of list. Course rounds may
+        | be removed from this list if calls are on different days.
       parameters:
         - $ref: "#/components/parameters/PageLimit"
         - $ref: "#/components/parameters/PageOffset"
       responses:
         "200":
           description: Ok
+          headers:
+            # UTRED: Alternativ lösning: använd link istället för pagineringsheaders
+            Pagination-Total-Count:
+              $ref: "#/components/headers/Pagination-Total-Count"
+            Pagination-Offset:
+              $ref: "#/components/headers/Pagination-Offset"
+            Pagination-Limit:
+              $ref: "#/components/headers/Pagination-Limit"
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: "#/components/schemas/CourseRound"
+                  $ref: "#/components/schemas/CourseRoundPartial"
         "401":
           $ref: "#/components/responses/401"
         "default":
           $ref: "#/components/responses/default"
 
-  /course-round/{ladokRoundId}:
+  /course-rounds/{ladokRoundId}:
     get:
-      summary: Returns information about this course round.
+      summary: Returns complete information about this course round.
+      description: |
+        | This endpoint returns all information about a course round. This includes the number of registered students,
+        | the number of reported results, grading distribution, programs and modules.
+        | Note: This information needs to be updated daily from when the course has ended until the course analysis has
+        | been created.
       parameters:
         - name: ladokRoundId
           in: path
@@ -69,7 +86,7 @@ paths:
         "default":
           $ref: "#/components/responses/default"
 
-  /course-round/{ladokRoundId}/students:
+  /course-rounds/{ladokRoundId}/students:
     get:
       summary: Returns list of students belonging to the course round.
       parameters:
@@ -83,6 +100,13 @@ paths:
       responses:
         "200":
           description: Ok
+          headers:
+            Pagination-Total-Count:
+              $ref: "#/components/headers/Pagination-Total-Count"
+            Pagination-Offset:
+              $ref: "#/components/headers/Pagination-Offset"
+            Pagination-Limit:
+              $ref: "#/components/headers/Pagination-Limit"
           content:
             application/json:
               schema:
@@ -95,21 +119,44 @@ paths:
           $ref: "#/components/responses/default"
 
 components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: Ocp-Apim-Subscription-Key
+
+  headers:
+    Pagination-Total-Count:
+      schema:
+        type: integer
+        description: The total number of course rounds available.
+    Pagination-Offset:
+      schema:
+        type: integer
+        description: The offset of the current page in items.
+        minimum: 0
+    Pagination-Limit:
+      schema:
+        type: integer
+        description: The limit of course rounds per page.
+        minimum: 1
+        maximum: 30
+        default: 30
   parameters:
     PageLimit:
       name: limit
       in: query
-      description: Nrof items per page
+      description: Nrof items per call
       schema:
         type: integer
-        minimum: 0
-        maximum: 100
-        default: 100
+        minimum: 1
+        maximum: 30
+        default: 30
       required: false
     PageOffset:
       name: offset
       in: query
-      description: Start on page (zero based)
+      description: Start at item offset (zero based)
       schema:
         type: integer
         minimum: 0
@@ -129,18 +176,8 @@ components:
               message:
                 type: string
 
-  securitySchemes:
-    oauth2:
-      type: oauth2
-      description: This API uses OAuth 2 with the implicit grant flow. [More info](https://api.example.com/docs/auth)
-      flows:
-        implicit: # <---- OAuth flow(authorizationCode, implicit, password or clientCredentials)
-          authorizationUrl: https://api.example.com/oauth2/authorize
-          scopes:
-            read: read data
-
   schemas:
-    CourseRound:
+    CourseRoundPartial:
       type: object
       required:
         - id
@@ -150,106 +187,134 @@ components:
         - name
         - courseCode
         - language
-        # - canceled
+        - canceled
         - endDate
         - displayYear
         - organization
         - institution
         - courseGoal
-        - period
+        - periods
         - credits
         - courseExaminers
         - courseResponsible
         - courseTeachers
-        - nrofRegisteredStudents
-        - nrofReportedResults
-        # - gradingDistribution
-        - programs
-        - modules
       properties:
-        id:
+        ladokCourseRoundId:
           type: string
           description: "Ladok equivalent: UtbildningstillfalleUID, KurstillfalleUID"
         ladokCourseId:
           type: string
-        ladokCourseRoundId:
-          type: string
+          description: "Ladok equivalent: UtbildningsUID, KursUID"
         canvasSisId:
           type: string
-          description: We currently use LADOK UID as canvasSisId (sis_course_id in Canvas API)
+          description: "This property is called sis_section_id in Canvas API. (Equivalent to ladokCourseRoundId)"
         name:
           type: string
+          description: "Name in tutoring language."
         courseCode:
           type: string
-          description: "utbildningskod"
+          description: "This is the _course_ code and originates from Ladok."
         language:
           type: string
           enum:
             - en
             - sv
-          description: The main language used for this course. Determines the language used to generate report.
+          description: "The tutoring language for this course round. Determines the language used to generate report."
         canceled:
           type: boolean
-          description: Marked true if the course has been canceled (duh!).
+          description: "Marked true if the course round has been canceled (duh!)."
         endDate:
           type: string
           format: date
-          description: The date when the course ends.
+          description: "The date when the course round ends."
         displayYear:
           type: string
-          description: "The year this course round was held (YYYY). Note: there are course rounds that span multiple years and might be displayes as YYYY-YYYY"
+          description: "The year this course round was held (YYYY). Note: there are course rounds that span multiple years and might be displayed as YYYY-YYYY"
         organization:
           $ref: "#/components/schemas/OrgEntity"
-          description: The school at KTH this course belongs to.
+          description: "The school at KTH this course round belongs to."
         institution:
           $ref: "#/components/schemas/OrgEntity"
-          description: The specific institution at a school this course is attached to.
+          description: "The specific institution at a school this course round is attached to."
         courseGoal:
           type: string
-          description: Long form text including linebreaks
-        period:
-          type: string
-          enum:
-            - P0
-            - P1
-            - P2
-            - P3
-            - P4
-            - P5
+          description: "This freetext entry explains the goal of the course. Includes linebreaks."
+        periods:
+          type: array
+          description: |
+            | List of periods this course round runs for. Currently we only return the start period
+            | and all credits for the course. In the future we might specify all periods and spread
+            | the credits accross them.
+          items:
+            type: object
+            required:
+              - period
+              - credits
+            properties:
+              period:
+                type: string
+                enum:
+                  - P0
+                  - P1
+                  - P2
+                  - P3
+                  - P4
+                  - P5
+              credits:
+                type: string
+                description: "Credits awarded for this period."
         credits:
           type: string
-          description: Credits awarded for this course
+          description: "Total credits awarded for this course."
         courseExaminers:
           type: array
-          description: "Person who is responsible for examination (source: LADOK)."
+          description: "List of examiners for this _course_."
           items:
             $ref: "#/components/schemas/CourseUser"
         courseResponsible:
           type: array
-          description: "Person who is responsible for the course (source: ???)."
+          description: "List of course responsible for this course round."
           items:
             $ref: "#/components/schemas/CourseUser"
         courseTeachers:
           type: array
-          description: "List of teachers connected to this course (source: ???)"
+          description: "List of teachers of this course round."
           items:
             $ref: "#/components/schemas/CourseUser"
-        nrofRegisteredStudents:
-          type: integer
-        nrofReportedResults:
-          type: integer
-        gradingDistribution:
-          type: object
-          description: "Kurs, betygsfördelning" # TODO: Add an example of what this would look like
-          additionalProperties: true
-        programs:
-          type: array
-          items:
-            $ref: "#/components/schemas/ProgramRound"
-        modules:
-          type: array
-          items:
-            $ref: "#/components/schemas/CourseModule"
+    CourseRound:
+      allOf:
+        - $ref: "#/components/schemas/CourseRoundPartial"
+        - type: object
+          required:
+            - totalRegisteredStudents
+            - totalReportedResults
+            - gradingDistribution
+            - programs
+            - modules
+          properties:
+            totalRegisteredStudents:
+              type: integer
+              description: "Number of students registered for this course round."
+            totalReportedResults:
+              type: integer
+              description: "Number of students with reported results for this course round."
+            gradingDistribution:
+              type: object
+              description: "Kurs, betygsfördelning"
+              additionalProperties: true
+              example:
+                - { "A": 3, "B": 25, "C": 15, "D": 3, "E": 0, "F": 2 }
+                - { "P": 45, "F": 3 }
+            programs:
+              type: array
+              description: "List of programs this course round is part of according to registered students."
+              items:
+                $ref: "#/components/schemas/ProgramRound"
+            modules:
+              type: array
+              description: "List of modules that are part of this course round, including grading distribution etc."
+              items:
+                $ref: "#/components/schemas/CourseModule"
 
     StudentParticipation:
       type: object
@@ -262,16 +327,16 @@ components:
         - name
         - email
         - roles
-        - locations
+        - location
         - program
       properties:
         id:
           type: string
           description: "Ladok equivalent: `${StudentUID}.${KurstillfalleUID}`"
-        ladokStudentId:
-          type: string
-        ladokCourseId:
-          type: string
+        # ladokStudentId:
+        #     type: string
+        # ladokCourseId:
+        #     type: string
         ladokCourseRoundId:
           type: string
         canvasSisId:
@@ -288,12 +353,9 @@ components:
           items:
             type: string
             enum:
-              - TBD
-              - ...
-        locations:
-          type: array
-          items:
-            type: string
+              - student
+        location: # This comes from BTH-data, do we really need this?
+          type: string
         program:
           $ref: "#/components/schemas/ProgramRound"
 
@@ -302,16 +364,18 @@ components:
       required:
         - code
         - semester
-        - startPeriod
+        - startTerm
         - name
         - studyYear
-        - specification
+        - required
       properties:
         code:
           type: string
-        semester:
+          description: "Program code, e.g. 'CINTE'"
+        semester: # QUESTION: A course round can run over several semesters, how do we handle that?
           type: string
-        startTerm:
+          description: "The semester this program round is part of."
+        startTerm: # QUESTION: Why do we need this?
           type: string
           description: Year and term when program round started
         name:
@@ -319,12 +383,20 @@ components:
         studyYear:
           type: integer
           description: Calculate by using startPeriod and current period.
-        specification:
-          type: string
+        specialization:
+          type: object
+          description: "Specialization of the program (inriktning på svenska). This is omitted if connection belongs to the base program."
+          properties:
+            code:
+              type: string
+            name:
+              type: string
+              description: "Name of the specialization in tutoring language."
         required:
           type: string
+          description: "Determines if taking this course is mandatory or not for this program."
           enum:
-            - TBD
+            - mandatory? # TODO: Figure out what the enum values really are
             - ...
 
     CourseModule:
@@ -334,12 +406,9 @@ components:
         - name
         - credits
         - gradingScheme
-        - nrofReportedResults
-        # - gradingDistribution
+        - totalReportedResults
+        - gradingDistribution
       properties:
-        id:
-          type: string
-          description: "Ladok UID for module instance (UtbildningsinstansUID?)"
         code:
           type: string
         name:
@@ -351,12 +420,14 @@ components:
           type: array
           items:
             type: string
-        nrofReportedResults:
+        totalReportedResults:
           type: integer
         gradingDistribution:
           type: object
           description: "Moment, betygsfördelning" # TODO: Add an example of what this would look like
-          additionalProperties: true
+          example:
+            - { "A": 3, "B": 25, "C": 15, "D": 3, "E": 0, "F": 2 }
+            - { "P": 45, "F": 3 }
 
     CourseUser:
       type: object
@@ -387,10 +458,13 @@ components:
       properties:
         displayName:
           type: string
-          description: The name of the organization entity to be displayed in report.
+          description: "The name of the organization entity to be displayed in report in the tutoring language."
         displayCode:
           type: string
-          description: KTH-specific code used for organization entity.
+          description: "KTH-specific code used for organization entity."
+          example:
+            - "EECS"
+            - "EECS/JA"
         kthId:
           type: string
-          description: The unique identifier used by the federated login server to refer to the organization entity.
+          description: "The unique identifier used by the federated login server to refer to the organization entity."

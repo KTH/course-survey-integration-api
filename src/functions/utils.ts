@@ -78,6 +78,11 @@ export type DbCollectionName =
   | "Program"
   | "ReportedResult";
 
+export type TQueryOptions = {
+  offset?: number;
+  limit?: number;
+};
+
 export class Database {
   _client: MongoClient | undefined;
 
@@ -105,26 +110,32 @@ export class Database {
     propName: string,
     value: string | object,
     collectionName: DbCollectionName,
+    { offset = 0, limit = 30 }: TQueryOptions = {},
   ): Promise<any[]> {
     await this.connect();
+    const options = { skip: offset, limit };
     const collection = this._client!.db().collection(collectionName);
-    const docs = await collection.find({ [propName]: value }).toArray();
+    const docs = await collection
+      .find({ [propName]: value }, options)
+      .toArray();
     return docs as T[];
   }
 
   async query<T>(
     query: { [key: string]: any },
     collectionName: DbCollectionName,
+    { offset = 0, limit = 30 }: TQueryOptions = {},
   ): Promise<any[]> {
     await this.connect();
+    const options = { skip: offset, limit };
     const collection = this._client!.db().collection(collectionName);
-    const docs = await collection.find(query).toArray();
+    const docs = await collection.find(query, options).toArray();
     return docs as T[];
   }
 
   async countByPropertyQuery(
     propName: string,
-    value: string,
+    value: string | Record<string, unknown>,
     collectionName: DbCollectionName,
   ): Promise<number> {
     await this.connect();

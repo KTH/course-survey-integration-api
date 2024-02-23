@@ -150,7 +150,7 @@ exports[`Get information from a program participation example from documentation
     "sv": "Civilingenjörsutbildning i samhällsbyggnad",
   },
   "required": "???",
-  "specification": undefined,
+  "specialization": undefined,
   "startTerm": "20212",
   "studyYear": 1,
 }

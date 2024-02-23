@@ -44,14 +44,16 @@ export async function handler(
 
   context.log(`ResultatPaHelKursAttesteradEvent: `);
 
-  const { UtbildningsinstansUID, StudentUID } = message;
+  const { KurstillfalleUID, StudentUID, UtbildningsinstansUID } = message;
   const { BeslutUID } = message.Beslut;
   const { BetygsgradID, BetygsskalaID, ResultatUID } = message.Resultat;
   const hashedStudentId = await hashStudentId(StudentUID);
 
+  const id = `${UtbildningsinstansUID}-${hashedStudentId}`;
   const doc: TReportedResultEntity = {
-    id: `${UtbildningsinstansUID}-${hashedStudentId}`,
-    parentId: UtbildningsinstansUID,
+    id,
+    parentId: UtbildningsinstansUID, // This matches the courseRoundId and is used to distinguish between course result and module result
+    courseRoundId: KurstillfalleUID,
     hashedStudentId,
     decision: BeslutUID,
     result: "string",
@@ -63,13 +65,7 @@ export async function handler(
     },
   };
 
-  const res = await db.query(
-    {
-      parentId: UtbildningsinstansUID,
-      hashedStudentId,
-    },
-    "ReportedResult",
-  );
+  const res = await db.fetchById(id, "ReportedResult");
 
   if (res.length > 0) {
     const foundDoc = res[0];
