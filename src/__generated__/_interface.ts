@@ -3,7 +3,6 @@
  * Do not make direct changes to the file.
  */
 
-
 export interface paths {
   "/course-rounds": {
     /**
@@ -134,12 +133,12 @@ export interface components {
        * | and all credits for the course. In the future we might specify all periods and spread
        * | the credits accross them.
        */
-      periods: ({
-          /** @enum {string} */
-          period: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
-          /** @description Credits awarded for this period. */
-          credits: string;
-        })[];
+      periods: {
+        /** @enum {string} */
+        period: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
+        /** @description Credits awarded for this period. */
+        credits: string;
+      }[];
       /** @description Total credits awarded for this course. */
       credits: string;
       /** @description List of examiners for this _course_. */

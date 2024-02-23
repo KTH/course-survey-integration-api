@@ -138,12 +138,14 @@ export async function handler(
     // Dummy data:
     language: dummyLanguage,
     canceled: dummyCanceled,
-    
+
     // N
-    periods: [{
-      period: koppsInfo.round.periods[0],
-      credits: `${ladokCourseRoundInfo?.credits} hp`,
-    }],
+    periods: [
+      {
+        period: koppsInfo.round.periods[0],
+        credits: `${ladokCourseRoundInfo?.credits} hp`,
+      },
+    ],
 
     // Source event message:
     ladokCourseId: msgUtbildningsUid,
