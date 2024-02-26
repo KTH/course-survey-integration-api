@@ -302,9 +302,7 @@ components:
               type: object
               description: "Kurs, betygsfördelning"
               additionalProperties: true
-              example:
-                - { "A": 3, "B": 25, "C": 15, "D": 3, "E": 0, "F": 2 }
-                - { "P": 45, "F": 3 }
+              example: '{ "A": 3, "B": 25, "C": 15, "D": 3, "E": 0, "F": 2 }'
             programs:
               type: array
               description: "List of programs this course round is part of according to registered students."
@@ -421,9 +419,7 @@ components:
         gradingDistribution:
           type: object
           description: "Moment, betygsfördelning" # TODO: Add an example of what this would look like
-          example:
-            - { "A": 3, "B": 25, "C": 15, "D": 3, "E": 0, "F": 2 }
-            - { "P": 45, "F": 3 }
+          example: '{ "A": 3, "B": 25, "C": 15, "D": 3, "E": 0, "F": 2 }'
 
     CourseUser:
       type: object
@@ -458,9 +454,8 @@ components:
         displayCode:
           type: string
           description: "KTH-specific code used for organization entity."
-          example:
-            - "EECS"
-            - "EECS/JA"
+          example: "'EECS', 'EECS/JA', etc."
         kthId:
           type: string
           description: "The unique identifier used by the federated login server to refer to the organization entity."
+
