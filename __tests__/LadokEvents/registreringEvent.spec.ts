@@ -5,7 +5,7 @@ import appConfig, {
 import { MockContext } from "./utils/mockContext";
 import { MockDatabase } from "./utils/mockDatabase";
 import { UgIntegrationMock } from "ug-integration/src/indexMock";
-import studentParticipation_01 from "../../__fixtures__/entities/01_studentParticipation.json";
+import { studentParticipations1 } from "../../__fixtures__/entities/01_studentParticipations";
 
 UgIntegrationMock.getUgUserByLadokId("bbcce853-4df3-11e8-a562-6ec76bb54b9f", {
   email: "email@email.com",
@@ -41,8 +41,9 @@ describe("RegistreringEvent", () => {
   });
 
   test("writes correct data to db", async () => {
+    const studentParticipation1 = studentParticipations1[0];
     const mockDb = new MockDatabase({
-      StudentParticipation: studentParticipation_01,
+      StudentParticipation: studentParticipation1,
     });
     const mockContext = new MockContext(event.userProps, appConfig);
     await handler(event.message, mockContext, mockDb);
