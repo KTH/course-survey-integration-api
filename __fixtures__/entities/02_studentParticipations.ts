@@ -1,6 +1,6 @@
 import { TStudentParticipationEntity } from "../../src/functions/interface";
 
-export const StudentParticipation2: TStudentParticipationEntity[] = [
+export const studentParticipations2: TStudentParticipationEntity[] = [
   {
     id: "02-1",
     parentId: "d682b090-e019-4fdf-8675-f10233394e12-ladokCoursRoundId",

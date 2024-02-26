@@ -1,6 +1,6 @@
 import { TReportedResultEntity } from "../../src/functions/interface";
 
-export const reportedResults1: TReportedResultEntity[] = [
+export const reportedResults2: TReportedResultEntity[] = [
   {
     id: "02-1",
     parentId: "230f8e64-88fb-4913-83e8-023a472d859f-ladokModuleRoundId",
