@@ -29,6 +29,8 @@ async function main() {
   for (const studentParticipation of studentParticipations2) {
     await db.insert(studentParticipation, "StudentParticipation");
   }
+
+  await db.close();
 }
 
 main();
