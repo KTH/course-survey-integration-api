@@ -53,8 +53,8 @@ export const courseRound1: TCourseRoundEntity = {
   ],
   _gradingScheme: ["P", "F"],
   courseCode: "AA0000",
-  endDate: "2021-01-01",
-  displayYear: "2021",
+  endDate: "2024-01-01",
+  displayYear: "2023-2024",
   credits: "7.5 hp",
   modules: [
     {
