@@ -126,3 +126,4 @@ The base entity is course round which is stored in a database (MongoDB). The cou
 - ladok3EventId: '28df899c-8fa8-11ee-855f-fd8b685e450d'
   - equivalent to: message.HandelsUID, context.handelseUID
 - ladok3EventMessageSequenceNumber: 123240
+
