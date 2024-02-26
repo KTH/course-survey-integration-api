@@ -60,7 +60,6 @@ export type TCourseRoundModuleEntity = {
 // This is an embedded object
 export type TProgramRoundEntity = {
   code: TProgramRound["code"];
-  semester: TProgramRound["semester"];
   startTerm: TProgramRound["startTerm"];
   name: TProgramRound["name"];
   studyYear: TProgramRound["studyYear"];
@@ -101,8 +100,8 @@ export type TCourseRoundEntity = {
 
 export type TReportedResultEntity = {
   id: string; // Required for DB-layer to work
-  parentId: string; // This can belong to a module (moduleRoundId) or a course round (courseRoundId).
-  courseRoundId: string; // CourseRound.ladokCourseRoundId (UtbildningstillfalleUID)
+  parentId: string; // This can belong to a module (UtbildningsinstansId = moduleRoundId) or a course (UtbildningsinstansId = courseId).
+  ladokCourseRoundId: string; // CourseRound.ladokCourseRoundId (UtbildningstillfalleUID)
   hashedStudentId: string; // StudentUID hashed
   decision: string; // BeslutUID
   result: string; // Calculated from BetygsgradID and BetygsskalaID
@@ -116,7 +115,8 @@ export type TReportedResultEntity = {
 
 export type TStudentParticipationEntity = {
   id: string; // Required for DB-layer to work
-  parentId: string; // CourseRound.ladokCourseRoundId (UtbildningsinstansUID)
+  // CourseRound.ladokCourseRoundId (UtbildningsinstansUID):
+  parentId: string; // TODO: Consider removing, use ladokCoursRoundId instead
   hashedStudentId: string; // StudentUID hashed
   ladokCourseRoundId: string;
   canvasSisId: string;

@@ -52,8 +52,8 @@ export async function handler(
   const id = `${UtbildningsinstansUID}-${hashedStudentId}`;
   const doc: TReportedResultEntity = {
     id,
-    parentId: UtbildningsinstansUID, // This matches the courseRoundId and is used to distinguish between course result and module result
-    courseRoundId: KurstillfalleUID,
+    parentId: UtbildningsinstansUID, // This matches the ladokCourseRoundId and is used to distinguish between course result and module result
+    ladokCourseRoundId: KurstillfalleUID,
     hashedStudentId,
     decision: BeslutUID,
     result: "string",

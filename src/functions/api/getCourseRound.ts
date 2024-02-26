@@ -23,18 +23,22 @@ export default async function handler<T extends APICourseRound>(
       studentParticipations,
     ] = await Promise.all([
       db.countByPropertyQuery(
-        "courseRoundId",
+        "ladokCourseRoundId",
         courseRound.id,
         "StudentParticipation",
       ),
       db.countByPropertyQuery(
-        "courseRoundId",
+        "ladokCourseRoundId",
         courseRound.id,
         "ReportedResult",
       ),
-      db.queryByProperty("courseRoundId", courseRound.id, "ReportedResult"),
       db.queryByProperty(
-        "courseRoundId",
+        "ladokCourseRoundId",
+        courseRound.id,
+        "ReportedResult",
+      ),
+      db.queryByProperty(
+        "ladokCourseRoundId",
         courseRound.id,
         "StudentParticipation",
       ),

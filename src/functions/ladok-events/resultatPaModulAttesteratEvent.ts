@@ -53,7 +53,7 @@ export async function handler(
   const doc: TReportedResultEntity = {
     id,
     parentId: UtbildningsinstansUID, // This matches the moduleRoundId
-    courseRoundId: KurstillfalleUID,
+    ladokCourseRoundId: KurstillfalleUID,
     hashedStudentId,
     decision: BeslutUID,
     result: "string",

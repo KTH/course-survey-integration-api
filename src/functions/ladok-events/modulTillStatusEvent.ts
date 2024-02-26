@@ -107,15 +107,17 @@ export async function handler(
   )
     return;
 
-  const courseRoundId = message.OverliggandeUtbildningsinstansUID;
+  const ladokCourseRoundId = message.OverliggandeUtbildningsinstansUID;
   const moduleId = message.UtbildningsinstansUID;
   const moduleCode = message.Utbildningskod;
   const status = message.Status;
-  context.log(`ModulTillStatusEvent: ${courseRoundId} ${moduleCode} ${status}`);
+  context.log(
+    `ModulTillStatusEvent: ${ladokCourseRoundId} ${moduleCode} ${status}`,
+  );
 
   try {
     const courseRound: TCourseRoundEntity = await db.fetchById(
-      courseRoundId,
+      ladokCourseRoundId,
       "CourseRound",
     );
     const language = courseRound.language;
