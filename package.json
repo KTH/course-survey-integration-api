@@ -3,7 +3,7 @@
   "description": "Monorepo for API-integration with Artologik Survey Report",
   "version": "0.1.0",
   "private": true,
-  "main": "dist/functions/*.js",
+  "main": "dist/src/functions/*.js",
   "scripts": {
     "build": "npm run build:libs && npm run build:functions",
     "build:functions": "tsc --outDir dist --sourceMap --declaration",
