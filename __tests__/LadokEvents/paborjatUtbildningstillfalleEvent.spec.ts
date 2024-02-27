@@ -1,8 +1,8 @@
 import { UgIntegrationMock } from "ug-integration/src/indexMock";
 import event from "../../__fixtures__/events/01_studiedeltagande.PaborjatUtbildningstillfalleEvent_1.json";
 import { handler } from "../../src/functions/ladok-events/paborjatUtbildningstillfalleEvent";
-import { MockContext } from "./utils/mockContext";
-import { MockDatabase } from "./utils/mockDatabase";
+import { MockContext } from "../utils/mockContext";
+import { MockDatabase } from "../utils/mockDatabase";
 import { KoppsIntegrationMock } from "kopps-integration/src/indexMock";
 import { LadokIntegrationMock } from "ladok-integration/src/indexMock";
 

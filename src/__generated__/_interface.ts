@@ -210,7 +210,9 @@ export interface components {
        * @description Moment, betygsfördelning
        * @example { "A": 3, "B": 25, "C": 15, "D": 3, "E": 0, "F": 2 }
        */
-      gradingDistribution: Record<string, never>;
+      gradingDistribution: {
+        [key: string]: number;
+      };
     };
     CourseUser: {
       /** @description This is the username used to log in to KTH SSO. */

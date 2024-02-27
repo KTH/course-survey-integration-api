@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/api/course-rounds/{id}/students can be executed 1`] = `
+{
+  "headers": {
+    "Pagination-Limit": "30",
+    "Pagination-Offset": "0",
+    "Pagination-Total-Count": "2",
+  },
+  "jsonBody": [
+    {
+      "canvasSisId": "u9sebbe0",
+      "email": "sebbe@example.com",
+      "id": "01-1",
+      "ladokCourseRoundId": "41374a41-2bda-404f-b11c-6e007deb61b4-ladokCoursRoundId",
+      "name": "Sebastian Sebsson",
+      "program": {
+        "code": "ARKIT",
+        "name": "Arkitektur",
+        "required": "obligatorisk",
+        "startTerm": "20221",
+        "studyYear": 4,
+      },
+      "roles": [
+        "student",
+      ],
+    },
+    {
+      "canvasSisId": "u9marta0",
+      "email": "Marta@example.com",
+      "id": "01-2",
+      "ladokCourseRoundId": "41374a41-2bda-404f-b11c-6e007deb61b4-ladokCoursRoundId",
+      "name": "Marta Martsdottir",
+      "program": {
+        "code": "ARKIT",
+        "name": "Arkitektur",
+        "required": "obligatorisk",
+        "startTerm": "20221",
+        "studyYear": 4,
+      },
+      "roles": [
+        "student",
+      ],
+    },
+  ],
+  "status": 200,
+}
+`;

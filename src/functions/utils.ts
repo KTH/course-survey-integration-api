@@ -110,13 +110,15 @@ export class Database {
     propName: string,
     value: string | object,
     collectionName: DbCollectionName,
-    { offset = 0, limit = 30 }: TQueryOptions = {},
+    options?: TQueryOptions,
   ): Promise<T[]> {
     await this.connect();
-    const options = { skip: offset, limit };
+    const opts = options !== undefined
+      ? { skip: options.offset, limit: options.limit }
+      : undefined ;
     const collection = this._client!.db().collection(collectionName);
     const docs = await collection
-      .find({ [propName]: value }, options)
+      .find({ [propName]: value }, opts)
       .toArray();
     return docs as T[];
   }
@@ -124,12 +126,14 @@ export class Database {
   async query<T = any>(
     query: { [key: string]: any },
     collectionName: DbCollectionName,
-    { offset = 0, limit = 30 }: TQueryOptions = {},
+    options?: TQueryOptions,
   ): Promise<T[]> {
     await this.connect();
-    const options = { skip: offset, limit };
+    const opts = options !== undefined
+      ? { skip: options.offset, limit: options.limit }
+      : undefined ;
     const collection = this._client!.db().collection(collectionName);
-    const docs = await collection.find(query, options).toArray();
+    const docs = await collection.find(query, opts).toArray();
     return docs as T[];
   }
 

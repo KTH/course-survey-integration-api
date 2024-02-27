@@ -3,7 +3,7 @@ import {
   HttpResponseInit,
   InvocationContext,
 } from "@azure/functions";
-import { APICourseRound } from "../interface";
+import { APICourseRound, TCourseModule, TCourseRoundModuleEntity, TReportedResultEntity } from "../interface";
 import { Database } from "../utils";
 
 export default async function handler<T extends APICourseRound>(
@@ -13,29 +13,29 @@ export default async function handler<T extends APICourseRound>(
 ): Promise<HttpResponseInit> {
   const { id } = request.params;
   let outp: APICourseRound;
+  
   try {
     const courseRound = await db.fetchById(id, "CourseRound");
-    const { ladokCourseRoundId } = courseRound;
+
+    if (!courseRound) {
+      return {
+        status: 404,
+        jsonBody: {
+          error: "Not found",
+          description: `CourseRound with id ${id} not found`,
+        },
+      };
+    }
+
+    const { ladokCourseId, ladokCourseRoundId } = courseRound;
 
     const [
-      nrofRegisteredStudents,
-      nrofReportedResults,
       reportedResults,
       studentParticipations,
     ] = await Promise.all([
-      db.countByPropertyQuery(
-        "ladokCourseRoundId",
-        ladokCourseRoundId,
-        "StudentParticipation",
-      ),
-      db.countByPropertyQuery(
-        "ladokCourseRoundId",
-        ladokCourseRoundId,
-        "ReportedResult",
-      ),
       db.queryByProperty(
-        "ladokCourseRoundId",
-        ladokCourseRoundId,
+        "parentId",
+        ladokCourseId,
         "ReportedResult",
       ),
       db.queryByProperty(
@@ -45,12 +45,15 @@ export default async function handler<T extends APICourseRound>(
       ),
     ]);
 
+    const totalRegisteredStudents = studentParticipations?.length ?? 0;
+    const totalReportedResults = reportedResults?.length ?? 0;
+
     const gradingDistribution = reportedResults.reduce(
       (acc: Record<string, number>, res: any) => {
         acc[res.result] = (acc[res.result] ?? 0) + 1;
         return acc;
       },
-      {},
+      Object.fromEntries(courseRound._gradingScheme.map((key: string) => [key, 0])),
     );
 
     const programs = studentParticipations.reduce(
@@ -62,12 +65,40 @@ export default async function handler<T extends APICourseRound>(
     );
 
     // Pick all public props except private
-    const { _id, _gradingScheme, ...props } = courseRound;
+    const { _id, _gradingScheme, modules, ...props } = courseRound;
+
+    const outpModules = await Promise.all(modules.map(async (module: TCourseRoundModuleEntity) => {
+      const totalReportedResults = await db.countByPropertyQuery(
+        "parentId",
+        module.moduleRoundId,
+        "ReportedResult",
+      );
+
+      const reportedResults = await db.queryByProperty<TReportedResultEntity>(
+        "parentId",
+        module.moduleRoundId,
+        "ReportedResult",
+      );
+
+      const gradingDistribution = reportedResults.reduce((acc: Record<string, number>, res: any) => {
+        acc[res.result] = (acc[res.result] ?? 0) + 1;
+        return acc;
+      }, Object.fromEntries(module.gradingScheme.map((key) => [key, 0])));
+
+      const outp: TCourseModule = {
+        ...module,
+        totalReportedResults,
+        gradingDistribution,
+      }
+
+      return outp;
+    }));
 
     outp = {
       ...props,
-      nrofRegisteredStudents,
-      nrofReportedResults,
+      modules: outpModules,
+      totalRegisteredStudents,
+      totalReportedResults,
       gradingDistribution,
       programs,
     };

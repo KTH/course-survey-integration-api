@@ -1,5 +1,5 @@
 import { InvocationContext } from "@azure/functions";
-import { TLadokEventUserProperties } from "../../../src/functions/ladok-events/types";
+import { TLadokEventUserProperties } from "../../src/functions/ladok-events/types";
 export class MockContext implements InvocationContext {
   invocationId: any = undefined;
   functionName: any = undefined;
@@ -12,7 +12,8 @@ export class MockContext implements InvocationContext {
   error: any = undefined;
   options: any = undefined;
 
-  triggerMetadata: Record<string, unknown>;
+  triggerMetadata?: Record<string, unknown> = undefined;
+
   log: jest.Mock;
   done: jest.Mock;
   res: {
@@ -21,12 +22,14 @@ export class MockContext implements InvocationContext {
   };
 
   constructor(
-    userProperties: TLadokEventUserProperties,
+    userProperties?: TLadokEventUserProperties,
     appConfig?: Record<string, unknown>,
   ) {
-    this.triggerMetadata = {
-      userProperties,
-    };
+    if (userProperties) {
+      this.triggerMetadata = {
+        userProperties,
+      };
+    }
 
     if (appConfig) {
       const { extraInputs = [], extraOutputs = [], ...rest } = appConfig;

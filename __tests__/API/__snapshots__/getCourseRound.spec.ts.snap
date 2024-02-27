@@ -1,0 +1,99 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/api/course-rounds/{id} can be executed 1`] = `
+{
+  "jsonBody": {
+    "canceled": false,
+    "canvasSisId": "41374a41-2bda-404f-b11c-6e007deb61b4-ladokCoursRoundId",
+    "courseCode": "AA0000",
+    "courseExaminers": [
+      {
+        "email": "sven@example.com",
+        "fullName": "Sven Svensson",
+        "kthUserId": "u9sven00",
+        "userName": "sven",
+      },
+      {
+        "email": "anna@example.com",
+        "fullName": "Anna Annasdotter",
+        "kthUserId": "u9anna00",
+        "userName": "anna",
+      },
+    ],
+    "courseGoal": "Förståelse av grundläggande koncept: Studenten bör kunna förklara och tillämpa grundläggande begrepp inom programmering, såsom variabler, datatyper, villkorssatser, loopar och funktioner.",
+    "courseResponsible": [
+      {
+        "email": "emil@example.com",
+        "fullName": "Emil Emilsson",
+        "kthUserId": "u9emil00",
+        "userName": "emil",
+      },
+    ],
+    "courseTeachers": [
+      {
+        "email": "elin@example.com",
+        "fullName": "Elin Elinsson",
+        "kthUserId": "u9elin00",
+        "userName": "elin",
+      },
+    ],
+    "credits": "7.5 hp",
+    "displayYear": "2023-2024",
+    "endDate": "2024-01-01",
+    "gradingDistribution": {
+      "F": 0,
+      "P": 2,
+    },
+    "id": "01-1",
+    "institution": {
+      "displayCode": "ITM",
+      "displayName": "Skolan för elektroteknik och datavetenskap",
+      "kthId": "u9itm000",
+    },
+    "ladokCourseId": "8734afdf-1da9-415d-8c08-9ed160f87c0a-ladokCourseId",
+    "ladokCourseRoundId": "41374a41-2bda-404f-b11c-6e007deb61b4-ladokCoursRoundId",
+    "language": "sv",
+    "modules": [
+      {
+        "code": "TEN1",
+        "credits": "7.5 hp",
+        "gradingDistribution": {
+          "F": 0,
+          "P": 2,
+        },
+        "gradingScheme": [
+          "P",
+          "F",
+        ],
+        "moduleRoundId": "531ea06f-a5dd-40f4-8709-cfd846e6e09d-ladokModuleRoundId",
+        "name": "Tentamen",
+        "totalReportedResults": 2,
+      },
+    ],
+    "name": "Introduktion till programmering",
+    "organization": {
+      "displayCode": "ITM/JA",
+      "displayName": "Institution för datavetenskap",
+      "kthId": "u9ja0000",
+    },
+    "periods": [
+      {
+        "credits": "7.5 hp",
+        "period": "P1",
+      },
+    ],
+    "programs": {
+      "ARKIT": {
+        "code": "ARKIT",
+        "name": "Arkitektur",
+        "required": "obligatorisk",
+        "startTerm": "20221",
+        "studyYear": 4,
+      },
+    },
+    "totalRegisteredStudents": 2,
+    "totalReportedResults": 2,
+  },
+  "status": 200,
+}
+`;

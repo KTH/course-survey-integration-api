@@ -19,6 +19,17 @@ export default async function handler<T extends APICourseRoundStudentList>(
   const { id } = request.params;
 
   const courseRound = await db.fetchById<TCourseRoundEntity>(id, "CourseRound");
+  
+  if (!courseRound) {
+    return {
+      status: 404,
+      jsonBody: {
+        error: "Not found",
+        description: `CourseRound with id ${id} not found`,
+      },
+    };
+  }
+
   const { ladokCourseRoundId } = courseRound;
 
   let outp: APICourseRoundStudentList = [];
@@ -60,16 +71,9 @@ export default async function handler<T extends APICourseRoundStudentList>(
     await db.close();
   }
 
-  if (!outp) {
-    return {
-      status: 404,
-      jsonBody: { error: "Not found" },
-    };
-  }
-
   return {
     status: 200,
-    jsonBody: outp,
+    jsonBody: outp ?? [],
     headers: {
       "Pagination-Total-Count": total.toString(),
       "Pagination-Offset": offset.toString(),

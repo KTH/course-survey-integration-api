@@ -1,4 +1,4 @@
-import { Database, DbCollectionName } from "../../../src/functions/utils";
+import { Database, DbCollectionName } from "../../src/functions/utils";
 
 type TQuery = {
   query: string;
@@ -42,6 +42,12 @@ export class MockDatabase implements Database {
   ): Promise<any[]> {
     const data = this._mockData[collectionName];
     const outp = Array.isArray(data) ? data : [data];
+    
+    if (typeof value === "object") {
+      // We don't need to mock proper queries
+      return outp;
+    }
+
     return outp.filter((doc: any) => doc?.[propName] === value);
   }
 
@@ -64,7 +70,8 @@ export class MockDatabase implements Database {
     value: string,
     collectionName: DbCollectionName,
   ): Promise<number> {
-    return 1;
+    const res = await this.queryByProperty(propName, value, collectionName);
+    return res.length;
   }
 
   async insert(doc: any, collectionName: DbCollectionName): Promise<void> {

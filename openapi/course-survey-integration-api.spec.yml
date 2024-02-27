@@ -415,6 +415,8 @@ components:
           type: object
           description: "Moment, betygsfördelning" # TODO: Add an example of what this would look like
           example: '{ "A": 3, "B": 25, "C": 15, "D": 3, "E": 0, "F": 2 }'
+          additionalProperties:
+            type: number
 
     CourseUser:
       type: object

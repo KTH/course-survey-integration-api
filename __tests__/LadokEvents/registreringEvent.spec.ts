@@ -2,8 +2,8 @@ import event from "../../__fixtures__/events/01_studiedeltagande.RegistreringEve
 import appConfig, {
   handler,
 } from "../../src/functions/ladok-events/registreringEvent";
-import { MockContext } from "./utils/mockContext";
-import { MockDatabase } from "./utils/mockDatabase";
+import { MockContext } from "../utils/mockContext";
+import { MockDatabase } from "../utils/mockDatabase";
 import { UgIntegrationMock } from "ug-integration/src/indexMock";
 import { studentParticipations1 } from "../../__fixtures__/entities/01_studentParticipations";
 

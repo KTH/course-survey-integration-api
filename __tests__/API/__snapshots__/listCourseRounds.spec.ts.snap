@@ -1,0 +1,134 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`/api/course-rounds can be executed 1`] = `
+{
+  "headers": {
+    "Pagination-Limit": "30",
+    "Pagination-Offset": "0",
+    "Pagination-Total-Count": "2",
+  },
+  "jsonBody": [
+    {
+      "canceled": false,
+      "canvasSisId": "41374a41-2bda-404f-b11c-6e007deb61b4-ladokCoursRoundId",
+      "courseCode": "AA0000",
+      "courseExaminers": [
+        {
+          "email": "sven@example.com",
+          "fullName": "Sven Svensson",
+          "kthUserId": "u9sven00",
+          "userName": "sven",
+        },
+        {
+          "email": "anna@example.com",
+          "fullName": "Anna Annasdotter",
+          "kthUserId": "u9anna00",
+          "userName": "anna",
+        },
+      ],
+      "courseGoal": "Förståelse av grundläggande koncept: Studenten bör kunna förklara och tillämpa grundläggande begrepp inom programmering, såsom variabler, datatyper, villkorssatser, loopar och funktioner.",
+      "courseResponsible": [
+        {
+          "email": "emil@example.com",
+          "fullName": "Emil Emilsson",
+          "kthUserId": "u9emil00",
+          "userName": "emil",
+        },
+      ],
+      "courseTeachers": [
+        {
+          "email": "elin@example.com",
+          "fullName": "Elin Elinsson",
+          "kthUserId": "u9elin00",
+          "userName": "elin",
+        },
+      ],
+      "credits": "7.5 hp",
+      "displayYear": "2023-2024",
+      "endDate": "2024-01-01",
+      "id": "01-1",
+      "institution": {
+        "displayCode": "ITM",
+        "displayName": "Skolan för elektroteknik och datavetenskap",
+        "kthId": "u9itm000",
+      },
+      "ladokCourseId": "8734afdf-1da9-415d-8c08-9ed160f87c0a-ladokCourseId",
+      "ladokCourseRoundId": "41374a41-2bda-404f-b11c-6e007deb61b4-ladokCoursRoundId",
+      "language": "sv",
+      "name": "Introduktion till programmering",
+      "organization": {
+        "displayCode": "ITM/JA",
+        "displayName": "Institution för datavetenskap",
+        "kthId": "u9ja0000",
+      },
+      "periods": [
+        {
+          "credits": "7.5 hp",
+          "period": "P1",
+        },
+      ],
+    },
+    {
+      "canceled": false,
+      "canvasSisId": "d682b090-e019-4fdf-8675-f10233394e12-ladokCoursRoundId",
+      "courseCode": "BB0001",
+      "courseExaminers": [
+        {
+          "email": "karin@example.com",
+          "fullName": "Karin Karlsson",
+          "kthUserId": "u9karin0",
+          "userName": "karin",
+        },
+        {
+          "email": "gunnar@example.com",
+          "fullName": "Gunnar Gunnarsson",
+          "kthUserId": "u9gunnar",
+          "userName": "gunnar",
+        },
+      ],
+      "courseGoal": "Förvärva en djupare förståelse för kemiska reaktioner, kinetik, termodynamik och andra grundläggande principer inom kemi.",
+      "courseResponsible": [
+        {
+          "email": "per@example.com",
+          "fullName": "Per Persson",
+          "kthUserId": "u9per000",
+          "userName": "per",
+        },
+      ],
+      "courseTeachers": [
+        {
+          "email": "elisabeth@example.com",
+          "fullName": "Elisabeth Eliadotter",
+          "kthUserId": "u9elisab",
+          "userName": "elisabeth",
+        },
+      ],
+      "credits": "6 hp",
+      "displayYear": "2023",
+      "endDate": "2023-09-01",
+      "id": "02-1",
+      "institution": {
+        "displayCode": "CSC",
+        "displayName": "Skolan för matematik och systemteknik",
+        "kthId": "u9csc000",
+      },
+      "ladokCourseId": "21a5ec0a-ea41-4967-8eb2-a824b5a720af-ladokCourseId",
+      "ladokCourseRoundId": "d682b090-e019-4fdf-8675-f10233394e12-ladokCoursRoundId",
+      "language": "sv",
+      "name": "Kemiteknik och Bioteknik med matematiska metoder I",
+      "organization": {
+        "displayCode": "CSC/PK",
+        "displayName": "Institutionen för datalogi och datorlingvistik",
+        "kthId": "u9pk0000",
+      },
+      "periods": [
+        {
+          "credits": "6 hp",
+          "period": "P3",
+        },
+      ],
+    },
+  ],
+  "status": 200,
+}
+`;
