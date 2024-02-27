@@ -15,6 +15,7 @@ export default async function handler<T extends APICourseRound>(
   let outp: APICourseRound;
   try {
     const courseRound = await db.fetchById(id, "CourseRound");
+    const { ladokCourseRoundId } = courseRound;
 
     const [
       nrofRegisteredStudents,
@@ -24,22 +25,22 @@ export default async function handler<T extends APICourseRound>(
     ] = await Promise.all([
       db.countByPropertyQuery(
         "ladokCourseRoundId",
-        courseRound.id,
+        ladokCourseRoundId,
         "StudentParticipation",
       ),
       db.countByPropertyQuery(
         "ladokCourseRoundId",
-        courseRound.id,
+        ladokCourseRoundId,
         "ReportedResult",
       ),
       db.queryByProperty(
         "ladokCourseRoundId",
-        courseRound.id,
+        ladokCourseRoundId,
         "ReportedResult",
       ),
       db.queryByProperty(
         "ladokCourseRoundId",
-        courseRound.id,
+        ladokCourseRoundId,
         "StudentParticipation",
       ),
     ]);

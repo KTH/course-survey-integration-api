@@ -3,7 +3,7 @@ import {
   HttpResponseInit,
   InvocationContext,
 } from "@azure/functions";
-import { APICourseRoundStudentList } from "../interface";
+import { APICourseRoundStudentList, TCourseRoundEntity, TStudentParticipationEntity } from "../interface";
 import { Database } from "../utils";
 
 export default async function handler<T extends APICourseRoundStudentList>(
@@ -18,18 +18,21 @@ export default async function handler<T extends APICourseRoundStudentList>(
 
   const { id } = request.params;
 
+  const courseRound = await db.fetchById<TCourseRoundEntity>(id, "CourseRound");
+  const { ladokCourseRoundId } = courseRound;
+
   let outp: APICourseRoundStudentList = [];
   let total;
   try {
     total = await db.countByPropertyQuery(
       "ladokCourseRoundId",
-      id,
+      ladokCourseRoundId,
       "StudentParticipation",
     );
     // TODO: Add type TStudentParticiaionEntity
-    const students = await db.queryByProperty(
+    const students = await db.queryByProperty<TStudentParticipationEntity>(
       "ladokCourseRoundId",
-      id,
+      ladokCourseRoundId,
       "StudentParticipation",
       { offset, limit },
     );
