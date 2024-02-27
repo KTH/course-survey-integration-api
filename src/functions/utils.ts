@@ -96,22 +96,22 @@ export class Database {
     this._client = undefined;
   }
 
-  async fetchById<T>(
+  async fetchById<T = any>(
     id: string,
     collectionName: DbCollectionName,
-  ): Promise<any> {
+  ): Promise<T> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     const doc = await collection.findOne({ id });
     return doc as T;
   }
 
-  async queryByProperty<T>(
+  async queryByProperty<T = any>(
     propName: string,
     value: string | object,
     collectionName: DbCollectionName,
     { offset = 0, limit = 30 }: TQueryOptions = {},
-  ): Promise<any[]> {
+  ): Promise<T[]> {
     await this.connect();
     const options = { skip: offset, limit };
     const collection = this._client!.db().collection(collectionName);
@@ -121,11 +121,11 @@ export class Database {
     return docs as T[];
   }
 
-  async query<T>(
+  async query<T = any>(
     query: { [key: string]: any },
     collectionName: DbCollectionName,
     { offset = 0, limit = 30 }: TQueryOptions = {},
-  ): Promise<any[]> {
+  ): Promise<T[]> {
     await this.connect();
     const options = { skip: offset, limit };
     const collection = this._client!.db().collection(collectionName);

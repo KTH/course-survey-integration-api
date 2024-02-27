@@ -122,10 +122,10 @@ export type TStudentParticipationEntity = {
   // CourseRound.ladokCourseRoundId (UtbildningsinstansUID):
   parentId: string; // TODO: Consider removing, use ladokCoursRoundId instead
   hashedStudentId: string; // StudentUID hashed
-  ladokCourseRoundId: string;
-  canvasSisId: string;
-  name: string;
-  email: string;
-  roles: string[];
+  ladokCourseRoundId: TStudentParticipation["ladokCourseRoundId"];
+  canvasSisId: TStudentParticipation["canvasSisId"];
+  name: TStudentParticipation["name"];
+  email: TStudentParticipation["email"];
+  roles: TStudentParticipation["roles"];
   program: TProgramRoundEntity;
 };
