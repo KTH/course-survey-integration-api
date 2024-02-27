@@ -3,6 +3,7 @@
  * Do not make direct changes to the file.
  */
 
+
 export interface paths {
   "/course-rounds": {
     /**
@@ -133,12 +134,12 @@ export interface components {
        * | and all credits for the course. In the future we might specify all periods and spread
        * | the credits accross them.
        */
-      periods?: {
-        /** @enum {string} */
-        period?: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
-        /** @description Credits awarded for this period. */
-        credits?: string;
-      }[];
+      periods: ({
+          /** @enum {string} */
+          period: "P0" | "P1" | "P2" | "P3" | "P4" | "P5";
+          /** @description Credits awarded for this period. */
+          credits: string;
+        })[];
       /** @description Total credits awarded for this course. */
       credits: string;
       /** @description List of examiners for this _course_. */
@@ -155,20 +156,7 @@ export interface components {
       totalReportedResults: number;
       /**
        * @description Kurs, betygsfördelning
-       * @example [
-       *   {
-       *     "A": 3,
-       *     "B": 25,
-       *     "C": 15,
-       *     "D": 3,
-       *     "E": 0,
-       *     "F": 2
-       *   },
-       *   {
-       *     "P": 45,
-       *     "F": 3
-       *   }
-       * ]
+       * @example { "A": 3, "B": 25, "C": 15, "D": 3, "E": 0, "F": 2 }
        */
       gradingDistribution: {
         [key: string]: unknown;
@@ -189,7 +177,6 @@ export interface components {
       /** Format: email */
       email: string;
       roles: "student"[];
-      location: string;
       program: components["schemas"]["ProgramRound"];
     };
     ProgramRound: {
@@ -206,8 +193,11 @@ export interface components {
         /** @description Name of the specialization in tutoring language. */
         name?: string;
       };
-      /** @description Determines if taking this course is mandatory or not for this program. */
-      required: string;
+      /**
+       * @description Determines if taking this course is mandatory or not for this program.
+       * @enum {string}
+       */
+      required: "obligatorisk" | "valbar" | "...";
     };
     CourseModule: {
       code: string;
@@ -218,20 +208,7 @@ export interface components {
       totalReportedResults: number;
       /**
        * @description Moment, betygsfördelning
-       * @example [
-       *   {
-       *     "A": 3,
-       *     "B": 25,
-       *     "C": 15,
-       *     "D": 3,
-       *     "E": 0,
-       *     "F": 2
-       *   },
-       *   {
-       *     "P": 45,
-       *     "F": 3
-       *   }
-       * ]
+       * @example { "A": 3, "B": 25, "C": 15, "D": 3, "E": 0, "F": 2 }
        */
       gradingDistribution: Record<string, never>;
     };
@@ -249,10 +226,7 @@ export interface components {
       displayName: string;
       /**
        * @description KTH-specific code used for organization entity.
-       * @example [
-       *   "EECS",
-       *   "EECS/JA"
-       * ]
+       * @example 'EECS', 'EECS/JA', etc.
        */
       displayCode: string;
       /** @description The unique identifier used by the federated login server to refer to the organization entity. */

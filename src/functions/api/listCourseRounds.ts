@@ -49,7 +49,45 @@ export default async function handler<T extends APICourseRoundList>(
     );
 
     // TODO: Fix this
-    outp = courseRounds;
+    outp = courseRounds.map(({
+      id,
+      ladokCourseId,
+      ladokCourseRoundId,
+      canvasSisId,
+      name,
+      courseCode,
+      language,
+      canceled,
+      endDate,
+      displayYear,
+      organization,
+      institution,
+      courseGoal,
+      periods,
+      credits,
+      courseExaminers,
+      courseResponsible,
+      courseTeachers,
+    }) => { return {
+      id,
+      ladokCourseId,
+      ladokCourseRoundId,
+      canvasSisId,
+      name,
+      courseCode,
+      language,
+      canceled,
+      endDate,
+      displayYear,
+      organization,
+      institution,
+      courseGoal,
+      periods,
+      credits,
+      courseExaminers,
+      courseResponsible,
+      courseTeachers,
+    } });
   } finally {
     await db.close();
   }

@@ -318,23 +318,17 @@ components:
       type: object
       required:
         - id
-        - ladokStudentId
-        - ladokCourseId
         - ladokCourseRoundId
         - canvasSisId
         - name
         - email
         - roles
-        - location
+        # - location
         - program
       properties:
         id:
           type: string
           description: "Ladok equivalent: `${StudentUID}.${KurstillfalleUID}`"
-        # ladokStudentId:
-        #     type: string
-        # ladokCourseId:
-        #     type: string
         ladokCourseRoundId:
           type: string
         canvasSisId:
@@ -352,8 +346,8 @@ components:
             type: string
             enum:
               - student
-        location: # This comes from BTH-data, do we really need this?
-          type: string
+        # location: # This comes from BTH-data, do we really need this?
+        #   type: string
         program:
           $ref: "#/components/schemas/ProgramRound"
 
@@ -390,7 +384,8 @@ components:
           type: string
           description: "Determines if taking this course is mandatory or not for this program."
           enum:
-            - mandatory? # TODO: Figure out what the enum values really are
+            - obligatorisk # TODO: Figure out what the enum values really are
+            - valbar
             - ...
 
     CourseModule:

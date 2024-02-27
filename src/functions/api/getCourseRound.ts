@@ -60,8 +60,11 @@ export default async function handler<T extends APICourseRound>(
       {},
     );
 
+    // Pick all public props except private
+    const { _id, _gradingScheme, ...props } = courseRound;
+
     outp = {
-      ...courseRound,
+      ...props,
       nrofRegisteredStudents,
       nrofReportedResults,
       gradingDistribution,

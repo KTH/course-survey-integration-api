@@ -27,12 +27,32 @@ export default async function handler<T extends APICourseRoundStudentList>(
       "StudentParticipation",
     );
     // TODO: Add type TStudentParticiaionEntity
-    outp = await db.queryByProperty(
+    const students = await db.queryByProperty(
       "ladokCourseRoundId",
       id,
       "StudentParticipation",
       { offset, limit },
     );
+
+    outp = students.map(({
+      id,
+      ladokCourseRoundId,
+      canvasSisId,
+      name,
+      email,
+      roles,
+      program,
+    }) => {
+      return {
+        id,
+        ladokCourseRoundId,
+        canvasSisId,
+        name,
+        email,
+        roles,
+        program,
+      }
+    });
   } finally {
     await db.close();
   }

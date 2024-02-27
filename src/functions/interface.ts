@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { paths, components } from "../__generated__/_interface";
 // # API Interface
 // To generate the _interface.ts file, run: `npm run generate-types`
@@ -68,6 +69,7 @@ export type TProgramRoundEntity = {
 };
 
 export type TCourseRoundEntity = {
+  _id?: string | ObjectId; // Used by document store
   id: string; // Required for DB-layer to work
   language: TCourseRound["language"];
   canceled: TCourseRound["canceled"];
@@ -99,6 +101,7 @@ export type TCourseRoundEntity = {
 };
 
 export type TReportedResultEntity = {
+  _id?: string | ObjectId; // Used by document store
   id: string; // Required for DB-layer to work
   parentId: string; // This can belong to a module (UtbildningsinstansId = moduleRoundId) or a course (UtbildningsinstansId = courseId).
   ladokCourseRoundId: string; // CourseRound.ladokCourseRoundId (UtbildningstillfalleUID)
@@ -114,6 +117,7 @@ export type TReportedResultEntity = {
 };
 
 export type TStudentParticipationEntity = {
+  _id?: string | ObjectId; // Used by document store
   id: string; // Required for DB-layer to work
   // CourseRound.ladokCourseRoundId (UtbildningsinstansUID):
   parentId: string; // TODO: Consider removing, use ladokCoursRoundId instead
