@@ -1,0 +1,606 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "0.1.0",
+    "title": "Course Survey Integration API",
+    "description": "Entities needed to create course surveys.",
+    "contact": {
+      "name": "E-lärande, KTH IT",
+      "url": "https://intra.kth.se/utbildning/e-larande/kontakt-och-support/kontakt-e-larande-1.836575",
+      "email": "it-support@kth.se"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://api.kth.se/course-survey-integration/v1",
+      "description": "Production URL"
+    },
+    {
+      "url": "https://api-r.referens.sys.kth.se/course-survey-integration/v1",
+      "description": "Staging URL"
+    }
+  ],
+  "security": [
+    {
+      "ApiKeyAuth": []
+    }
+  ],
+  "paths": {
+    "/course-rounds": {
+      "get": {
+        "summary": "Returns a list of course rounds pending evaluation (partial objects only).",
+        "description": "| The API will return course rounds from this or previous term. The course round is returned as a partial object,\n| for complete data call the details endpoint. A course round might be updated and course rounds might be added\n| to this list as time progresses during the term. Added courses will be added to end of list. Course rounds may\n| be removed from this list if calls are on different days.\n",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/PageLimit"
+          },
+          {
+            "$ref": "#/components/parameters/PageOffset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "headers": {
+              "Pagination-Total-Count": {
+                "$ref": "#/components/headers/Pagination-Total-Count"
+              },
+              "Pagination-Offset": {
+                "$ref": "#/components/headers/Pagination-Offset"
+              },
+              "Pagination-Limit": {
+                "$ref": "#/components/headers/Pagination-Limit"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CourseRoundPartial"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "default": {
+            "$ref": "#/components/responses/default"
+          }
+        }
+      }
+    },
+    "/course-rounds/{id}": {
+      "get": {
+        "summary": "Returns complete information about this course round.",
+        "description": "| This endpoint returns all information about a course round. This includes the number of registered students,\n| the number of reported results, grading distribution, programs and modules.\n| Note: This information needs to be updated daily from when the course has ended until the course analysis has\n| been created.\n",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CourseRound"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "default": {
+            "$ref": "#/components/responses/default"
+          }
+        }
+      }
+    },
+    "/course-rounds/{id}/students": {
+      "get": {
+        "summary": "Returns list of students belonging to the course round.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "required": true
+          },
+          {
+            "$ref": "#/components/parameters/PageLimit"
+          },
+          {
+            "$ref": "#/components/parameters/PageOffset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "headers": {
+              "Pagination-Total-Count": {
+                "$ref": "#/components/headers/Pagination-Total-Count"
+              },
+              "Pagination-Offset": {
+                "$ref": "#/components/headers/Pagination-Offset"
+              },
+              "Pagination-Limit": {
+                "$ref": "#/components/headers/Pagination-Limit"
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StudentParticipation"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/401"
+          },
+          "default": {
+            "$ref": "#/components/responses/default"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Ocp-Apim-Subscription-Key"
+      }
+    },
+    "headers": {
+      "Pagination-Total-Count": {
+        "schema": {
+          "type": "integer",
+          "description": "The total number of course rounds available."
+        }
+      },
+      "Pagination-Offset": {
+        "schema": {
+          "type": "integer",
+          "description": "The offset of the current page in items.",
+          "minimum": 0
+        }
+      },
+      "Pagination-Limit": {
+        "schema": {
+          "type": "integer",
+          "description": "The limit of course rounds per page.",
+          "minimum": 1,
+          "maximum": 30,
+          "default": 30
+        }
+      }
+    },
+    "parameters": {
+      "PageLimit": {
+        "name": "limit",
+        "in": "query",
+        "description": "Nrof items per call",
+        "schema": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 30,
+          "default": 30
+        },
+        "required": false
+      },
+      "PageOffset": {
+        "name": "offset",
+        "in": "query",
+        "description": "Start at item offset (zero based)",
+        "schema": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 0
+        },
+        "required": false
+      }
+    },
+    "responses": {
+      "401": {
+        "description": "Unauthorized"
+      },
+      "default": {
+        "description": "Invalid request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "CourseRoundPartial": {
+        "type": "object",
+        "required": [
+          "id",
+          "ladokCourseId",
+          "ladokCourseRoundId",
+          "canvasSisId",
+          "name",
+          "courseCode",
+          "language",
+          "canceled",
+          "endDate",
+          "displayYear",
+          "organization",
+          "institution",
+          "courseGoal",
+          "periods",
+          "credits",
+          "courseExaminers",
+          "courseResponsible",
+          "courseTeachers"
+        ],
+        "properties": {
+          "ladokCourseRoundId": {
+            "type": "string",
+            "description": "Ladok equivalent: UtbildningstillfalleUID, KurstillfalleUID"
+          },
+          "ladokCourseId": {
+            "type": "string",
+            "description": "Ladok equivalent: UtbildningsUID, KursUID"
+          },
+          "canvasSisId": {
+            "type": "string",
+            "description": "This property is called sis_section_id in Canvas API. (Equivalent to ladokCourseRoundId)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Name in tutoring language."
+          },
+          "courseCode": {
+            "type": "string",
+            "description": "This is the _course_ code and originates from Ladok."
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "en",
+              "sv"
+            ],
+            "description": "The tutoring language for this course round. Determines the language used to generate report."
+          },
+          "canceled": {
+            "type": "boolean",
+            "description": "Marked true if the course round has been canceled (duh!)."
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date",
+            "description": "The date when the course round ends."
+          },
+          "displayYear": {
+            "type": "string",
+            "description": "The year this course round was held (YYYY). Note: there are course rounds that span multiple years and might be displayed as YYYY-YYYY"
+          },
+          "organization": {
+            "$ref": "#/components/schemas/OrgEntity",
+            "description": "The school at KTH this course round belongs to."
+          },
+          "institution": {
+            "$ref": "#/components/schemas/OrgEntity",
+            "description": "The specific institution at a school this course round is attached to."
+          },
+          "courseGoal": {
+            "type": "string",
+            "description": "This freetext entry explains the goal of the course. Includes linebreaks."
+          },
+          "periods": {
+            "type": "array",
+            "description": "| List of periods this course round runs for. Currently we only return the start period\n| and all credits for the course. In the future we might specify all periods and spread\n| the credits accross them.\n",
+            "items": {
+              "type": "object",
+              "required": [
+                "period",
+                "credits"
+              ],
+              "properties": {
+                "period": {
+                  "type": "string",
+                  "enum": [
+                    "P0",
+                    "P1",
+                    "P2",
+                    "P3",
+                    "P4",
+                    "P5"
+                  ]
+                },
+                "credits": {
+                  "type": "string",
+                  "description": "Credits awarded for this period."
+                }
+              }
+            }
+          },
+          "credits": {
+            "type": "string",
+            "description": "Total credits awarded for this course."
+          },
+          "courseExaminers": {
+            "type": "array",
+            "description": "List of examiners for this _course_.",
+            "items": {
+              "$ref": "#/components/schemas/CourseUser"
+            }
+          },
+          "courseResponsible": {
+            "type": "array",
+            "description": "List of course responsible for this course round.",
+            "items": {
+              "$ref": "#/components/schemas/CourseUser"
+            }
+          },
+          "courseTeachers": {
+            "type": "array",
+            "description": "List of teachers of this course round.",
+            "items": {
+              "$ref": "#/components/schemas/CourseUser"
+            }
+          }
+        }
+      },
+      "CourseRound": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CourseRoundPartial"
+          },
+          {
+            "type": "object",
+            "required": [
+              "totalRegisteredStudents",
+              "totalReportedResults",
+              "gradingDistribution",
+              "programs",
+              "modules"
+            ],
+            "properties": {
+              "totalRegisteredStudents": {
+                "type": "integer",
+                "description": "Number of students registered for this course round."
+              },
+              "totalReportedResults": {
+                "type": "integer",
+                "description": "Number of students with reported results for this course round."
+              },
+              "gradingDistribution": {
+                "type": "object",
+                "description": "Kurs, betygsfördelning",
+                "example": "{ \"A\": 3, \"B\": 25, \"C\": 15, \"D\": 3, \"E\": 0, \"F\": 2 }",
+                "additionalProperties": {
+                  "type": "number"
+                }
+              },
+              "programs": {
+                "type": "array",
+                "description": "List of programs this course round is part of according to registered students.",
+                "items": {
+                  "$ref": "#/components/schemas/ProgramRound"
+                }
+              },
+              "modules": {
+                "type": "array",
+                "description": "List of modules that are part of this course round, including grading distribution etc.",
+                "items": {
+                  "$ref": "#/components/schemas/CourseModule"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "StudentParticipation": {
+        "type": "object",
+        "required": [
+          "id",
+          "ladokCourseRoundId",
+          "canvasSisId",
+          "name",
+          "email",
+          "roles",
+          "program"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Ladok equivalent: `${StudentUID}.${KurstillfalleUID}`"
+          },
+          "ladokCourseRoundId": {
+            "type": "string"
+          },
+          "canvasSisId": {
+            "type": "string",
+            "description": "We currently use kthUserId as canvasSisId"
+          },
+          "name": {
+            "type": "string",
+            "description": "Full Name of user"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "student"
+              ]
+            }
+          },
+          "program": {
+            "$ref": "#/components/schemas/ProgramRound"
+          }
+        }
+      },
+      "ProgramRound": {
+        "type": "object",
+        "required": [
+          "code",
+          "startTerm",
+          "name",
+          "studyYear",
+          "required"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "description": "Program code, e.g. 'CINTE'"
+          },
+          "startTerm": {
+            "type": "string",
+            "description": "Year and term when program round started"
+          },
+          "name": {
+            "type": "string"
+          },
+          "studyYear": {
+            "type": "integer",
+            "description": "Calculate by using startPeriod and current period."
+          },
+          "specialization": {
+            "type": "object",
+            "description": "Specialization of the program (inriktning på svenska). This is omitted if connection belongs to the base program.",
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string",
+                "description": "Name of the specialization in tutoring language."
+              }
+            }
+          },
+          "required": {
+            "type": "string",
+            "description": "Determines if taking this course is mandatory or not for this program.",
+            "enum": [
+              "obligatorisk",
+              "valbar",
+              "..."
+            ]
+          }
+        }
+      },
+      "CourseModule": {
+        "type": "object",
+        "required": [
+          "code",
+          "name",
+          "credits",
+          "gradingScheme",
+          "totalReportedResults",
+          "gradingDistribution"
+        ],
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "credits": {
+            "type": "string",
+            "description": "Credits awarded for this module."
+          },
+          "gradingScheme": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "totalReportedResults": {
+            "type": "integer"
+          },
+          "gradingDistribution": {
+            "type": "object",
+            "description": "Moment, betygsfördelning",
+            "example": "{ \"A\": 3, \"B\": 25, \"C\": 15, \"D\": 3, \"E\": 0, \"F\": 2 }",
+            "additionalProperties": {
+              "type": "number"
+            }
+          }
+        }
+      },
+      "CourseUser": {
+        "type": "object",
+        "required": [
+          "userName",
+          "kthUserId",
+          "email",
+          "fullName"
+        ],
+        "properties": {
+          "userName": {
+            "type": "string",
+            "description": "This is the username used to log in to KTH SSO."
+          },
+          "kthUserId": {
+            "type": "string",
+            "description": "This is the unique identifier for a user at KTH."
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "fullName": {
+            "type": "string"
+          }
+        }
+      },
+      "OrgEntity": {
+        "type": "object",
+        "required": [
+          "displayName",
+          "displayCode",
+          "kthId"
+        ],
+        "properties": {
+          "displayName": {
+            "type": "string",
+            "description": "The name of the organization entity to be displayed in report in the tutoring language."
+          },
+          "displayCode": {
+            "type": "string",
+            "description": "KTH-specific code used for organization entity.",
+            "example": "'EECS', 'EECS/JA', etc."
+          },
+          "kthId": {
+            "type": "string",
+            "description": "The unique identifier used by the federated login server to refer to the organization entity."
+          }
+        }
+      }
+    }
+  }
+}
