@@ -3,7 +3,7 @@ import {
   HttpResponseInit,
   InvocationContext,
 } from "@azure/functions";
-import { APICourseRoundStudentList, TCourseRoundEntity, TStudentParticipationEntity } from "../interface";
+import { APICourseRoundStudentList, APICourseRoundStudentListParams, TCourseRoundEntity, TStudentParticipationEntity } from "../interface";
 import { Database } from "../utils";
 
 export default async function handler<T extends APICourseRoundStudentList>(
@@ -16,7 +16,7 @@ export default async function handler<T extends APICourseRoundStudentList>(
   let limit = parseInt(request.query.get("limit") ?? "30");
   if (limit > 30) limit = 30;
 
-  const { id } = request.params;
+  const { id } = request.params as APICourseRoundStudentListParams["path"];
 
   const courseRound = await db.fetchById<TCourseRoundEntity>(id, "CourseRound");
   

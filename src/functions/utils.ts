@@ -5,6 +5,7 @@ import {
 } from "@azure/functions";
 import { MongoClient, ObjectId } from "mongodb";
 import { TLadokEventUserProperties } from "./ladok-events/types";
+import { APIPaths } from "./interface";
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const { COSMOSDB_CONNECTION_STRING } = process.env;
@@ -35,6 +36,15 @@ export function API(handler: ApiHttpHandler) {
       throw err;
     }
   };
+}
+
+/**
+ * This wrapper enforces paths to match API specification and removes the leading slash
+ * @param path the path as defined in the API specification
+ * @returns the path without the leading slash
+ */
+export function APIPathFromSpec(path: APIPaths) {
+  return path.substring(1);
 }
 
 type ServiceBusTopicHandler<T = unknown> = (

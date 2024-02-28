@@ -17,11 +17,11 @@ info:
     url: https://intra.kth.se/utbildning/e-larande/kontakt-och-support/kontakt-e-larande-1.836575
     email: it-support@kth.se
 
-servers:
-  - url: https://api.kth.se/course-survey-integration/v1
-    description: Production URL
-  - url: https://api-r.referens.sys.kth.se/course-survey-integration/v1
-    description: Staging URL
+# servers:
+#   - url: course-survey-integration-prod
+#     description: Production URL
+#   - url: course-survey-integration-ref
+#     description: Staging URL
 
 security:
   - ApiKeyAuth: []
@@ -60,7 +60,7 @@ paths:
         "default":
           $ref: "#/components/responses/default"
 
-  /course-rounds/{ladokRoundId}:
+  /course-rounds/{id}:
     get:
       summary: Returns complete information about this course round.
       description: |
@@ -69,7 +69,7 @@ paths:
         | Note: This information needs to be updated daily from when the course has ended until the course analysis has
         | been created.
       parameters:
-        - name: ladokRoundId
+        - name: id
           in: path
           schema:
             type: string
@@ -86,11 +86,11 @@ paths:
         "default":
           $ref: "#/components/responses/default"
 
-  /course-rounds/{ladokRoundId}/students:
+  /course-rounds/{id}/students:
     get:
       summary: Returns list of students belonging to the course round.
       parameters:
-        - name: ladokRoundId
+        - name: id
           in: path
           schema:
             type: string

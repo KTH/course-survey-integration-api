@@ -32,18 +32,23 @@ export type TApiError = {
 };
 
 // ## Endpoints
+export type APIPaths = keyof paths;
+
 export type PathCourseRoundList = paths["/course-rounds"];
 export type APICourseRoundListErrType = TAPIErrType;
 export type APICourseRoundList = TCourseRoundPartial[];
+export type APICourseRoundListParams = PathCourseRoundList["get"]["parameters"];
 
-export type PathCourseRound = paths["/course-rounds/{ladokRoundId}"];
+export type PathCourseRound = paths["/course-rounds/{id}"];
 export type APICourseRoundErrType = TAPIErrType;
 export type APICourseRound = TCourseRound;
+export type APICourseRoundParams = PathCourseRound["get"]["parameters"];
 
 export type PathCourseRoundStudentList =
-  paths["/course-rounds/{ladokRoundId}/students"];
+paths["/course-rounds/{id}/students"];
 export type APICourseRoundStudentListErrType = TAPIErrType;
 export type APICourseRoundStudentList = TStudentParticipation[];
+export type APICourseRoundStudentListParams = PathCourseRoundStudentList["get"]["parameters"];
 
 /**
  * Domain entities stored in DB

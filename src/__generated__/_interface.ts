@@ -37,7 +37,7 @@ export interface paths {
       };
     };
   };
-  "/course-rounds/{ladokRoundId}": {
+  "/course-rounds/{id}": {
     /**
      * Returns complete information about this course round.
      * @description | This endpoint returns all information about a course round. This includes the number of registered students,
@@ -48,7 +48,7 @@ export interface paths {
     get: {
       parameters: {
         path: {
-          ladokRoundId: string;
+          id: string;
         };
       };
       responses: {
@@ -63,7 +63,7 @@ export interface paths {
       };
     };
   };
-  "/course-rounds/{ladokRoundId}/students": {
+  "/course-rounds/{id}/students": {
     /** Returns list of students belonging to the course round. */
     get: {
       parameters: {
@@ -72,7 +72,7 @@ export interface paths {
           offset?: components["parameters"]["PageOffset"];
         };
         path: {
-          ladokRoundId: string;
+          id: string;
         };
       };
       responses: {
@@ -159,7 +159,7 @@ export interface components {
        * @example { "A": 3, "B": 25, "C": 15, "D": 3, "E": 0, "F": 2 }
        */
       gradingDistribution: {
-        [key: string]: unknown;
+        [key: string]: number;
       };
       /** @description List of programs this course round is part of according to registered students. */
       programs: components["schemas"]["ProgramRound"][];

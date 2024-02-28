@@ -3,7 +3,7 @@ import {
   HttpResponseInit,
   InvocationContext,
 } from "@azure/functions";
-import { APICourseRound, TCourseModule, TCourseRoundModuleEntity, TReportedResultEntity } from "../interface";
+import { APICourseRound, APICourseRoundParams, TCourseModule, TCourseRoundModuleEntity, TReportedResultEntity } from "../interface";
 import { Database } from "../utils";
 
 export default async function handler<T extends APICourseRound>(
@@ -11,7 +11,7 @@ export default async function handler<T extends APICourseRound>(
   context: InvocationContext,
   db: Database,
 ): Promise<HttpResponseInit> {
-  const { id } = request.params;
+  const { id } = request.params as APICourseRoundParams["path"];
   let outp: APICourseRound;
   
   try {
