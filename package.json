@@ -45,9 +45,11 @@
   },
   "dependencies": {
     "@azure/functions": "^4.1.0",
-    "mongodb": "^4.0.0",
+    "chartjs-node-canvas": "^4.1.6",
+    "chart.js": "^3.9.1",
     "kopps-integration": "^0.1.0",
     "ladok-integration": "^0.1.0",
+    "mongodb": "^4.0.0",
     "ug-integration": "^0.1.0"
   },
   "workspaces": [

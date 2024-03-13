@@ -3,11 +3,13 @@ import {
   APICourseRoundList,
   APICourseRound,
   APICourseRoundStudentList,
+  APICourseRoundGradingDistributionChart,
   PathCourseRound,
 } from "./interface";
 import getCourseRound from "./api/getCourseRound";
 import getCourseRoundStudents from "./api/getCourseRoundStudents";
 import listCourseRounds from "./api/listCourseRounds";
+import getGradingDistributionChart from "./api/getGradingDistributionChart";
 import { API, APIPathFromSpec } from "./utils";
 
 // NOTE: These API-endpoints are protected by the function API key "default" when run in Azure
@@ -25,6 +27,14 @@ app.http("APIGetCourseRoundStudents", {
   authLevel: "function",
   handler: API(getCourseRoundStudents<APICourseRoundStudentList>),
   route: APIPathFromSpec("/course-rounds/{id}/students"),
+});
+
+
+app.http("APIGetCourseRoundDistributionChart", {
+  methods: ["GET"],
+  authLevel: "function",
+  handler: API(getGradingDistributionChart<APICourseRoundGradingDistributionChart>),
+  route: APIPathFromSpec("/course-rounds/{id}/grading-distribution.png"),
 });
 
 app.http("APIListCourseRounds", {

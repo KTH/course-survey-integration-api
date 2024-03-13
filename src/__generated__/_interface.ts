@@ -92,6 +92,30 @@ export interface paths {
       };
     };
   };
+  "/course-rounds/{id}/grading-distribution.png": {
+    /**
+     * Returns a PNG image of the grading distribution for this course round.
+     * @description | This endpoint returns a PNG image of the grading distribution for this course round.
+     * | The image is generated from the grading distribution object in the course round object.
+     */
+    get: {
+      parameters: {
+        path: {
+          id: string;
+        };
+      };
+      responses: {
+        /** @description Ok */
+        200: {
+          content: {
+            "image/png": string;
+          };
+        };
+        401: components["responses"]["401"];
+        default: components["responses"]["default"];
+      };
+    };
+  };
 }
 
 export type webhooks = Record<string, never>;
