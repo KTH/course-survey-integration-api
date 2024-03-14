@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { paths, components } from "../__generated__/_interface";
+import { Blob } from "buffer";
 // # API Interface
 // To generate the _interface.ts file, run: `npm run generate-types`
 // in the root of the project.
@@ -49,6 +50,11 @@ paths["/course-rounds/{id}/students"];
 export type APICourseRoundStudentListErrType = TAPIErrType;
 export type APICourseRoundStudentList = TStudentParticipation[];
 export type APICourseRoundStudentListParams = PathCourseRoundStudentList["get"]["parameters"];
+
+export type PathCourseRoundGradingDistributionChart = paths["/course-rounds/{id}/grading-distribution.png"];
+export type APICourseRoundGradingDistributionChartErrType = TAPIErrType;
+export type APICourseRoundGradingDistributionChart = Blob;
+export type APICourseRoundGradingDistributionChartParams = PathCourseRoundGradingDistributionChart["get"]["parameters"];
 
 /**
  * Domain entities stored in DB

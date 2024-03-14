@@ -117,6 +117,30 @@ paths:
           $ref: "#/components/responses/401"
         "default":
           $ref: "#/components/responses/default"
+  /course-rounds/{id}/grading-distribution.png:
+    get:
+      summary: Returns a PNG image of the grading distribution for this course round.
+      description: |
+        | This endpoint returns a PNG image of the grading distribution for this course round.
+        | The image is generated from the grading distribution object in the course round object.
+      parameters:
+        - name: id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        "200":
+          description: Ok
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+        "401":
+          $ref: "#/components/responses/401"
+        "default":
+          $ref: "#/components/responses/default"
 
 components:
   securitySchemes:
