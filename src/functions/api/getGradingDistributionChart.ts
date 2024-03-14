@@ -53,9 +53,9 @@ export default async function handler<T extends APICourseRoundGradingDistributio
 
     const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, backgroundColour});
     const data = {
+      labels: Object.keys(gradingDistribution),
       datasets: [{
         data: Object.values(gradingDistribution),
-        labales: Object.keys(gradingDistribution),
       }]
     };
     const configuration = {
