@@ -52,15 +52,16 @@ export default async function handler<T extends APICourseRoundGradingDistributio
     );
 
     const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, backgroundColour});
+    const data = {
+      datasets: [{
+        data: Object.values(gradingDistribution),
+        labales: Object.keys(gradingDistribution),
+      }]
+    };
     const configuration = {
       // https://www.chartjs.org/docs/latest/charts/bar.html
       type: chartType,
-      data: {
-        datasets: [{
-          data: Object.values(gradingDistribution),
-          labales: Object.keys(gradingDistribution),
-        }]
-      }
+      data,
     };
     const image = await chartJSNodeCanvas.renderToBuffer(configuration);
     outp = new Blob([image]);
