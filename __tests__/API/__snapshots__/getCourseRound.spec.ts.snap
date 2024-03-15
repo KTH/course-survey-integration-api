@@ -46,9 +46,9 @@ exports[`/api/course-rounds/{id} can be executed 1`] = `
     },
     "id": "01-1",
     "institution": {
-      "displayCode": "ITM",
-      "displayName": "Skolan för elektroteknik och datavetenskap",
-      "kthId": "u9itm000",
+      "displayCode": "ITM/JA",
+      "displayName": "Institution för datavetenskap",
+      "kthId": "u9ja0000",
     },
     "ladokCourseId": "8734afdf-1da9-415d-8c08-9ed160f87c0a-ladokCourseId",
     "ladokCourseRoundId": "41374a41-2bda-404f-b11c-6e007deb61b4-ladokCoursRoundId",
@@ -72,9 +72,9 @@ exports[`/api/course-rounds/{id} can be executed 1`] = `
     ],
     "name": "Introduktion till programmering",
     "organization": {
-      "displayCode": "ITM/JA",
-      "displayName": "Institution för datavetenskap",
-      "kthId": "u9ja0000",
+      "displayCode": "ITM",
+      "displayName": "Skolan för elektroteknik och datavetenskap",
+      "kthId": "u9itm000",
     },
     "periods": [
       {

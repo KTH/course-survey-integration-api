@@ -48,18 +48,18 @@ exports[`/api/course-rounds can be executed 1`] = `
       "endDate": "2024-01-01",
       "id": "01-1",
       "institution": {
-        "displayCode": "ITM",
-        "displayName": "Skolan för elektroteknik och datavetenskap",
-        "kthId": "u9itm000",
+        "displayCode": "ITM/JA",
+        "displayName": "Institution för datavetenskap",
+        "kthId": "u9ja0000",
       },
       "ladokCourseId": "8734afdf-1da9-415d-8c08-9ed160f87c0a-ladokCourseId",
       "ladokCourseRoundId": "41374a41-2bda-404f-b11c-6e007deb61b4-ladokCoursRoundId",
       "language": "sv",
       "name": "Introduktion till programmering",
       "organization": {
-        "displayCode": "ITM/JA",
-        "displayName": "Institution för datavetenskap",
-        "kthId": "u9ja0000",
+        "displayCode": "ITM",
+        "displayName": "Skolan för elektroteknik och datavetenskap",
+        "kthId": "u9itm000",
       },
       "periods": [
         {
@@ -108,18 +108,18 @@ exports[`/api/course-rounds can be executed 1`] = `
       "endDate": "2023-09-01",
       "id": "02-1",
       "institution": {
-        "displayCode": "CSC",
-        "displayName": "Skolan för matematik och systemteknik",
-        "kthId": "u9csc000",
+        "displayCode": "CSC/PK",
+        "displayName": "Institutionen för datalogi och datorlingvistik",
+        "kthId": "u9pk0000",
       },
       "ladokCourseId": "21a5ec0a-ea41-4967-8eb2-a824b5a720af-ladokCourseId",
       "ladokCourseRoundId": "d682b090-e019-4fdf-8675-f10233394e12-ladokCoursRoundId",
       "language": "sv",
       "name": "Kemiteknik och Bioteknik med matematiska metoder I",
       "organization": {
-        "displayCode": "CSC/PK",
-        "displayName": "Institutionen för datalogi och datorlingvistik",
-        "kthId": "u9pk0000",
+        "displayCode": "CSC",
+        "displayName": "Skolan för matematik och systemteknik",
+        "kthId": "u9csc000",
       },
       "periods": [
         {

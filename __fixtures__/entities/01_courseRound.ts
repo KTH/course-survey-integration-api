@@ -5,9 +5,9 @@ export const courseRound1: TCourseRoundEntity = {
   language: "sv",
   canceled: false,
   institution: {
-    displayName: "Skolan för elektroteknik och datavetenskap",
-    displayCode: "ITM",
-    kthId: "u9itm000",
+    displayName: "Institution för datavetenskap",
+    displayCode: "ITM/JA",
+    kthId: "u9ja0000",
   },
   periods: [{ period: "P1", credits: "7.5 hp" }],
   courseExaminers: [
@@ -31,9 +31,9 @@ export const courseRound1: TCourseRoundEntity = {
   courseGoal:
     "Förståelse av grundläggande koncept: Studenten bör kunna förklara och tillämpa grundläggande begrepp inom programmering, såsom variabler, datatyper, villkorssatser, loopar och funktioner.",
   organization: {
-    displayName: "Institution för datavetenskap",
-    displayCode: "ITM/JA",
-    kthId: "u9ja0000",
+    displayName: "Skolan för elektroteknik och datavetenskap",
+    displayCode: "ITM",
+    kthId: "u9itm000",
   },
   courseResponsible: [
     {

@@ -5,9 +5,9 @@ export const courseRound2: TCourseRoundEntity = {
   language: "sv",
   canceled: false,
   institution: {
-    displayName: "Skolan för matematik och systemteknik",
-    displayCode: "CSC",
-    kthId: "u9csc000",
+    displayName: "Institutionen för datalogi och datorlingvistik",
+    displayCode: "CSC/PK",
+    kthId: "u9pk0000",
   },
   periods: [{ period: "P3", credits: "6 hp" }],
   courseExaminers: [
@@ -31,9 +31,9 @@ export const courseRound2: TCourseRoundEntity = {
   courseGoal:
     "Förvärva en djupare förståelse för kemiska reaktioner, kinetik, termodynamik och andra grundläggande principer inom kemi.",
   organization: {
-    displayName: "Institutionen för datalogi och datorlingvistik",
-    displayCode: "CSC/PK",
-    kthId: "u9pk0000",
+    displayName: "Skolan för matematik och systemteknik",
+    displayCode: "CSC",
+    kthId: "u9csc000",
   },
   courseResponsible: [
     {
