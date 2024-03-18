@@ -175,6 +175,7 @@ export async function handler(
     // Source LADOK REST API:
     _gradingScheme: Object.keys(ladokGradingDistribution ?? {}),
     courseCode: ladokCourseRoundInfo?.courseCode,
+    courseInstanceCode: ladokCourseRoundInfo?.courseInstanceCode,
     endDate: ladokCourseRoundInfo?.endDate,
     displayYear: ladokCourseYear,
     credits: `${ladokCourseRoundInfo?.credits} hp`,

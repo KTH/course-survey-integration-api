@@ -133,6 +133,8 @@ export interface components {
       name: string;
       /** @description This is the _course_ code and originates from Ladok. */
       courseCode: string;
+      /** @description This is the _course instance_ code (Kurstillfalleskod) and originates from Ladok. */
+      courseInstanceCode: string;
       /**
        * @description The tutoring language for this course round. Determines the language used to generate report.
        * @enum {string}

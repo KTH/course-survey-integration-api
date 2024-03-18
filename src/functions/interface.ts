@@ -105,6 +105,7 @@ export type TCourseRoundEntity = {
   // Source LADOK REST API:
   _gradingScheme: string[];
   courseCode: TCourseRound["courseCode"];
+  courseInstanceCode: TCourseRound["courseInstanceCode"];
   endDate: TCourseRound["endDate"];
   displayYear: TCourseRound["displayYear"];
   credits: TCourseRound["credits"];

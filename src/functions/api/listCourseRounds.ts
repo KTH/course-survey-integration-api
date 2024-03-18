@@ -5,7 +5,6 @@ import {
 } from "@azure/functions";
 import {
   APICourseRoundList,
-  TCourseRound,
   TCourseRoundEntity,
   TProgramRound,
 } from "../interface";
@@ -78,6 +77,7 @@ export default async function handler<T extends APICourseRoundList>(
       canvasSisId,
       name,
       courseCode,
+      courseInstanceCode,
       language,
       canceled,
       endDate,
@@ -97,6 +97,7 @@ export default async function handler<T extends APICourseRoundList>(
       canvasSisId,
       name,
       courseCode,
+      courseInstanceCode,
       language,
       canceled,
       endDate,
