@@ -164,6 +164,8 @@ export interface components {
           /** @description Credits awarded for this period. */
           credits: string;
         })[];
+      /** @description List of programs this course round is part of according to registered students. */
+      programs: components["schemas"]["ProgramRound"][];
       /** @description Total credits awarded for this course. */
       credits: string;
       /** @description List of examiners for this _course_. */
@@ -185,8 +187,6 @@ export interface components {
       gradingDistribution: {
         [key: string]: number;
       };
-      /** @description List of programs this course round is part of according to registered students. */
-      programs: components["schemas"]["ProgramRound"][];
       /** @description List of modules that are part of this course round, including grading distribution etc. */
       modules: components["schemas"]["CourseModule"][];
     };

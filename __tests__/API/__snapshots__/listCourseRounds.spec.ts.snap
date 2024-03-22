@@ -67,6 +67,15 @@ exports[`/api/course-rounds can be executed 1`] = `
           "period": "P1",
         },
       ],
+      "programs": [
+        {
+          "code": "ARKIT",
+          "name": "Arkitektur",
+          "required": "obligatorisk",
+          "startTerm": "20221",
+          "studyYear": 4,
+        },
+      ],
     },
     {
       "canceled": false,
@@ -125,6 +134,19 @@ exports[`/api/course-rounds can be executed 1`] = `
         {
           "credits": "6 hp",
           "period": "P3",
+        },
+      ],
+      "programs": [
+        {
+          "code": "BIO",
+          "name": "Biologi och bioteknik",
+          "required": "obligatorisk",
+          "specialization": {
+            "code": "BMRU",
+            "name": "Biokemi och molekylärbiologianalys med Rust",
+          },
+          "startTerm": "20231",
+          "studyYear": 1,
         },
       ],
     },
