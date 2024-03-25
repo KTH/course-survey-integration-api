@@ -3,7 +3,7 @@ import {
   HttpResponseInit,
   InvocationContext,
 } from "@azure/functions";
-import { APICourseRound, APICourseRoundParams, TCourseModule, TCourseRoundModuleEntity, TReportedResultEntity } from "../interface";
+import { APICourseRound, APICourseRoundParams, TCourseModule, TCourseRoundModuleEntity, TProgramRound, TReportedResultEntity } from "../interface";
 import { Database } from "../utils";
 
 export default async function handler<T extends APICourseRound>(
@@ -57,7 +57,7 @@ export default async function handler<T extends APICourseRound>(
     );
 
     const programs = studentParticipations.reduce(
-      (acc: Record<string, number>, res: any) => {
+      (acc: Record<string, TProgramRound>, res: any) => {
         acc[res.program.code] ??= res.program;
         return acc;
       },

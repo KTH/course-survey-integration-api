@@ -7,6 +7,7 @@ import {
   APICourseRoundList,
   TCourseRound,
   TCourseRoundEntity,
+  TProgramRound,
 } from "../interface";
 import { Database } from "../utils";
 
@@ -48,6 +49,27 @@ export default async function handler<T extends APICourseRoundList>(
       { offset, limit },
     );
 
+    // Add programmes to list of course rounds
+    const programAssociations: Record<string, TProgramRound[]> = {};
+    for (const courseRound of courseRounds) {
+      const { ladokCourseRoundId } = courseRound;
+      const studentParticipations = await db.queryByProperty(
+        "ladokCourseRoundId",
+        ladokCourseRoundId,
+        "StudentParticipation",
+      );
+      const programs = studentParticipations.reduce(
+        (acc: Record<string, TProgramRound>, res: any) => {
+          acc[res.program.code] ??= res.program;
+          return acc;
+        },
+        {},
+      );
+
+      // Store list of program values so they can be added to list of course rounds
+      programAssociations[ladokCourseRoundId] = Object.values(programs);
+    }
+
     // TODO: Fix this
     outp = courseRounds.map(({
       id,
@@ -83,6 +105,7 @@ export default async function handler<T extends APICourseRoundList>(
       institution,
       courseGoal,
       periods,
+      programs: programAssociations[ladokCourseRoundId],
       credits,
       courseExaminers,
       courseResponsible,
