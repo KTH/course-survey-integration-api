@@ -19,6 +19,8 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
       },
     ],
     "courseGoal": "The course aims to give basic knowledge of programming in F#.",
+    "courseInstanceArchivingCode": "DD1321 HT22 51210",
+    "courseInstanceCode": "51210",
     "courseResponsible": [
       {
         "email": "cr@email.com",

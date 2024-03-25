@@ -84,3 +84,9 @@ export async function hashStudentId(studentId: string): Promise<string> {
     hash.end();
   });
 }
+
+export function convertToCourseInstanceArchivingCode(ladokCourseRoundInfo: any, koppsInfo: any) {
+  const [startYear, termNr] = [koppsInfo?.round?.startTerm.slice(2, 4), koppsInfo?.round?.startTerm.slice(4, 5)];
+  const startTerm = termNr === "1" ? "HT" : "VT";
+  return `${ladokCourseRoundInfo?.courseCode} ${startTerm}${startYear} ${koppsInfo?.round.ladokRoundId || ladokCourseRoundInfo?.courseInstanceCode}`;
+}

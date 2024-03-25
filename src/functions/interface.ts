@@ -91,6 +91,7 @@ export type TCourseRoundEntity = {
   // Source event message:
   ladokCourseId: TCourseRound["ladokCourseId"];
   ladokCourseRoundId: TCourseRound["ladokCourseRoundId"];
+  courseInstanceArchivingCode: string;
   canvasSisId: TCourseRound["canvasSisId"];
 
   // Source KOPPS API:
@@ -105,6 +106,7 @@ export type TCourseRoundEntity = {
   // Source LADOK REST API:
   _gradingScheme: string[];
   courseCode: TCourseRound["courseCode"];
+  courseInstanceCode: TCourseRound["courseInstanceCode"];
   endDate: TCourseRound["endDate"];
   displayYear: TCourseRound["displayYear"];
   credits: TCourseRound["credits"];

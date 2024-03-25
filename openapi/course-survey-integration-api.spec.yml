@@ -210,6 +210,8 @@ components:
         - canvasSisId
         - name
         - courseCode
+        - courseInstanceCode
+        - courseInstanceArchivingCode
         - language
         - canceled
         - endDate
@@ -239,6 +241,12 @@ components:
         courseCode:
           type: string
           description: "This is the _course_ code and originates from Ladok."
+        courseInstanceCode:
+          type: string
+          description: "This is the _course instance_ code (Kurstillfalleskod) and originates from Ladok."
+        courseInstanceArchivingCode:
+          type: string
+          description: "This is a unique identifier of a _course instance_ to be used as course code in meta data."
         language:
           type: string
           enum:
