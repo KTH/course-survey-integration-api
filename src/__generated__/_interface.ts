@@ -135,6 +135,8 @@ export interface components {
       courseCode: string;
       /** @description This is the _course instance_ code (Kurstillfalleskod) and originates from Ladok. */
       courseInstanceCode: string;
+      /** @description This is a unique identifier of a _course instance_ to be used as course code in meta data. */
+      courseInstanceArchivingCode: string;
       /**
        * @description The tutoring language for this course round. Determines the language used to generate report.
        * @enum {string}

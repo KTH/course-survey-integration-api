@@ -91,6 +91,7 @@ export type TCourseRoundEntity = {
   // Source event message:
   ladokCourseId: TCourseRound["ladokCourseId"];
   ladokCourseRoundId: TCourseRound["ladokCourseRoundId"];
+  courseInstanceArchivingCode: string;
   canvasSisId: TCourseRound["canvasSisId"];
 
   // Source KOPPS API:

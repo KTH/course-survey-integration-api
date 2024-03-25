@@ -13,6 +13,7 @@ import { getCourseInformation } from "kopps-integration";
 import { getCourseRoundInformation } from "ladok-integration";
 import {
   convertLadokModuleToCourseModule,
+  convertToCourseInstanceArchivingCode,
   convertUgSchoolToOrgEntity,
   convertUgUsersToCourseUsers,
 } from "./utils";
@@ -176,6 +177,7 @@ export async function handler(
     _gradingScheme: Object.keys(ladokGradingDistribution ?? {}),
     courseCode: ladokCourseRoundInfo?.courseCode,
     courseInstanceCode: ladokCourseRoundInfo?.courseInstanceCode,
+    courseInstanceArchivingCode: convertToCourseInstanceArchivingCode(ladokCourseRoundInfo, koppsInfo),
     endDate: ladokCourseRoundInfo?.endDate,
     displayYear: ladokCourseYear,
     credits: `${ladokCourseRoundInfo?.credits} hp`,
@@ -197,3 +199,4 @@ export default {
   // extraInputs: [cosmosInput],
   // extraOutputs: [cosmosOutput],
 };
+
