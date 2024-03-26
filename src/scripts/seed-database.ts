@@ -1,7 +1,17 @@
 /**
  * This script is used to seed the database with some initial data.
+ * 
+ * Set up the database connection in .env file.
+ * 
+ *   COSMOSDB_CONNECTION_STRING="..."
+ * 
+ * Usage:
+ * 
+ *   npx ts-node src/scripts/seed-database.ts
+ * 
  */
-import { Database } from "../functions/utils";
+import "./config";
+import { Database, DbCollectionName } from "../functions/utils";
 import { courseRound1 } from "../../__fixtures__/entities/01_courseRound";
 import { courseRound2 } from "../../__fixtures__/entities/02_courseRound";
 import { reportedResults1 } from "../../__fixtures__/entities/01_reportedResults";
