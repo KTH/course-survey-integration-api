@@ -174,7 +174,7 @@ export class Database {
   ): Promise<void> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
-    await collection.updateOne({ id }, partial);
+    await collection.updateOne({ id }, { $set: partial });
   }
 }
 
