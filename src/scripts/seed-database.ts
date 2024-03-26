@@ -19,25 +19,29 @@ import { reportedResults2 } from "../../__fixtures__/entities/02_reportedResults
 import { studentParticipations1 } from "../../__fixtures__/entities/01_studentParticipations";
 import { studentParticipations2 } from "../../__fixtures__/entities/02_studentParticipations";
 
+
+async function updateOrInsert(db: Database, id: string, entity: any, collection: DbCollectionName): Promise<void> {
+  if (await db.fetchById(id, collection)) {
+    await db.update(id, entity, collection)
+  } else {
+    await db.insert(entity, collection);
+  }
+}
+
 async function main() {
   const db = new Database();
   await db.connect();
 
-  await db.insert(courseRound1, "CourseRound");
-  await db.insert(courseRound2, "CourseRound");
-
-  for (const reportedResult of reportedResults1) {
-    await db.insert(reportedResult, "ReportedResult");
-  }
-  for (const reportedResult of reportedResults2) {
-    await db.insert(reportedResult, "ReportedResult");
+  for (const courseRound of [courseRound1, courseRound2]) {
+    await updateOrInsert(db, courseRound.id, courseRound, "CourseRound")
   }
 
-  for (const studentParticipation of studentParticipations1) {
-    await db.insert(studentParticipation, "StudentParticipation");
+  for (const reportedResult of [...reportedResults1, ...reportedResults2]) {
+    await updateOrInsert(db, reportedResult.id, reportedResult, "ReportedResult")
   }
-  for (const studentParticipation of studentParticipations2) {
-    await db.insert(studentParticipation, "StudentParticipation");
+
+  for (const studentParticipation of [...studentParticipations1, ...studentParticipations2]) {
+    await updateOrInsert(db, studentParticipation.id, studentParticipation, "StudentParticipation")
   }
 
   await db.close();
