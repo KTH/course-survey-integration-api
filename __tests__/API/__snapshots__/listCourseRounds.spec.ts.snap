@@ -28,6 +28,7 @@ exports[`/api/course-rounds can be executed 1`] = `
       ],
       "courseGoal": "Förståelse av grundläggande koncept: Studenten bör kunna förklara och tillämpa grundläggande begrepp inom programmering, såsom variabler, datatyper, villkorssatser, loopar och funktioner.",
       "courseInstanceArchivingCode": "AA0000 HT23 51210",
+      "courseInstanceArchivingStartTerm": "HT23",
       "courseInstanceCode": "51210",
       "courseResponsible": [
         {
@@ -99,6 +100,7 @@ exports[`/api/course-rounds can be executed 1`] = `
       ],
       "courseGoal": "Förvärva en djupare förståelse för kemiska reaktioner, kinetik, termodynamik och andra grundläggande principer inom kemi.",
       "courseInstanceArchivingCode": "BB0001 HT23 51210",
+      "courseInstanceArchivingStartTerm": "HT23",
       "courseInstanceCode": "34210",
       "courseResponsible": [
         {

@@ -9,6 +9,7 @@ import {
   TProgramRound,
 } from "../interface";
 import { Database } from "../utils";
+import { startTermFromArchivingCode } from "../ladok-events/utils";
 
 export default async function handler<T extends APICourseRoundList>(
   request: HttpRequest,
@@ -100,6 +101,7 @@ export default async function handler<T extends APICourseRoundList>(
       courseCode,
       courseInstanceCode,
       courseInstanceArchivingCode,
+      courseInstanceArchivingStartTerm: startTermFromArchivingCode(courseInstanceArchivingCode),
       language,
       canceled,
       endDate,

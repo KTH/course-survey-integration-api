@@ -241,6 +241,7 @@ components:
         - courseCode
         - courseInstanceCode
         - courseInstanceArchivingCode
+        - courseInstanceArchivingStartTerm
         - language
         - canceled
         - endDate
@@ -276,6 +277,9 @@ components:
         courseInstanceArchivingCode:
           type: string
           description: "This is a unique identifier of a _course instance_ to be used as course code in meta data."
+        courseInstanceArchivingStartTerm:
+          type: string
+          description: "This is a human friendly rendering of start term to be stored in meta data."
         language:
           type: string
           enum:

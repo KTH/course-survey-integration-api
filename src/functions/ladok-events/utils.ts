@@ -85,8 +85,23 @@ export async function hashStudentId(studentId: string): Promise<string> {
   });
 }
 
-export function convertToCourseInstanceArchivingCode(ladokCourseRoundInfo: any, koppsInfo: any) {
+
+export function convertToCourseInstanceArchivingCode(
+  ladokCourseRoundInfo: { courseCode: string, courseInstanceCode: string },
+  koppsInfo: { round: { startTerm: string, ladokRoundId?: string } },
+) {
   const [startYear, termNr] = [koppsInfo?.round?.startTerm.slice(2, 4), koppsInfo?.round?.startTerm.slice(4, 5)];
   const startTerm = termNr === "1" ? "HT" : "VT";
   return `${ladokCourseRoundInfo?.courseCode} ${startTerm}${startYear} ${koppsInfo?.round.ladokRoundId || ladokCourseRoundInfo?.courseInstanceCode}`;
 }
+
+/**
+ * Extracts the start term from an archiving code converted by convertToCourseInstanceArchivingCode.
+ * TODO: Write a test that makes sure that if convertToCourseInstanceArchivingCode is changed, this is too.
+ */
+export function startTermFromArchivingCode(archivingCode: string): string {
+  // The archiving code is formatted as: "SF1625 HT23 51210"
+  const [ _courseCode, startTerm, _courseInstanceCode ] = archivingCode.split(" ");
+  return startTerm;
+}
+
