@@ -14,7 +14,7 @@
     "prepare": "npm run build && npm run test",
     "prestart": "npm run clean && npm run build",
     "start": "func start",
-    "start:api": "func start --functions APIGetCourseRound APIGetCourseRoundStudents APIListCourseRounds",
+    "start:api": "func start --functions APIGetCourseRound APIGetCourseRoundStudents APIListCourseRounds APIGetCourseRoundDistributionChart APIGetModuleDistributionChart",
     "start:ladok": "func start --functions Registrering",
     "test": "npm run test:type-checking && npm run build && npm run test:regression",
     "test:regression": "jest --testMatch '**/__tests__/**/*.spec.ts' --testTimeout 1000",

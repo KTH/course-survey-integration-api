@@ -35,26 +35,30 @@ export type TApiError = {
 // ## Endpoints
 export type APIPaths = keyof paths;
 
-export type PathCourseRoundList = paths["/course-rounds"];
+export type OpenApiCourseRoundList = paths["/course-rounds"];
 export type APICourseRoundListErrType = TAPIErrType;
 export type APICourseRoundList = TCourseRoundPartial[];
-export type APICourseRoundListParams = PathCourseRoundList["get"]["parameters"];
+export type APICourseRoundListParams = OpenApiCourseRoundList["get"]["parameters"];
 
-export type PathCourseRound = paths["/course-rounds/{id}"];
+export type OpenApiCourseRound = paths["/course-rounds/{id}"];
 export type APICourseRoundErrType = TAPIErrType;
 export type APICourseRound = TCourseRound;
-export type APICourseRoundParams = PathCourseRound["get"]["parameters"];
+export type APICourseRoundParams = OpenApiCourseRound["get"]["parameters"];
 
-export type PathCourseRoundStudentList =
-paths["/course-rounds/{id}/students"];
+export type OpenApiCourseRoundStudentList = paths["/course-rounds/{id}/students"];
 export type APICourseRoundStudentListErrType = TAPIErrType;
 export type APICourseRoundStudentList = TStudentParticipation[];
-export type APICourseRoundStudentListParams = PathCourseRoundStudentList["get"]["parameters"];
+export type APICourseRoundStudentListParams = OpenApiCourseRoundStudentList["get"]["parameters"];
 
-export type PathCourseRoundGradingDistributionChart = paths["/course-rounds/{id}/grading-distribution.png"];
+export type OpenApiCourseRoundGradingDistributionChart = paths["/course-rounds/{id}/grading-distribution.png"];
 export type APICourseRoundGradingDistributionChartErrType = TAPIErrType;
 export type APICourseRoundGradingDistributionChart = Blob;
-export type APICourseRoundGradingDistributionChartParams = PathCourseRoundGradingDistributionChart["get"]["parameters"];
+export type APICourseRoundGradingDistributionChartParams = OpenApiCourseRoundGradingDistributionChart["get"]["parameters"];
+
+export type OpenApiModuleGradingDistributionChart = paths["/course-rounds/{id}/modules/{moduleCode}/grading-distribution.png"];
+export type APIModuleGradingDistributionChartErrType = TAPIErrType;
+export type APIModuleGradingDistributionChart = Blob;
+export type APIModuleGradingDistributionChartParams = OpenApiModuleGradingDistributionChart["get"]["parameters"];
 
 /**
  * Domain entities stored in DB

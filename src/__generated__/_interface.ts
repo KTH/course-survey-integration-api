@@ -116,6 +116,31 @@ export interface paths {
       };
     };
   };
+  "/course-rounds/{id}/modules/{moduleCode}/grading-distribution.png": {
+    /**
+     * Returns a PNG image of the grading distribution for this module.
+     * @description | This endpoint returns a PNG image of the grading distribution for this module.
+     * | The image is generated from the grading distribution object in the course round object.
+     */
+    get: {
+      parameters: {
+        path: {
+          id: string;
+          moduleCode: string;
+        };
+      };
+      responses: {
+        /** @description Ok */
+        200: {
+          content: {
+            "image/png": string;
+          };
+        };
+        401: components["responses"]["401"];
+        default: components["responses"]["default"];
+      };
+    };
+  };
 }
 
 export type webhooks = Record<string, never>;
