@@ -59,7 +59,7 @@ export default async function handler<T extends APIModuleGradingDistributionChar
         acc[res.result] = (acc[res.result] ?? 0) + 1;
         return acc;
       },
-      Object.fromEntries(courseRound._gradingScheme.map((key: string) => [key, 0])),
+      Object.fromEntries(module.gradingScheme.map((key: string) => [key, 0])),
     );
 
     const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height, backgroundColour});
