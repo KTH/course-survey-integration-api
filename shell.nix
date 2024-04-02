@@ -12,9 +12,8 @@ in pkgs.mkShell rec {
     azure-functions-core-tools
     nodejs_20
     openssl
-    # node-gyp has issues with certain versions of python
-    # https://github.com/nodejs/node-gyp/issues/2219
-    # If this is resolved we can remove this:
-    python310Full
+    
+    # node-canvas required by chartjs fails on darwin due to missing CoreText
+    pkgs.darwin.apple_sdk.frameworks.CoreText
   ];
 }
