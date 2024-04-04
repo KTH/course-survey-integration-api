@@ -6,6 +6,7 @@ import registreringEvent, { TRegistreringEvent } from "./ladok-events/registreri
 import resultatPaHelKursAttesteratEvent, { TResultatPaHelKursAttesteratEvent } from "./ladok-events/resultatPaHelKursAttesteratEvent";
 import resultatPaModulAttesteratEvent, { TResultatPaModulAttesteratEvent } from "./ladok-events/resultatPaModulAttesteratEvent";
 import attesteratResultatMakuleratEvent, { TAttesteratResultatMakuleratEvent } from "./ladok-events/attesteratResultatMakuleratEvent";
+import messageArchiver from "./ladok-events/messageArchiver";
 import { ServiceBus } from "./utils";
 
 const {
@@ -58,3 +59,9 @@ app.serviceBusTopic("ResultatPaHelKursAttesterat", {
 //   handler: ServiceBus<TAttesteratResultatMakuleratEvent>(attesteratResultatMakuleratEvent),
 //   subscriptionName: 'csia-attesterat-resultat-makulerat',
 // });
+
+app.serviceBusTopic("MessageArchiver", {
+  ...sharedProps,
+  handler: ServiceBus<any>(messageArchiver),
+  subscriptionName: "message-archiver",
+});
