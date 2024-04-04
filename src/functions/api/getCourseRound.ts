@@ -4,7 +4,7 @@ import {
   InvocationContext,
 } from "@azure/functions";
 import { APICourseRound, APICourseRoundParams, TCourseModule, TCourseRoundModuleEntity, TProgramRound, TReportedResultEntity } from "../interface";
-import { Database } from "../utils";
+import { Database } from "../db";
 import { startTermFromArchivingCode } from "../ladok-events/utils";
 
 export default async function handler<T extends APICourseRound>(

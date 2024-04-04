@@ -11,7 +11,7 @@
  * 
  */
 import "./config";
-import { Database, DbCollectionName } from "../functions/utils";
+import { Database, DbCollectionName } from "../functions/db";
 import { courseRound1 } from "../../__fixtures__/entities/01_courseRound";
 import { courseRound2 } from "../../__fixtures__/entities/02_courseRound";
 import { reportedResults1 } from "../../__fixtures__/entities/01_reportedResults";

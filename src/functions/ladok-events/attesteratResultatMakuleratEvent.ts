@@ -1,6 +1,7 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
-import { Database, ServiceBus, isValidEvent } from "../utils";
+import { isValidEvent } from "../utils";
+import { Database } from "../db";
 
 export type TAttesteratResultatMakuleratEvent = {
   Beslut: {
@@ -22,7 +23,7 @@ export type TAttesteratResultatMakuleratEvent = {
   EventContext: TLadokEventContext;
 };
 
-export async function handler(
+export default async function handler(
   message: TAttesteratResultatMakuleratEvent,
   context: InvocationContext,
   db: Database,
@@ -37,10 +38,3 @@ export async function handler(
 
   context.log(`AttesteratResultatMakuleratEvent: `);
 }
-
-export default {
-  handler: ServiceBus<TAttesteratResultatMakuleratEvent>(handler),
-  // input binding doesn't support cosmos document store yet
-  // extraInputs: [cosmosInput],
-  // extraOutputs: [cosmosOutput],
-};

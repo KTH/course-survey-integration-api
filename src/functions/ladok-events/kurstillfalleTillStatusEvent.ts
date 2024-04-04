@@ -1,6 +1,7 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext, TLadokAttributvarde } from "./types";
-import { Database, ServiceBus, isValidEvent } from "../utils";
+import { isValidEvent } from "../utils";
+import { Database } from "../db";
 import { TCourseRoundEntity } from "../interface";
 
 export type TKurstillfalleTillStatusEvent = {
@@ -60,7 +61,7 @@ export type TKurstillfalleTillStatusEvent = {
   }[];
 };
 
-export async function handler(
+export default async function handler(
   message: TKurstillfalleTillStatusEvent,
   context: InvocationContext,
   db: Database,
@@ -97,9 +98,3 @@ export async function handler(
     await db.close();
   }
 }
-
-export default {
-  handler: ServiceBus<TKurstillfalleTillStatusEvent>(handler),
-  extraInputs: undefined,
-  extraOutputs: undefined,
-};

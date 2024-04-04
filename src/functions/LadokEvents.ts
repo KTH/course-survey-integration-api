@@ -1,11 +1,12 @@
 import { app } from "@azure/functions";
-import kurstillfalleTillStatusEvent from "./ladok-events/kurstillfalleTillStatusEvent";
-import modulTillStatusEvent from "./ladok-events/modulTillStatusEvent";
-import paborjadUtbildningEvent from "./ladok-events/paborjatUtbildningstillfalleEvent";
-import registreringEvent from "./ladok-events/registreringEvent";
-import resultatPaHelKursAttesteratEvent from "./ladok-events/resultatPaHelKursAttesteratEvent";
-import resultatPaModulAttesteratEvent from "./ladok-events/resultatPaModulAttesteratEvent";
-import attesteratResultatMakuleratEvent from "./ladok-events/attesteratResultatMakuleratEvent";
+import kurstillfalleTillStatusEvent, { TKurstillfalleTillStatusEvent } from "./ladok-events/kurstillfalleTillStatusEvent";
+import modulTillStatusEvent, { TModulTillStatusEvent } from "./ladok-events/modulTillStatusEvent";
+import paborjadUtbildningEvent, { TPaborjatUtbildningstillfalleEvent } from "./ladok-events/paborjatUtbildningstillfalleEvent";
+import registreringEvent, { TRegistreringEvent } from "./ladok-events/registreringEvent";
+import resultatPaHelKursAttesteratEvent, { TResultatPaHelKursAttesteratEvent } from "./ladok-events/resultatPaHelKursAttesteratEvent";
+import resultatPaModulAttesteratEvent, { TResultatPaModulAttesteratEvent } from "./ladok-events/resultatPaModulAttesteratEvent";
+import attesteratResultatMakuleratEvent, { TAttesteratResultatMakuleratEvent } from "./ladok-events/attesteratResultatMakuleratEvent";
+import { ServiceBus } from "./utils";
 
 const {
   LADOK3_FEED_SERVICE_BUS_TOPIC_NAME = "course-survey-integration-api-ref",
@@ -18,42 +19,42 @@ const sharedProps = {
 
 app.serviceBusTopic("Registrering", {
   ...sharedProps,
-  ...registreringEvent,
+  handler: ServiceBus<TRegistreringEvent>(registreringEvent),
   subscriptionName: "registrering",
 });
 
 app.serviceBusTopic("PaborjatUtbildningstillfalleEvent", {
   ...sharedProps,
-  ...paborjadUtbildningEvent,
+  handler: ServiceBus<TPaborjatUtbildningstillfalleEvent>(paborjadUtbildningEvent),
   subscriptionName: "paborjat-utbildningstillfalle",
 });
 
 app.serviceBusTopic("KurstillfälleTillStatus", {
   ...sharedProps,
-  ...kurstillfalleTillStatusEvent,
+  handler: ServiceBus<TKurstillfalleTillStatusEvent>(kurstillfalleTillStatusEvent),
   subscriptionName: "kurstillfalle-till-status",
 });
 
 app.serviceBusTopic("ModuleTillStatus", {
   ...sharedProps,
-  ...modulTillStatusEvent,
+  handler: ServiceBus<TModulTillStatusEvent>(modulTillStatusEvent),
   subscriptionName: "modul-till-status",
 });
 
 app.serviceBusTopic("ResultatPaModulAttesterat", {
   ...sharedProps,
-  ...resultatPaModulAttesteratEvent,
+  handler: ServiceBus<TResultatPaModulAttesteratEvent>(resultatPaModulAttesteratEvent),
   subscriptionName: "resultat-pa-modul-attesterat",
 });
 
 app.serviceBusTopic("ResultatPaHelKursAttesterat", {
   ...sharedProps,
-  ...resultatPaHelKursAttesteratEvent,
+  handler: ServiceBus<TResultatPaHelKursAttesteratEvent>(resultatPaHelKursAttesteratEvent),
   subscriptionName: "resultat-pa-hel-kurs-attesterat",
 });
 
 // app.serviceBusTopic('AttesteratResultatMakulerat', {
 //   ...sharedProps,
-//   ...attesteratResultatMakuleratEvent,
+//   handler: ServiceBus<TAttesteratResultatMakuleratEvent>(attesteratResultatMakuleratEvent),
 //   subscriptionName: 'csia-attesterat-resultat-makulerat',
 // });

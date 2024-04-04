@@ -1,4 +1,4 @@
-import { Database, DbCollectionName } from "../../src/functions/utils";
+import { Database, DbCollectionName } from "../../src/functions/db";
 
 type TQuery = {
   query: string;

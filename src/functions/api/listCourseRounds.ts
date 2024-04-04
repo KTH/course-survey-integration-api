@@ -8,7 +8,7 @@ import {
   TCourseRoundEntity,
   TProgramRound,
 } from "../interface";
-import { Database } from "../utils";
+import { Database } from "../db";
 import { startTermFromArchivingCode } from "../ladok-events/utils";
 
 export default async function handler<T extends APICourseRoundList>(
