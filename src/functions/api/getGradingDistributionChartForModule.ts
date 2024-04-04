@@ -7,7 +7,7 @@ import { Blob } from "buffer";
 import { ChartJSNodeCanvas } from "chartjs-node-canvas";
 import { ChartTypeRegistry } from "chart.js";
 import { APIModuleGradingDistributionChart, APIModuleGradingDistributionChartParams, TCourseRoundEntity, TCourseRoundModuleEntity, TReportedResultEntity } from "../interface";
-import { Database } from "../utils";
+import { Database } from "../db";
 
 const width = 600; //px
 const height = 400; //px

@@ -1,7 +1,7 @@
 import event from "../../__fixtures__/events/01_utbildningsinformation.KurstillfalleTillStatusEvent_1.json";
-import { handler } from "../../src/functions/ladok-events/kurstillfalleTillStatusEvent";
-import { MockContext } from "../../__tests__/LadokEvents/utils/mockContext";
-import { MockDatabase } from "../../__tests__/LadokEvents/utils/mockDatabase";
+import handler from "../../src/functions/ladok-events/kurstillfalleTillStatusEvent";
+import { MockContext } from "../../__tests__/utils/mockContext";
+import { MockDatabase } from "../../__tests__/utils/mockDatabase";
 
 const DB_MOCK_INPUT = {
   CourseRound: {

@@ -1,7 +1,7 @@
 import event from "../../__fixtures__/events/03_resultat.AttesteratResultatMakuleratEvent.json";
-import { handler } from "../../src/functions/ladok-events/attesteratResultatMakuleratEvent";
-import { MockContext } from "../../__tests__/LadokEvents/utils/mockContext";
-import { MockDatabase } from "../../__tests__/LadokEvents/utils/mockDatabase";
+import handler from "../../src/functions/ladok-events/attesteratResultatMakuleratEvent";
+import { MockContext } from "../../__tests__/utils/mockContext";
+import { MockDatabase } from "../../__tests__/utils/mockDatabase";
 
 describe("AttesteratResultatMakuleratEvent", () => {
   test("can be executed", async () => {

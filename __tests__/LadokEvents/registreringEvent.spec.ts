@@ -1,7 +1,5 @@
 import event from "../../__fixtures__/events/01_studiedeltagande.RegistreringEvent_1.json";
-import appConfig, {
-  handler,
-} from "../../src/functions/ladok-events/registreringEvent";
+import handler from "../../src/functions/ladok-events/registreringEvent";
 import { MockContext } from "../utils/mockContext";
 import { MockDatabase } from "../utils/mockDatabase";
 import { UgIntegrationMock } from "ug-integration/src/indexMock";
@@ -17,13 +15,13 @@ UgIntegrationMock.getUgUserByLadokId("bbcce853-4df3-11e8-a562-6ec76bb54b9f", {
 describe("RegistreringEvent", () => {
   test("can be executed", async () => {
     const mockDb = new MockDatabase();
-    const mockContext = new MockContext(event.userProps, appConfig);
+    const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);
   });
 
   test("logs invocation", async () => {
     const mockDb = new MockDatabase();
-    const mockContext = new MockContext(event.userProps, appConfig);
+    const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);
 
     expect(mockContext.log.mock.calls.length).toBe(1);
@@ -34,7 +32,7 @@ describe("RegistreringEvent", () => {
 
   test.skip("fetches student data from UG", async () => {
     const mockDb = new MockDatabase();
-    const mockContext = new MockContext(event.userProps, appConfig);
+    const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);
     // TODO: We meed to mock the UG REST API
     expect(mockDb._result).toMatchSnapshot();
@@ -45,7 +43,7 @@ describe("RegistreringEvent", () => {
     const mockDb = new MockDatabase({
       StudentParticipation: studentParticipation1,
     });
-    const mockContext = new MockContext(event.userProps, appConfig);
+    const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);
 
     expect(mockDb._result).toMatchSnapshot();

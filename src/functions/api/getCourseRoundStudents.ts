@@ -4,7 +4,7 @@ import {
   InvocationContext,
 } from "@azure/functions";
 import { APICourseRoundStudentList, APICourseRoundStudentListParams, TCourseRoundEntity, TStudentParticipationEntity } from "../interface";
-import { Database } from "../utils";
+import { Database } from "../db";
 
 export default async function handler<T extends APICourseRoundStudentList>(
   request: HttpRequest,

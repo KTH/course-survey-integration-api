@@ -1,6 +1,7 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
-import { Database, ServiceBus, isValidEvent } from "../utils";
+import { isValidEvent } from "../utils";
+import { Database } from "../db";
 import { TReportedResultEntity } from "../interface";
 import { hashStudentId } from "./utils";
 
@@ -29,7 +30,7 @@ export type TResultatPaHelKursAttesteratEvent = {
   UtbildningsinstansUID: string; // "a4565646-b3b8-11ee-bf6a-e2af0a9345af"
 };
 
-export async function handler(
+export default async function handler(
   message: TResultatPaHelKursAttesteratEvent,
   context: InvocationContext,
   db: Database,
@@ -76,8 +77,3 @@ export async function handler(
   await db.close();
 }
 
-export default {
-  handler: ServiceBus<TResultatPaHelKursAttesteratEvent>(handler),
-  extraInputs: undefined,
-  extraOutputs: undefined,
-};

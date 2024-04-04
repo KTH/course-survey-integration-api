@@ -1,6 +1,7 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokAttributvarde, TLadokEventContext } from "./types";
-import { Database, ServiceBus, isValidEvent } from "../utils";
+import { isValidEvent } from "../utils";
+import { Database } from "../db";
 import { TCourseRoundEntity, TCourseRoundModuleEntity } from "../interface";
 import { getGradingScheme } from "ladok-integration";
 
@@ -94,7 +95,7 @@ function convertBetygsskalaToGradingScheme(id: number): string[] {
   return gradingScheme.grades.map((grade) => grade.code);
 }
 
-export async function handler(
+export default async function handler(
   message: TModulTillStatusEvent,
   context: InvocationContext,
   db: Database,
@@ -161,9 +162,3 @@ export async function handler(
     await db.close();
   }
 }
-
-export default {
-  handler: ServiceBus<TModulTillStatusEvent>(handler),
-  extraInputs: undefined,
-  extraOutputs: undefined,
-};

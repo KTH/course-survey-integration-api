@@ -1,6 +1,6 @@
 import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
-import { ServiceBus, Database } from "../utils";
+import { Database } from "../db";
 import { getUgUserByLadokId } from "ug-integration";
 import { strict as assert } from "node:assert";
 
@@ -41,7 +41,7 @@ export type TRegistreringEvent = {
   UtbildningsinstansUID: string; // "e51b9585-9501-11ee-a0ce-a9a57d284dbd"
 };
 
-export async function handler(
+export default async function handler(
   message: TRegistreringEvent,
   context: InvocationContext,
   db: Database,
@@ -98,10 +98,3 @@ export async function handler(
   await db.insert(doc, "StudentParticipation");
   await db.close();
 }
-
-export default {
-  handler: ServiceBus<TRegistreringEvent>(handler),
-  // input binding doesn't support cosmos document store yet
-  // extraInputs: [cosmosInput],
-  // extraOutputs: [cosmosOutput],
-};

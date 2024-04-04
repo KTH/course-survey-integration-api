@@ -7,7 +7,8 @@ import {
   getUgSchool,
   getUgUser,
 } from "ug-integration";
-import { ServiceBus, isValidEvent, Database } from "../utils";
+import { isValidEvent } from "../utils";
+import { Database } from "../db";
 import { TCourseRound, TCourseRoundEntity } from "../interface";
 import { getCourseInformation } from "kopps-integration";
 import { getCourseRoundInformation } from "ladok-integration";
@@ -30,7 +31,7 @@ export type TPaborjatUtbildningstillfalleEvent = {
   EventContext: TLadokEventContext;
 };
 
-export async function handler(
+export default async function handler(
   message: TPaborjatUtbildningstillfalleEvent,
   context: InvocationContext,
   db: Database,
@@ -192,11 +193,3 @@ export async function handler(
   await db.insert(doc, "CourseRound");
   await db.close();
 }
-
-export default {
-  handler: ServiceBus<TPaborjatUtbildningstillfalleEvent>(handler),
-  // input binding doesn't support cosmos document store yet
-  // extraInputs: [cosmosInput],
-  // extraOutputs: [cosmosOutput],
-};
-
