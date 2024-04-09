@@ -7,6 +7,10 @@ const {
 
 if (IS_PROD && !COSMOSDB_CONNECTION_STRING)
   throw new Error("Missing env var COSMOS_DB_CONNECTION_STRING");
+
+const dbConnectionUrl = new URL(COSMOSDB_CONNECTION_STRING);
+const COSMOSDB_NAME = process.env.COSMOSDB_NAME ?? "test";
+dbConnectionUrl.pathname = `/${COSMOSDB_NAME}`;
   
 // const DB_NAME = "ladok3";
 // const DB_QUEUE_NAME = "Ladok3FeedEvent";
@@ -61,7 +65,7 @@ export class Database {
 
   async connect(): Promise<void> {
     if (this._client) return;
-    const mongoClient = new MongoClient(COSMOSDB_CONNECTION_STRING!);
+    const mongoClient = new MongoClient(dbConnectionUrl.href);
     this._client = await mongoClient.connect();
   }
   async close(): Promise<void> {
