@@ -6,5 +6,6 @@
   "debug.internalConsoleOptions": "neverOpen",
   "azureFunctions.projectLanguageModel": 4,
   "azureFunctions.projectSubpath": "packages/functions-app",
-  "azureFunctions.preDeployTask": "npm prune (functions)"
+  "azureFunctions.preDeployTask": "npm prune (functions)",
+  "nixEnvSelector.nixFile": "${workspaceFolder}/shell.nix"
 }
