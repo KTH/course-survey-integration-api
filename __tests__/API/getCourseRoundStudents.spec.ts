@@ -35,4 +35,11 @@ describe("/api/course-rounds/{id}/students", () => {
     const outp = await handler(mockRequest, mockContext, mockDb);
     expect(outp).toMatchSnapshot();
   });
+  test("sorts results for stable pagination results", async () => {
+    const mockDb = new MockDatabase(mockDbData);
+    const mockContext = new MockContext();
+    const mockRequest = new MockRequest({ params: { id: "01-1" } });
+    const outp = await handler(mockRequest, mockContext, mockDb);
+    expect(mockDb._queryOptions).toMatchSnapshot();
+  });
 });

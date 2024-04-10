@@ -1,4 +1,4 @@
-import { Database, DbCollectionName } from "../../src/functions/db";
+import { Database, DbCollectionName, TQueryOptions } from "../../src/functions/db";
 
 type TQuery = {
   query: string;
@@ -9,6 +9,7 @@ export class MockDatabase implements Database {
   _result: Record<DbCollectionName, any>;
   _mockData: Record<DbCollectionName, any>;
   _client: any;
+  _queryOptions: (TQueryOptions | undefined)[];
 
   // I would have prefered narrowing keys to DbCollectionName but
   // the syntax Record<DbCollectionName, any> requires all keys
@@ -19,6 +20,7 @@ export class MockDatabase implements Database {
   constructor(mockData: Record<string, any> | undefined = undefined) {
     this._mockData = mockData ?? ({} as Record<DbCollectionName, TQuery | any>);
     this._result = {} as Record<DbCollectionName, any>;
+    this._queryOptions = [ ]
   }
 
   async connect(): Promise<void> {
@@ -39,7 +41,9 @@ export class MockDatabase implements Database {
     propName: string,
     value: string,
     collectionName: DbCollectionName,
+    options?: TQueryOptions
   ): Promise<any[]> {
+    this._queryOptions.push(options);
     const data = this._mockData[collectionName];
     const outp = Array.isArray(data) ? data : [data];
     
@@ -57,7 +61,12 @@ export class MockDatabase implements Database {
    * @param collectionName
    * @returns
    */
-  async query(query: any, collectionName: DbCollectionName): Promise<any[]> {
+  async query(
+    query: any,
+    collectionName: DbCollectionName,
+    options?: TQueryOptions,
+  ): Promise<any[]> {
+    this._queryOptions.push(options);
     const data = this._mockData[collectionName];
     const outp = Array.isArray(data) ? data : [data];
     return outp
