@@ -46,3 +46,15 @@ exports[`/api/course-rounds/{id}/students can be executed 1`] = `
   "status": 200,
 }
 `;
+
+exports[`/api/course-rounds/{id}/students sorts results for stable pagination results 1`] = `
+[
+  undefined,
+  {
+    "limit": 30,
+    "offset": 0,
+    "sortBy": "_id",
+    "sortOrder": "asc",
+  },
+]
+`;

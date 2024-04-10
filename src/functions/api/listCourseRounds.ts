@@ -46,7 +46,9 @@ export default async function handler<T extends APICourseRoundList>(
       "endDate",
       { $lt: selectionEndDate, $gt: selectionStartDate },
       "CourseRound",
-      { offset, limit },
+      // Paging requires stable sort order, otherwise we may
+      // skip or duplicate items
+      { offset, limit, sortBy: "_id", sortOrder: "asc"},
     );
 
     // Add programmes to list of course rounds

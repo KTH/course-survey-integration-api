@@ -1,4 +1,4 @@
-import { MongoClient } from "mongodb";
+import { FindOptions, MongoClient } from "mongodb";
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const {
@@ -58,6 +58,8 @@ export type DbCollectionName = "StudentParticipation" |
 export type TQueryOptions = {
   offset?: number;
   limit?: number;
+  sortBy?: "_id";
+  sortOrder?: "asc" | "desc";
 };
 
 export class Database {
@@ -90,9 +92,15 @@ export class Database {
     options?: TQueryOptions
   ): Promise<T[]> {
     await this.connect();
-    const opts = options !== undefined
+
+    // Query options and sorting
+    const opts: FindOptions<Document> | undefined = options !== undefined
       ? { skip: options.offset, limit: options.limit }
-      : undefined;
+      : {};
+    if (options?.sortBy) {
+      opts["sort"] = { [options.sortBy]: options.sortOrder === "asc" ? 1 : -1 };
+    }
+
     const collection = this._client!.db().collection(collectionName);
     const docs = await collection
       .find({ [propName]: value }, opts)
@@ -106,9 +114,15 @@ export class Database {
     options?: TQueryOptions
   ): Promise<T[]> {
     await this.connect();
-    const opts = options !== undefined
+
+    // Query options and sorting
+    const opts: FindOptions<Document> | undefined = options !== undefined
       ? { skip: options.offset, limit: options.limit }
-      : undefined;
+      : {};
+    if (options?.sortBy) {
+      opts["sort"] = { [options.sortBy]: options.sortOrder === "asc" ? 1 : -1 };
+    }
+
     const collection = this._client!.db().collection(collectionName);
     const docs = await collection.find(query, opts).toArray();
     return docs as T[];

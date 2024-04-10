@@ -45,7 +45,9 @@ export default async function handler<T extends APICourseRoundStudentList>(
       "ladokCourseRoundId",
       ladokCourseRoundId,
       "StudentParticipation",
-      { offset, limit },
+      // Paging requires stable sort order, otherwise we may
+      // skip or duplicate items
+      { offset, limit, sortBy: "_id", sortOrder: "asc"},
     );
 
     outp = students.map(({
