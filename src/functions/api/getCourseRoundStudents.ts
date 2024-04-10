@@ -14,7 +14,7 @@ export default async function handler<T extends APICourseRoundStudentList>(
   let offset = parseInt(request.query.get("offset") ?? "0");
   if (offset < 0) offset = 0;
   let limit = parseInt(request.query.get("limit") ?? "30");
-  if (limit > 30) limit = 30;
+  if (limit > 100) limit = 100;
 
   const { id } = request.params as APICourseRoundStudentListParams["path"];
 

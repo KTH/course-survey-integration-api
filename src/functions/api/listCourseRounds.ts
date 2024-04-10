@@ -29,7 +29,7 @@ export default async function handler<T extends APICourseRoundList>(
   if (offset < 0) offset = 0;
   let limit = parseInt(request.query.get("limit") ?? "30");
   if (limit < 1) limit = 1;
-  if (limit > 30) limit = 30;
+  if (limit > 100) limit = 100;
 
   let outp: APICourseRoundList = [];
   let total;
