@@ -12,7 +12,9 @@ in pkgs.mkShell rec {
     azure-functions-core-tools
     nodejs_20
     openssl
-    
+  ]
+  ++
+  lib.optionals stdenv.isDarwin [
     # node-canvas required by chartjs fails on darwin due to missing CoreText
     pkgs.darwin.apple_sdk.frameworks.CoreText
   ];
