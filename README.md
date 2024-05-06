@@ -112,7 +112,7 @@ This function listens to the LADOK Atom-feed for messages to create:
 - program rounds
 - various course events
 
-The base entity is course round which is stored in a database (MongoDB). The course round is then decorated with data according to the OpenAPI-specialization (course-survey-integration-api.spec.yml).
+The base entity is course round which is stored in a database (MongoDB). The course round is then decorated with data according to the [OpenAPI-specification](./openapi/course-survey-integration-api.spec.yml).
 
 - Look at https://github.com/KTH/kopps-ladok3-events
 

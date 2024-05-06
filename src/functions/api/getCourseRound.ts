@@ -59,7 +59,9 @@ export default async function handler<T extends APICourseRound>(
 
     const programs = studentParticipations.reduce(
       (acc: Record<string, TProgramRound>, res: any) => {
-        acc[res.program.code] ??= res.program;
+        if (res.program) {
+          acc[res.program.code] ??= res.program;
+        }
         return acc;
       },
       {},
