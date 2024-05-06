@@ -240,8 +240,8 @@ components:
         - name
         - courseCode
         - courseInstanceCode
-        - courseInstanceArchivingCode
-        - courseInstanceArchivingStartTerm
+        # - courseInstanceArchivingCode -- this appears not to be provided for all courses
+        # - courseInstanceArchivingStartTerm -- ...which means this can't be determined
         - language
         - canceled
         - endDate

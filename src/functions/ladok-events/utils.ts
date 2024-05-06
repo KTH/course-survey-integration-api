@@ -101,7 +101,7 @@ export function convertToCourseInstanceArchivingCode(
  */
 export function startTermFromArchivingCode(archivingCode: string): string {
   // The archiving code is formatted as: "SF1625 HT23 51210"
-  const [ _courseCode, startTerm, _courseInstanceCode ] = archivingCode.split(" ");
+  const [ _courseCode, startTerm, _courseInstanceCode ] = archivingCode?.split(" ") ?? [];
   return startTerm;
 }
 
