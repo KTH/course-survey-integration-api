@@ -145,12 +145,15 @@ export type TStudentParticipationEntity = {
   _id?: string | ObjectId; // Used by document store
   id: string; // Required for DB-layer to work
   // CourseRound.ladokCourseRoundId (UtbildningsinstansUID):
-  parentId: string; // TODO: Consider removing, use ladokCoursRoundId instead
-  hashedStudentId: string; // StudentUID hashed
+  ladokStudentId: string;
+  ladokCourseId: string;
   ladokCourseRoundId: TStudentParticipation["ladokCourseRoundId"];
+  
   canvasSisId: TStudentParticipation["canvasSisId"];
   name: TStudentParticipation["name"];
   email: TStudentParticipation["email"];
-  roles: TStudentParticipation["roles"];
-  program: TProgramRoundEntity;
+  roles: TStudentParticipation["roles"]; // Accutally only "student"
+  locations: string[];
+
+  programRound: TProgramRoundEntity;
 };
