@@ -63,6 +63,13 @@ export type APIModuleGradingDistributionChartParams = OpenApiModuleGradingDistri
 /**
  * Domain entities stored in DB
  */
+export type TBeslutMetaData = {
+  Anteckning: string; // "Det bidde fel i systemet. Jag har makulerat beslutet.",
+  BeslutUID: string; // "34b1ff17-603e-11e9-9dcc-b1e66e1540b0",
+  Beslutsdatum: string; // "2024-01-16",
+  Beslutsfattare: string; // "Emil Stenberg (IT)",
+  BeslutsfattareUID: string; // "34b1ff17-603e-11e9-9dcc-b1e66e1540b0"
+}
 
 // This is an embedded object
 export type TCourseRoundModuleEntity = {
@@ -120,17 +127,18 @@ export type TCourseRoundEntity = {
 export type TReportedResultEntity = {
   _id?: string | ObjectId; // Used by document store
   id: string; // Required for DB-layer to work
-  parentId: string; // This can belong to a module (UtbildningsinstansId = moduleRoundId) or a course (UtbildningsinstansId = courseId).
-  ladokCourseRoundId: string; // CourseRound.ladokCourseRoundId (UtbildningstillfalleUID)
-  hashedStudentId: string; // StudentUID hashed
-  decision: string; // BeslutUID
-  result: string; // Calculated from BetygsgradID and BetygsskalaID
+  parentId?: string; // This can belong to a module (UtbildningsinstansId = moduleRoundId) or a course (UtbildningsinstansId = courseId).
+  ladokCourseRoundId?: string; // CourseRound.ladokCourseRoundId (UtbildningstillfalleUID)
+  hashedStudentId?: string; // StudentUID hashed
+  decision?: string; // BeslutUID
+  result?: string; // Calculated from BetygsgradID and BetygsskalaID
   metaData: {
-    HandelseUID: string;
-    BetygsgradID: number;
-    BetygsskalaID: number;
+    HandelseUID?: string;
+    BetygsgradID?: number;
+    BetygsskalaID?: number;
     ResultatUID: string;
   };
+  retraction?: TBeslutMetaData;
 };
 
 export type TStudentParticipationEntity = {

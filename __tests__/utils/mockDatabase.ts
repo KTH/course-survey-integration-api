@@ -103,6 +103,27 @@ export class MockDatabase implements Database {
         ...partial,
       };
     } else {
+      // Not found!
+      // this._result[collectionName] = { ...partial };
+    }
+  }
+
+  async upsert(
+    id: string,
+    partial: any,
+    collectionName: DbCollectionName,
+  ): Promise<void> {
+    if (id === this._result[collectionName]?.id) {
+      this._result[collectionName] = {
+        ...this._result[collectionName],
+        ...partial,
+      };
+    } else if (id === this._mockData[collectionName]?.id) {
+      this._result[collectionName] = {
+        ...this._mockData[collectionName],
+        ...partial,
+      };
+    } else {
       this._result[collectionName] = { ...partial };
     }
   }

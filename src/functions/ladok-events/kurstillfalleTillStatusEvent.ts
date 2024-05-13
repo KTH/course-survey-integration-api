@@ -4,6 +4,10 @@ import { isValidEvent } from "../utils";
 import { Database } from "../db";
 import { TCourseRoundEntity } from "../interface";
 
+enum KURSTILLFALLE_STATUS {
+  canceled = -1,
+}
+
 export type TKurstillfalleTillStatusEvent = {
   HandelseUID: string; // "7c2e425f-9507-11ee-a0ce-a9a57d284dbd",
   EventContext: TLadokEventContext;
@@ -89,11 +93,26 @@ export default async function handler(
     // 2. Update status
     // 3. Persist in DB
 
-    await db.update<TCourseRoundEntity>(
-      courseRound.id!,
-      { canceled: status === -1 },
-      "CourseRound",
-    );
+    if (courseRound) {
+      await db.upsert<TCourseRoundEntity>(
+        courseRound.id!,
+        { canceled: status === KURSTILLFALLE_STATUS.canceled },
+        "CourseRound",
+      );
+    } else {
+      // Should we store a partial CourseRound? In which case we need to store datetime of the event
+      // so we can figure out if we should merge or overwrite the partial CourseRound with a full CourseRound
+      // if it arrives later.
+
+      // // Store a partial
+      // await db.insert<any>(
+      //   {
+      //     id: utbildningstillfalleUid,
+      //     canceled: status === KURSTILLFALLE_STATUS.canceled,
+      //   },
+      //   "CourseRound",
+      // );
+    }
   } finally {
     await db.close();
   }

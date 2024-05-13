@@ -11,7 +11,8 @@ export default async function handler(
   const { userProperties } = triggerMetadata as any;
 
   try {
-    await db.insert<any>(
+    await db.upsert<any>(
+      invocationId,
       {
         id: invocationId,
         ladok3EventType: userProperties?.ladok3EventType,

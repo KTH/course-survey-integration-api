@@ -2,9 +2,11 @@ import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { isValidEvent } from "../utils";
 import { Database } from "../db";
+import { TReportedResultEntity } from "../interface";
 
 export type TAttesteratResultatMakuleratEvent = {
   Beslut: {
+    Anteckning: string; // "Makulerat av någon anledning.",
     BeslutUID: string; // "34b1ff17-603e-11e9-9dcc-b1e66e1540b0",
     Beslutsdatum: string; // "2024-01-18",
     Beslutsfattare: string; // "Emil Stenberg (IT)",
@@ -33,8 +35,22 @@ export default async function handler(
       "AttesteratResultatMakuleratEvent",
       context?.triggerMetadata?.userProperties,
     )
-  )
-    return;
+  ) return;
 
-  context.log(`AttesteratResultatMakuleratEvent: `);
+  try {
+    const result = await db.queryByProperty("metaData.ResultatUID", message.ResultatUID, "ReportedResult");
+    if (result.length === 0) {
+      // QUESTION: Should we store this in case messages come out of order?
+      context.log(`Resultat with ResultatUID ${message.ResultatUID} not found`);
+      return;
+    }
+  
+    const reportedResult = result[0];
+  
+    await db.upsert<TReportedResultEntity>(reportedResult.id, { retraction: message.Beslut }, "ReportedResult");
+  } finally {
+    await db.close();
+  }
+
+  // context.log(`AttesteratResultatMakuleratEvent: `);
 }

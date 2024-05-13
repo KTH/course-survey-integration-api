@@ -157,6 +157,16 @@ export class Database {
     const collection = this._client!.db().collection(collectionName);
     await collection.updateOne({ id }, { $set: partial });
   }
+
+  async upsert<T extends TBaseEntity>(
+    id: string,
+    partial: Partial<T>,
+    collectionName: DbCollectionName
+  ): Promise<void> {
+    await this.connect();
+    const collection = this._client!.db().collection(collectionName);
+    await collection.updateOne({ id }, { $set: { ...partial, id } }, { upsert: true });
+  }
 }
 type TBaseEntity = {
   id: string;

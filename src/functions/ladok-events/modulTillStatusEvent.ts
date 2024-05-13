@@ -78,7 +78,9 @@ export type TModulTillStatusEvent = {
   };
 };
 
-const STATUS_ACTIVE = 2;
+enum MODUL_STATUS {
+  active = 2,
+}
 
 function convertBenamningToName(
   inp: TModulTillStatusEvent["Benamningar"]["Benamning"],
@@ -117,13 +119,16 @@ export default async function handler(
   );
 
   try {
-    const courseRound: TCourseRoundEntity = await db.fetchById(
+    // If we don't have the course round, we can't update the module
+    // so we create a thin dummy
+    const courseRound = await db.fetchById<TCourseRoundEntity>(
       ladokCourseRoundId,
       "CourseRound",
-    );
+    ) ?? { id: ladokCourseRoundId, modules: [] };
+
     const language = courseRound.language;
     let updatedModules;
-    if (status === STATUS_ACTIVE) {
+    if (status === MODUL_STATUS.active) {
       // Add if not exists
       if (
         !courseRound.modules?.find(
@@ -132,7 +137,7 @@ export default async function handler(
       ) {
         const newModule: TCourseRoundModuleEntity = {
           moduleRoundId: moduleId, //
-          code: message.Utbildningskod,
+          code: moduleCode,
           name:
             convertBenamningToName(message.Benamningar.Benamning, language) ??
             "",
@@ -150,9 +155,9 @@ export default async function handler(
         (module: TCourseRoundModuleEntity) => module.code === moduleCode,
       );
     }
-    await db.update<TCourseRoundEntity>(
+    await db.upsert<TCourseRoundEntity>(
       courseRound.id!,
-      { modules: updatedModules },
+      { modules: updatedModules, },
       "CourseRound",
     );
     // 1. Fetch CourseRound from DB

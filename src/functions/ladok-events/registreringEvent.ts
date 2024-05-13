@@ -10,7 +10,7 @@ import {
 } from "ladok-integration";
 
 /** Information about student participation as stored in the Database */
-export type DatabaseStudentParticipation = {
+export type TDatabaseStudentParticipation = {
   id: string;
   ladokStudentId: string;
   ladokCourseId: string;
@@ -55,46 +55,49 @@ export default async function handler(
   const ladokStudentId = message.StudentUID;
   context.log(`RegistreringEvent: ${ladokCourseRoundId} ${ladokStudentId}`);
 
-  const id = `${ladokStudentId}.${ladokCourseRoundId}`;
-  const studentParticipation: DatabaseStudentParticipation = await db.fetchById(
-    id,
-    "StudentParticipation",
-  );
+  try {
+    const id = `${ladokStudentId}.${ladokCourseRoundId}`;
+    const studentParticipation: TDatabaseStudentParticipation = await db.fetchById(
+      id,
+      "StudentParticipation",
+    );
 
-  if (studentParticipation) {
-    // StudentParticipation exists
+    if (studentParticipation) {
+      // StudentParticipation exists
+      await db.close();
+      return;
+    }
+
+    const ugUser = await getUgUserByLadokId(ladokStudentId);
+    // const ugUser = await getUgUser(ladokStudentId);
+    assert(ugUser !== undefined, "");
+
+    const programParticipation = await getProgramParticipation(
+      ladokStudentId,
+      ladokCourseRoundId,
+    );
+
+    // 1. Create a StudentParticipation object
+    const doc: TDatabaseStudentParticipation = {
+      id,
+      ladokStudentId,
+      ladokCourseId,
+      ladokCourseRoundId,
+      /** @description We currently use kthUserId as canvasSisId */
+      canvasSisId: ugUser.kthid,
+      /** @description Full Name of user */
+      name: `${ugUser.givenName} ${ugUser.surname}`,
+      /** Format: email */
+      email: ugUser?.email,
+      roles: ["student"],
+      locations: [],
+      programRound: programParticipation,
+    };
+
+    // 2. Get more student info from UG REST API
+    // 3. Persist in DB
+    await db.upsert<TDatabaseStudentParticipation>(doc.id, doc, "StudentParticipation");
+  } finally {
     await db.close();
-    return;
   }
-
-  const ugUser = await getUgUserByLadokId(ladokStudentId);
-  // const ugUser = await getUgUser(ladokStudentId);
-  assert(ugUser !== undefined, "");
-
-  const programParticipation = await getProgramParticipation(
-    ladokStudentId,
-    ladokCourseRoundId,
-  );
-
-  // 1. Create a StudentParticipation object
-  const doc: DatabaseStudentParticipation = {
-    id,
-    ladokStudentId,
-    ladokCourseId,
-    ladokCourseRoundId,
-    /** @description We currently use kthUserId as canvasSisId */
-    canvasSisId: ugUser.kthid,
-    /** @description Full Name of user */
-    name: `${ugUser.givenName} ${ugUser.surname}`,
-    /** Format: email */
-    email: ugUser?.email,
-    roles: ["student"],
-    locations: [],
-    programRound: programParticipation,
-  };
-
-  // 2. Get more student info from UG REST API
-  // 3. Persist in DB
-  await db.insert(doc, "StudentParticipation");
-  await db.close();
 }
