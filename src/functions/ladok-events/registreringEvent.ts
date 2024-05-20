@@ -21,7 +21,7 @@ export type TDatabaseStudentParticipation = {
   email: string;
   roles: ["student"];
   locations: string[];
-  programRound: ProgramParticipation;
+  program: ProgramParticipation;
 };
 
 export type TRegistreringEvent = {
@@ -63,7 +63,10 @@ export default async function handler(
     );
 
     if (studentParticipation) {
-      // StudentParticipation exists
+      // StudentParticipation exists and we don't update student participations so we assume
+      // that info is correct
+      // TODO: Consider logging a warning
+      context.warn(`StudentParticipation ${id} already exists. Skipping! [HandelseUID ${message.HandelseUID}]`)
       await db.close();
       return;
     }
@@ -91,12 +94,12 @@ export default async function handler(
       email: ugUser?.email,
       roles: ["student"],
       locations: [],
-      programRound: programParticipation,
+      program: programParticipation,
     };
 
     // 2. Get more student info from UG REST API
     // 3. Persist in DB
-    await db.upsert<TDatabaseStudentParticipation>(doc.id, doc, "StudentParticipation");
+    await db.insert<TDatabaseStudentParticipation>(doc, "StudentParticipation");
   } finally {
     await db.close();
   }

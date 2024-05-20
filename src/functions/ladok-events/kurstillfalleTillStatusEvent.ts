@@ -85,34 +85,11 @@ export default async function handler(
   );
 
   try {
-    const courseRound = await db.fetchById(
+    await db.upsert<TCourseRoundEntity>(
       utbildningstillfalleUid,
+      { canceled: status === KURSTILLFALLE_STATUS.canceled },
       "CourseRound",
     );
-    // 1. Fetch CourseRound from DB
-    // 2. Update status
-    // 3. Persist in DB
-
-    if (courseRound) {
-      await db.upsert<TCourseRoundEntity>(
-        courseRound.id!,
-        { canceled: status === KURSTILLFALLE_STATUS.canceled },
-        "CourseRound",
-      );
-    } else {
-      // Should we store a partial CourseRound? In which case we need to store datetime of the event
-      // so we can figure out if we should merge or overwrite the partial CourseRound with a full CourseRound
-      // if it arrives later.
-
-      // // Store a partial
-      // await db.insert<any>(
-      //   {
-      //     id: utbildningstillfalleUid,
-      //     canceled: status === KURSTILLFALLE_STATUS.canceled,
-      //   },
-      //   "CourseRound",
-      // );
-    }
   } finally {
     await db.close();
   }

@@ -11,7 +11,7 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
     "ladokStudentId": "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
     "locations": [],
     "name": "Dummy User",
-    "programRound": undefined,
+    "program": undefined,
     "roles": [
       "student",
     ],

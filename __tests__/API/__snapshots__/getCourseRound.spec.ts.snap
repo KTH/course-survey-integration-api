@@ -58,6 +58,7 @@ exports[`/api/course-rounds/{id} can be executed 1`] = `
     "language": "sv",
     "modules": [
       {
+        "canceled": false,
         "code": "TEN1",
         "credits": "7.5 hp",
         "gradingDistribution": {

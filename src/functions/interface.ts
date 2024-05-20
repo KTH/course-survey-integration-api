@@ -75,6 +75,7 @@ export type TBeslutMetaData = {
 export type TCourseRoundModuleEntity = {
   moduleRoundId: string; // Used to match with credits (TReportedResultEntity)
   code: TCourseModule["code"];
+  canceled: boolean;
   name: TCourseModule["name"];
   credits: TCourseModule["credits"];
   gradingScheme: TCourseModule["gradingScheme"];
@@ -145,15 +146,16 @@ export type TStudentParticipationEntity = {
   _id?: string | ObjectId; // Used by document store
   id: string; // Required for DB-layer to work
   // CourseRound.ladokCourseRoundId (UtbildningsinstansUID):
-  ladokStudentId: string;
-  ladokCourseId: string;
+  hashedStudentId: string;
+  // ladokStudentId: string;
+  // ladokCourseId: string;
   ladokCourseRoundId: TStudentParticipation["ladokCourseRoundId"];
   
   canvasSisId: TStudentParticipation["canvasSisId"];
   name: TStudentParticipation["name"];
   email: TStudentParticipation["email"];
   roles: TStudentParticipation["roles"]; // Accutally only "student"
-  locations: string[];
+  // locations: string[];
 
-  programRound: TProgramRoundEntity;
+  program: TProgramRoundEntity;
 };

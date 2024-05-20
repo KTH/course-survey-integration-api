@@ -52,6 +52,7 @@ export function convertLadokModuleToCourseModule(
     _reportedResults: {},
     code: ladokModule.code,
     name: ladokModule.name?.[lang],
+    canceled: false,
     credits: ladokModule.credits,
     gradingScheme: Object.keys(gradingDistribution ?? {}),
     nrofReportedResults: 0, // TODO: Calculated field

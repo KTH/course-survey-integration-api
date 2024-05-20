@@ -58,6 +58,7 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
     "modules": [
       {
         "_reportedResults": {},
+        "canceled": false,
         "code": "F1",
         "credits": 7.5,
         "gradingDistribution": {
