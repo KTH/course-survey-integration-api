@@ -49,7 +49,7 @@ export default async function handler(
 
   // If we have applied message out of order, we might have a course round in the db
   const existingCourseRound = await db.fetchById<TCourseRoundEntity>(msgUtbildningstillfalleUid, "CourseRound");
-  
+
   // More common is that we have already processed a registration for this course
   // Since this message handler is the only one adding ladokCourseId to the object
   // we use that to determine if the course round exists.
@@ -68,14 +68,14 @@ export default async function handler(
     const ladokCourseRoundInfo = await getCourseRoundInformation(
       msgUtbildningstillfalleUid,
     );
-  
+
     const ladokCourseCode = ladokCourseRoundInfo.courseCode;
     const roundTerm = koppsInfo.round.startTerm;
     const ladokCourseYear = ladokCourseRoundInfo.startDate.slice(0, 4);
-  
+
     // Note: this uses the "old" round code format
     const roundCode = koppsInfo.round.code;
-  
+
     // TODO: Should we cache these values? For how long?
     // TODO: Use live data but during development we can use hardcoded values
     const courseResponsibleIds = await getUgCourseResponsible(
@@ -88,27 +88,27 @@ export default async function handler(
       roundTerm,
       roundCode,
     );
-  
+
     const examinersIds = await getUgCourseExaminers(ladokCourseCode);
-  
+
     // TODO: Should we cache these values? For how long?
     const courseResponsible = convertUgUsersToCourseUsers(
       await Promise.all(courseResponsibleIds.map(getUgUser)),
     );
-  
+
     const teachers = convertUgUsersToCourseUsers(
       await Promise.all(teachersIds.map(getUgUser)),
     );
-  
+
     const examiners = convertUgUsersToCourseUsers(
       await Promise.all(examinersIds.map(getUgUser)),
     );
-  
+
     const ladokSchoolCode = ladokCourseRoundInfo.organisation.code;
     const ladokInsitutionCode = ladokCourseRoundInfo.organisationUnit.code;
     const tmpUgSchool = await getUgSchool(ladokSchoolCode);
     const tmpUgInstitution = await getUgSchool(ladokInsitutionCode);
-  
+
     const ladokGradingDistribution =
       ladokCourseRoundInfo.gradingScheme?.grades?.reduce(
         (val: any, curr: any) => {
@@ -131,16 +131,16 @@ export default async function handler(
       const m = existingCourseRound?.modules.find(m => m.code === module.code);
       return m ? { ...module, canceled: m.canceled } : module;
     });
-  
+
     // TODO: Create entity types that are synced with the API response types
     const doc: TCourseRoundEntity = {
       // Required for DB-layer to work
       id: msgUtbildningstillfalleUid,
-  
+
       // Dummy data:
       language: dummyLanguage,
       canceled: existingCourseRound?.canceled ?? false,
-  
+
       // N
       periods: [
         {
@@ -148,23 +148,23 @@ export default async function handler(
           credits: `${ladokCourseRoundInfo?.credits} hp`,
         },
       ],
-  
+
       // Source event message:
       ladokCourseId: msgUtbildningsUid,
       ladokCourseRoundId: msgUtbildningstillfalleUid,
       canvasSisId: msgUtbildningstillfalleUid, // I deduced this by looking at the Event Relationship diagram, not yet verified in Canvas
-  
+
       // Source KOPPS API:
       name: koppsInfo?.course.name[dummyLanguage],
       courseGoal: koppsInfo?.syllabus.goals,
-  
+
       // Source UG:
       organization: convertUgSchoolToOrgEntity(
         tmpUgSchool,
         ladokSchoolCode,
         dummyLanguage,
       ),
-  
+
       institution: convertUgSchoolToOrgEntity(
         tmpUgInstitution,
         ladokInsitutionCode,
@@ -173,7 +173,7 @@ export default async function handler(
       courseResponsible: courseResponsible,
       courseExaminers: examiners,
       courseTeachers: teachers,
-  
+
       // Source LADOK REST API:
       _gradingScheme: Object.keys(ladokGradingDistribution ?? {}),
       courseCode: ladokCourseRoundInfo?.courseCode,

@@ -86,15 +86,16 @@ exports[`/api/course-rounds/{id} can be executed 1`] = `
         "period": "P1",
       },
     ],
-    "programs": {
-      "ARKIT": {
+    "programs": [
+      {
         "code": "ARKIT",
         "name": "Arkitektur",
-        "required": "obligatorisk",
+        "required": "Obligatorisk",
+        "specialization": undefined,
         "startTerm": "20221",
         "studyYear": 4,
       },
-    },
+    ],
     "totalRegisteredStudents": 2,
     "totalReportedResults": 2,
   },

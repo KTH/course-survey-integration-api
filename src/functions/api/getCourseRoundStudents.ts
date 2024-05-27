@@ -50,6 +50,8 @@ export default async function handler<T extends APICourseRoundStudentList>(
       { offset, limit, sortBy: "_id", sortOrder: "asc"},
     );
 
+    const lang = courseRound.language ?? "sv";
+
     outp = students.map(({
       id,
       ladokCourseRoundId,
@@ -59,6 +61,19 @@ export default async function handler<T extends APICourseRoundStudentList>(
       roles,
       program,
     }) => {
+      const transformedSpecialization = program?.specialization ? {
+        code: program.specialization['code'],
+        name: program.specialization['name']?.[lang],
+      } : undefined;
+
+      const transformedProgram = program ? {
+        code: program['code'],
+        startTerm: program['startTerm'],
+        name: program['name'][lang],
+        studyYear: program['studyYear'],
+        specialization: transformedSpecialization,
+        required: program['required'],
+      } : undefined;
       return {
         id,
         ladokCourseRoundId,
@@ -66,7 +81,7 @@ export default async function handler<T extends APICourseRoundStudentList>(
         name,
         email,
         roles,
-        program,
+        program: transformedProgram,
       }
     });
   } finally {

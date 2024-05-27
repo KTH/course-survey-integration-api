@@ -1,19 +1,14 @@
 import { ObjectId } from "mongodb";
 import { paths, components } from "../__generated__/_interface";
 import { Blob } from "buffer";
+import { CourseRequiredForProgram } from "ladok-integration";
 // # API Interface
 // To generate the _interface.ts file, run: `npm run generate-types`
 // in the root of the project.
 
 // ## API Components
 export type TCourseRoundPartial = components["schemas"]["CourseRoundPartial"];
-export type TCourseRound = components["schemas"]["CourseRound"] & {
-  /**
-   * Add each reported result using composite key to allow for updates.
-   * key: `TBD`
-   */
-  _gradingScheme: string[]; // Support to calculate grading distribution, currently not shown in report
-};
+export type TCourseRound = components["schemas"]["CourseRound"];
 export type TStudentParticipation =
   components["schemas"]["StudentParticipation"];
 export type TProgramRound = components["schemas"]["ProgramRound"];
@@ -85,10 +80,10 @@ export type TCourseRoundModuleEntity = {
 export type TProgramRoundEntity = {
   code: TProgramRound["code"];
   startTerm: TProgramRound["startTerm"];
-  name: TProgramRound["name"];
+  name: { sv: string, en: string };
   studyYear: TProgramRound["studyYear"];
-  specialization?: TProgramRound["specialization"];
-  required: TProgramRound["required"];
+  specialization?: { code: string, name?: { sv: string, en: string }};
+  required: CourseRequiredForProgram;
 };
 
 export type TCourseRoundEntity = {
@@ -146,16 +141,18 @@ export type TStudentParticipationEntity = {
   _id?: string | ObjectId; // Used by document store
   id: string; // Required for DB-layer to work
   // CourseRound.ladokCourseRoundId (UtbildningsinstansUID):
-  hashedStudentId: string;
-  // ladokStudentId: string;
-  // ladokCourseId: string;
+  ladokStudentId: string;
+  ladokCourseId: string;
   ladokCourseRoundId: TStudentParticipation["ladokCourseRoundId"];
   
   canvasSisId: TStudentParticipation["canvasSisId"];
   name: TStudentParticipation["name"];
   email: TStudentParticipation["email"];
   roles: TStudentParticipation["roles"]; // Accutally only "student"
-  // locations: string[];
+  // roles: ["student"];
 
-  program: TProgramRoundEntity;
+  locations: string[];
+  program?: TProgramRoundEntity;
+
+
 };

@@ -73,8 +73,11 @@ exports[`/api/course-rounds can be executed 1`] = `
       "programs": [
         {
           "code": "ARKIT",
-          "name": "Arkitektur",
-          "required": "obligatorisk",
+          "name": {
+            "en": "Arkitektur",
+            "sv": "Arkitektur",
+          },
+          "required": "O",
           "startTerm": "20221",
           "studyYear": 4,
         },
@@ -145,11 +148,17 @@ exports[`/api/course-rounds can be executed 1`] = `
       "programs": [
         {
           "code": "BIO",
-          "name": "Biologi och bioteknik",
-          "required": "obligatorisk",
+          "name": {
+            "en": "Biologi och bioteknik",
+            "sv": "Biologi och bioteknik",
+          },
+          "required": "O",
           "specialization": {
             "code": "BMRU",
-            "name": "Biokemi och molekylärbiologianalys med Rust",
+            "name": {
+              "en": "Biokemi och molekylärbiologianalys med Rust",
+              "sv": "Biokemi och molekylärbiologianalys med Rust",
+            },
           },
           "startTerm": "20231",
           "studyYear": 1,

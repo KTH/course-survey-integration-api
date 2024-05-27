@@ -3,9 +3,10 @@ import {
   HttpResponseInit,
   InvocationContext,
 } from "@azure/functions";
-import { APICourseRound, APICourseRoundParams, TCourseModule, TCourseRoundModuleEntity, TProgramRound, TReportedResultEntity } from "../interface";
+import { APICourseRound, APICourseRoundParams, TCourseModule, TCourseRoundEntity, TCourseRoundModuleEntity, TProgramRound, TProgramRoundEntity, TReportedResultEntity, TStudentParticipation, TStudentParticipationEntity } from "../interface";
 import { Database } from "../db";
 import { startTermFromArchivingCode } from "../ladok-events/utils";
+import { CourseRequiredForProgram } from "ladok-integration";
 
 export default async function handler<T extends APICourseRound>(
   request: HttpRequest,
@@ -16,7 +17,7 @@ export default async function handler<T extends APICourseRound>(
   let outp: APICourseRound;
   
   try {
-    const courseRound = await db.fetchById(id, "CourseRound");
+    const courseRound = await db.fetchById<TCourseRoundEntity>(id, "CourseRound");
 
     if (!courseRound) {
       return {
@@ -34,12 +35,12 @@ export default async function handler<T extends APICourseRound>(
       reportedResults,
       studentParticipations,
     ] = await Promise.all([
-      db.queryByProperty(
+      db.queryByProperty<TReportedResultEntity>(
         "parentId",
         ladokCourseId,
         "ReportedResult",
       ),
-      db.queryByProperty(
+      db.queryByProperty<TStudentParticipationEntity>(
         "ladokCourseRoundId",
         ladokCourseRoundId,
         "StudentParticipation",
@@ -50,7 +51,8 @@ export default async function handler<T extends APICourseRound>(
     const totalReportedResults = reportedResults?.length ?? 0;
 
     const gradingDistribution = reportedResults.reduce(
-      (acc: Record<string, number>, res: any) => {
+      (acc: Record<string, number>, res: TReportedResultEntity) => {
+        if (res.result === undefined) return acc;
         acc[res.result] = (acc[res.result] ?? 0) + 1;
         return acc;
       },
@@ -58,9 +60,9 @@ export default async function handler<T extends APICourseRound>(
     );
 
     const programs = studentParticipations.reduce(
-      (acc: Record<string, TProgramRound>, res: any) => {
+      (acc: Record<string, TProgramRound>, res: TStudentParticipationEntity) => {
         if (res.program) {
-          acc[res.program.code] ??= res.program;
+          acc[res.program.code] ??= transformProgramRoundForApi(res.program, courseRound.language);
         }
         return acc;
       },
@@ -104,7 +106,7 @@ export default async function handler<T extends APICourseRound>(
       totalRegisteredStudents,
       totalReportedResults,
       gradingDistribution,
-      programs,
+      programs: Object.values(programs),
     };
   } finally {
     await db.close();
@@ -120,5 +122,47 @@ export default async function handler<T extends APICourseRound>(
   return {
     status: 200,
     jsonBody: outp,
+  };
+}
+
+const requiredStrings = {
+  "sv": {
+    ALL: "Alla", // Oklart vad detta betyder
+    O: "Obligatorisk",
+    VV: "Villkorligt valfri",
+    R: "Rekommenderad",
+    V: "Valfri",
+
+
+  },
+  "en": {
+    ALL: "All", // Oklart vad detta betyder
+    O: "Mandatory",
+    VV: "Conditionally Elective",
+    R: "Recommended",
+    V: "Elective",
+  }
+}
+
+function transformProgramRoundForApi(prog: TProgramRoundEntity, lang: "sv" | "en"): TProgramRound {
+  const {
+    code,
+    startTerm,
+    name,
+    studyYear,
+    specialization,
+    required,
+  } = prog;
+
+  return {
+    code,
+    startTerm,
+    name: name[lang],
+    studyYear,
+    specialization: specialization && {
+        code: specialization.code,
+        name: specialization.name?.[lang],
+    },
+    required: requiredStrings[lang][required],
   };
 }

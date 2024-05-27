@@ -5,24 +5,9 @@ import { getUgUserByLadokId } from "ug-integration";
 import { strict as assert } from "node:assert";
 
 import {
-  ProgramParticipation,
   getProgramParticipation,
 } from "ladok-integration";
-
-/** Information about student participation as stored in the Database */
-export type TDatabaseStudentParticipation = {
-  id: string;
-  ladokStudentId: string;
-  ladokCourseId: string;
-  ladokCourseRoundId: string;
-
-  canvasSisId: string;
-  name: string;
-  email: string;
-  roles: ["student"];
-  locations: string[];
-  program: ProgramParticipation;
-};
+import { TProgramRoundEntity, TStudentParticipationEntity } from "../interface";
 
 export type TRegistreringEvent = {
   Omfattningsvarde: string; // "10.0",
@@ -57,7 +42,7 @@ export default async function handler(
 
   try {
     const id = `${ladokStudentId}.${ladokCourseRoundId}`;
-    const studentParticipation: TDatabaseStudentParticipation = await db.fetchById(
+    const studentParticipation: TStudentParticipationEntity = await db.fetchById(
       id,
       "StudentParticipation",
     );
@@ -78,10 +63,10 @@ export default async function handler(
     const programParticipation = await getProgramParticipation(
       ladokStudentId,
       ladokCourseRoundId,
-    );
+    ) satisfies (TProgramRoundEntity | undefined);
 
     // 1. Create a StudentParticipation object
-    const doc: TDatabaseStudentParticipation = {
+    const doc: TStudentParticipationEntity = {
       id,
       ladokStudentId,
       ladokCourseId,
@@ -97,9 +82,7 @@ export default async function handler(
       program: programParticipation,
     };
 
-    // 2. Get more student info from UG REST API
-    // 3. Persist in DB
-    await db.insert<TDatabaseStudentParticipation>(doc, "StudentParticipation");
+    await db.upsert<TStudentParticipationEntity>(doc.id, doc, "StudentParticipation");
   } finally {
     await db.close();
   }

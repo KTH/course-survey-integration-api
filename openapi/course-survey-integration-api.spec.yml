@@ -390,7 +390,7 @@ components:
         - email
         - roles
         # - location
-        - program
+        # - program
       properties:
         id:
           type: string
@@ -448,11 +448,10 @@ components:
               description: "Name of the specialization in tutoring language."
         required:
           type: string
-          description: "Determines if taking this course is mandatory or not for this program."
-          enum:
-            - obligatorisk # TODO: Figure out what the enum values really are
-            - valbar
-            - ...
+          description: "Text presentingif taking this course is mandatory or not for this program."
+          # enum:
+          #   - obligatorisk # TODO: Figure out what the enum values really are
+          #   - valbar
 
     CourseModule:
       type: object

@@ -161,9 +161,9 @@ export interface components {
       /** @description This is the _course instance_ code (Kurstillfalleskod) and originates from Ladok. */
       courseInstanceCode: string;
       /** @description This is a unique identifier of a _course instance_ to be used as course code in meta data. */
-      courseInstanceArchivingCode: string;
+      courseInstanceArchivingCode?: string;
       /** @description This is a human friendly rendering of start term to be stored in meta data. */
-      courseInstanceArchivingStartTerm: string;
+      courseInstanceArchivingStartTerm?: string;
       /**
        * @description The tutoring language for this course round. Determines the language used to generate report.
        * @enum {string}
@@ -232,7 +232,7 @@ export interface components {
       /** Format: email */
       email: string;
       roles: "student"[];
-      program: components["schemas"]["ProgramRound"];
+      program?: components["schemas"]["ProgramRound"];
     };
     ProgramRound: {
       /** @description Program code, e.g. 'CINTE' */
@@ -248,11 +248,8 @@ export interface components {
         /** @description Name of the specialization in tutoring language. */
         name?: string;
       };
-      /**
-       * @description Determines if taking this course is mandatory or not for this program.
-       * @enum {string}
-       */
-      required: "obligatorisk" | "valbar" | "...";
+      /** @description Determines if taking this course is mandatory or not for this program. */
+      required: string;
     };
     CourseModule: {
       code: string;

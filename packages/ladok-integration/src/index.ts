@@ -15,6 +15,15 @@ import {
 
 export { getGradingScheme } from "./utils";
 
+
+// This is an embedded object
+export type CourseRequiredForProgram =
+  | "ALL" // ("Alla", "All", "Alla", "All"),
+  | "O" // ("Obligatoriska", "Mandatory", "Obligatorisk", "Mandatory"),
+  | "VV" // ("Villkorligt valfria", "Conditionally Elective", "Villkorligt valfri", "Conditionally Elective"),
+  | "R" // ("Rekommenderade", "Recommended", "Rekommenderad", "Recommended"),
+  | "V" // ("Valfria", "Optional", "Valfri", "Optional");
+
 export type ProgramParticipation =
   | undefined
   | {
@@ -22,7 +31,7 @@ export type ProgramParticipation =
       name: { sv: string; en: string };
       startTerm: string;
       studyYear: number;
-      required: "???";
+      required: CourseRequiredForProgram;
       specialization:
         | undefined
         | {
@@ -138,7 +147,7 @@ export async function getProgramParticipation(
     name: program.Utbildningsinformation.Benamning,
     startTerm: programStartTerm,
     studyYear,
-    required: "???" as "???",
+    required: "O" as CourseRequiredForProgram,
     specialization: undefined,
   };
 
