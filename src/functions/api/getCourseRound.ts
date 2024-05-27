@@ -6,7 +6,6 @@ import {
 import { APICourseRound, APICourseRoundParams, TCourseModule, TCourseRoundEntity, TCourseRoundModuleEntity, TProgramRound, TProgramRoundEntity, TReportedResultEntity, TStudentParticipation, TStudentParticipationEntity } from "../interface";
 import { Database } from "../db";
 import { startTermFromArchivingCode } from "../ladok-events/utils";
-import { CourseRequiredForProgram } from "ladok-integration";
 
 export default async function handler<T extends APICourseRound>(
   request: HttpRequest,
