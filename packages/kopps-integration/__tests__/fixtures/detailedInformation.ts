@@ -1,3 +1,5 @@
+import { CourseRequiredForProgram } from "../../src/types";
+
 export const SF1624 = {
   course: {
     academicLevel: "A",
@@ -59,7 +61,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i medieteknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -72,7 +74,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning öppen ingång",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -186,7 +188,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i industriell teknik och hållbarhet",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -300,7 +302,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i informationsteknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -415,7 +417,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i bioteknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -428,7 +430,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i maskinteknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -543,7 +545,7 @@ export const SF1624 = {
           title: "Civilingenjör och lärare",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -556,7 +558,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i design och produktframtagning",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -569,7 +571,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i energi och miljö",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -684,7 +686,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i medicinsk teknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -798,7 +800,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i datateknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -913,7 +915,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i elektroteknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -926,7 +928,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i industriell ekonomi",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1042,7 +1044,7 @@ export const SF1624 = {
           title: "Civilingenjör och lärare",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1056,7 +1058,7 @@ export const SF1624 = {
           title: "Civilingenjör och lärare",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1069,7 +1071,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i materialdesign",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1082,7 +1084,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i samhällsbyggnad",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1095,7 +1097,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i teknisk kemi",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1210,7 +1212,7 @@ export const SF1624 = {
           title: "Civilingenjör och lärare",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1223,7 +1225,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i design och produktframtagning",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1236,7 +1238,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i energi och miljö",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1355,7 +1357,7 @@ export const SF1624 = {
           title: "Civilingenjör och lärare",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1369,7 +1371,7 @@ export const SF1624 = {
           title: "Civilingenjör och lärare",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1382,7 +1384,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i materialdesign",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1395,7 +1397,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i samhällsbyggnad",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1408,7 +1410,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i teknisk kemi",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1525,7 +1527,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i datateknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1643,7 +1645,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i medicinsk teknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1760,7 +1762,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i industriell teknik och hållbarhet",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1877,7 +1879,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i bioteknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -1890,7 +1892,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i maskinteknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -2007,7 +2009,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i elektroteknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -2020,7 +2022,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i industriell ekonomi",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -2138,7 +2140,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i medieteknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -2151,7 +2153,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning öppen ingång",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },
@@ -2268,7 +2270,7 @@ export const SF1624 = {
           title: "Civilingenjörsutbildning i informationsteknik",
           electiveCondition: {
             ordinal: 1,
-            name: "O",
+            name: "O" as CourseRequiredForProgram,
             abbrLabel: "Obligatorisk",
           },
         },

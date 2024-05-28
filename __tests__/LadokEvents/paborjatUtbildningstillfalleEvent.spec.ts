@@ -16,6 +16,7 @@ KoppsIntegrationMock.getCourseInformation(
     goals: "The course aims to give basic knowledge of programming in F#.",
     startTerm: "20221",
     code: "51210",
+    electiveConditions: []
   },
 );
 

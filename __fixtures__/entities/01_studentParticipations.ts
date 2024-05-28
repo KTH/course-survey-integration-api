@@ -16,7 +16,6 @@ export const studentParticipations1: TStudentParticipationEntity[] = [
     program: {
       code: "ARKIT",
       name: { sv: "Arkitektur", en: "Arkitektur" },
-      required: "O",
       startTerm: "20221",
       studyYear: 4,
     },
@@ -36,7 +35,6 @@ export const studentParticipations1: TStudentParticipationEntity[] = [
     program: {
       code: "ARKIT",
       name: { sv: "Arkitektur", en: "Arkitektur"},
-      required: "O",
       startTerm: "20221",
       studyYear: 4,
     },

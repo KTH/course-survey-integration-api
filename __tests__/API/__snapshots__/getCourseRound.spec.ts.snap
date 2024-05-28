@@ -42,6 +42,20 @@ exports[`/api/course-rounds/{id} can be executed 1`] = `
     ],
     "credits": "7.5 hp",
     "displayYear": "2023-2024",
+    "electiveConditionsForPrograms": [
+      {
+        "electiveCondition": {
+          "abbrLabel": "Obligaotrisk",
+          "name": "O",
+          "ordinal": 1,
+        },
+        "progAdmissionTerm": {
+          "term": 20221,
+        },
+        "programmeCode": "ARKIT",
+        "studyYear": 4,
+      },
+    ],
     "endDate": "2024-01-01",
     "gradingDistribution": {
       "F": 0,

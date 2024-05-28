@@ -77,7 +77,6 @@ exports[`/api/course-rounds can be executed 1`] = `
             "en": "Arkitektur",
             "sv": "Arkitektur",
           },
-          "required": "O",
           "startTerm": "20221",
           "studyYear": 4,
         },
@@ -152,7 +151,6 @@ exports[`/api/course-rounds can be executed 1`] = `
             "en": "Biologi och bioteknik",
             "sv": "Biologi och bioteknik",
           },
-          "required": "O",
           "specialization": {
             "code": "BMRU",
             "name": {

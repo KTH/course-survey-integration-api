@@ -45,6 +45,7 @@ exports[`RegistreringEvent writes correct data to db 1`] = `
     ],
     "credits": "7.5 hp",
     "displayYear": "2023",
+    "electiveConditionsForPrograms": [],
     "endDate": "2023-03-17",
     "id": "41717c91-4028-11ee-bf53-2115569549a8",
     "institution": {

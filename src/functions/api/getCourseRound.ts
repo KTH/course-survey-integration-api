@@ -61,7 +61,7 @@ export default async function handler<T extends APICourseRound>(
     const programs = studentParticipations.reduce(
       (acc: Record<string, TProgramRound>, res: TStudentParticipationEntity) => {
         if (res.program) {
-          acc[res.program.code] ??= transformProgramRoundForApi(res.program, courseRound.language);
+          acc[res.program.code] ??= transformProgramRoundForApi(res.program, courseRound, courseRound.language);
         }
         return acc;
       },
@@ -131,8 +131,7 @@ const requiredStrings = {
     VV: "Villkorligt valfri",
     R: "Rekommenderad",
     V: "Valfri",
-
-
+    "undefined": "n/a"
   },
   "en": {
     ALL: "All", // Oklart vad detta betyder
@@ -140,18 +139,23 @@ const requiredStrings = {
     VV: "Conditionally Elective",
     R: "Recommended",
     V: "Elective",
+    "undefined": "n/a"
   }
 }
 
-function transformProgramRoundForApi(prog: TProgramRoundEntity, lang: "sv" | "en"): TProgramRound {
+export function transformProgramRoundForApi(prog: TProgramRoundEntity, courseRound: TCourseRoundEntity, lang: "sv" | "en"): TProgramRound {
   const {
     code,
     startTerm,
     name,
     studyYear,
     specialization,
-    required,
   } = prog;
+
+  const koppsElectiveCondition = courseRound.electiveConditionsForPrograms.find(
+    c => c.programmeCode === code && c.progAdmissionTerm?.term?.toString() === startTerm
+  );
+  const electiveConditionCode = koppsElectiveCondition?.electiveCondition.name;
 
   return {
     code,
@@ -162,6 +166,6 @@ function transformProgramRoundForApi(prog: TProgramRoundEntity, lang: "sv" | "en
         code: specialization.code,
         name: specialization.name?.[lang],
     },
-    required: requiredStrings[lang][required],
+    required: requiredStrings[lang][electiveConditionCode ?? "undefined"],
   };
 }

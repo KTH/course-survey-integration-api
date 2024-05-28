@@ -68,4 +68,16 @@ export const courseRound1: TCourseRoundEntity = {
       gradingScheme: ["P", "F"],
     },
   ],
+  electiveConditionsForPrograms: [{
+    "programmeCode": "ARKIT",
+    "progAdmissionTerm": {
+        "term": 20221,
+    },
+    "studyYear": 4,
+    "electiveCondition": {
+        "ordinal": 1, // 2
+        "name": "O",
+        "abbrLabel": "Obligaotrisk",
+    }
+  }],
 };

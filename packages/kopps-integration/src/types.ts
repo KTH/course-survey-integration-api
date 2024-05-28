@@ -18,6 +18,29 @@ export interface KoppsPerson {
   username: string;
 }
 
+export type CourseRequiredForProgram =
+  | "ALL" // ("Alla", "All", "Alla", "All"),
+  | "O" // ("Obligatoriska", "Mandatory", "Obligatorisk", "Mandatory"),
+  | "VV" // ("Villkorligt valfria", "Conditionally Elective", "Villkorligt valfri", "Conditionally Elective"),
+  | "R" // ("Rekommenderade", "Recommended", "Rekommenderad", "Recommended"),
+  | "V" // ("Valfria", "Optional", "Valfri", "Optional");
+
+export type CourseElectiveCondition = {
+  // "specCode": string, // "FOR"
+  "programmeCode": string, // "CDEPR"
+  "progAdmissionTerm": {
+      "term": number, // 20222
+  },
+  "studyYear": number, // 3
+  // "title": string, // "Civilingenjörsutbildning i design och produktframtagning",
+  "electiveCondition": {
+      "ordinal": number, // 2
+      "name": CourseRequiredForProgram, // "VV"
+      "abbrLabel": string, // "Villkorligt valfri"
+  }
+}
+
+
 /** Course round information */
 export interface KoppsCourseRoundInfo {
   round: {
@@ -47,13 +70,8 @@ export interface KoppsCourseRoundInfo {
 
   ldapResponsibles?: KoppsPerson[];
   ldapTeachers?: KoppsPerson[];
-
-  // Information about programs. Not used at this moment
-  // usage?: {
-  //   programmeCode: string;
-  //   specCode: string;
-  //   title: string;
-  // }[];
+  
+  usage: Array<CourseElectiveCondition>
 }
 
 export interface KoppsSyllabus {

@@ -75,6 +75,7 @@ export default async function handler(
 
     // Note: this uses the "old" round code format
     const roundCode = koppsInfo.round.code;
+    const electiveConditionsForPrograms = koppsInfo.electiveConditions;
 
     // TODO: Should we cache these values? For how long?
     // TODO: Use live data but during development we can use hardcoded values
@@ -183,6 +184,7 @@ export default async function handler(
       displayYear: ladokCourseYear,
       credits: `${ladokCourseRoundInfo?.credits} hp`,
       modules: mergedModules,
+      electiveConditionsForPrograms,
     };
     await db.upsert<TCourseRoundEntity>(doc.id, doc, "CourseRound");
   } finally {

@@ -76,4 +76,16 @@ export const courseRound2: TCourseRoundEntity = {
       gradingScheme: ["P", "F"],
     },
   ],
+  electiveConditionsForPrograms: [{
+    "programmeCode": "BIO",
+    "progAdmissionTerm": {
+        "term": 20231,
+    },
+    "studyYear": 1,
+    "electiveCondition": {
+        "ordinal": 1, // 2
+        "name": "O",
+        "abbrLabel": "Obligaotrisk",
+    }
+  }],
 };

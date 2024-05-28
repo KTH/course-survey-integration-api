@@ -16,7 +16,6 @@ export const studentParticipations2: TStudentParticipationEntity[] = [
     program: {
       code: "BIO",
       name: { sv: "Biologi och bioteknik", en: "Biologi och bioteknik" },
-      required: "O",
       startTerm: "20231",
       studyYear: 1,
       specialization: {
@@ -40,7 +39,6 @@ export const studentParticipations2: TStudentParticipationEntity[] = [
     program: {
       code: "BIO",
       name: { sv: "Biologi och bioteknik", en: "Biologi och bioteknik" },
-      required: "O",
       startTerm: "20231",
       studyYear: 1,
     },

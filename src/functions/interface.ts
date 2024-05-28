@@ -1,7 +1,6 @@
 import { ObjectId } from "mongodb";
 import { paths, components } from "../__generated__/_interface";
 import { Blob } from "buffer";
-import { CourseRequiredForProgram } from "ladok-integration";
 // # API Interface
 // To generate the _interface.ts file, run: `npm run generate-types`
 // in the root of the project.
@@ -77,13 +76,34 @@ export type TCourseRoundModuleEntity = {
 };
 
 // This is an embedded object
+export type TKoppsCourseRequiredForProgram =
+  | "ALL" // ("Alla", "All", "Alla", "All"),
+  | "O" // ("Obligatoriska", "Mandatory", "Obligatorisk", "Mandatory"),
+  | "VV" // ("Villkorligt valfria", "Conditionally Elective", "Villkorligt valfri", "Conditionally Elective"),
+  | "R" // ("Rekommenderade", "Recommended", "Rekommenderad", "Recommended"),
+  | "V" // ("Valfria", "Optional", "Valfri", "Optional");
+
+export type TKoppsCourseElectiveCondition = {
+  "programmeCode": string, // "CDEPR"
+  "progAdmissionTerm": {
+      "term": number, // 20222
+  },
+  "studyYear": number, // 3
+  // "title": string, // "Civilingenjörsutbildning i design och produktframtagning",
+  "electiveCondition": {
+      "ordinal": number, // 2
+      "name": TKoppsCourseRequiredForProgram, // "VV"
+      "abbrLabel": string, // "Villkorligt valfri"
+  }
+}
+
+// This is an embedded object
 export type TProgramRoundEntity = {
   code: TProgramRound["code"];
   startTerm: TProgramRound["startTerm"];
   name: { sv: string, en: string };
   studyYear: TProgramRound["studyYear"];
   specialization?: { code: string, name?: { sv: string, en: string }};
-  required: CourseRequiredForProgram;
 };
 
 export type TCourseRoundEntity = {
@@ -118,6 +138,7 @@ export type TCourseRoundEntity = {
   displayYear: TCourseRound["displayYear"];
   credits: TCourseRound["credits"];
   modules: TCourseRoundModuleEntity[];
+  electiveConditionsForPrograms: TKoppsCourseElectiveCondition[];
 };
 
 export type TReportedResultEntity = {
@@ -153,6 +174,4 @@ export type TStudentParticipationEntity = {
 
   locations: string[];
   program?: TProgramRoundEntity;
-
-
 };

@@ -5,6 +5,7 @@ import {
 } from "@azure/functions";
 import { APICourseRoundStudentList, APICourseRoundStudentListParams, TCourseRoundEntity, TStudentParticipationEntity } from "../interface";
 import { Database } from "../db";
+import { transformProgramRoundForApi } from "./getCourseRound";
 
 export default async function handler<T extends APICourseRoundStudentList>(
   request: HttpRequest,
@@ -61,19 +62,7 @@ export default async function handler<T extends APICourseRoundStudentList>(
       roles,
       program,
     }) => {
-      const transformedSpecialization = program?.specialization ? {
-        code: program.specialization['code'],
-        name: program.specialization['name']?.[lang],
-      } : undefined;
-
-      const transformedProgram = program ? {
-        code: program['code'],
-        startTerm: program['startTerm'],
-        name: program['name'][lang],
-        studyYear: program['studyYear'],
-        specialization: transformedSpecialization,
-        required: program['required'],
-      } : undefined;
+      const transformedProgram = program ? transformProgramRoundForApi(program, courseRound, lang) : undefined;
       return {
         id,
         ladokCourseRoundId,
