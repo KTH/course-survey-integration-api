@@ -147,7 +147,7 @@ describe("RegistreringEvent", () => {
     );
   });
 
-  test.skip("fetches course info from KOPPS", async () => {
+  test("fetches course info from KOPPS", async () => {
     const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);
@@ -155,7 +155,7 @@ describe("RegistreringEvent", () => {
     expect(mockDb._result).toMatchSnapshot();
   });
 
-  test.skip("fetches course info from LADOK", async () => {
+  test("fetches course info from LADOK", async () => {
     const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);
@@ -163,7 +163,7 @@ describe("RegistreringEvent", () => {
     expect(mockDb._result).toMatchSnapshot();
   });
 
-  test.skip("fetches course info from UG", async () => {
+  test("fetches course info from UG", async () => {
     const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);

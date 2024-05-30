@@ -30,11 +30,10 @@ describe("RegistreringEvent", () => {
     );
   });
 
-  test.skip("fetches student data from UG", async () => {
+  test("fetches student data from UG", async () => {
     const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);
-    // TODO: We meed to mock the UG REST API
     expect(mockDb._result).toMatchSnapshot();
   });
 
