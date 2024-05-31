@@ -36,6 +36,10 @@ const gotClient = got.extend({
 });
 
 function errorHandler(endpoint: string, error: unknown): never {
+  if (typeof error === "object" && error !== null) {
+    Error.captureStackTrace(error, errorHandler);
+  }
+  
   if (error instanceof HTTPError) {
     throw new ApiError(error);
   }
