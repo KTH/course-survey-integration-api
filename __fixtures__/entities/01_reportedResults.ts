@@ -61,4 +61,39 @@ export const reportedResults1: TReportedResultEntity[] = [
       ResultatUID: "b9d0c0ea-7a27-4fbc-a638-6b99fe0a6b40-resultatId",
     },
   },
+  {
+    id: "01-5r",
+    parentId: "531ea06f-a5dd-40f4-8709-cfd846e6e09d-ladokModuleRoundId",
+    ladokCourseRoundId:
+      "41374a41-2bda-404f-b11c-6e007deb61b4-ladokCoursRoundId",
+    hashedStudentId: "1e380e11-b44f-11ee-988f-6acd08c746d6-hashedStudentId",
+    decision: "2fb3cbf5-289c-4905-854b-a2c450ee7267-beslutsId",
+    result: "P",
+    metaData: {
+      HandelseUID: "0f77af27-8d9b-4e9c-b2fe-600fc1cec9ad-handelseId",
+      BetygsgradID: 131661,
+      BetygsskalaID: 131657,
+      ResultatUID: "1e380e11-b44f-11ee-988f-6acd08c746d6-resultatId",
+    },
+    retraction: {
+      Anteckning: "Det bidde fel i systemet. Jag har makulerat beslutet.",
+      BeslutUID: "34b1ff17-603e-11e9-9dcc-b1e66e1540b0",
+      Beslutsdatum: "2024-01-16",
+      Beslutsfattare: "Emil Stenberg (IT)",
+      BeslutsfattareUID: "34b1ff17-603e-11e9-9dcc-b1e66e1540b0"
+    }
+  },
+  {
+    id: "01-6r",
+    metaData: {
+      ResultatUID: "1e380e11-b44f-11ee-988f-6acd08c746d6-resultatId",
+    },
+    retraction: {
+      Anteckning: "Det bidde fel i systemet. Jag har makulerat beslutet.",
+      BeslutUID: "34b1ff17-603e-11e9-9dcc-b1e66e1540b0",
+      Beslutsdatum: "2024-01-16",
+      Beslutsfattare: "Emil Stenberg (IT)",
+      BeslutsfattareUID: "34b1ff17-603e-11e9-9dcc-b1e66e1540b0"
+    }
+  },
 ];

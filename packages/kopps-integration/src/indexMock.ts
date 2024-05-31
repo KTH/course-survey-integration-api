@@ -1,4 +1,5 @@
 import { getCourseInformation as origGetCourseInformation } from ".";
+import { CourseElectiveCondition } from "./types";
 import { getPeriods } from "./utils";
 
 type TParams = {
@@ -9,6 +10,7 @@ type TParams = {
   goals: string;
   startTerm: string;
   code: string;
+  electiveConditions: CourseElectiveCondition[];
 };
 
 const _mockedValues: Record<string, TParams> = {};
@@ -25,7 +27,7 @@ export class KoppsIntegrationMock {
 export async function getCourseInformation(
   ladokUid: string,
 ): Promise<ReturnType<typeof origGetCourseInformation>> {
-  const { title, titleOther, courseCode, periods, goals, startTerm, code } =
+  const { title, titleOther, courseCode, periods, goals, startTerm, code, electiveConditions } =
     _mockedValues[ladokUid];
   return {
     course: {
@@ -43,5 +45,6 @@ export async function getCourseInformation(
     syllabus: {
       goals: goals,
     },
+    electiveConditions,
   };
 }

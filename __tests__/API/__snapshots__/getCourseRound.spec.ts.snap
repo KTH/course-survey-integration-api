@@ -42,6 +42,20 @@ exports[`/api/course-rounds/{id} can be executed 1`] = `
     ],
     "credits": "7.5 hp",
     "displayYear": "2023-2024",
+    "electiveConditionsForPrograms": [
+      {
+        "electiveCondition": {
+          "abbrLabel": "Obligaotrisk",
+          "name": "O",
+          "ordinal": 1,
+        },
+        "progAdmissionTerm": {
+          "term": 20221,
+        },
+        "programmeCode": "ARKIT",
+        "studyYear": 4,
+      },
+    ],
     "endDate": "2024-01-01",
     "gradingDistribution": {
       "F": 0,
@@ -58,11 +72,12 @@ exports[`/api/course-rounds/{id} can be executed 1`] = `
     "language": "sv",
     "modules": [
       {
+        "canceled": false,
         "code": "TEN1",
         "credits": "7.5 hp",
         "gradingDistribution": {
           "F": 0,
-          "P": 2,
+          "P": 3,
         },
         "gradingScheme": [
           "P",
@@ -70,7 +85,7 @@ exports[`/api/course-rounds/{id} can be executed 1`] = `
         ],
         "moduleRoundId": "531ea06f-a5dd-40f4-8709-cfd846e6e09d-ladokModuleRoundId",
         "name": "Tentamen",
-        "totalReportedResults": 2,
+        "totalReportedResults": 3,
       },
     ],
     "name": "Introduktion till programmering",
@@ -85,15 +100,16 @@ exports[`/api/course-rounds/{id} can be executed 1`] = `
         "period": "P1",
       },
     ],
-    "programs": {
-      "ARKIT": {
+    "programs": [
+      {
         "code": "ARKIT",
         "name": "Arkitektur",
-        "required": "obligatorisk",
+        "required": "Obligatorisk",
+        "specialization": undefined,
         "startTerm": "20221",
         "studyYear": 4,
       },
-    },
+    ],
     "totalRegisteredStudents": 2,
     "totalReportedResults": 2,
   },

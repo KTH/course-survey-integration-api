@@ -17,7 +17,8 @@ exports[`/api/course-rounds/{id}/students can be executed 1`] = `
       "program": {
         "code": "ARKIT",
         "name": "Arkitektur",
-        "required": "obligatorisk",
+        "required": "Obligatorisk",
+        "specialization": undefined,
         "startTerm": "20221",
         "studyYear": 4,
       },
@@ -34,7 +35,8 @@ exports[`/api/course-rounds/{id}/students can be executed 1`] = `
       "program": {
         "code": "ARKIT",
         "name": "Arkitektur",
-        "required": "obligatorisk",
+        "required": "Obligatorisk",
+        "specialization": undefined,
         "startTerm": "20221",
         "studyYear": 4,
       },

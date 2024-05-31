@@ -62,9 +62,22 @@ export const courseRound1: TCourseRoundEntity = {
     {
       moduleRoundId: "531ea06f-a5dd-40f4-8709-cfd846e6e09d-ladokModuleRoundId",
       code: "TEN1",
+      canceled: false,
       name: "Tentamen",
       credits: "7.5 hp",
       gradingScheme: ["P", "F"],
     },
   ],
+  electiveConditionsForPrograms: [{
+    "programmeCode": "ARKIT",
+    "progAdmissionTerm": {
+        "term": 20221,
+    },
+    "studyYear": 4,
+    "electiveCondition": {
+        "ordinal": 1, // 2
+        "name": "O",
+        "abbrLabel": "Obligaotrisk",
+    }
+  }],
 };

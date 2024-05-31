@@ -17,6 +17,7 @@ describe("getPeriods", () => {
         ladokRoundId: "",
         startTerm: { term: 0 },
       },
+      usage: [],
     };
 
     expect(getPeriods(round)).toStrictEqual(["P0", "P1"]);
@@ -30,6 +31,7 @@ describe("getPeriods", () => {
         ladokRoundId: "",
         startTerm: { term: 0 },
       },
+      usage: [],
     };
 
     expect(getPeriods(round)).toStrictEqual([]);
@@ -46,6 +48,7 @@ describe("getPeriods", () => {
         ladokRoundId: "",
         startTerm: { term: 0 },
       },
+      usage: [],
     };
 
     expect(getPeriods(round)).toStrictEqual(["P2", "P3"]);
@@ -64,6 +67,7 @@ describe("getPeriods", () => {
         ladokRoundId: "",
         startTerm: { term: 0 },
       },
+      usage: []
     };
 
     expect(getPeriods(round)).toStrictEqual(["P5", "P1", "P1", "P1"]);
@@ -80,6 +84,7 @@ describe("getPeriods", () => {
         ladokRoundId: "",
         startTerm: { term: 0 },
       },
+      usage: []
     };
 
     // Note: "2" must come before "3"
@@ -97,6 +102,7 @@ describe("getPeriods", () => {
         ladokRoundId: "",
         startTerm: { term: 0 },
       },
+      usage: [],
     };
 
     // P5 should come first because term is 20231
@@ -115,6 +121,7 @@ describe("getPeriods", () => {
         ladokRoundId: "",
         startTerm: { term: 0 },
       },
+      usage: []
     };
 
     expect(getPeriods(round)).toStrictEqual(["P4", "P0"]);

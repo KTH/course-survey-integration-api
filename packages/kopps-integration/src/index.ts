@@ -17,6 +17,8 @@ export async function getCourseInformation(ladokUid: string) {
     term,
   );
 
+  const electiveConditions = detailedInformation.roundInfos.map(ri => ri.usage).flat();
+
   return {
     course: {
       name: {
@@ -41,5 +43,6 @@ export async function getCourseInformation(ladokUid: string) {
     syllabus: {
       goals: syllabus.courseSyllabus.goals,
     },
+    electiveConditions,
   };
 }

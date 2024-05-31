@@ -52,6 +52,7 @@ export function convertLadokModuleToCourseModule(
     _reportedResults: {},
     code: ladokModule.code,
     name: ladokModule.name?.[lang],
+    canceled: false,
     credits: ladokModule.credits,
     gradingScheme: Object.keys(gradingDistribution ?? {}),
     nrofReportedResults: 0, // TODO: Calculated field
@@ -60,6 +61,7 @@ export function convertLadokModuleToCourseModule(
 }
 
 export async function hashStudentId(studentId: string): Promise<string> {
+  // TODO: For this to be secure we need to add a secret salt that is not stored in the code.
   const hash = crypto.createHash("sha256");
 
   return new Promise((resolve, reject) => {

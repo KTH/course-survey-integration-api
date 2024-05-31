@@ -1,0 +1,5 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AttesteratResultatMakuleratEvent creates a result that is retracted 1`] = `{}`;
+
+exports[`AttesteratResultatMakuleratEvent marks an existing result as retracted 1`] = `{}`;

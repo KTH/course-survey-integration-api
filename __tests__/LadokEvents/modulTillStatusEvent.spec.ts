@@ -32,11 +32,10 @@ describe("RegistreringEvent", () => {
     );
   });
 
-  test.skip("writes correct data to db", async () => {
+  test("writes correct data to db", async () => {
     const mockDb = new MockDatabase(DB_MOCK_INPUT);
     const mockContext = new MockContext(event.userProps);
-    const outp = await handler(event.message, mockContext, mockDb);
-
-    expect(outp).toMatchSnapshot();
+    await handler(event.message, mockContext, mockDb);
+    expect(mockDb._result).toMatchSnapshot();
   });
 });

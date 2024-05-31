@@ -11,7 +11,14 @@ export default async function handler(
   const { userProperties } = triggerMetadata as any;
 
   try {
-    await db.insert<any>(
+    const res = await db.fetchById(invocationId, "Ladok3FeedEvents" as any);
+    if (res) {
+      // Allready exists
+      return;
+    }
+
+    await db.upsert<any>(
+      invocationId,
       {
         id: invocationId,
         ladok3EventType: userProperties?.ladok3EventType,

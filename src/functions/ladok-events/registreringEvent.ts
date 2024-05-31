@@ -5,24 +5,9 @@ import { getUgUserByLadokId } from "ug-integration";
 import { strict as assert } from "node:assert";
 
 import {
-  ProgramParticipation,
   getProgramParticipation,
 } from "ladok-integration";
-
-/** Information about student participation as stored in the Database */
-export type DatabaseStudentParticipation = {
-  id: string;
-  ladokStudentId: string;
-  ladokCourseId: string;
-  ladokCourseRoundId: string;
-
-  canvasSisId: string;
-  name: string;
-  email: string;
-  roles: ["student"];
-  locations: string[];
-  programRound: ProgramParticipation;
-};
+import { TProgramRoundEntity, TStudentParticipationEntity } from "../interface";
 
 export type TRegistreringEvent = {
   Omfattningsvarde: string; // "10.0",
@@ -55,46 +40,50 @@ export default async function handler(
   const ladokStudentId = message.StudentUID;
   context.log(`RegistreringEvent: ${ladokCourseRoundId} ${ladokStudentId}`);
 
-  const id = `${ladokStudentId}.${ladokCourseRoundId}`;
-  const studentParticipation: DatabaseStudentParticipation = await db.fetchById(
-    id,
-    "StudentParticipation",
-  );
+  try {
+    const id = `${ladokStudentId}.${ladokCourseRoundId}`;
+    const studentParticipation: TStudentParticipationEntity = await db.fetchById(
+      id,
+      "StudentParticipation",
+    );
 
-  if (studentParticipation) {
-    // StudentParticipation exists
+    if (studentParticipation) {
+      // StudentParticipation exists and we don't update student participations so we assume
+      // that info is correct
+      // TODO: Consider logging a warning
+      context.warn(`StudentParticipation ${id} already exists. Skipping! [HandelseUID ${message.HandelseUID}]`)
+      await db.close();
+      return;
+    }
+
+    const ugUser = await getUgUserByLadokId(ladokStudentId);
+    // const ugUser = await getUgUser(ladokStudentId);
+    assert(ugUser !== undefined, "");
+
+    const programParticipation = await getProgramParticipation(
+      ladokStudentId,
+      ladokCourseRoundId,
+    ) satisfies (TProgramRoundEntity | undefined);
+
+    // 1. Create a StudentParticipation object
+    const doc: TStudentParticipationEntity = {
+      id,
+      ladokStudentId,
+      ladokCourseId,
+      ladokCourseRoundId,
+      /** @description We currently use kthUserId as canvasSisId */
+      canvasSisId: ugUser.kthid,
+      /** @description Full Name of user */
+      name: `${ugUser.givenName} ${ugUser.surname}`,
+      /** Format: email */
+      email: ugUser?.email,
+      roles: ["student"],
+      locations: [],
+      program: programParticipation,
+    };
+
+    await db.upsert<TStudentParticipationEntity>(doc.id, doc, "StudentParticipation");
+  } finally {
     await db.close();
-    return;
   }
-
-  const ugUser = await getUgUserByLadokId(ladokStudentId);
-  // const ugUser = await getUgUser(ladokStudentId);
-  assert(ugUser !== undefined, "");
-
-  const programParticipation = await getProgramParticipation(
-    ladokStudentId,
-    ladokCourseRoundId,
-  );
-
-  // 1. Create a StudentParticipation object
-  const doc: DatabaseStudentParticipation = {
-    id,
-    ladokStudentId,
-    ladokCourseId,
-    ladokCourseRoundId,
-    /** @description We currently use kthUserId as canvasSisId */
-    canvasSisId: ugUser.kthid,
-    /** @description Full Name of user */
-    name: `${ugUser.givenName} ${ugUser.surname}`,
-    /** Format: email */
-    email: ugUser?.email,
-    roles: ["student"],
-    locations: [],
-    programRound: programParticipation,
-  };
-
-  // 2. Get more student info from UG REST API
-  // 3. Persist in DB
-  await db.insert(doc, "StudentParticipation");
-  await db.close();
 }

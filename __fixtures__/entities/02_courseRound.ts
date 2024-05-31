@@ -62,6 +62,7 @@ export const courseRound2: TCourseRoundEntity = {
     {
       moduleRoundId: "230f8e64-88fb-4913-83e8-023a472d859f-ladokModuleRoundId",
       code: "TEN1",
+      canceled: false,
       name: "Tentamen",
       credits: "5 hp",
       gradingScheme: ["A", "B", "C", "D", "E", "Fx", "F"],
@@ -69,9 +70,22 @@ export const courseRound2: TCourseRoundEntity = {
     {
       moduleRoundId: "5e6fafb5-56d4-4c6c-9738-a2d3dbed4354-ladokModuleRoundId",
       code: "LAB",
+      canceled: false,
       name: "Laboration",
       credits: "1 hp",
       gradingScheme: ["P", "F"],
     },
   ],
+  electiveConditionsForPrograms: [{
+    "programmeCode": "BIO",
+    "progAdmissionTerm": {
+        "term": 20231,
+    },
+    "studyYear": 1,
+    "electiveCondition": {
+        "ordinal": 1, // 2
+        "name": "O",
+        "abbrLabel": "Obligaotrisk",
+    }
+  }],
 };

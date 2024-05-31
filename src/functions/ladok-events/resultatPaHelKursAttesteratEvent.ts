@@ -48,32 +48,29 @@ export default async function handler(
   const { KurstillfalleUID, StudentUID, UtbildningsinstansUID } = message;
   const { BeslutUID } = message.Beslut;
   const { BetygsgradID, BetygsskalaID, ResultatUID } = message.Resultat;
-  const hashedStudentId = await hashStudentId(StudentUID);
+  
+  try {
+    const hashedStudentId = await hashStudentId(StudentUID);
 
-  const id = `${UtbildningsinstansUID}-${hashedStudentId}`;
-  const doc: TReportedResultEntity = {
-    id,
-    parentId: UtbildningsinstansUID, // This matches the ladokCourseRoundId and is used to distinguish between course result and module result
-    ladokCourseRoundId: KurstillfalleUID,
-    hashedStudentId,
-    decision: BeslutUID,
-    result: "string",
-    metaData: {
-      HandelseUID: message.HandelseUID,
-      BetygsgradID,
-      BetygsskalaID,
-      ResultatUID,
-    },
-  };
+    const id = `${UtbildningsinstansUID}-${hashedStudentId}`;
+    const doc: TReportedResultEntity = {
+      id,
+      parentId: UtbildningsinstansUID, // This matches the ladokCourseRoundId and is used to distinguish between course result and module result
+      ladokCourseRoundId: KurstillfalleUID,
+      hashedStudentId,
+      decision: BeslutUID,
+      result: "string",
+      metaData: {
+        HandelseUID: message.HandelseUID,
+        BetygsgradID,
+        BetygsskalaID,
+        ResultatUID,
+      },
+    };
 
-  const res = await db.fetchById(id, "ReportedResult");
-
-  if (res.length > 0) {
-    const foundDoc = res[0];
-    await db.update<TReportedResultEntity>(foundDoc._id, doc, "ReportedResult");
-  } else {
-    await db.insert<TReportedResultEntity>(doc, "ReportedResult");
+    await db.upsert<TReportedResultEntity>(doc.id, doc, "ReportedResult");
+  } finally {
+    await db.close();
   }
-  await db.close();
 }
 

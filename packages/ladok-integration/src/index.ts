@@ -22,7 +22,6 @@ export type ProgramParticipation =
       name: { sv: string; en: string };
       startTerm: string;
       studyYear: number;
-      required: "???";
       specialization:
         | undefined
         | {
@@ -138,7 +137,6 @@ export async function getProgramParticipation(
     name: program.Utbildningsinformation.Benamning,
     startTerm: programStartTerm,
     studyYear,
-    required: "???" as "???",
     specialization: undefined,
   };
 

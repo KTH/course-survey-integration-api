@@ -5,6 +5,7 @@ import {
 } from "@azure/functions";
 import { APICourseRoundStudentList, APICourseRoundStudentListParams, TCourseRoundEntity, TStudentParticipationEntity } from "../interface";
 import { Database } from "../db";
+import { transformProgramRoundForApi } from "./getCourseRound";
 
 export default async function handler<T extends APICourseRoundStudentList>(
   request: HttpRequest,
@@ -50,6 +51,8 @@ export default async function handler<T extends APICourseRoundStudentList>(
       { offset, limit, sortBy: "_id", sortOrder: "asc"},
     );
 
+    const lang = courseRound.language ?? "sv";
+
     outp = students.map(({
       id,
       ladokCourseRoundId,
@@ -59,6 +62,7 @@ export default async function handler<T extends APICourseRoundStudentList>(
       roles,
       program,
     }) => {
+      const transformedProgram = program ? transformProgramRoundForApi(program, courseRound, lang) : undefined;
       return {
         id,
         ladokCourseRoundId,
@@ -66,7 +70,7 @@ export default async function handler<T extends APICourseRoundStudentList>(
         name,
         email,
         roles,
-        program,
+        program: transformedProgram,
       }
     });
   } finally {

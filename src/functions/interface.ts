@@ -7,13 +7,7 @@ import { Blob } from "buffer";
 
 // ## API Components
 export type TCourseRoundPartial = components["schemas"]["CourseRoundPartial"];
-export type TCourseRound = components["schemas"]["CourseRound"] & {
-  /**
-   * Add each reported result using composite key to allow for updates.
-   * key: `TBD`
-   */
-  _gradingScheme: string[]; // Support to calculate grading distribution, currently not shown in report
-};
+export type TCourseRound = components["schemas"]["CourseRound"];
 export type TStudentParticipation =
   components["schemas"]["StudentParticipation"];
 export type TProgramRound = components["schemas"]["ProgramRound"];
@@ -63,24 +57,53 @@ export type APIModuleGradingDistributionChartParams = OpenApiModuleGradingDistri
 /**
  * Domain entities stored in DB
  */
+export type TBeslutMetaData = {
+  Anteckning: string; // "Det bidde fel i systemet. Jag har makulerat beslutet.",
+  BeslutUID: string; // "34b1ff17-603e-11e9-9dcc-b1e66e1540b0",
+  Beslutsdatum: string; // "2024-01-16",
+  Beslutsfattare: string; // "Emil Stenberg (IT)",
+  BeslutsfattareUID: string; // "34b1ff17-603e-11e9-9dcc-b1e66e1540b0"
+}
 
 // This is an embedded object
 export type TCourseRoundModuleEntity = {
   moduleRoundId: string; // Used to match with credits (TReportedResultEntity)
   code: TCourseModule["code"];
+  canceled: boolean;
   name: TCourseModule["name"];
   credits: TCourseModule["credits"];
   gradingScheme: TCourseModule["gradingScheme"];
 };
 
 // This is an embedded object
+export type TKoppsCourseRequiredForProgram =
+  | "ALL" // ("Alla", "All", "Alla", "All"),
+  | "O" // ("Obligatoriska", "Mandatory", "Obligatorisk", "Mandatory"),
+  | "VV" // ("Villkorligt valfria", "Conditionally Elective", "Villkorligt valfri", "Conditionally Elective"),
+  | "R" // ("Rekommenderade", "Recommended", "Rekommenderad", "Recommended"),
+  | "V" // ("Valfria", "Optional", "Valfri", "Optional");
+
+export type TKoppsCourseElectiveCondition = {
+  "programmeCode": string, // "CDEPR"
+  "progAdmissionTerm": {
+      "term": number, // 20222
+  },
+  "studyYear": number, // 3
+  // "title": string, // "Civilingenjörsutbildning i design och produktframtagning",
+  "electiveCondition": {
+      "ordinal": number, // 2
+      "name": TKoppsCourseRequiredForProgram, // "VV"
+      "abbrLabel": string, // "Villkorligt valfri"
+  }
+}
+
+// This is an embedded object
 export type TProgramRoundEntity = {
   code: TProgramRound["code"];
   startTerm: TProgramRound["startTerm"];
-  name: TProgramRound["name"];
+  name: { sv: string, en: string };
   studyYear: TProgramRound["studyYear"];
-  specialization?: TProgramRound["specialization"];
-  required: TProgramRound["required"];
+  specialization?: { code: string, name?: { sv: string, en: string }};
 };
 
 export type TCourseRoundEntity = {
@@ -115,34 +138,40 @@ export type TCourseRoundEntity = {
   displayYear: TCourseRound["displayYear"];
   credits: TCourseRound["credits"];
   modules: TCourseRoundModuleEntity[];
+  electiveConditionsForPrograms: TKoppsCourseElectiveCondition[];
 };
 
 export type TReportedResultEntity = {
   _id?: string | ObjectId; // Used by document store
   id: string; // Required for DB-layer to work
-  parentId: string; // This can belong to a module (UtbildningsinstansId = moduleRoundId) or a course (UtbildningsinstansId = courseId).
-  ladokCourseRoundId: string; // CourseRound.ladokCourseRoundId (UtbildningstillfalleUID)
-  hashedStudentId: string; // StudentUID hashed
-  decision: string; // BeslutUID
-  result: string; // Calculated from BetygsgradID and BetygsskalaID
+  parentId?: string; // This can belong to a module (UtbildningsinstansId = moduleRoundId) or a course (UtbildningsinstansId = courseId).
+  ladokCourseRoundId?: string; // CourseRound.ladokCourseRoundId (UtbildningstillfalleUID)
+  hashedStudentId?: string; // StudentUID hashed
+  decision?: string; // BeslutUID
+  result?: string; // Calculated from BetygsgradID and BetygsskalaID
   metaData: {
-    HandelseUID: string;
-    BetygsgradID: number;
-    BetygsskalaID: number;
+    HandelseUID?: string;
+    BetygsgradID?: number;
+    BetygsskalaID?: number;
     ResultatUID: string;
   };
+  retraction?: TBeslutMetaData;
 };
 
 export type TStudentParticipationEntity = {
   _id?: string | ObjectId; // Used by document store
   id: string; // Required for DB-layer to work
   // CourseRound.ladokCourseRoundId (UtbildningsinstansUID):
-  parentId: string; // TODO: Consider removing, use ladokCoursRoundId instead
-  hashedStudentId: string; // StudentUID hashed
+  ladokStudentId: string;
+  ladokCourseId: string;
   ladokCourseRoundId: TStudentParticipation["ladokCourseRoundId"];
+  
   canvasSisId: TStudentParticipation["canvasSisId"];
   name: TStudentParticipation["name"];
   email: TStudentParticipation["email"];
-  roles: TStudentParticipation["roles"];
-  program: TProgramRoundEntity;
+  roles: TStudentParticipation["roles"]; // Accutally only "student"
+  // roles: ["student"];
+
+  locations: string[];
+  program?: TProgramRoundEntity;
 };

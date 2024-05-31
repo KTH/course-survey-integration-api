@@ -78,7 +78,9 @@ export type TModulTillStatusEvent = {
   };
 };
 
-const STATUS_ACTIVE = 2;
+enum MODUL_STATUS {
+  active = 2,
+}
 
 function convertBenamningToName(
   inp: TModulTillStatusEvent["Benamningar"]["Benamning"],
@@ -111,53 +113,48 @@ export default async function handler(
   const ladokCourseRoundId = message.OverliggandeUtbildningsinstansUID;
   const moduleId = message.UtbildningsinstansUID;
   const moduleCode = message.Utbildningskod;
-  const status = message.Status;
+  const moduleStatus = message.Status;
+
   context.log(
-    `ModulTillStatusEvent: ${ladokCourseRoundId} ${moduleCode} ${status}`,
+    `ModulTillStatusEvent: ${ladokCourseRoundId} ${moduleCode} ${moduleStatus}`,
   );
 
   try {
-    const courseRound: TCourseRoundEntity = await db.fetchById(
+    // If we don't have the course round, we can't update the module
+    // so we create a thin dummy
+    const courseRound = await db.fetchById<TCourseRoundEntity>(
       ladokCourseRoundId,
       "CourseRound",
     );
-    const language = courseRound.language;
-    let updatedModules;
-    if (status === STATUS_ACTIVE) {
-      // Add if not exists
-      if (
-        !courseRound.modules?.find(
-          (module: TCourseRoundModuleEntity) => module.code === moduleCode,
-        )
-      ) {
-        const newModule: TCourseRoundModuleEntity = {
-          moduleRoundId: moduleId, //
-          code: message.Utbildningskod,
-          name:
-            convertBenamningToName(message.Benamningar.Benamning, language) ??
-            "",
-          credits: message.Omfattningsvarde,
-          gradingScheme: convertBetygsskalaToGradingScheme(
-            message.BetygsskalaID,
-          ),
-        };
-        updatedModules = [...(courseRound.modules ?? []), newModule];
-      }
+
+    const language = courseRound?.language ?? 'sv';
+
+    const newModule: TCourseRoundModuleEntity = {
+      moduleRoundId: moduleId, //
+      code: moduleCode,
+      canceled: moduleStatus !== MODUL_STATUS.active,
+      name:
+        convertBenamningToName(message.Benamningar.Benamning, language) ??
+        "",
+      credits: message.Omfattningsvarde,
+      gradingScheme: convertBetygsskalaToGradingScheme(
+        message.BetygsskalaID,
+      ),
+    };
+
+    // Add module if it doesn't exist, otherwise update
+    let updatedModules = courseRound?.modules ?? [];
+    if (updatedModules.find(m => m.code === moduleCode)) {
+      updatedModules = courseRound.modules.map((module) => module.code !== moduleCode ? module : {...module, status: moduleStatus});
     } else {
-      // Remove if exists
-      // TODO: Add moduleId to Module interface
-      updatedModules = courseRound.modules.filter(
-        (module: TCourseRoundModuleEntity) => module.code === moduleCode,
-      );
+      updatedModules = [...updatedModules, newModule];
     }
-    await db.update<TCourseRoundEntity>(
-      courseRound.id!,
-      { modules: updatedModules },
+    
+    await db.upsert<TCourseRoundEntity>(
+      ladokCourseRoundId,
+      { modules: updatedModules, },
       "CourseRound",
     );
-    // 1. Fetch CourseRound from DB
-    // 2. Update status
-    // 3. Persist in DB
   } finally {
     await db.close();
   }
