@@ -1,5 +1,20 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`RegistreringEvent stores a transaction log 1`] = `
+[
+  {
+    "action": "update",
+    "collectionName": "CourseRound",
+    "createdAt": "1884-01-01 Test Dummy",
+    "delta": {
+      "canceled": false,
+      "id": "41717c91-4028-11ee-bf53-2115569549a8",
+    },
+    "relatedId": "__dummy_id__",
+  },
+]
+`;
+
 exports[`RegistreringEvent writes correct data to db 1`] = `
 {
   "CourseRound": {
