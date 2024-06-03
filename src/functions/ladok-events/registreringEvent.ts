@@ -8,6 +8,7 @@ import {
   getProgramParticipation,
 } from "ladok-integration";
 import { TProgramRoundEntity, TStudentParticipationEntity } from "../interface";
+import { isValidEvent } from "../utils";
 
 export type TRegistreringEvent = {
   Omfattningsvarde: string; // "10.0",
@@ -31,7 +32,13 @@ export default async function handler(
   context: InvocationContext,
   db: Database,
 ): Promise<void> {
-  // if (!isValidEvent("se.ladok.schemas.studiedeltagande.RegistreringEvent", context?.triggerMetadata?.userProperties)) return;
+  if (
+    !isValidEvent(
+      "se.ladok.schemas.studiedeltagande.RegistreringEvent",
+      context?.triggerMetadata?.userProperties,
+    )
+  )
+    return;
 
   // TODO: Consider using zod to validate the message
 
@@ -63,7 +70,7 @@ export default async function handler(
     const programParticipation = await getProgramParticipation(
       ladokStudentId,
       ladokCourseRoundId,
-    ) satisfies (TProgramRoundEntity | undefined);
+    ) satisfies (TProgramRoundEntity | undefined);
 
     // 1. Create a StudentParticipation object
     const doc: TStudentParticipationEntity = {
