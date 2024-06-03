@@ -1,4 +1,5 @@
-import { Database, DbCollectionName, TQueryOptions } from "../../src/functions/db";
+import { ObjectId } from "mongodb";
+import { Database, DbCollectionName, TMessageEntity, TQueryOptions, TTransAction } from "../../src/functions/db";
 
 type TQuery = {
   query: string;
@@ -7,20 +8,35 @@ type TQuery = {
 
 export class MockDatabase implements Database {
   _result: Record<DbCollectionName, any>;
+  _transactionLog: { action: string, collectionName: string, relatedId: string, createdAt: string, delta: Record<string, any> }[];
+  _incomingMessageLog: Record<string, any>;
   _mockData: Record<DbCollectionName, any>;
   _client: any;
   _queryOptions: (TQueryOptions | undefined)[];
 
-  // I would have prefered narrowing keys to DbCollectionName but
-  // the syntax Record<DbCollectionName, any> requires all keys
-  // from DbCollectionName to be present.
+  // I would have prefered narrowing keys in mockData to type DbCollectionName but
+  // the syntax Record<DbCollectionName, any> requires all keys from DbCollectionName
+  // to be present.
   /**
    * @param mockData an array of objects that can be queried by .filter(), either a document or a TQuery (only used for query()).
    */
   constructor(mockData: Record<string, any> | undefined = undefined) {
     this._mockData = mockData ?? ({} as Record<DbCollectionName, TQuery | any>);
     this._result = {} as Record<DbCollectionName, any>;
+    this._transactionLog = [];
+    this._incomingMessageLog = {}; // Ladok3FeedEvents
     this._queryOptions = [ ]
+  }
+
+  async _logTransaction(action: TTransAction, collectionName: string, doc: any, _id?: string | ObjectId): Promise<void> {
+    this._transactionLog.push({ action, collectionName: collectionName, relatedId: "__dummy_id__", createdAt: "1884-01-01 Test Dummy", delta: { ...doc } })
+  }
+
+  async _logIncomingMessage(
+    invocationId: string,
+    doc: TMessageEntity,
+  ): Promise<void> {
+    this._incomingMessageLog[invocationId] = { ...doc }; // Ladok3FeedEvents
   }
 
   async connect(): Promise<void> {
@@ -52,7 +68,7 @@ export class MockDatabase implements Database {
       return outp;
     }
 
-    return outp.filter((doc: any) => doc?.[propName] === value);
+    return outp.filter((doc: any) => _getVal(doc, propName) === value);
   }
 
   /**
@@ -85,6 +101,7 @@ export class MockDatabase implements Database {
 
   async insert(doc: any, collectionName: DbCollectionName): Promise<void> {
     this._result[collectionName] = doc;
+    await this._logTransaction("insert", collectionName, { ...doc }, "__dummy_id__");
   }
 
   async update(
@@ -106,6 +123,7 @@ export class MockDatabase implements Database {
       // Not found!
       // this._result[collectionName] = { ...partial };
     }
+    await this._logTransaction("update", collectionName, { ...partial });
   }
 
   async upsert(
@@ -125,6 +143,23 @@ export class MockDatabase implements Database {
       };
     } else {
       this._result[collectionName] = { ...partial };
+      await this._logTransaction("insert", collectionName, { id, ...partial }, "__dummy_id__");
+      return;
     }
+    
+    await this._logTransaction("update", collectionName, { id, ...partial });
+  }
+}
+
+function _getVal(doc: any, propName: string): any {
+  if (doc) {
+    let tmp = doc;
+    let propLst: string[] = propName?.split(".");
+    while (propLst.length > 0) {
+      const p = propLst.shift();
+      if (p === undefined) break;
+      tmp = tmp?.[p];
+    }
+    return tmp;
   }
 }
