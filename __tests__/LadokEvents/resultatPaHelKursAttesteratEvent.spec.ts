@@ -30,5 +30,12 @@ describe("ResultatPaHelKursAttesteratEvent", () => {
     await handler(event.message, mockContext, mockDb);
   });
 
+  test("stores a transaction log", async () => {
+    // This is done in case we register the retraction message prior to the actual result message
+    const mockDb = new MockDatabase(mockDbData);
+    const mockContext = new MockContext(event.userProps);
+    await handler(event.message, mockContext, mockDb);
 
+    expect(mockDb._transactionLog).toMatchSnapshot();
+  });
 });
