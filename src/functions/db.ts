@@ -1,4 +1,4 @@
-import { FindOptions, MongoClient } from "mongodb";
+import { Collection, FindOptions, MongoClient, ObjectId } from "mongodb";
 
 const IS_PROD = process.env.NODE_ENV === "production";
 const {
@@ -11,7 +11,7 @@ if (IS_PROD && !COSMOSDB_CONNECTION_STRING)
 const dbConnectionUrl = new URL(COSMOSDB_CONNECTION_STRING);
 const COSMOSDB_NAME = process.env.COSMOSDB_NAME ?? "test";
 dbConnectionUrl.pathname = `/${COSMOSDB_NAME}`;
-  
+
 // const DB_NAME = "ladok3";
 // const DB_QUEUE_NAME = "Ladok3FeedEvent";
 
@@ -62,8 +62,38 @@ export type TQueryOptions = {
   sortOrder?: "asc" | "desc";
 };
 
+export type TTransAction = "insert" | "update" | "delete";
+
+export type TMessageEntity = {
+  id: string,
+  ladok3EventType: string,
+  ladok3Username: string,
+  userProperties: Record<string, any>,
+  message: Record<string, any>,
+};
+
+
 export class Database {
   _client: MongoClient | undefined;
+
+  async _logTransaction(
+    action: TTransAction,
+    collectionName: string,
+    doc: any,
+    _id?: string | ObjectId,
+  ): Promise<void> {
+    const collection = this._client!.db().collection("TransactionLog");
+    await collection.insertOne({ action, collectionName: collectionName, relatedId: (_id ?? doc._id).toString(), createdAt: new Date().toISOString(), delta: { ...doc } });
+  }
+
+  async _logIncomingMessage(
+    invocationId: string,
+    doc: TMessageEntity,
+  ): Promise<void> {
+    await this.connect();
+    const collection = this._client!.db().collection("Ladok3FeedEvents");
+    await collection.updateOne({ id: invocationId }, { ...doc }, { upsert: true });
+  }
 
   async connect(): Promise<void> {
     if (this._client) return;
@@ -141,31 +171,38 @@ export class Database {
 
   async insert<T extends TBaseEntity>(
     doc: T,
-    collectionName: DbCollectionName
+    collectionName: DbCollectionName,
   ): Promise<void> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
-    await collection.insertOne({ ...doc });
+    const res = await collection.insertOne({ ...doc });
+    await this._logTransaction("insert", collection.collectionName, { ...doc }, res.insertedId);
   }
 
   async update<T extends TBaseEntity>(
     id: string,
     partial: Partial<T>,
-    collectionName: DbCollectionName
+    collectionName: DbCollectionName,
   ): Promise<void> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     await collection.updateOne({ id }, { $set: partial });
+    await this._logTransaction("update", collection.collectionName, { ...partial });
   }
 
   async upsert<T extends TBaseEntity>(
     id: string,
     partial: Partial<T>,
-    collectionName: DbCollectionName
+    collectionName: DbCollectionName,
   ): Promise<void> {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
-    await collection.updateOne({ id }, { $set: { ...partial, id } }, { upsert: true });
+    const res = await collection.updateOne({ id }, { $set: { ...partial, id } }, { upsert: true });
+    if (res.upsertedId) {
+      await this._logTransaction("insert", collection.collectionName, { id, ...partial }, res.upsertedId);
+    } else {
+      await this._logTransaction("update", collection.collectionName, { id, ...partial });
+    }
   }
 }
 type TBaseEntity = {
