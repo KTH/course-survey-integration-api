@@ -1,5 +1,5 @@
-import event from "../../__fixtures__/events/05_resultat.AttesteratResultatMakuleratEvent_1.json";
-import handler from "../../src/functions/ladok-events/attesteratResultatMakuleratEvent";
+import event from "../../__fixtures__/events/03_resultat.ResultatPaHelKursAttesteratEvent_1.json";
+import handler from "../../src/functions/ladok-events/resultatPaHelKursAttesteratEvent";
 import { MockContext } from "../utils/mockContext";
 import { MockDatabase } from "../utils/mockDatabase";
 import { reportedResults1 } from "../../__fixtures__/entities/01_reportedResults";
