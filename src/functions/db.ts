@@ -187,7 +187,8 @@ export class Database {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     await collection.updateOne({ id }, { $set: partial });
-    await this._logTransaction("update", collection.collectionName, { ...partial });
+    const doc = await collection.findOne({ id }, { projection: { _id: 1 } });
+    await this._logTransaction("update", collection.collectionName, { ...partial }, doc!._id);
   }
 
   async upsert<T extends TBaseEntity>(
@@ -201,7 +202,8 @@ export class Database {
     if (res.upsertedId) {
       await this._logTransaction("insert", collection.collectionName, { id, ...partial }, res.upsertedId);
     } else {
-      await this._logTransaction("update", collection.collectionName, { id, ...partial });
+      const doc = await collection.findOne({ id }, { projection: { _id: 1 } });
+      await this._logTransaction("update", collection.collectionName, { id, ...partial }, doc!._id);
     }
   }
 }
