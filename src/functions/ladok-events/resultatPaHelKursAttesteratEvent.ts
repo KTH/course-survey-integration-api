@@ -37,7 +37,7 @@ export default async function handler(
 ): Promise<void> {
   if (
     !isValidEvent(
-      "ResultatPaHelKursAttesteradEvent",
+      "se.ladok.schemas.resultat.ResultatPaHelKursAttesteratEvent",
       context?.triggerMetadata?.userProperties,
     )
   )

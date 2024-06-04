@@ -32,7 +32,7 @@ export default async function handler(
 ): Promise<void> {
   if (
     !isValidEvent(
-      "AttesteratResultatMakuleratEvent",
+      "se.ladok.schemas.resultat.AttesteratResultatMakuleratEvent",
       context?.triggerMetadata?.userProperties,
     )
   ) return;

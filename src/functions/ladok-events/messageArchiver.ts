@@ -17,7 +17,7 @@ export default async function handler(
       return;
     }
 
-    await db.upsert<any>(
+    await db._logIncomingMessage(
       invocationId,
       {
         id: invocationId,
@@ -26,7 +26,6 @@ export default async function handler(
         userProperties,
         message,
       },
-      "Ladok3FeedEvents" as any,
     )
   } catch (err) {
     throw err;

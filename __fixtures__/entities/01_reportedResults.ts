@@ -51,14 +51,14 @@ export const reportedResults1: TReportedResultEntity[] = [
     parentId: "8734afdf-1da9-415d-8c08-9ed160f87c0a-ladokCourseId",
     ladokCourseRoundId:
       "41374a41-2bda-404f-b11c-6e007deb61b4-ladokCoursRoundId",
-    hashedStudentId: "4c18639a-7e9d-4ebc-9f90-92b40cbd5508-hashedStudentId",
+    hashedStudentId: "4ff5969a-0e54-11ed-8f4d-87c157374df8-hashedStudentId",
     decision: "e5d84a88-847a-48e3-a643-88ab415ba90f-beslutsId",
     result: "P",
     metaData: {
       HandelseUID: "f75b0757-1183-4533-8201-b9de39ac264c-handelseId",
       BetygsgradID: 131661,
       BetygsskalaID: 131657,
-      ResultatUID: "b9d0c0ea-7a27-4fbc-a638-6b99fe0a6b40-resultatId",
+      ResultatUID: "1e380e11-b44f-11ee-988f-6acd08c746d6",
     },
   },
   {
