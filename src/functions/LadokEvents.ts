@@ -30,7 +30,7 @@ app.serviceBusTopic("PaborjatUtbildningstillfalleEvent", {
   subscriptionName: "paborjat-utbildningstillfalle",
 });
 
-app.serviceBusTopic("KurstillfälleTillStatus", {
+app.serviceBusTopic("KurstillfalleTillStatus", {
   ...sharedProps,
   handler: ServiceBus<TKurstillfalleTillStatusEvent>(kurstillfalleTillStatusEvent),
   subscriptionName: "kurstillfalle-till-status",
