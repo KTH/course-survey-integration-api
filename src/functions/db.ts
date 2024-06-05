@@ -92,7 +92,7 @@ export class Database {
   ): Promise<void> {
     await this.connect();
     const collection = this._client!.db().collection("Ladok3FeedEvents");
-    const res = await collection.countDocuments({ id: invocationId });
+    const res = await collection.findOne({ id: invocationId });
     if (!res) {
       await collection.insertOne({ ...doc });
     }
