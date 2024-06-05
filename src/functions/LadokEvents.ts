@@ -54,11 +54,11 @@ app.serviceBusTopic("ResultatPaHelKursAttesterat", {
   subscriptionName: "resultat-pa-hel-kurs-attesterat",
 });
 
-// app.serviceBusTopic('AttesteratResultatMakulerat', {
-//   ...sharedProps,
-//   handler: ServiceBus<TAttesteratResultatMakuleratEvent>(attesteratResultatMakuleratEvent),
-//   subscriptionName: 'csia-attesterat-resultat-makulerat',
-// });
+app.serviceBusTopic('AttesteratResultatMakulerat', {
+  ...sharedProps,
+  handler: ServiceBus<TAttesteratResultatMakuleratEvent>(attesteratResultatMakuleratEvent),
+  subscriptionName: 'attesterat-resultat-makulerat',
+});
 
 app.serviceBusTopic("MessageArchiver", {
   ...sharedProps,

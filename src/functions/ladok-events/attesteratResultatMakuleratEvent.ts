@@ -3,6 +3,7 @@ import { TLadokEventContext } from "./types";
 import { isValidEvent } from "../utils";
 import { Database } from "../db";
 import { TReportedResultEntity } from "../interface";
+import { hashStudentId } from "./utils";
 
 export type TAttesteratResultatMakuleratEvent = {
   Beslut: {
@@ -38,16 +39,10 @@ export default async function handler(
   ) return;
 
   try {
-    const result = await db.queryByProperty("metaData.ResultatUID", message.ResultatUID, "ReportedResult");
-    if (result.length === 0) {
-      // QUESTION: Should we store this in case messages come out of order?
-      context.log(`Resultat with ResultatUID ${message.ResultatUID} not found`);
-      return;
-    }
+    const hashedStudentId = await hashStudentId(message.StudentUID);
+    const id = `${message.UtbildningsinstansUID}-${hashedStudentId}`;
   
-    const reportedResult = result[0];
-  
-    await db.upsert<TReportedResultEntity>(reportedResult.id, { retraction: message.Beslut }, "ReportedResult");
+    await db.upsert<TReportedResultEntity>(id, { id, retraction: message.Beslut }, "ReportedResult");
   } finally {
     await db.close();
   }
