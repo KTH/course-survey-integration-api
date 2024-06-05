@@ -92,7 +92,10 @@ export class Database {
   ): Promise<void> {
     await this.connect();
     const collection = this._client!.db().collection("Ladok3FeedEvents");
-    await collection.updateOne({ id: invocationId }, { ...doc }, { upsert: true });
+    const res = await collection.countDocuments({ id: invocationId });
+    if (!res) {
+      await collection.insertOne({ ...doc });
+    }
   }
 
   async connect(): Promise<void> {
@@ -187,7 +190,7 @@ export class Database {
     await this.connect();
     const collection = this._client!.db().collection(collectionName);
     await collection.updateOne({ id }, { $set: partial });
-    const doc = await collection.findOne({ id }, { projection: { _id: 1 } });
+    const doc = await collection.findOne({ id });
     await this._logTransaction("update", collection.collectionName, { ...partial }, doc!._id);
   }
 
@@ -202,7 +205,7 @@ export class Database {
     if (res.upsertedId) {
       await this._logTransaction("insert", collection.collectionName, { id, ...partial }, res.upsertedId);
     } else {
-      const doc = await collection.findOne({ id }, { projection: { _id: 1 } });
+      const doc = await collection.findOne({ id });
       await this._logTransaction("update", collection.collectionName, { id, ...partial }, doc!._id);
     }
   }
