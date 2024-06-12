@@ -13,8 +13,10 @@ const {
   LADOK3_FEED_SERVICE_BUS_TOPIC_NAME = "course-survey-integration-api-ref",
 } = process.env;
 
+const SERVICEBUS_CONNECTION = process.env["SERVICEBUS_CONNECTION"] || "LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING";
+
 const sharedProps = {
-  connection: "LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING",
+  connection: SERVICEBUS_CONNECTION,
   topicName: LADOK3_FEED_SERVICE_BUS_TOPIC_NAME,
 };
 
