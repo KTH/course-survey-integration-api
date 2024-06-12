@@ -14,7 +14,7 @@ const {
 } = process.env;
 
 const sharedProps = {
-  connection: "kth_integral_connection",
+  connection: "LADOK3_FEED_SERVICE_BUS_CONNECTION_STRING",
   topicName: LADOK3_FEED_SERVICE_BUS_TOPIC_NAME,
 };
 
