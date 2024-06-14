@@ -1,14 +1,24 @@
-import { ProgramParticipation, TGetCourseRoundInformation } from ".";
+import { ProgramParticipation, TGetCourseRoundInformation, TGetCourseRoundLanguage } from ".";
 
 // This doesn't require mocking
 export { getGradingScheme } from "../src";
 
 const _mockedValues: Record<
   string,
-  TGetCourseRoundInformation | ProgramParticipation
+  TGetCourseRoundInformation | ProgramParticipation | TGetCourseRoundLanguage
 > = {};
 
 export class LadokIntegrationMock {
+  static getCourseRoundLanguage(
+    ladokUid: string,
+    params: TGetCourseRoundLanguage,
+  ) {
+    if (_mockedValues[ladokUid])
+      throw new Error(`Mock value already registered for ${ladokUid}`);
+
+    _mockedValues[ladokUid] = params;
+  }
+
   static getCourseRoundInformation(
     ladokUid: string,
     params: TGetCourseRoundInformation,
@@ -31,6 +41,11 @@ export class LadokIntegrationMock {
     _mockedValues[key] = params;
   }
 }
+
+export async function getCourseRoundLanguage(utbildningstillfalleUid: string) {
+  return _mockedValues[utbildningstillfalleUid];
+}
+
 
 export async function getCourseRoundInformation(ladokUid: string) {
   return _mockedValues[ladokUid];

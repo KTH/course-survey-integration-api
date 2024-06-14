@@ -4,6 +4,7 @@ import {
   getKurstillfallesdeltagande,
   getOrganisation,
   getStudiestruktur,
+  getUtbildningstillfalle,
 } from "./api";
 import {
   diffTerms,
@@ -65,6 +66,20 @@ export type TGetCourseRoundInformation = {
   }>;
   gradingScheme: TGradingScheme;
 };
+
+export type TGetCourseRoundLanguage = {
+  language: "sv" | "en";
+}
+
+export async function getCourseRoundLanguage(
+  utbildningstillfalleUid: string,
+): Promise<TGetCourseRoundLanguage> {
+  const utbildningstillfalle = await getUtbildningstillfalle(utbildningstillfalleUid);
+  const langAttr = utbildningstillfalle.Attributvarden.find(a => a.Namn === "utbildning.attribut.undervisningssprak");
+  return {
+    language: langAttr?.Varde === "1" ? "sv" : "en",
+  };
+}
 
 /** Get course round information from its Ladok UID */
 export async function getCourseRoundInformation(

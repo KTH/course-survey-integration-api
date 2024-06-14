@@ -117,3 +117,16 @@ const StudiestrukturRec: z.ZodType<TStudiestruktur> = StudiestrukturBase.extend(
 export const Studiestruktur = z.object({
   Studiestrukturer: z.array(StudiestrukturRec),
 });
+
+// https://www.integrationstest.ladok.se/restdoc/utbildningsinformation.html#N71765
+const AttributVarde = z.object({
+  AttributdefinitionUID: z.string(),
+  Grupp: z.number(),
+  link: z.array(z.any()),
+  Namn: z.string(),
+  Uid: z.string(),
+  Varde: z.string(),
+});
+export const Utbildningstillfalle = z.object({
+  Attributvarden: AttributVarde.array(),
+});
