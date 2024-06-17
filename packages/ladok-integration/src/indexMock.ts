@@ -13,10 +13,11 @@ export class LadokIntegrationMock {
     ladokUid: string,
     params: TGetCourseRoundLanguage,
   ) {
-    if (_mockedValues[ladokUid])
-      throw new Error(`Mock value already registered for ${ladokUid}`);
+    const key = `${ladokUid}-language`;
+    if (_mockedValues[key])
+      throw new Error(`Mock value already registered for ${key}`);
 
-    _mockedValues[ladokUid] = params;
+    _mockedValues[key] = params;
   }
 
   static getCourseRoundInformation(
@@ -43,7 +44,7 @@ export class LadokIntegrationMock {
 }
 
 export async function getCourseRoundLanguage(utbildningstillfalleUid: string) {
-  return _mockedValues[utbildningstillfalleUid];
+  return _mockedValues[`${utbildningstillfalleUid}-language`];
 }
 
 

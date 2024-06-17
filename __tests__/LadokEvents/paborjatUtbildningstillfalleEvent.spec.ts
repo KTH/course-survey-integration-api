@@ -81,6 +81,10 @@ LadokIntegrationMock.getCourseRoundInformation(
   },
 );
 
+LadokIntegrationMock.getCourseRoundLanguage(event.message.UtbildningstillfalleUID, {
+  language: "sv",
+});
+
 UgIntegrationMock.getUgUser("u1responsible", {
   email: "cr@email.com",
   kthid: "u1responsible",
