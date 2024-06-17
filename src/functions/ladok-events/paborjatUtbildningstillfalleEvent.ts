@@ -11,7 +11,7 @@ import { isValidEvent } from "../utils";
 import { Database } from "../db";
 import { TCourseRound, TCourseRoundEntity } from "../interface";
 import { getCourseInformation } from "kopps-integration";
-import { getCourseRoundInformation } from "ladok-integration";
+import { getCourseRoundInformation, getCourseRoundLanguage } from "ladok-integration";
 import {
   convertLadokModuleToCourseModule,
   convertToCourseInstanceArchivingCode,
@@ -63,7 +63,7 @@ export default async function handler(
     `PaborjatUtbildningstillfalleEvent: ${msgUtbildningstillfalleUid}`,
   );
   try {
-    const dummyLanguage = "sv"; // TODO: Fix me!!! Should use default language for course
+    const { language } = await getCourseRoundLanguage(msgUtbildningstillfalleUid);
     const koppsInfo = await getCourseInformation(msgUtbildningstillfalleUid);
     const ladokCourseRoundInfo = await getCourseRoundInformation(
       msgUtbildningstillfalleUid,
@@ -126,7 +126,7 @@ export default async function handler(
     // We do this in case a KurstillfalleTillStatusEvent has been processed
     // before this event.
     let mergedModules = ladokCourseRoundInfo?.modules?.map((m) =>
-      convertLadokModuleToCourseModule(m, dummyLanguage),
+      convertLadokModuleToCourseModule(m, language),
     );
     mergedModules = mergedModules.map(module => {
       const m = existingCourseRound?.modules.find(m => m.code === module.code);
@@ -139,7 +139,7 @@ export default async function handler(
       id: msgUtbildningstillfalleUid,
 
       // Dummy data:
-      language: dummyLanguage,
+      language: language,
       canceled: existingCourseRound?.canceled ?? false,
 
       // N
@@ -156,20 +156,20 @@ export default async function handler(
       canvasSisId: msgUtbildningstillfalleUid, // I deduced this by looking at the Event Relationship diagram, not yet verified in Canvas
 
       // Source KOPPS API:
-      name: koppsInfo?.course.name[dummyLanguage],
+      name: koppsInfo?.course.name[language],
       courseGoal: koppsInfo?.syllabus.goals,
 
       // Source UG:
       organization: convertUgSchoolToOrgEntity(
         tmpUgSchool,
         ladokSchoolCode,
-        dummyLanguage,
+        language,
       ),
 
       institution: convertUgSchoolToOrgEntity(
         tmpUgInstitution,
         ladokInsitutionCode,
-        dummyLanguage,
+        language,
       ),
       courseResponsible: courseResponsible,
       courseExaminers: examiners,

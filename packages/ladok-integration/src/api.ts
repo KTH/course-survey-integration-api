@@ -7,6 +7,7 @@ import {
   Kurstillfallesdeltagande,
   Studiestruktur,
   LadokAnvandare,
+  Utbildningstillfalle,
 } from "./types";
 import got, { HTTPError } from "got";
 
@@ -23,6 +24,7 @@ const gotClient = got.extend({
       "application/vnd.ladok-resultat+json",
       "application/vnd.ladok-kataloginformation+json",
       "application/vnd.ladok-studiedeltagande+json",
+      "application/vnd.ladok-utbildningsinformation+json",
     ].join(","),
   },
   responseType: "json",
@@ -96,3 +98,13 @@ export async function getStudiestruktur(studentUID: string) {
     Studiestruktur,
   );
 }
+
+export async function getUtbildningstillfalle(utbildningstillfalleUID: string) {
+  return typedGet(
+    `utbildningsinformation/utbildningstillfalle/${utbildningstillfalleUID}`,
+    Utbildningstillfalle,
+  );
+}
+
+
+// /utbildningsinformation/internal/utbildningstillfalle/647a7d3d-9a89-11ee-bfe5-0721067a4fbf
