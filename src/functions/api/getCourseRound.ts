@@ -152,7 +152,7 @@ export function transformProgramRoundForApi(prog: TProgramRoundEntity, courseRou
     specialization,
   } = prog;
 
-  const koppsElectiveCondition = courseRound.electiveConditionsForPrograms.find(
+  const koppsElectiveCondition = courseRound.electiveConditionsForPrograms?.find(
     c => c.programmeCode === code && c.progAdmissionTerm?.term?.toString() === startTerm
   );
   const electiveConditionCode = koppsElectiveCondition?.electiveCondition.name;
