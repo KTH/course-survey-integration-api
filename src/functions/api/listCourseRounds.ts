@@ -60,8 +60,12 @@ export default async function handler<T extends APICourseRoundList>(
         ladokCourseRoundId,
         "StudentParticipation",
       );
-      const programs = studentParticipations.reduce(
-        (acc: Record<string, TProgramRound>, res: any) => {
+
+      const programsObj = studentParticipations.reduce(
+        // The stored program objects have a full i18n name object because we might
+        // not know what language the CourseRound is held in at time of storing
+        // StudentParticipation object.
+        (acc: Record<string, TProgramRound & { name: Record<"en" | "sv", string>}>, res: any) => {
           if (res.program) {
             acc[res.program.code] ??= res.program;
           }
@@ -70,8 +74,17 @@ export default async function handler<T extends APICourseRoundList>(
         {},
       );
 
+      // Select language based on course round language
+      const programs = Object.values(programsObj).map<TProgramRound>((program) => {
+        return {
+          ...program,
+          // We might have string entries stored in db so using the string is a fallback
+          name: typeof program.name === "object" ? program.name[courseRound.language] : program.name,
+        }
+      });
+
       // Store list of program values so they can be added to list of course rounds
-      programAssociations[ladokCourseRoundId] = Object.values(programs);
+      programAssociations[ladokCourseRoundId] = programs;
     }
 
     // TODO: Fix this

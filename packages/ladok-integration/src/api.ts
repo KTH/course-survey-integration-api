@@ -106,5 +106,4 @@ export async function getUtbildningstillfalle(utbildningstillfalleUID: string) {
   );
 }
 
-
 // /utbildningsinformation/internal/utbildningstillfalle/647a7d3d-9a89-11ee-bfe5-0721067a4fbf
