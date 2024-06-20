@@ -7,9 +7,11 @@ import {
   APICourseRoundList,
   TCourseRoundEntity,
   TProgramRound,
+  TProgramRoundEntity,
 } from "../interface";
 import { Database } from "../db";
 import { startTermFromArchivingCode } from "../ladok-events/utils";
+import { transformProgramRoundForApi } from "./getCourseRound";
 
 export default async function handler<T extends APICourseRoundList>(
   request: HttpRequest,
@@ -54,16 +56,22 @@ export default async function handler<T extends APICourseRoundList>(
     // Add programmes to list of course rounds
     const programAssociations: Record<string, TProgramRound[]> = {};
     for (const courseRound of courseRounds) {
+      // TODO: I believe this is causing a massive amount of RU usage.
+      // Consider removing program property from CourseRound listing
       const { ladokCourseRoundId } = courseRound;
       const studentParticipations = await db.queryByProperty(
         "ladokCourseRoundId",
         ladokCourseRoundId,
         "StudentParticipation",
       );
+
       const programs = studentParticipations.reduce(
+        // The stored program objects have a full i18n name object because we might
+        // not know what language the CourseRound is held in at time of storing
+        // StudentParticipation object.
         (acc: Record<string, TProgramRound>, res: any) => {
           if (res.program) {
-            acc[res.program.code] ??= res.program;
+            acc[res.program.code] ??= transformProgramRoundForApi(res.program, courseRound, courseRound.language);
           }
           return acc;
         },
