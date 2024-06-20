@@ -7,9 +7,11 @@ import {
   APICourseRoundList,
   TCourseRoundEntity,
   TProgramRound,
+  TProgramRoundEntity,
 } from "../interface";
 import { Database } from "../db";
 import { startTermFromArchivingCode } from "../ladok-events/utils";
+import { transformProgramRoundForApi } from "./getCourseRound";
 
 export default async function handler<T extends APICourseRoundList>(
   request: HttpRequest,
@@ -54,6 +56,8 @@ export default async function handler<T extends APICourseRoundList>(
     // Add programmes to list of course rounds
     const programAssociations: Record<string, TProgramRound[]> = {};
     for (const courseRound of courseRounds) {
+      // TODO: I believe this is causing a massive amount of RU usage.
+      // Consider removing program property from CourseRound listing
       const { ladokCourseRoundId } = courseRound;
       const studentParticipations = await db.queryByProperty(
         "ladokCourseRoundId",
@@ -61,30 +65,21 @@ export default async function handler<T extends APICourseRoundList>(
         "StudentParticipation",
       );
 
-      const programsObj = studentParticipations.reduce(
+      const programs = studentParticipations.reduce(
         // The stored program objects have a full i18n name object because we might
         // not know what language the CourseRound is held in at time of storing
         // StudentParticipation object.
-        (acc: Record<string, TProgramRound & { name: Record<"en" | "sv", string>}>, res: any) => {
+        (acc: Record<string, TProgramRound>, res: any) => {
           if (res.program) {
-            acc[res.program.code] ??= res.program;
+            acc[res.program.code] ??= transformProgramRoundForApi(res.program, courseRound, courseRound.language);
           }
           return acc;
         },
         {},
       );
 
-      // Select language based on course round language
-      const programs = Object.values(programsObj).map<TProgramRound>((program) => {
-        return {
-          ...program,
-          // We might have string entries stored in db so using the string is a fallback
-          name: typeof program.name === "object" ? program.name[courseRound.language] : program.name,
-        }
-      });
-
       // Store list of program values so they can be added to list of course rounds
-      programAssociations[ladokCourseRoundId] = programs;
+      programAssociations[ladokCourseRoundId] = Object.values(programs);
     }
 
     // TODO: Fix this
