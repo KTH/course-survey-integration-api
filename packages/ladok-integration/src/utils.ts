@@ -36,6 +36,30 @@ export function getGradingScheme(id: number) {
     };
   }
 
+  // GD (deprecated) used for HL1903
+  if (id === 131650) {
+    return {
+      code: "GD",
+      grades: [
+        { validFinalGrade: true, code: "G" },
+        { validFinalGrade: true, code: "D" },
+        { validFinalGrade: false, code: "U" },
+      ],
+    };
+  }
+
+  // UV (deprecated) used for HL1903
+  if (id === 131668) {
+    return {
+      code: "UV",
+      grades: [
+        { validFinalGrade: true, code: "VG" },
+        { validFinalGrade: true, code: "G" },
+        { validFinalGrade: false, code: "U" },
+      ],
+    };
+  }
+
   throw new Error(`Unknown grading scheme id [${id}]`);
 }
 
