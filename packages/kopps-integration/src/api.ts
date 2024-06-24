@@ -18,12 +18,13 @@ const gotClient = got.extend({
   },
 });
 
-function errorHandler(error: unknown): never {
+function errorHandler(details: {}, error: unknown): never {
   if (typeof error === "object" && error !== null) {
     Error.captureStackTrace(error, errorHandler);
   }
   
   if (error instanceof HTTPError) {
+    error.message = `${error.message} ${JSON.stringify(details)}`;
     throw new ApiError(error);
   }
 
@@ -40,7 +41,7 @@ export async function getCourseRoundSummary(ladokId: string) {
       `courses/offerings/roundnumber?ladokuid=${ladokId}`,
     )
     .then((response) => response.body)
-    .catch(errorHandler);
+    .catch((err) => errorHandler({ ladokId }, err));
 }
 
 /**
@@ -53,5 +54,5 @@ export async function getCourseDetailedInformation(courseCode: string) {
       `course/${courseCode}/detailedinformation`,
     )
     .then((response) => response.body)
-    .catch(errorHandler);
+    .catch((err) => errorHandler({ courseCode }, err));
 }
