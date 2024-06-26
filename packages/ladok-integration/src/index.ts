@@ -129,6 +129,12 @@ export async function getProgramParticipation(
     return undefined;
   }
 
+  if (d1.Utbildningsinformation.Utbildningskod === "UTVTS") {
+    // This is part of a study exchange, not a specific program
+    // FIX https://kth-se.atlassian.net/browse/FOE-418
+    return undefined;
+  }
+
   const s = await getStudiestruktur(studentUID);
   const arr = findStudiestruktur(d1.Studiestrukturreferens, s.Studiestrukturer);
 
