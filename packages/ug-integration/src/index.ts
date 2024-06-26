@@ -28,7 +28,10 @@ export async function getUgMembers(groupName: string) {
   const groups = UgGroups.parse(json);
 
   if (groups.length === 0) {
-    throw new Error(`UGRestClient: group [${groupName}] not found`);
+    // throw new Error(`UGRestClient: group [${groupName}] not found`);
+    // The school will be informed by other systems that this course is missing members so
+    // we don't need to throw an error here. https://kth-se.atlassian.net/browse/FOE-412
+    return [];
   }
 
   if (groups.length > 1) {
