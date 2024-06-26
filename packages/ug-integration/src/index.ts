@@ -128,7 +128,13 @@ export async function getUgSchool(
     )
     .catch(ugClientGetErrorHandler);
 
-  if (json === undefined) return;
+  const res = Array.isArray(json) ? json.pop() : undefined;
 
-  return UgSchool.parse(json.pop());
+  if (res === undefined) {
+    throw new Error(
+      `UGRestClient: the search for pa.org.${schoolCode.toUpperCase()} returned "${json}" (expected array of objects)`,
+    );
+  }
+
+  return UgSchool.parse(res);
 }
