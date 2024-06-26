@@ -78,6 +78,7 @@ export const Kurstillfallesdeltagande = z.object({
     z.object({
       Studiestrukturreferens: z.optional(z.string()),
       Utbildningsinformation: z.object({
+        Utbildningskod: z.string(),
         UtbildningstillfalleUID: z.string(),
         Studieperiod: z.object({
           Startdatum: z.string(),
