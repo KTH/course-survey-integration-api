@@ -1,6 +1,6 @@
 import { getKurstillfallesdeltagande } from "../src/api";
 import { Kurstillfallesdeltagande } from "../src/types";
-import data from "./fixtures/kurstillfallesdeltagande_student.json";
+import data from "./fixtures/kurstillfallesdeltagande_student_with_exchange_studies.json";
 import { ApiSchemaError } from "../src/errors";
 import { ZodError } from "zod";
 import { inspect } from "node:util";
