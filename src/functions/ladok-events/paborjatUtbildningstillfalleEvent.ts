@@ -76,7 +76,7 @@ export default async function handler(
       if (err.response?.statusCode === 404) {
         // KOPPS couldn't find the course so it might be deprecated
         // Deprecated courses only have exams so we check available modules
-        const onlyExams = ladokCourseRoundInfo.modules.every(m => m.code.startsWith("TEN"));
+        const onlyExams = ladokCourseRoundInfo.modules?.every(m => m.code.startsWith("TEN"));
         if (onlyExams) {
           // We can't do anything with this course
           context.info(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) is deprecated and only has exams. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
@@ -149,7 +149,7 @@ export default async function handler(
       convertLadokModuleToCourseModule(m, language),
     );
     mergedModules = mergedModules.map(module => {
-      const m = existingCourseRound?.modules.find(m => m.code === module.code);
+      const m = existingCourseRound?.modules?.find(m => m.code === module.code);
       return m ? { ...module, canceled: m.canceled } : module;
     });
 
