@@ -55,6 +55,7 @@ export default async function handler(
   // we use that to determine if the course round exists.
   if (existingCourseRound?.ladokCourseId) {
     // Already added so skip all expensive lookups and return early
+    await db.close();
     return;
   }
 
@@ -64,10 +65,29 @@ export default async function handler(
   );
   try {
     const { language } = await getCourseRoundLanguage(msgUtbildningstillfalleUid);
-    const koppsInfo = await getCourseInformation(msgUtbildningstillfalleUid);
     const ladokCourseRoundInfo = await getCourseRoundInformation(
       msgUtbildningstillfalleUid,
     );
+
+    let koppsInfo;
+    try {
+      koppsInfo = await getCourseInformation(msgUtbildningstillfalleUid);
+    } catch (err: any) {
+      if (err.response?.statusCode === 404) {
+        // KOPPS couldn't find the course so it might be deprecated
+        // Deprecated courses only have exams so we check available modules
+        const onlyExams = ladokCourseRoundInfo.modules.every(m => m.code.startsWith("TEN"));
+        if (onlyExams) {
+          // We can't do anything with this course
+          context.info(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) is deprecated and only has exams. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
+          // TODO: Consider logging this as a transaction of new type "skip"
+          await db.close();
+          return;
+        }
+      }
+      // Unknown error needs to be thrown
+      throw err;
+    }
 
     const ladokCourseCode = ladokCourseRoundInfo.courseCode;
     const roundTerm = koppsInfo.round.startTerm;
