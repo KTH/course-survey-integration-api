@@ -12,6 +12,9 @@ in pkgs.mkShell rec {
     azure-functions-core-tools
     nodejs_20
     openssl
+    # The following is used for troubleshooting
+    hurl
+    jq
   ]
   ++
   lib.optionals stdenv.isDarwin [
