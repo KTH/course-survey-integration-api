@@ -1,0 +1,1187 @@
+{
+  "Attributvarden": [
+    {
+      "Attributdefinition": {
+        "Datatyp": "html",
+        "Kod": "utbildning.attribut.behorighetskrav",
+        "Uid": "10001001-1200-0100-0020-d2f7971e4592"
+      },
+      "Varden": [
+        "Grundläggande behörighet samt särskild behörighet: Matematik 3b alternativt Matematik 3c, Samhällskunskap 1b alternativt Samhällskunskap 1a1+1b2, Naturkunskap 2. Naturkunskap 2 kan ersättas med kurserna Kemi 1 samt Fysik 1a alternativt Fysik 1b1+1b2. I vart och ett av ämnena krävs lägst betyget E."
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "html",
+        "Kod": "utbildning.attribut.beskrivning.av.utbildningen",
+        "Uid": "10001001-1200-0100-0036-d2f7971e4592"
+      },
+      "Varden": [
+        "Arkitektutbildningen på KTH ger dig färdigheter inom ett område som verkar mellan konst och vetenskap. Som arkitekt utvecklar du framtidens konstruktioner och miljöer för ett socialt och ekologiskt hållbart samhälle. Utbildningen uppfyller EU:s yrkeskvalifikationsdirektiv vilket gör att du kan jobba internationellt efter examen.\nArkitektur handlar om allt mänskligt byggande och formgivande av miljön runt omkring oss. På Arkitektutbildningen får du djupdyka i ämnet och läsa om arkitekturens historia, arkitekturteknik och konstnärliga ämnen. Under det fjärde och femte året jobbar du kreativt i projekt tillsammans med andra studenter i en serie valbara studios. Utbildningen avslutas med ett examensarbete och det finns möjligheter att göra delar av utbildningen utomlands.\nEfter utbildningen kan du jobba med att utveckla allt från byggnader och interiörer till landskap och hela städer. En viktig utmaning är att utveckla konstruktioner för ett hållbart samhälle och använda miljövänliga material i samklang med naturen. Arbetsmarknaden för arkitekter blir allt mer internationell och du kan jobba på arkitektkontor, i den offentliga sektorn eller starta eget företag."
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "string",
+        "Kod": "utbildning.attribut.examen.uppgift.for.emil",
+        "Uid": "10001001-1200-0100-0212-d2f7971e4592"
+      },
+      "Varden": [
+        "Arkitektexamen"
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "boolean",
+        "Kod": "avvecklad"
+      },
+      "Varden": [
+        "false"
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "string",
+        "Kod": "utbildning.attribut.engelsk.benamning",
+        "Uid": "10001001-1200-0100-0003-d2f7971e4592"
+      },
+      "Varden": [
+        "Degree Programme in Architecture"
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "boolean",
+        "Kod": "har_resultat"
+      },
+      "Varden": [
+        "false"
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "omfattning",
+        "Kod": "utbildning.attribut.omfattning",
+        "Uid": "10001001-1200-0100-0000-d2f7971e4592"
+      },
+      "Varden": [
+        "300.0"
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "attributgrupp",
+        "Kod": "utbildning.attribut.organisation",
+        "Uid": "10001001-1200-0100-0001-d2f7971e4592"
+      },
+      "GrupperadeVarden": [
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.organisation.uid"
+              },
+              "Varden": [
+                "e9167a49-73d6-11e8-8c58-f9aa7f7e4fb6"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.organisation.kod",
+                "Uid": "10001001-1200-0100-0001-d2f7971e4592"
+              },
+              "Varden": [
+                "A"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.organisation.svensk.benamning",
+                "Uid": "10001001-1200-0100-0001-d2f7971e4592"
+              },
+              "Varden": [
+                "ABE/Skolan för arkitektur och samhällsbyggnad"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.organisation.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0001-d2f7971e4592"
+              },
+              "Varden": [
+                "ABE/School of Architecture and the Built Environment"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.organisation.organisationsenhetstyp.svensk.benamning",
+                "Uid": "10001001-1200-0100-0001-d2f7971e4592"
+              },
+              "Varden": [
+                "Institution"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.organisation.organisationsenhetstyp.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0001-d2f7971e4592"
+              },
+              "Varden": [
+                "Department"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "boolean",
+        "Kod": "senaste_version"
+      },
+      "Varden": [
+        "true"
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "boolean",
+        "Kod": "sjalvstandig"
+      },
+      "Varden": [
+        "true"
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "attributgrupp",
+        "Kod": "status"
+      },
+      "GrupperadeVarden": [
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "status.id"
+              },
+              "Varden": [
+                "3"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "status.kod"
+              },
+              "Varden": [
+                "S3"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "status.svensk.benamning"
+              },
+              "Varden": [
+                "Komplett"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "status.engelsk.benamning"
+              },
+              "Varden": [
+                "Complete"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "string",
+        "Kod": "utbildning.attribut.svensk.benamning",
+        "Uid": "10001001-1200-0100-0002-d2f7971e4592"
+      },
+      "Varden": [
+        "Arkitektutbildning"
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "string",
+        "Kod": "utbildning.uid"
+      },
+      "Varden": [
+        "9f5d6c69-73d8-11e8-afa7-8e408e694e54"
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "string",
+        "Kod": "utbildning.attribut.kod",
+        "Uid": "10001001-1200-0100-0004-d2f7971e4592"
+      },
+      "Varden": [
+        "ARKIT"
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "integer",
+        "Kod": "versionsnummer"
+      },
+      "Varden": [
+        "1"
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "attributgrupp.grunddata",
+        "Kod": "utbildning.attribut.krav.pa.tidigare.studier",
+        "Uid": "10001001-1200-0100-0037-d2f7971e4592"
+      },
+      "GrupperadeVarden": [
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.krav.pa.tidigare.studier.id",
+                "Uid": "10001001-1200-0100-0037-d2f7971e4592"
+              },
+              "Varden": [
+                "2"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.krav.pa.tidigare.studier.kod",
+                "Uid": "10001001-1200-0100-0037-d2f7971e4592"
+              },
+              "Varden": [
+                "GR"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.krav.pa.tidigare.studier.svensk.benamning",
+                "Uid": "10001001-1200-0100-0037-d2f7971e4592"
+              },
+              "Varden": [
+                "Inga tidigare högskolestudier krävs"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.krav.pa.tidigare.studier.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0037-d2f7971e4592"
+              },
+              "Varden": [
+                "Upper secondary or equivalent"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "attributgrupp.grunddata",
+        "Kod": "utbildning.attribut.tilltradesniva",
+        "Uid": "10001001-1200-0100-0083-d2f7971e4592"
+      },
+      "GrupperadeVarden": [
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.tilltradesniva.id",
+                "Uid": "10001001-1200-0100-0083-d2f7971e4592"
+              },
+              "Varden": [
+                "1"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.tilltradesniva.kod",
+                "Uid": "10001001-1200-0100-0083-d2f7971e4592"
+              },
+              "Varden": [
+                "1"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.tilltradesniva.svensk.benamning",
+                "Uid": "10001001-1200-0100-0083-d2f7971e4592"
+              },
+              "Varden": [
+                "Grundnivå"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.tilltradesniva.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0083-d2f7971e4592"
+              },
+              "Varden": [
+                "First cycle"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "attributgrupp.grunddata",
+        "Kod": "utbildning.attribut.giltig.from",
+        "Uid": "10001001-1200-0100-0221-d2f7971e4592"
+      },
+      "GrupperadeVarden": [
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.giltig.from.id",
+                "Uid": "10001001-1200-0100-0221-d2f7971e4592"
+              },
+              "Varden": [
+                "133040"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.giltig.from.kod",
+                "Uid": "10001001-1200-0100-0221-d2f7971e4592"
+              },
+              "Varden": [
+                "HT2007"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.giltig.from.svensk.benamning",
+                "Uid": "10001001-1200-0100-0221-d2f7971e4592"
+              },
+              "Varden": [
+                "Hösttermin 2007"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.giltig.from.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0221-d2f7971e4592"
+              },
+              "Varden": [
+                "Autumn semester 2007"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "date",
+                "Kod": "utbildning.attribut.giltig.from.startdag",
+                "Uid": "10001001-1200-0100-0221-d2f7971e4592"
+              },
+              "Varden": [
+                "2007-08-31"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "date",
+                "Kod": "utbildning.attribut.giltig.from.sistadag",
+                "Uid": "10001001-1200-0100-0221-d2f7971e4592"
+              },
+              "Varden": [
+                "2008-01-11"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.giltig.from.periodtyp.id",
+                "Uid": "10001001-1200-0100-0221-d2f7971e4592"
+              },
+              "Varden": [
+                "2"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.giltig.from.periodtyp.kod",
+                "Uid": "10001001-1200-0100-0221-d2f7971e4592"
+              },
+              "Varden": [
+                "TERMIN"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.giltig.from.periodtyp.svensk.benamning",
+                "Uid": "10001001-1200-0100-0221-d2f7971e4592"
+              },
+              "Varden": [
+                "Termin"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.giltig.from.periodtyp.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0221-d2f7971e4592"
+              },
+              "Varden": [
+                "Semester"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "attributgrupp.grunddata",
+        "Kod": "utbildningstyp"
+      },
+      "GrupperadeVarden": [
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.id"
+              },
+              "Varden": [
+                "78"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.kod"
+              },
+              "Varden": [
+                "2007PRG"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.svensk.benamning"
+              },
+              "Varden": [
+                "Program"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.engelsk.benamning"
+              },
+              "Varden": [
+                "Programme"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.grundtyp"
+              },
+              "Varden": [
+                "KURSPAKETERING"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "boolean",
+                "Kod": "utbildningstyp.avser.tillfalle"
+              },
+              "Varden": [
+                "false"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "integer",
+                "Kod": "utbildningstyp.sorteringsordning"
+              },
+              "Varden": [
+                "4"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.id"
+              },
+              "Varden": [
+                "1"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.kod"
+              },
+              "Varden": [
+                "HÖ07"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.svensk.benamning"
+              },
+              "Varden": [
+                "Högskoleutbildning, 2007 års studieordning"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.engelsk.benamning"
+              },
+              "Varden": [
+                "Higher education, study regulation of 2007"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.utbildningsform.id"
+              },
+              "Varden": [
+                "1"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.utbildningsform.kod"
+              },
+              "Varden": [
+                "HÖ"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.utbildningsform.svensk.benamning"
+              },
+              "Varden": [
+                "Högskoleutbildning"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.utbildningsform.engelsk.benamning"
+              },
+              "Varden": [
+                "Higher education"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.enhet.id"
+              },
+              "Varden": [
+                "2"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.enhet.kod"
+              },
+              "Varden": [
+                "HP"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.enhet.svensk.benamning"
+              },
+              "Varden": [
+                "Högskolepoäng"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildningstyp.studieordning.enhet.engelsk.benamning"
+              },
+              "Varden": [
+                "Credits"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "integer",
+                "Kod": "utbildningstyp.studieordning.enhet.helarsekvivalent"
+              },
+              "Varden": [
+                "60"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "attributgrupp.grunddata",
+        "Kod": "utbildning.attribut.amnesord",
+        "Uid": "10001001-1200-0100-0012-d2f7971e4592"
+      },
+      "GrupperadeVarden": [
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.amnesord.id",
+                "Uid": "10001001-1200-0100-0012-d2f7971e4592"
+              },
+              "Varden": [
+                "391"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.amnesord.kod",
+                "Uid": "10001001-1200-0100-0012-d2f7971e4592"
+              },
+              "Varden": [
+                "391"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.amnesord.svensk.benamning",
+                "Uid": "10001001-1200-0100-0012-d2f7971e4592"
+              },
+              "Varden": [
+                "Teknik och teknisk industri; Teknologi"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.amnesord.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0012-d2f7971e4592"
+              },
+              "Varden": [
+                "Technology"
+              ]
+            }
+          ]
+        },
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.amnesord.id",
+                "Uid": "10001001-1200-0100-0012-d2f7971e4592"
+              },
+              "Varden": [
+                "485"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.amnesord.kod",
+                "Uid": "10001001-1200-0100-0012-d2f7971e4592"
+              },
+              "Varden": [
+                "485"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.amnesord.svensk.benamning",
+                "Uid": "10001001-1200-0100-0012-d2f7971e4592"
+              },
+              "Varden": [
+                "Arkitektur (Material, konstruktion och tillverkning)"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.amnesord.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0012-d2f7971e4592"
+              },
+              "Varden": [
+                "Architecture (Materials, Construction and Manufacturing)"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "Attributdefinition": {
+        "Datatyp": "attributgrupp",
+        "Kod": "utbildning.attribut.lokalmarkning",
+        "Uid": "10001001-1200-0100-0097-d2f7971e4592"
+      },
+      "GrupperadeVarden": [
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.id",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "133438"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.kod",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "AR"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.svensk.benamning",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "Gruppering av program enligt årsredovisn"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "- No translation available -"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.id",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "133442"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.kod",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "CA"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.svensk.benamning",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "Civilingenjörs- och arkitektutbildning"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "- No translation available -"
+              ]
+            }
+          ]
+        },
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.id",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "133538"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.kod",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "EXORDN"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.svensk.benamning",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "Examensordning"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "- No translation available -"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.id",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "133539"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.kod",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "07"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.svensk.benamning",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "2007-års examensordning"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "- No translation available -"
+              ]
+            }
+          ]
+        },
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.id",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "133571"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.kod",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "SKOLA"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.svensk.benamning",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "Organisation"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "- No translation available -"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.id",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "133574"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.kod",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "A"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.svensk.benamning",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "ABE"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "- No translation available -"
+              ]
+            }
+          ]
+        },
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.id",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "133622"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.kod",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "PROGRAM"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.svensk.benamning",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "Utbildningsprogram"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "- No translation available -"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.id",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "133625"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.kod",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "ARK"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.svensk.benamning",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "Arkitektutb. 270-300 hp"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "- No translation available -"
+              ]
+            }
+          ]
+        },
+        {
+          "Varden": [
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.id",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "133792"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.kod",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "EXGRUPP"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.svensk.benamning",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "Nationell examensgrupp (program)"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsnyckel.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0095-d2f7971e4592"
+              },
+              "Varden": [
+                "- No translation available -"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.id",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "133811"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.kod",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "YARKI"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.svensk.benamning",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "Arkitektexamen"
+              ]
+            },
+            {
+              "Attributdefinition": {
+                "Datatyp": "string",
+                "Kod": "utbildning.attribut.markningsvarde.engelsk.benamning",
+                "Uid": "10001001-1200-0100-0096-d2f7971e4592"
+              },
+              "Varden": [
+                "- No translation available -"
+              ]
+            }
+          ]
+        }
+      ],
+      "Varden": []
+    }
+  ],
+  "Uid": "9f5d454d-73d8-11e8-afa7-8e408e694e54"
+}

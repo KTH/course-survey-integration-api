@@ -65,6 +65,15 @@ export const LadokKursinstans = z.object({
   OrganisationUID: z.string(),
 });
 
+export const LadokUtbildningsinstans = z.object({
+  Attributvarden: z.array(
+    z.record(
+      z.any(),
+    ),
+  ),
+  Uid: z.string(),
+});
+
 export const LadokOrganisation = z.object({
   Benamning: z.object({
     sv: z.string(),

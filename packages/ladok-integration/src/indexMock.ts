@@ -1,11 +1,11 @@
-import { ProgramParticipation, TGetCourseRoundInformation, TGetCourseRoundLanguage } from ".";
+import { ProgramParticipation, TGetCourseRoundInformation, TGetCourseRoundLanguage, TGetEduInstance } from ".";
 
 // This doesn't require mocking
 export { getGradingScheme } from "../src";
 
 const _mockedValues: Record<
   string,
-  TGetCourseRoundInformation | ProgramParticipation | TGetCourseRoundLanguage
+  TGetCourseRoundInformation | ProgramParticipation | TGetCourseRoundLanguage | TGetEduInstance
 > = {};
 
 export class LadokIntegrationMock {
@@ -41,6 +41,13 @@ export class LadokIntegrationMock {
 
     _mockedValues[key] = params;
   }
+
+  static getEduInstance(ladokUid: string, params: { ladokUID: string, isCoursePackage: boolean }) {
+    if (_mockedValues[ladokUid])
+      throw new Error(`Mock value already registered for ${ladokUid}`);
+
+    _mockedValues[ladokUid] = params;
+  }
 }
 
 export async function getCourseRoundLanguage(utbildningstillfalleUid: string) {
@@ -57,4 +64,8 @@ export async function getProgramParticipation(
   courseRoundUID: string,
 ) {
   return _mockedValues[[studentUID, courseRoundUID].join("-")];
+}
+
+export async function getEduInstance(ladokUid: string) {
+  return _mockedValues[ladokUid];
 }

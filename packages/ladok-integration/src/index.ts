@@ -4,6 +4,7 @@ import {
   getKurstillfallesdeltagande,
   getOrganisation,
   getStudiestruktur,
+  getUtbildningsinstans,
   getUtbildningstillfalle,
 } from "./api";
 import {
@@ -11,6 +12,7 @@ import {
   findStudiestruktur,
   getGradingScheme,
   getTermFromDate,
+  isKurspaketering,
   parseOrganisation,
 } from "./utils";
 
@@ -67,6 +69,11 @@ export type TGetCourseRoundInformation = {
   gradingScheme: TGradingScheme;
 };
 
+export type TGetEduInstance = {
+  ladokUID: string;
+  isCoursePackage: boolean;
+}
+
 export type TGetCourseRoundLanguage = {
   language: "sv" | "en";
 }
@@ -109,6 +116,16 @@ export async function getCourseRoundInformation(
 
     // TODO: Extract the information from kurstillfalle.BetygsskalaID
     gradingScheme: getGradingScheme(kurstillfalle.BetygsskalaID),
+  };
+}
+
+export async function getEduInstance(ladokUid: string): Promise<TGetEduInstance> {
+  const utbinstans = await getUtbildningsinstans(ladokUid);
+  const isCoursePackage = isKurspaketering(utbinstans);
+
+  return {
+    ladokUID: ladokUid,
+    isCoursePackage, 
   };
 }
 

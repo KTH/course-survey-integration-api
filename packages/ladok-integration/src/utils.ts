@@ -1,6 +1,7 @@
 import type { z } from "zod";
 import { LadokOrganisation } from "./types";
 import { strict as assert } from "node:assert";
+import { TGetEduInstance } from ".";
 
 type LadokOrganisation = z.infer<typeof LadokOrganisation>;
 
@@ -162,4 +163,24 @@ export function findStudiestruktur<T extends { Referens: string; Barn: T[] }>(
   }
 
   return [];
+}
+
+export function isKurspaketering(data: any): boolean {
+  for (const attribut of data.Attributvarden) {
+    if (!Array.isArray(attribut.GrupperadeVarden)) continue;
+
+    for (const grupperatVarde of attribut.GrupperadeVarden) {
+      if (!Array.isArray(grupperatVarde.Varden)) continue;
+
+      for (const varde of grupperatVarde.Varden) {
+        if (varde.Attributdefinition.Kod !== "utbildningstyp.grundtyp") continue;
+
+        if (varde.Varden[0] === "KURSPAKETERING") {
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
 }
