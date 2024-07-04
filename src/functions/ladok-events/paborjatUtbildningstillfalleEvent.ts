@@ -11,7 +11,7 @@ import { isValidEvent } from "../utils";
 import { Database } from "../db";
 import { TCourseRound, TCourseRoundEntity } from "../interface";
 import { getCourseInformation } from "kopps-integration";
-import { getCourseRoundInformation, getCourseRoundLanguage } from "ladok-integration";
+import { getCourseRoundInformation, getCourseRoundLanguage, getEduInstance } from "ladok-integration";
 import {
   convertLadokModuleToCourseModule,
   convertToCourseInstanceArchivingCode,
@@ -65,9 +65,25 @@ export default async function handler(
   );
   try {
     const { language } = await getCourseRoundLanguage(msgUtbildningstillfalleUid);
-    const ladokCourseRoundInfo = await getCourseRoundInformation(
-      msgUtbildningstillfalleUid,
-    );
+    
+    let ladokCourseRoundInfo;
+    try {
+      ladokCourseRoundInfo = await getCourseRoundInformation(
+        msgUtbildningstillfalleUid,
+      );
+    } catch (err: any) {
+      if (err.response?.statusCode === 404) {
+        // LADOK couldn't find the course round so it might be a course package
+        // such as: exchange studies, program, doctoral program, etc.
+        const eduInstance = await getEduInstance(msgUtbildningstillfalleUid);
+        if (eduInstance.isCoursePackage) {
+          await db.close();
+          return;
+        }
+      }
+      // Throw on any other error
+      throw err;
+    }
 
     let koppsInfo;
     try {

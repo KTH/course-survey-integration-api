@@ -1,4 +1,10 @@
 import { diffTerms, findStudiestruktur, getTermFromDate } from "../src/utils";
+import { isKurspaketering } from "../src/utils";
+import utbInstDoktorsprog from "./fixtures/utbildningsinstans-doktorsprog.json";
+import utbInstKurspaketering from "./fixtures/utbildningsinstans-kurspaketering.json";
+import utbInstProgram from "./fixtures/utbildningsinstans-program.json";
+import utbInstSkola from "./fixtures/utbildningsinstans-skola.json";
+import utbInstUtbprog from "./fixtures/utbildningsinstans-utbprog.json";
 
 describe("getTermFromDate", () => {
   test("Dates january to june are considered spring term", () => {
@@ -60,5 +66,32 @@ describe("findStudiestruktur", () => {
 
   test("return empty array if nothing is found", () => {
     expect(findStudiestruktur("r0", struktur)).toEqual([]);
+  });
+});
+
+describe("isKurspaketering", () => {
+  test("can detect DOKTORSPROG", () => {
+    const res = isKurspaketering(utbInstDoktorsprog);
+    expect(res).toBe(true);
+  });
+
+  test("can detect KURSPAKETERING", () => {
+    const res = isKurspaketering(utbInstKurspaketering);
+    expect(res).toBe(true);
+  });
+
+  test("can detect PROGRAM", () => {
+    const res = isKurspaketering(utbInstProgram);
+    expect(res).toBe(true);
+  });
+
+  test("can detect SKOLA", () => {
+    const res = isKurspaketering(utbInstSkola);
+    expect(res).toBe(true);
+  });
+
+  test("can detect UTBPROG", () => {
+    const res = isKurspaketering(utbInstUtbprog);
+    expect(res).toBe(true);
   });
 });

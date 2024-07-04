@@ -8,6 +8,7 @@ import {
   Studiestruktur,
   LadokAnvandare,
   Utbildningstillfalle,
+  LadokUtbildningsinstans,
 } from "./types";
 import got, { HTTPError } from "got";
 
@@ -65,6 +66,20 @@ function errorHandler(endpoint: string, error: unknown): never {
     at async /home/site/wwwroot/dist/src/functions/utils.js:44:20
 
   The line dist/api.js:69:25 pointed to the general typechecking function
+
+  This might not work due to Got's error handling. If not, add a function _getCurrentUser() that
+ 
+  function _getCurrentUser()
+    return typedGet("kataloginformation/anvandare/autentiserad", LadokAnvandare);
+  }
+
+  or
+
+  function _getCurrentUser(endpoint, zodType) {
+    return gotClient(endpoint)
+      .then((r) => zodType.parse(r.body))
+      .catch((err) => errorHandler(endpoint, err));
+  }
 */
 
 export async function getCurrentUser() {
@@ -86,6 +101,14 @@ export async function getKurstillfalle(kurstillfalleUID: string) {
 export async function getKursinstans(utbildningsinstansUID: string) {
   const endpoint = `resultat/utbildningsinstans/kursinstans/${utbildningsinstansUID}`;
   const zodType = LadokKursinstans;
+  return gotClient(endpoint)
+    .then((r) => zodType.parse(r.body))
+    .catch((err) => errorHandler(endpoint, err));
+}
+
+export async function getUtbildningsinstans(utbildningsinstansUID: string) {
+  const endpoint = `utbildningsinformation/ro/utbildningsinstans/${utbildningsinstansUID}`;
+  const zodType = LadokUtbildningsinstans;
   return gotClient(endpoint)
     .then((r) => zodType.parse(r.body))
     .catch((err) => errorHandler(endpoint, err));
