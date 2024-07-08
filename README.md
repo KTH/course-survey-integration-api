@@ -34,6 +34,7 @@ This request will be processed and once your API-access key is available, you wi
 
 In this project we use Test Driven Development (TDD). Testing manually is both confusing and prone to errors. Also, local invocations of funcitons won't provide a proper context object which limits what kind of tests you can implement. This requires you to write each test before you implement the code.
 
+
 ```sh
 npm run test
 ```
@@ -56,6 +57,12 @@ npm run start
 
 Start all functions. This will start processing messages available on the service bus subscriptions. It will also
 allow you to make calls to the API using HTTP-endpoints.
+
+### Errors in Production
+
+If you get an error in production. Find the message stored in MongoDB collection `ladok3FeedEvents`. Add the entire entry as JSON-file to `__fixtures__/eventsFromLadok` and write a test that consumes that message (see *.integration.prod.ts). Make sure you are using PROD-setup for tests and running tje `test:integration-prod` script.
+
+### Adding New Data Sources
 
 When integrating with data sources you:
 
