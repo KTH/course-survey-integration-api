@@ -14,6 +14,7 @@ import {
   getTermFromDate,
   isDoktorsavhandling,
   isKurspaketering,
+  isUtbytesinstans,
   parseOrganisation,
 } from "./utils";
 
@@ -74,6 +75,7 @@ export type TGetEduInstance = {
   ladokUID: string;
   isCoursePackage: boolean;
   isDoctoralThesis: boolean;
+  isExchangeCourse: boolean;
 }
 
 export type TGetCourseRoundLanguage = {
@@ -122,15 +124,19 @@ export async function getCourseRoundInformation(
 }
 
 export async function getEduInstance(ladokUid: string): Promise<TGetEduInstance> {
+  // Course packages don't have kurstillfalle, otherwise that would have been a
+  // nicer endpoint.
   const utbtillfalle = await getUtbildningstillfalle(ladokUid);
   const utbinstans = await getUtbildningsinstans(utbtillfalle.UtbildningsinstansUID);
   const isCoursePackage = isKurspaketering(utbinstans);
   const isDoctoralThesis = isDoktorsavhandling(utbinstans);
+  const isExchangeCourse = isUtbytesinstans(utbinstans);
 
   return {
     ladokUID: ladokUid,
     isCoursePackage,
     isDoctoralThesis,
+    isExchangeCourse,
   };
 }
 

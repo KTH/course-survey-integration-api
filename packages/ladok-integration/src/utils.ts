@@ -205,3 +205,29 @@ export function isDoktorsavhandling(data: any): boolean {
 
   return false;
 }
+
+const exchangeCourseCodes = [
+  "UTBSAM",
+  "UTHTDA",
+  "UTHTJ",
+  "UTHTM",
+  "UTHTS",
+  "UTHTTA",
+  "UTVTDA",
+  "UTVTJ",
+  "UTVTM",
+  "UTVTS",
+  "UTVTTA",
+];
+
+export function isUtbytesinstans(data: any): boolean {
+  for (const attribut of data.Attributvarden) {
+    if (attribut.Attributdefinition.Kod === "utbildning.attribut.kod"
+        && exchangeCourseCodes.includes(attribut.Varden[0])
+    ) {
+      return true;
+    }
+  }
+
+  return false;
+}
