@@ -104,6 +104,15 @@ export default async function handler(
           await db.close();
           return;
         }
+
+        const eduInstance = await getEduInstance(msgUtbildningstillfalleUid);
+        if (eduInstance.isExchangeStudent) {
+          // We can't do anything with this course
+          context.log(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) involves exchange student and can't be found in KOPPS. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
+          // TODO: Consider logging this as a transaction of new type "skip"
+          await db.close();
+          return;
+        }
       }
       // Unknown error needs to be thrown
       throw err;
