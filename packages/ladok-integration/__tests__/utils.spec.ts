@@ -1,10 +1,11 @@
-import { diffTerms, findStudiestruktur, getTermFromDate } from "../src/utils";
+import { diffTerms, findStudiestruktur, getTermFromDate, isUtbytesinstans } from "../src/utils";
 import { isKurspaketering, isDoktorsavhandling } from "../src/utils";
 import utbInstDoktorsprog from "./fixtures/utbildningsinstans-doktorsprog.json";
 import utbInstKurspaketering from "./fixtures/utbildningsinstans-kurspaketering.json";
 import utbInstProgram from "./fixtures/utbildningsinstans-program.json";
 import utbInstSkola from "./fixtures/utbildningsinstans-skola.json";
 import utbInstUtbprog from "./fixtures/utbildningsinstans-utbprog.json";
+import utbInstUtbkurs from "./fixtures/utbildningsinstans-utbkurs.json";
 import utbInstDocItm from "./fixtures/utbildningsinstand-doctoral-thesis-itm.json";
 
 describe("getTermFromDate", () => {
@@ -103,3 +104,12 @@ describe("isDoktorsavhandling", () => {
     expect(res).toBe(true);
   });
 });
+
+describe("isUtbyteskurs", () => {
+  test("can detect for ITM-school", () => {
+    const res = isUtbytesinstans(utbInstUtbkurs);
+    expect(res).toBe(true);
+  });
+});
+
+utbInstUtbkurs

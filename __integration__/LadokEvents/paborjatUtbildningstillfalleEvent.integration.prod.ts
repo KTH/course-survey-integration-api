@@ -2,7 +2,8 @@ import handler from "../../src/functions/ladok-events/paborjatUtbildningstillfal
 import { MockContext } from "../../__tests__/utils/mockContext";
 import { MockDatabase } from "../../__tests__/utils/mockDatabase";
 
-import exchangeEvent from "../../__fixtures__/eventsFromLadok/PaborjatUtbildningstillfalleEvent_exchange.json";
+import exchangeProgEvent from "../../__fixtures__/eventsFromLadok/PaborjatUtbildningstillfalleEvent_exchange_prog.json";
+import exchangeCourseEvent from "../../__fixtures__/eventsFromLadok/PaborjatUtbildningstillfalleEvent_exchange_course.json";
 import researchSchoolEvent from "../../__fixtures__/eventsFromLadok/PaborjatUtbildningstillfalleEvent_research_school.json";
 import doctoralProgramEvent from "../../__fixtures__/eventsFromLadok/PaborjatUtbildningstillfalleEvent_doctoral_program.json";
 import doctoralThesisEvent from "../../__fixtures__/eventsFromLadok/PaborjatUtbildningstillfalleEvent_doctoral_thesis.json";
@@ -12,10 +13,10 @@ if (!IS_PROD_ENV)
   throw new Error("These tests ruse messages and data from PROD");
 
 describe("PaborjadUtbildningEvent -- PROD", () => {
-  test("can handle exchange", async () => {
+  test("can handle exchange prog", async () => {
     const mockDb = new MockDatabase();
-    const mockContext = new MockContext(exchangeEvent.userProperties);
-    await handler(exchangeEvent.message, mockContext, mockDb);
+    const mockContext = new MockContext(exchangeProgEvent.userProperties);
+    await handler(exchangeProgEvent.message, mockContext, mockDb);
 
     expect(mockDb._result).toMatchSnapshot();
   });
@@ -32,6 +33,14 @@ describe("PaborjadUtbildningEvent -- PROD", () => {
     const mockDb = new MockDatabase();
     const mockContext = new MockContext(doctoralProgramEvent.userProperties);
     await handler(doctoralProgramEvent.message, mockContext, mockDb);
+
+    expect(mockDb._result).toMatchSnapshot();
+  });
+
+  test("can handle exchange course", async () => {
+    const mockDb = new MockDatabase();
+    const mockContext = new MockContext(exchangeCourseEvent.userProperties);
+    await handler(exchangeCourseEvent.message, mockContext, mockDb);
 
     expect(mockDb._result).toMatchSnapshot();
   });

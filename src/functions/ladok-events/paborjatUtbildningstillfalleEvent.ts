@@ -76,8 +76,9 @@ export default async function handler(
       const eduInstance = await getEduInstance(msgUtbildningstillfalleUid);
       if (eduInstance.isCoursePackage
           || eduInstance.isDoctoralThesis
+          || eduInstance.isExchangeCourse
       ) {
-        context.log(`Course round ${msgUtbildningstillfalleUid} not found in Ladok, because this is a course package. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
+        context.log(`Course round ${msgUtbildningstillfalleUid} not found in Ladok, because this is a course package, doctoral thesis or exchange course. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
         await db.close();
         return;
       }
