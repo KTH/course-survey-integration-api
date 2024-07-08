@@ -139,4 +139,5 @@ const AttributVarde = z.object({
 });
 export const Utbildningstillfalle = z.object({
   Attributvarden: AttributVarde.array(),
+  UtbildningsinstansUID: z.string(),
 });

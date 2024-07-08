@@ -11,7 +11,7 @@ import { isValidEvent } from "../utils";
 import { Database } from "../db";
 import { TCourseRound, TCourseRoundEntity } from "../interface";
 import { getCourseInformation } from "kopps-integration";
-import { getCourseRoundInformation, getCourseRoundLanguage, getEduInstance } from "ladok-integration";
+import { TGetCourseRoundLanguage, getCourseRoundInformation, getCourseRoundLanguage, getEduInstance } from "ladok-integration";
 import {
   convertLadokModuleToCourseModule,
   convertToCourseInstanceArchivingCode,
@@ -65,26 +65,27 @@ export default async function handler(
   );
   try {
     const { language } = await getCourseRoundLanguage(msgUtbildningstillfalleUid);
-    
+
     let ladokCourseRoundInfo;
     try {
       ladokCourseRoundInfo = await getCourseRoundInformation(
         msgUtbildningstillfalleUid,
       );
-    } catch (err: any) {
-      if (err.response?.statusCode === 404) {
-        // LADOK couldn't find the course round so it might be a course package
-        // such as: exchange studies, program, doctoral program, etc.
-        const eduInstance = await getEduInstance(msgUtbildningstillfalleUid);
-        if (eduInstance.isCoursePackage) {
-          await db.close();
-          return;
-        }
+    } catch (err) {
+      // We should skip course packaging events
+      const eduInstance = await getEduInstance(msgUtbildningstillfalleUid);
+      if (eduInstance.isCoursePackage) {
+        context.log(`Course round ${msgUtbildningstillfalleUid} not found in Ladok, because this is a course package. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
+        await db.close();
+        return;
       }
-      // Throw on any other error
-      throw err;
-    }
 
+      // If there was some other error, we should re-throw it
+      if (ladokCourseRoundInfo === undefined) {
+        throw err;
+      }
+    }
+    
     let koppsInfo;
     try {
       koppsInfo = await getCourseInformation(msgUtbildningstillfalleUid);
@@ -95,7 +96,7 @@ export default async function handler(
         const onlyExams = ladokCourseRoundInfo.modules?.every(m => m.code.startsWith("TEN"));
         if (onlyExams) {
           // We can't do anything with this course
-          context.info(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) is deprecated and only has exams. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
+          context.log(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) is deprecated and only has exams. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
           // TODO: Consider logging this as a transaction of new type "skip"
           await db.close();
           return;

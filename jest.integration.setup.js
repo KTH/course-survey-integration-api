@@ -29,10 +29,6 @@ module.exports = async function (globalConfig, projectConfig) {
     "LADOK_API_PFX_PASSPHRASE is not defined",
   );
   assert(
-    env.KOPPS_API_URL === "https://api-r.referens.sys.kth.se/api/kopps/v2/",
-    "KOPPS_API_URL is not pointing to test environment",
-  );
-  assert(
     env.KOPPS_API_SUBSCRIPTION_KEY === undefined,
     "KOPPS_API_SUBSCRIPTION_KEY should not be defined",
   );

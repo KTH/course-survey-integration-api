@@ -34,7 +34,7 @@ response_body: body
 EOF
 )
 
-if [ ! -z "$STATUS" ]; then
+if [ -z "$STATUS" ]; then
   printf "HTTP STATUS: "; echo $outp | jq -r 'select(.name == "response_status") | .value'
 fi
 echo $outp | jq -r 'select(.name == "response_body") | .value' | jq

@@ -1,0 +1,37 @@
+{
+  "_id": {
+    "$oid": "66460039b31da061329aa58f"
+  },
+  "id": "593f118e-aa32-491c-97e1-7ef94ee88372",
+  "ladok3EventType": "se.ladok.schemas.studiedeltagande.PaborjatUtbildningstillfalleEvent",
+  "ladok3Username": "no-reply@kth.se",
+  "userProperties": {
+    "ladok3AtomEntryId": "5583780c-1382-11ef-82d2-4aac92754ddf",
+    "ladok3Username": "no-reply@kth.se",
+    "ladok3IsLastFeed": true,
+    "ladok3AtomFeed": "https://api.ladok.se:443/uppfoljning/feed/323970",
+    "content_HYPHEN_Type": "application/json",
+    "ladok3AtomEntryUpdated": "2024-05-16T14:46:35.838",
+    "ladok3EventType": "se.ladok.schemas.studiedeltagande.PaborjatUtbildningstillfalleEvent",
+    "traceparent": "00-b05191f397970e76bcef6bac0af0c9cc-9b921521d5188dd9-01",
+    "ladok3AtomEntryIndexInFeed": 5,
+    "ladok3EventId": "54a26633-1382-11ef-ae56-13f61944471d",
+    "ladok3MessageType": "ladok3Event",
+    "ladok3MessageSequenceNumber": 18620
+  },
+  "message": {
+    "PaborjandeDatum": "2024-01-23",
+    "StudentUID": "d23eeec4-88f4-11ec-9817-e32d9d924aa8",
+    "TillfallesantagningUID": "387eb3bc-b9e9-11ee-b3b7-0ec23e324dc9",
+    "UtbildningUID": "8c942800-73d8-11e8-afa7-8e408e694e54",
+    "UtbildningsinstansUID": "062cfb03-cdf6-11e8-8254-2fc0159d49d6",
+    "UtbildningstillfalleUID": "163ae1a8-b9e9-11ee-8445-06d1bdce47b2",
+    "UtbildningstillfallestypID": 101957,
+    "HandelseUID": "54a26633-1382-11ef-ae56-13f61944471d",
+    "EventContext": {
+      "AnvandareUID": "4e846b9b-7465-11e8-9f6f-3f1455794c36",
+      "Anvandarnamn": "no-reply@kth.se",
+      "LarosateID": 29
+    }
+  }
+}

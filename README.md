@@ -32,7 +32,7 @@ This request will be processed and once your API-access key is available, you wi
 
 ## Development
 
-In this project we use Test Driven Development (TDD) when possible. This requires you to write each test before you implement the code.
+In this project we use Test Driven Development (TDD). Testing manually is both confusing and prone to errors. Also, local invocations of funcitons won't provide a proper context object which limits what kind of tests you can implement. This requires you to write each test before you implement the code.
 
 ```sh
 npm run test

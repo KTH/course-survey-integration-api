@@ -11,13 +11,12 @@ exports[`RegistreringEvent INTEGRATION handles program information correctly 1`]
     "ladokStudentId": "63a138cf-f042-11eb-8cb6-0bb93b844502",
     "locations": [],
     "name": "<HIDDEN>",
-    "programRound": {
+    "program": {
       "code": "CSAMH",
       "name": {
         "en": "Degree Programme in Civil Engineering and Urban Management",
         "sv": "Civilingenjörsutbildning i samhällsbyggnad",
       },
-      "required": "???",
       "specialization": {
         "code": "BBP",
         "name": {
@@ -46,7 +45,7 @@ exports[`RegistreringEvent INTEGRATION writes correct data to db 1`] = `
     "ladokStudentId": "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
     "locations": [],
     "name": "Sebastian Ware",
-    "programRound": undefined,
+    "program": undefined,
     "roles": [
       "student",
     ],

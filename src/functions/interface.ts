@@ -58,7 +58,7 @@ export type APIModuleGradingDistributionChartParams = OpenApiModuleGradingDistri
  * Domain entities stored in DB
  */
 export type TBeslutMetaData = {
-  Anteckning: string; // "Det bidde fel i systemet. Jag har makulerat beslutet.",
+  Anteckning?: string; // "Det bidde fel i systemet. Jag har makulerat beslutet.",
   BeslutUID: string; // "34b1ff17-603e-11e9-9dcc-b1e66e1540b0",
   Beslutsdatum: string; // "2024-01-16",
   Beslutsfattare: string; // "Emil Stenberg (IT)",

@@ -13,6 +13,10 @@ for i in "$@"; do
     LADOK_UID="${i#*=}"
     shift
     ;;
+    --no-status)
+    STATUS=no
+    shift
+    ;;
   esac
 done
 
@@ -33,5 +37,7 @@ EOF
 echo $outp | jq -r 'select(.name == "response_status")'
 exit 1
 
-printf "HTTP STATUS: "; echo $outp | jq -r 'select(.name == "response_status") | .value'
+if [ -z "$STATUS" ]; then
+  printf "HTTP STATUS: "; echo $outp | jq -r 'select(.name == "response_status") | .value'
+fi
 echo $outp | jq -r 'select(.name == "response_body") | .value' | jq
