@@ -184,3 +184,24 @@ export function isKurspaketering(data: any): boolean {
 
   return false;
 }
+
+const doctoralThesisCodes = [
+  "DOKABE",
+  "DOKCBH",
+  "DOKEECS",
+  "DOKITM",
+  "DOKITM10",
+  "DOKSCI",
+  "DOKV18",
+];
+
+export function isDoktorsavhandling(data: any): boolean {
+  for (const attribut of data.Attributvarden) {
+    if (attribut.Attributdefinition.Kod === "utbildning.attribut.kod"
+        && doctoralThesisCodes.includes(attribut.Varden[0])) {
+      return true;
+    }
+  }
+
+  return false;
+}

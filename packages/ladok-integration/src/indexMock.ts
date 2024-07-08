@@ -42,7 +42,7 @@ export class LadokIntegrationMock {
     _mockedValues[key] = params;
   }
 
-  static getEduInstance(ladokUid: string, params: { ladokUID: string, isCoursePackage: boolean }) {
+  static getEduInstance(ladokUid: string, params: { ladokUID: string, isCoursePackage: boolean, isDoctoralThesis: boolean}) {
     if (_mockedValues[ladokUid])
       throw new Error(`Mock value already registered for ${ladokUid}`);
 

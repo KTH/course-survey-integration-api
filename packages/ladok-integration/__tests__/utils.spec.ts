@@ -1,10 +1,11 @@
 import { diffTerms, findStudiestruktur, getTermFromDate } from "../src/utils";
-import { isKurspaketering } from "../src/utils";
+import { isKurspaketering, isDoktorsavhandling } from "../src/utils";
 import utbInstDoktorsprog from "./fixtures/utbildningsinstans-doktorsprog.json";
 import utbInstKurspaketering from "./fixtures/utbildningsinstans-kurspaketering.json";
 import utbInstProgram from "./fixtures/utbildningsinstans-program.json";
 import utbInstSkola from "./fixtures/utbildningsinstans-skola.json";
 import utbInstUtbprog from "./fixtures/utbildningsinstans-utbprog.json";
+import utbInstDocItm from "./fixtures/utbildningsinstand-doctoral-thesis-itm.json";
 
 describe("getTermFromDate", () => {
   test("Dates january to june are considered spring term", () => {
@@ -92,6 +93,13 @@ describe("isKurspaketering", () => {
 
   test("can detect UTBPROG", () => {
     const res = isKurspaketering(utbInstUtbprog);
+    expect(res).toBe(true);
+  });
+});
+
+describe("isDoktorsavhandling", () => {
+  test("can detect for ITM-school", () => {
+    const res = isDoktorsavhandling(utbInstDocItm);
     expect(res).toBe(true);
   });
 });

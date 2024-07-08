@@ -2,6 +2,8 @@
 
 exports[`PaborjadUtbildningEvent -- PROD can handle doctoral program 1`] = `{}`;
 
+exports[`PaborjadUtbildningEvent -- PROD can handle doctoral thesis 1`] = `{}`;
+
 exports[`PaborjadUtbildningEvent -- PROD can handle exchange 1`] = `{}`;
 
 exports[`PaborjadUtbildningEvent -- PROD can handle school 1`] = `{}`;

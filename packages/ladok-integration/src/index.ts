@@ -12,6 +12,7 @@ import {
   findStudiestruktur,
   getGradingScheme,
   getTermFromDate,
+  isDoktorsavhandling,
   isKurspaketering,
   parseOrganisation,
 } from "./utils";
@@ -72,6 +73,7 @@ export type TGetCourseRoundInformation = {
 export type TGetEduInstance = {
   ladokUID: string;
   isCoursePackage: boolean;
+  isDoctoralThesis: boolean;
 }
 
 export type TGetCourseRoundLanguage = {
@@ -123,10 +125,12 @@ export async function getEduInstance(ladokUid: string): Promise<TGetEduInstance>
   const utbtillfalle = await getUtbildningstillfalle(ladokUid);
   const utbinstans = await getUtbildningsinstans(utbtillfalle.UtbildningsinstansUID);
   const isCoursePackage = isKurspaketering(utbinstans);
+  const isDoctoralThesis = isDoktorsavhandling(utbinstans);
 
   return {
     ladokUID: ladokUid,
-    isCoursePackage, 
+    isCoursePackage,
+    isDoctoralThesis,
   };
 }
 

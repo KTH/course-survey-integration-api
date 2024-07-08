@@ -74,7 +74,9 @@ export default async function handler(
     } catch (err) {
       // We should skip course packaging events
       const eduInstance = await getEduInstance(msgUtbildningstillfalleUid);
-      if (eduInstance.isCoursePackage) {
+      if (eduInstance.isCoursePackage
+          || eduInstance.isDoctoralThesis
+      ) {
         context.log(`Course round ${msgUtbildningstillfalleUid} not found in Ladok, because this is a course package. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
         await db.close();
         return;
