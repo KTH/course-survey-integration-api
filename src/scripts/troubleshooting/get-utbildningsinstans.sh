@@ -13,8 +13,12 @@ for i in "$@"; do
     LADOK_UID="${i#*=}"
     shift
     ;;
+    --no-status)
+    STATUS=no
+    shift
+    ;;
     *)
-      if [[ "is-course-package" == *"${i}"* ]]; then
+      if [[ "is-course-package show-type" == *"${i}"* ]]; then
         CMD="${i}"
       fi
     ;;
@@ -35,7 +39,9 @@ response_body: body
 EOF
 )
 
-printf "HTTP STATUS: "; echo $outp | jq -r 'select(.name == "response_status") | .value'
+if [ -z "$STATUS" ]; then
+  printf "HTTP STATUS: "; echo $outp | jq -r 'select(.name == "response_status") | .value'
+fi
 
 if [ "$CMD" = "" ]; then
   echo $outp | jq -r 'select(.name == "response_body") | .value' | jq
@@ -51,5 +57,23 @@ if [ "$CMD" = "is-course-package" ]; then
   else
     echo "This is NOT skippable"
     exit 255
+  fi
+fi
+
+if [ "$CMD" = "show-type" ]; then
+  res=$(echo $outp | jq -r 'select(.name == "response_body") | .value' | jq '.Attributvarden[].GrupperadeVarden[]?.Varden[] | select(.Attributdefinition.Kod == "utbildning.attribut.markningsnyckel.kod") | .Varden[]')
+  
+  if [[ "$res" = '"UTBPROG"' ]]; then
+    echo "This is an exchange"
+    exit 0
+  elif [[ "$res" = '"SKOLA"' ]]; then
+    echo "This is a school"
+    exit 0
+  elif [[ "$res" = '"DOKTORSPROG"' ]]; then
+    echo "This is a doctoral program"
+    exit 0
+  elif [[ "$res" == '"PROGRAM"' ]]; then
+    echo "This is a program"
+    exit 0
   fi
 fi

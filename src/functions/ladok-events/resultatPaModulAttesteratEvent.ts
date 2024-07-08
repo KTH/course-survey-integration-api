@@ -2,18 +2,13 @@ import { InvocationContext } from "@azure/functions";
 import { TLadokEventContext } from "./types";
 import { isValidEvent } from "../utils";
 import { Database } from "../db";
-import { TReportedResultEntity } from "../interface";
+import { TBeslutMetaData, TReportedResultEntity } from "../interface";
 import { hashStudentId } from "./utils";
 
 export type TResultatPaModulAttesteratEvent = {
   HandelseUID: string; // "22a5b75c-b446-11ee-988f-6acd08c746d6",
   EventContext: TLadokEventContext;
-  Beslut: {
-    BeslutUID: string; // "34b1ff17-603e-11e9-9dcc-b1e66e1540b0",
-    Beslutsdatum: string; // "2024-01-16",
-    Beslutsfattare: string; // "Emil Stenberg (IT)",
-    BeslutsfattareUID: string; // "34b1ff17-603e-11e9-9dcc-b1e66e1540b0"
-  };
+  Beslut: TBeslutMetaData;
   KursUID: string; // "a4565647-b3b8-11ee-bf6a-e2af0a9345af",
   KursinstansUID: string; // "a4565646-b3b8-11ee-bf6a-e2af0a9345af",
   KurstillfalleUID: string; // "f1b8ac31-b3b8-11ee-bf6a-e2af0a9345af",

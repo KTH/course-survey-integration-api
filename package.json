@@ -19,6 +19,7 @@
     "test": "npm run test:type-checking && npm run build && npm run test:regression",
     "test:regression": "jest --testMatch '**/__tests__/**/*.spec.ts' --testTimeout 1000",
     "test:integration": "jest --roots __integration__ --testMatch '**/*.integration.ts' --config=./jest.integration.config.js --testTimeout 5000",
+    "test:integration-prod": "jest --roots __integration__ --testMatch '**/*.integration.prod.ts' --config=./jest.integration.config.js --testTimeout 5000",
     "test:ladok-integration": "jest --roots packages/ladok-integration/__tests__ --testMatch '**/*.integration.ts' --config=./jest.integration.config.js --testTimeout 5000",
     "test:update-snapshots": "jest --testMatch '**/__tests__/**/*.spec.ts' --testTimeout 1000 --updateSnapshot",
     "test:type-checking": "tsc --noEmit",

@@ -14,9 +14,10 @@ export type TLadokEventUserProperties = {
 };
 
 export type TLadokEventContext = {
-  AnvandareUID: string; // "66830d48-51f3-11ec-8f26-98603a8f42a4",
+  AnvandareUID?: string; // "66830d48-51f3-11ec-8f26-98603a8f42a4",
   Anvandarnamn: string; // "jhsware@kth.se",
   LarosateID: number; // 29
+  StudentUID?: string; // "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
 };
 
 export type TLadokAttributvarde = {

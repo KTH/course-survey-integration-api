@@ -120,7 +120,8 @@ export async function getCourseRoundInformation(
 }
 
 export async function getEduInstance(ladokUid: string): Promise<TGetEduInstance> {
-  const utbinstans = await getUtbildningsinstans(ladokUid);
+  const utbtillfalle = await getUtbildningstillfalle(ladokUid);
+  const utbinstans = await getUtbildningsinstans(utbtillfalle.UtbildningsinstansUID);
   const isCoursePackage = isKurspaketering(utbinstans);
 
   return {
