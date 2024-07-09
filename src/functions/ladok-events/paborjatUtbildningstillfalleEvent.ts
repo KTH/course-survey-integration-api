@@ -124,9 +124,13 @@ export default async function handler(
           return;
         }
 
-
+        // And the rest 404s we'll just skip
+        context.log(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) can't be found in KOPPS. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
+        await db.close();
+        return;
       }
-      // Unknown error needs to be thrown
+
+      // Other Kopps errors should be re-thrown
       throw err;
     }
 
