@@ -1,4 +1,4 @@
-import { ZodError, ZodSchema } from "zod";
+import { ZodError, z } from "zod";
 import { ApiError, ApiSchemaError } from "./errors";
 import {
   LadokKursinstans,

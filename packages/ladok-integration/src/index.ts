@@ -9,6 +9,7 @@ import {
 } from "./api";
 import {
   diffTerms,
+  exchangeCourseCodes,
   findStudiestruktur,
   getGradingScheme,
   getTermFromDate,
@@ -173,13 +174,18 @@ export async function getProgramParticipation(
     return undefined;
   }
 
-  if (d1.Utbildningsinformation.Utbildningskod === "UTVTS") {
+  if (d1.Utbildningsinformation.Utbildningskod && exchangeCourseCodes.includes(d1.Utbildningsinformation.Utbildningskod)) {
     // This is part of a study exchange, not a specific program
     // FIX https://kth-se.atlassian.net/browse/FOE-418
     return undefined;
   }
 
   const s = await getStudiestruktur(studentUID);
+
+  if (s.Studiestrukturer.find((s => s.Utbildningsinformation?.AvsesLedaTill === "DOKTORSEXAMEN"))) {
+    return undefined;
+  }
+
   const arr = findStudiestruktur(d1.Studiestrukturreferens, s.Studiestrukturer);
 
   if (arr.length === 0) {
@@ -197,6 +203,11 @@ export async function getProgramParticipation(
   );
   const diff = diffTerms(courseRoundStartTerm, programStartTerm);
   const studyYear = Math.floor(diff / 2) + 1;
+
+  if (program.Utbildningsinformation.Benamning) {
+    throw new Error(`The program name for course round [${courseRoundUID}] must be a multi-lang object.`)
+  }
+
   const programData = {
     code: program.Utbildningsinformation.Utbildningskod,
     name: program.Utbildningsinformation.Benamning,
@@ -210,6 +221,11 @@ export async function getProgramParticipation(
   }
 
   const specialization = arr[1];
+
+  if (specialization.Utbildningsinformation.Benamning) {
+    throw new Error(`The specialization name for course round [${courseRoundUID}] must be a multi-lang object.`)
+  }
+
   const specializationData = {
     code: specialization.Utbildningsinformation.Utbildningskod,
     name: specialization.Utbildningsinformation.Benamning,

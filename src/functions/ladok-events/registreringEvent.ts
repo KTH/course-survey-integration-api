@@ -71,6 +71,11 @@ export default async function handler(
       ladokCourseRoundId,
     ) satisfies (TProgramRoundEntity | undefined);
 
+    if (programParticipation === undefined) {
+      context.log(`StudentParticipation ${id} isn't related to a normal course round (${ladokCourseRoundId}). Skipping! [HandelseUID ${message.HandelseUID}]`)
+      return
+    }
+
     // 1. Create a StudentParticipation object
     const doc: TStudentParticipationEntity = {
       id,
