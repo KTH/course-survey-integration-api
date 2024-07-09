@@ -59,7 +59,6 @@ export default async function handler(
       // that info is correct
       // TODO: Consider logging a warning
       context.warn(`StudentParticipation ${id} already exists. Skipping! [HandelseUID ${message.HandelseUID}]`)
-      await db.close();
       return;
     }
 

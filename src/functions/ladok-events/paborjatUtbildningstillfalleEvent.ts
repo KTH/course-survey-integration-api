@@ -81,7 +81,6 @@ export default async function handler(
           || eduInstance.isDeprecatedStudyOrder
       ) {
         context.log(`Course round ${msgUtbildningstillfalleUid} not found in Ladok, because this is a course package, doctoral thesis or exchange course. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
-        await db.close();
         return;
       }
 
@@ -103,7 +102,6 @@ export default async function handler(
           // We can't do anything with this course
           context.log(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) is deprecated and only has exams. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
           // TODO: Consider logging this as a transaction of new type "skip"
-          await db.close();
           return;
         }
 
@@ -113,7 +111,6 @@ export default async function handler(
           // We can't do anything with this course
           context.log(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) involves exchange student and can't be found in KOPPS. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
           // TODO: Consider logging this as a transaction of new type "skip"
-          await db.close();
           return;
         }
         
@@ -121,13 +118,11 @@ export default async function handler(
           // We can't do anything with this course
           context.log(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) involves "uppdragsutbildning" and can't be found in KOPPS. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
           // TODO: Consider logging this as a transaction of new type "skip"
-          await db.close();
           return;
         }
 
         // And the rest 404s we'll just skip
         context.log(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) can't be found in KOPPS. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
-        await db.close();
         return;
       }
 
@@ -135,7 +130,6 @@ export default async function handler(
       if (eduInstance.isDeprecatedStudyOrder) {
         // We can't do anything with this course
         context.log(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) is deprecated study order and can't be found in KOPPS. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
-        await db.close();
         return;
       }
       // Other Kopps errors should be re-thrown
@@ -155,7 +149,6 @@ export default async function handler(
         || ["pa.org.mj","pa.org.md"].includes(ladokInsitutionCode.toLowerCase())
       ) {
         context.log(`For course round ${msgUtbildningstillfalleUid}, the org [${ladokSchoolCode} or ${ladokInsitutionCode}] not found in UG. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
-        await db.close();
         return;
       }
     }
