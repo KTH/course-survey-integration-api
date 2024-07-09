@@ -198,7 +198,7 @@ const doctoralThesisCodes = [
 export function isDoktorsavhandling(data: any): boolean {
   for (const attribut of data.Attributvarden) {
     if (attribut.Attributdefinition.Kod === "utbildning.attribut.kod"
-        && doctoralThesisCodes.includes(attribut.Varden[0])) {
+      && doctoralThesisCodes.includes(attribut.Varden[0])) {
       return true;
     }
   }
@@ -223,7 +223,13 @@ const exchangeCourseCodes = [
 export function isUtbytesinstans(data: any): boolean {
   for (const attribut of data.Attributvarden) {
     if (attribut.Attributdefinition.Kod === "utbildning.attribut.kod"
-        && exchangeCourseCodes.includes(attribut.Varden[0])
+      && exchangeCourseCodes.includes(attribut.Varden[0])
+    ) {
+      return true;
+    }
+
+    if (attribut.Attributdefinition.Kod === "utbildning.attribut.engelsk.benamning"
+      && attribut.Varden[0] === "Exchange load"
     ) {
       return true;
     }

@@ -5,7 +5,8 @@ import utbInstKurspaketering from "./fixtures/utbildningsinstans-kurspaketering.
 import utbInstProgram from "./fixtures/utbildningsinstans-program.json";
 import utbInstSkola from "./fixtures/utbildningsinstans-skola.json";
 import utbInstUtbprog from "./fixtures/utbildningsinstans-utbprog.json";
-import utbInstUtbkurs from "./fixtures/utbildningsinstans-utbkurs.json";
+import utbInstUtbkursWithCode from "./fixtures/utbildningsinstans-utbkurs-kod.json";
+import utbInstUtbkursWithoutCode from "./fixtures/utbildningsinstans-utbkurs-ingen-kod.json";
 import utbInstDocItm from "./fixtures/utbildningsinstand-doctoral-thesis-itm.json";
 import utbInstUtbStudent from "./fixtures/utbildningsinstans-utbstudent.json";
 
@@ -107,10 +108,17 @@ describe("isDoktorsavhandling", () => {
 });
 
 describe("isUtbyteskurs", () => {
-  test("can detect for ITM-school", () => {
-    const res = isUtbytesinstans(utbInstUtbkurs);
+  test("can detect by utbildning.attribut.kod", () => {
+    const res = isUtbytesinstans(utbInstUtbkursWithCode);
     expect(res).toBe(true);
   });
+  
+  test("can detect by engelsk.benamning", () => {
+    const res = isUtbytesinstans(utbInstUtbkursWithoutCode);
+    expect(res).toBe(true);
+  });
+
+
 });
 
 describe("isUtbytesstudent", () => {
