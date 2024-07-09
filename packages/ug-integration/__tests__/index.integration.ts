@@ -44,7 +44,7 @@ describe("Test that your credential has proper permissions", () => {
   });
 
   test("can get group", async () => {
-    const res = await getUgMembers("edu.courses.SF.SF1624.examiner");
+    const res = await getUgMembers("edu.courses.SF.SF1624.examiner") as any;
     expect(res?.email).toBeDefined();
     expect(res?.givenName).toBeDefined();
     expect(res?.surname).toBeDefined();
