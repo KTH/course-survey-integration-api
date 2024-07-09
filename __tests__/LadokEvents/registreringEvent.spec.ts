@@ -3,6 +3,7 @@ import handler from "../../src/functions/ladok-events/registreringEvent";
 import { MockContext } from "../utils/mockContext";
 import { MockDatabase } from "../utils/mockDatabase";
 import { UgIntegrationMock } from "ug-integration/src/indexMock";
+import { LadokIntegrationMock } from "ladok-integration/src/indexMock";
 import { studentParticipations1 } from "../../__fixtures__/entities/01_studentParticipations";
 
 UgIntegrationMock.getUgUserByLadokId("bbcce853-4df3-11e8-a562-6ec76bb54b9f", {
@@ -10,6 +11,14 @@ UgIntegrationMock.getUgUserByLadokId("bbcce853-4df3-11e8-a562-6ec76bb54b9f", {
   kthid: "u1dummyuser",
   givenName: "Dummy",
   surname: "User",
+});
+
+LadokIntegrationMock.getProgramParticipation("bbcce853-4df3-11e8-a562-6ec76bb54b9f-41717c91", "4028-11ee-bf53-2115569549a8", {
+    code: "dummyProgramCode",
+    name: { sv: "Dummy Program SV", en: "Dummy Program EN"},
+    startTerm: "20231",
+    studyYear: 2023,
+    specialization: undefined,
 });
 
 describe("RegistreringEvent", () => {
@@ -30,14 +39,14 @@ describe("RegistreringEvent", () => {
     );
   });
 
-  test("fetches student data from UG", async () => {
+  test.only("fetches student data from UG", async () => {
     const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);
     expect(mockDb._result).toMatchSnapshot();
   });
 
-  test("writes correct data to db", async () => {
+  test.only("writes correct data to db", async () => {
     const studentParticipation1 = studentParticipations1[0];
     const mockDb = new MockDatabase({
       StudentParticipation: studentParticipation1,
