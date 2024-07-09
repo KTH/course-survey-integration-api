@@ -13,6 +13,7 @@ import {
   getGradingScheme,
   getTermFromDate,
   isDoktorsavhandling,
+  isGammalStudieordning,
   isKurspaketering,
   isLicentiatuppsats,
   isUppdragsutbildning,
@@ -82,6 +83,7 @@ export type TGetEduInstance = {
   isExchangeCourse: boolean;
   isExchangeStudent: boolean;
   isIndustrialEdu: boolean;
+  isDeprecatedStudyOrder: boolean;
 }
 
 export type TGetCourseRoundLanguage = {
@@ -140,6 +142,7 @@ export async function getEduInstance(ladokUid: string): Promise<TGetEduInstance>
   const isExchangeCourse = isUtbytesinstans(utbinstans);
   const isExchangeStudent = isUtbytesstudent(utbinstans);
   const isIndustrialEdu = isUppdragsutbildning(utbinstans);
+  const isDeprecatedStudyOrder = isGammalStudieordning(utbinstans);
 
   return {
     ladokUID: ladokUid,
@@ -149,6 +152,7 @@ export async function getEduInstance(ladokUid: string): Promise<TGetEduInstance>
     isExchangeStudent,
     isIndustrialEdu,
     isLicPaper,
+    isDeprecatedStudyOrder,
   };
 }
 

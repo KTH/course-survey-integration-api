@@ -309,3 +309,27 @@ export function isUppdragsutbildning(data: any): boolean {
   return false;
 }
 
+const deprecatedStudyRules = [
+  "HÖ07"
+];
+
+export function isGammalStudieordning(data: any): boolean {
+  for (const attribut of data.Attributvarden) {
+    if (!Array.isArray(attribut.GrupperadeVarden)) continue;
+
+    for (const grupperatVarde of attribut.GrupperadeVarden) {
+      if (!Array.isArray(grupperatVarde.Varden)) continue;
+
+      for (const varde of grupperatVarde.Varden) {
+        if (varde.Attributdefinition.Kod !== "utbildningstyp.studieordning.kod") continue;
+
+        if (deprecatedStudyRules.includes(varde.Varden[0].toUpperCase())) {
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
+}
+
