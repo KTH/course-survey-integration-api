@@ -12,7 +12,7 @@ import deprecatedStudyOrder from "../../__fixtures__/eventsFromLadok/PaborjatUtb
 
 const IS_PROD_ENV = process.env.LADOK_API_BASEURL === "https://api.ladok.se";
 if (!IS_PROD_ENV)
-  throw new Error("These tests ruse messages and data from PROD");
+  throw new Error("These tests use messages and data from PROD");
 
 describe("PaborjadUtbildningEvent -- PROD", () => {
   test("can handle exchange prog", async () => {
