@@ -257,3 +257,24 @@ export function isUtbytesstudent(data: any): boolean {
 
   return false;
 }
+
+export function isUppdragsutbildning(data: any): boolean {
+  for (const attribut of data.Attributvarden) {
+    if (!Array.isArray(attribut.GrupperadeVarden)) continue;
+
+    for (const grupperatVarde of attribut.GrupperadeVarden) {
+      if (!Array.isArray(grupperatVarde.Varden)) continue;
+
+      for (const varde of grupperatVarde.Varden) {
+        if (varde.Attributdefinition.Kod !== "utbildningstyp.studieordning.utbildningsform.kod") continue;
+
+        if (varde.Varden[0] === "UP") {
+          return true;
+        }
+      }
+    }
+  }
+
+  return false;
+}
+

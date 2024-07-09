@@ -14,6 +14,7 @@ import {
   getTermFromDate,
   isDoktorsavhandling,
   isKurspaketering,
+  isUppdragsutbildning,
   isUtbytesinstans,
   isUtbytesstudent,
   parseOrganisation,
@@ -78,6 +79,7 @@ export type TGetEduInstance = {
   isDoctoralThesis: boolean;
   isExchangeCourse: boolean;
   isExchangeStudent: boolean;
+  isIndustrialEdu: boolean;
 }
 
 export type TGetCourseRoundLanguage = {
@@ -134,6 +136,7 @@ export async function getEduInstance(ladokUid: string): Promise<TGetEduInstance>
   const isDoctoralThesis = isDoktorsavhandling(utbinstans);
   const isExchangeCourse = isUtbytesinstans(utbinstans);
   const isExchangeStudent = isUtbytesstudent(utbinstans);
+  const isIndustrialEdu = isUppdragsutbildning(utbinstans);
 
   return {
     ladokUID: ladokUid,
@@ -141,6 +144,7 @@ export async function getEduInstance(ladokUid: string): Promise<TGetEduInstance>
     isDoctoralThesis,
     isExchangeCourse,
     isExchangeStudent,
+    isIndustrialEdu,
   };
 }
 
