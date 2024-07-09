@@ -49,14 +49,24 @@ export function getGradingScheme(id: number) {
     };
   }
 
-  // UV (deprecated) used for HL1903
-  if (id === 131668) {
+  // UV (deprecated) 131668 used for HL1903, 101312 used for a bunch of others
+  if (id === 131668 || id === 101312) {
     return {
       code: "UV",
       grades: [
         { validFinalGrade: true, code: "VG" },
         { validFinalGrade: true, code: "G" },
         { validFinalGrade: false, code: "U" },
+      ],
+    };
+  }
+
+  // FOG (deprecated)
+  if (id === 1) {
+    return {
+      code: "FOG",
+      grades: [
+        { validFinalGrade: true, code: "G" },
       ],
     };
   }
