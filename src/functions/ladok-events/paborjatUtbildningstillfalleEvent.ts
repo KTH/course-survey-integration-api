@@ -88,6 +88,24 @@ export default async function handler(
         throw err;
       }
     }
+
+    // Handle errors with school codes that can't be found in UG
+    const ladokSchoolCode = ladokCourseRoundInfo.organisation.code;
+    const ladokInsitutionCode = ladokCourseRoundInfo.organisationUnit.code;
+    let tmpUgSchool;
+    let tmpUgInstitution;
+    try {
+      tmpUgSchool = await getUgSchool(ladokSchoolCode);
+      tmpUgInstitution = await getUgSchool(ladokInsitutionCode);
+    } catch (err: any) {
+      if (["pa.org.mj","pa.org.md"].includes(ladokSchoolCode.toLowerCase())
+        || ["pa.org.mj","pa.org.md"].includes(ladokInsitutionCode.toLowerCase())
+      ) {
+        context.log(`For course round ${msgUtbildningstillfalleUid}, the org [${ladokSchoolCode} or ${ladokInsitutionCode}] not found in UG. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
+        await db.close();
+        return;
+      }
+    }
     
     let koppsInfo;
     try {
@@ -153,11 +171,6 @@ export default async function handler(
     const examiners = convertUgUsersToCourseUsers(
       await Promise.all(examinersIds.map(getUgUser)),
     );
-
-    const ladokSchoolCode = ladokCourseRoundInfo.organisation.code;
-    const ladokInsitutionCode = ladokCourseRoundInfo.organisationUnit.code;
-    const tmpUgSchool = await getUgSchool(ladokSchoolCode);
-    const tmpUgInstitution = await getUgSchool(ladokInsitutionCode);
 
     const ladokGradingDistribution =
       ladokCourseRoundInfo.gradingScheme?.grades?.reduce(
