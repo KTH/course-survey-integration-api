@@ -8,6 +8,7 @@ import researchSchoolEvent from "../../__fixtures__/eventsFromLadok/PaborjatUtbi
 import doctoralProgramEvent from "../../__fixtures__/eventsFromLadok/PaborjatUtbildningstillfalleEvent_doctoral_program.json";
 import doctoralThesisEvent from "../../__fixtures__/eventsFromLadok/PaborjatUtbildningstillfalleEvent_doctoral_thesis.json";
 import deprecatedCourseEvent from "../../__fixtures__/eventsFromLadok/PaborjatUtbildningstillfalleEvent_deprecated_course.json";
+import deprecatedStudyOrder from "../../__fixtures__/eventsFromLadok/PaborjatUtbildningstillfalleEvent_deprecated_study_order.json";
 
 const IS_PROD_ENV = process.env.LADOK_API_BASEURL === "https://api.ladok.se";
 if (!IS_PROD_ENV)
@@ -54,10 +55,18 @@ describe("PaborjadUtbildningEvent -- PROD", () => {
     expect(mockDb._result).toMatchSnapshot();
   });
 
-  test.only("can handle deprecated course", async () => {
+  test("can handle deprecated course", async () => {
     const mockDb = new MockDatabase();
     const mockContext = new MockContext(deprecatedCourseEvent.userProperties);
     await handler(deprecatedCourseEvent.message, mockContext, mockDb);
+
+    expect(mockDb._result).toMatchSnapshot();
+  });
+
+  test("can handle deprecated study order", async () => {
+    const mockDb = new MockDatabase();
+    const mockContext = new MockContext(deprecatedStudyOrder.userProperties);
+    await handler(deprecatedStudyOrder.message, mockContext, mockDb);
 
     expect(mockDb._result).toMatchSnapshot();
   });

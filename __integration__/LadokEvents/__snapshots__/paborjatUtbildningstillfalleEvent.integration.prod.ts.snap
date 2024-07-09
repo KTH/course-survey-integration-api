@@ -1,5 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`PaborjadUtbildningEvent -- PROD can handle deprecated course 1`] = `{}`;
+
+exports[`PaborjadUtbildningEvent -- PROD can handle deprecated study order 1`] = `{}`;
+
 exports[`PaborjadUtbildningEvent -- PROD can handle doctoral program 1`] = `{}`;
 
 exports[`PaborjadUtbildningEvent -- PROD can handle doctoral thesis 1`] = `{}`;
