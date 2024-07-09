@@ -237,7 +237,7 @@ export function isLicentiatuppsats(data: any): boolean {
   return false;
 }
 
-const exchangeCourseCodes = [
+export const exchangeCourseCodes = [
   "UTBSAM",
   "UTHTDA",
   "UTHTJ",

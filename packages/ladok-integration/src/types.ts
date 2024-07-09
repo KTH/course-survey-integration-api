@@ -103,19 +103,21 @@ export const Kurstillfallesdeltagande = z.object({
 const StudiestrukturBase = z.object({
   Referens: z.string(),
   Utbildningsinformation: z.object({
+    AvsesLedaTill: z.string(),
     Utbildningskod: z.string(),
     Benamning: z.object({
       sv: z.string(),
       en: z.string(),
-    }),
+    }).partial({ en: true }), // Special cases don't have english translations
     Studieperiod: z.object({
       Startdatum: z.string(),
     }),
-  }),
+  }).partial({ AvsesLedaTill: true}),
 });
 
 export type TStudiestruktur = z.infer<typeof StudiestrukturBase> & {
   Barn: TStudiestruktur[];
+
 };
 
 const StudiestrukturRec: z.ZodType<TStudiestruktur> = StudiestrukturBase.extend(

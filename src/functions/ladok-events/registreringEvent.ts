@@ -59,7 +59,6 @@ export default async function handler(
       // that info is correct
       // TODO: Consider logging a warning
       context.warn(`StudentParticipation ${id} already exists. Skipping! [HandelseUID ${message.HandelseUID}]`)
-      await db.close();
       return;
     }
 
@@ -71,6 +70,11 @@ export default async function handler(
       ladokStudentId,
       ladokCourseRoundId,
     ) satisfies (TProgramRoundEntity | undefined);
+
+    if (programParticipation === undefined) {
+      context.log(`StudentParticipation ${id} isn't related to a normal course round (${ladokCourseRoundId}). Skipping! [HandelseUID ${message.HandelseUID}]`)
+      return
+    }
 
     // 1. Create a StudentParticipation object
     const doc: TStudentParticipationEntity = {

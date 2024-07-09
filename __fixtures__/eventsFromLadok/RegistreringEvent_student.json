@@ -1,0 +1,50 @@
+{
+  "_id": {
+    "$oid": "665423c388f34288da7b8e12"
+  },
+  "id": "ac641bd0-5707-473d-8b7f-32eb8e50f6f5",
+  "ladok3EventType": "se.ladok.schemas.studiedeltagande.RegistreringEvent",
+  "ladok3Username": "no-reply@kth.se",
+  "userProperties": {
+    "ladok3AtomEntryId": "c22f549a-1bef-11ef-9831-a06033294c00",
+    "ladok3Username": "no-reply@kth.se",
+    "ladok3IsLastFeed": true,
+    "ladok3AtomFeed": "https://api.ladok.se:443/uppfoljning/feed/324208",
+    "content_HYPHEN_Type": "application/json",
+    "ladok3AtomEntryUpdated": "2024-05-27T08:10:02.976",
+    "ladok3EventType": "se.ladok.schemas.studiedeltagande.RegistreringEvent",
+    "traceparent": "00-72ddd9b2c8a63ede76c21c918be5aa7b-887ec3458449a264-01",
+    "ladok3AtomEntryIndexInFeed": 1,
+    "ladok3EventId": "c186df25-1bef-11ef-a0f0-b00d893340ec",
+    "ladok3MessageType": "ladok3Event",
+    "ladok3MessageSequenceNumber": 11409
+  },
+  "message": {
+    "Omfattningsvarde": "6.0",
+    "Studieavgiftsbetalning": "studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_aktuell",
+    "StudieperiodSlut": "2024-01-15",
+    "StudieperiodStart": "2023-08-28",
+    "ArAnpassad": false,
+    "HandelseUID": "c186df25-1bef-11ef-a0f0-b00d893340ec",
+    "EventContext": {
+      "AnvandareUID": "8a813c34-d04b-11e8-9bca-2a611a284dc8",
+      "Anvandarnamn": "no-reply@kth.se",
+      "LarosateID": 29
+    },
+    "InomKurspaketeringstillfalle": [
+      {
+        "KurspaketeringUID": "8cc7e229-73d8-11e8-afa7-8e408e694e54",
+        "KurspaketeringstillfalleUID": "55f8657b-c2c5-11eb-a300-2e820ab246e3",
+        "TillfallesantagningUID": "6f7cfc90-c2c5-11eb-b7a2-3a6b217b44ce",
+        "UtbildningstypID": 101956
+      }
+    ],
+    "KursUID": "9c909049-73d8-11e8-afa7-8e408e694e54",
+    "KurstillfalleUID": "070770b6-fafa-11ee-b162-3ddababc4b87",
+    "Period": 1,
+    "RegistreringUID": "bc4e81a5-1bef-11ef-a0f0-b00d893340ec",
+    "StudentUID": "2ccee18c-5a96-11e8-9dae-241de8ab435c",
+    "TillfallesantagningUID": "bc4e3384-1bef-11ef-a0f0-b00d893340ec",
+    "UtbildningsinstansUID": "a8022877-0388-11e9-8c43-9ca055e7460e"
+  }
+}
