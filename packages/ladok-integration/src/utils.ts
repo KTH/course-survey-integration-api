@@ -206,6 +206,27 @@ export function isDoktorsavhandling(data: any): boolean {
   return false;
 }
 
+const licThesisCodes = [
+  "LICABE",
+  "LICABE10",
+  "LICCBH",
+  "LICEECS",
+  "LICITM",
+  "LICITM10",
+  "LICSCI",
+];
+
+export function isLicentiatuppsats(data: any): boolean {
+  for (const attribut of data.Attributvarden) {
+    if (attribut.Attributdefinition.Kod === "utbildning.attribut.kod"
+      && licThesisCodes.includes(attribut.Varden[0])) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 const exchangeCourseCodes = [
   "UTBSAM",
   "UTHTDA",

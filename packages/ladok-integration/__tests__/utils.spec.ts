@@ -1,4 +1,4 @@
-import { diffTerms, findStudiestruktur, getTermFromDate } from "../src/utils";
+import { diffTerms, findStudiestruktur, getTermFromDate, isLicentiatuppsats } from "../src/utils";
 import { isUtbytesinstans, isUtbytesstudent, isKurspaketering, isDoktorsavhandling, isUppdragsutbildning } from "../src/utils";
 import utbInstDoktorsprog from "./fixtures/utbildningsinstans-doktorsprog.json";
 import utbInstKurspaketering from "./fixtures/utbildningsinstans-kurspaketering.json";
@@ -10,6 +10,7 @@ import utbInstUtbkursWithoutCode from "./fixtures/utbildningsinstans-utbkurs-ing
 import utbInstDocItm from "./fixtures/utbildningsinstand-doctoral-thesis-itm.json";
 import utbInstUtbStudent from "./fixtures/utbildningsinstans-utbstudent.json";
 import utbInstUppdragsutbildning from "./fixtures/utbildningsinstans-uppdragsutb.json";
+import utbInstLicSci from "./fixtures/utbildningsinstans-lic-paper-sci.json";
 
 describe("getTermFromDate", () => {
   test("Dates january to june are considered spring term", () => {
@@ -108,6 +109,13 @@ describe("isDoktorsavhandling", () => {
   });
 });
 
+describe("isLicentiatuppsats", () => {
+  test("can detect for ITM-school", () => {
+    const res = isLicentiatuppsats(utbInstLicSci);
+    expect(res).toBe(true);
+  });
+});
+
 describe("isUtbyteskurs", () => {
   test("can detect by utbildning.attribut.kod", () => {
     const res = isUtbytesinstans(utbInstUtbkursWithCode);
@@ -118,8 +126,6 @@ describe("isUtbyteskurs", () => {
     const res = isUtbytesinstans(utbInstUtbkursWithoutCode);
     expect(res).toBe(true);
   });
-
-
 });
 
 describe("isUtbytesstudent", () => {

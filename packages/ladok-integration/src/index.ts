@@ -14,6 +14,7 @@ import {
   getTermFromDate,
   isDoktorsavhandling,
   isKurspaketering,
+  isLicentiatuppsats,
   isUppdragsutbildning,
   isUtbytesinstans,
   isUtbytesstudent,
@@ -77,6 +78,7 @@ export type TGetEduInstance = {
   ladokUID: string;
   isCoursePackage: boolean;
   isDoctoralThesis: boolean;
+  isLicPaper: boolean;
   isExchangeCourse: boolean;
   isExchangeStudent: boolean;
   isIndustrialEdu: boolean;
@@ -134,6 +136,7 @@ export async function getEduInstance(ladokUid: string): Promise<TGetEduInstance>
   const utbinstans = await getUtbildningsinstans(utbtillfalle.UtbildningsinstansUID);
   const isCoursePackage = isKurspaketering(utbinstans);
   const isDoctoralThesis = isDoktorsavhandling(utbinstans);
+  const isLicPaper = isLicentiatuppsats(utbinstans);
   const isExchangeCourse = isUtbytesinstans(utbinstans);
   const isExchangeStudent = isUtbytesstudent(utbinstans);
   const isIndustrialEdu = isUppdragsutbildning(utbinstans);
@@ -145,6 +148,7 @@ export async function getEduInstance(ladokUid: string): Promise<TGetEduInstance>
     isExchangeCourse,
     isExchangeStudent,
     isIndustrialEdu,
+    isLicPaper,
   };
 }
 
