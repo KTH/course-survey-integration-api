@@ -77,6 +77,7 @@ export default async function handler(
       if (eduInstance.isCoursePackage
           || eduInstance.isDoctoralThesis
           || eduInstance.isExchangeCourse
+          || eduInstance.isLicPaper
       ) {
         context.log(`Course round ${msgUtbildningstillfalleUid} not found in Ladok, because this is a course package, doctoral thesis or exchange course. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
         await db.close();
@@ -106,6 +107,7 @@ export default async function handler(
         }
 
         const eduInstance = await getEduInstance(msgUtbildningstillfalleUid);
+
         if (eduInstance.isExchangeStudent) {
           // We can't do anything with this course
           context.log(`Course ${ladokCourseRoundInfo.courseCode} (${msgUtbildningstillfalleUid}) involves exchange student and can't be found in KOPPS. Skipping! [StudentUID ${message.StudentUID}; HandelseUID ${message.HandelseUID}]!`);
