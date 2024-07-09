@@ -1,4 +1,4 @@
-import { diffTerms, findStudiestruktur, getTermFromDate, isLicentiatuppsats } from "../src/utils";
+import { diffTerms, findStudiestruktur, getTermFromDate, isGammalStudieordning, isLicentiatuppsats } from "../src/utils";
 import { isUtbytesinstans, isUtbytesstudent, isKurspaketering, isDoktorsavhandling, isUppdragsutbildning } from "../src/utils";
 import utbInstDoktorsprog from "./fixtures/utbildningsinstans-doktorsprog.json";
 import utbInstKurspaketering from "./fixtures/utbildningsinstans-kurspaketering.json";
@@ -11,6 +11,7 @@ import utbInstDocItm from "./fixtures/utbildningsinstand-doctoral-thesis-itm.jso
 import utbInstUtbStudent from "./fixtures/utbildningsinstans-utbstudent.json";
 import utbInstUppdragsutbildning from "./fixtures/utbildningsinstans-uppdragsutb.json";
 import utbInstLicSci from "./fixtures/utbildningsinstans-lic-paper-sci.json";
+import utbInstGamStudieo from "./fixtures/utbildningsinstans-gammal-studieordning.json";
 
 describe("getTermFromDate", () => {
   test("Dates january to june are considered spring term", () => {
@@ -138,6 +139,13 @@ describe("isUtbytesstudent", () => {
 describe("isUppdragsutbildning", () => {
   test("can detect", () => {
     const res = isUppdragsutbildning(utbInstUppdragsutbildning);
+    expect(res).toBe(true);
+  });
+});
+
+describe("isGammalStudieordning", () => {
+  test("can detect", () => {
+    const res = isGammalStudieordning(utbInstGamStudieo);
     expect(res).toBe(true);
   });
 });

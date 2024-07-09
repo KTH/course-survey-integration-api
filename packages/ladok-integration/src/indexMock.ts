@@ -51,6 +51,7 @@ export class LadokIntegrationMock {
       isExchangeStudent: boolean,
       isIndustrialEdu: boolean,
       isLicPaper: boolean,
+      isDeprecatedStudyOrder: boolean,
     }) {
     if (_mockedValues[ladokUid])
       throw new Error(`Mock value already registered for ${ladokUid}`);
