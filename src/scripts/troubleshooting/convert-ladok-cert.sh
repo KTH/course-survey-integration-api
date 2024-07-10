@@ -27,3 +27,5 @@ fi
 
 # This is the actual code
 base64 --decode -i $LADOK_CERT_PATH | openssl pkcs12 -out cert.pem -nodes
+echo "./cert.pem created valid until:"
+openssl x509 -enddate -noout -in cert.pem

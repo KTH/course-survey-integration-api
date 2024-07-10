@@ -1,3 +1,5 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`RegistreringEvent -- PROD handles doctoral participation by skipping 1`] = `{}`;
+
+exports[`RegistreringEvent -- PROD handles student exchange by skipping 1`] = `{}`;
