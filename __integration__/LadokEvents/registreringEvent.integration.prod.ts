@@ -32,3 +32,4 @@ describe("RegistreringEvent -- PROD", () => {
     expect(mockDb._result).toMatchSnapshot();
   });
 });
+

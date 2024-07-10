@@ -21,6 +21,17 @@ LadokIntegrationMock.getProgramParticipation("bbcce853-4df3-11e8-a562-6ec76bb54b
     specialization: undefined,
 });
 
+LadokIntegrationMock.getEduInstance("41717c91-4028-11ee-bf53-2115569549a8", {
+  ladokUID: "4028-11ee-bf53-2115569549a8-dummy-prog",
+  isCoursePackage: false,
+  isDoctoralThesis: false,
+  isExchangeCourse: false,
+  isExchangeStudent: false,
+  isIndustrialEdu: false,
+  isLicPaper: false,
+  isDeprecatedStudyOrder: false,
+});
+
 describe("RegistreringEvent", () => {
   test("can be executed", async () => {
     const mockDb = new MockDatabase();
@@ -39,14 +50,14 @@ describe("RegistreringEvent", () => {
     );
   });
 
-  test.only("fetches student data from UG", async () => {
+  test("fetches student data from UG", async () => {
     const mockDb = new MockDatabase();
     const mockContext = new MockContext(event.userProps);
     await handler(event.message, mockContext, mockDb);
     expect(mockDb._result).toMatchSnapshot();
   });
 
-  test.only("writes correct data to db", async () => {
+  test("writes correct data to db", async () => {
     const studentParticipation1 = studentParticipations1[0];
     const mockDb = new MockDatabase({
       StudentParticipation: studentParticipation1,

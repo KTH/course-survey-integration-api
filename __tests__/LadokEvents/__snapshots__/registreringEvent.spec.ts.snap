@@ -43,7 +43,16 @@ exports[`RegistreringEvent stores a transaction log 1`] = `
       "ladokStudentId": "bbcce853-4df3-11e8-a562-6ec76bb54b9f",
       "locations": [],
       "name": "Dummy User",
-      "program": undefined,
+      "program": {
+        "code": "dummyProgramCode",
+        "name": {
+          "en": "Dummy Program EN",
+          "sv": "Dummy Program SV",
+        },
+        "specialization": undefined,
+        "startTerm": "20231",
+        "studyYear": 2023,
+      },
       "roles": [
         "student",
       ],
