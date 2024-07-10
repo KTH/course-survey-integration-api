@@ -5,6 +5,7 @@ import { getUgUserByLadokId } from "ug-integration";
 import { strict as assert } from "node:assert";
 
 import {
+  getEduInstance,
   getProgramParticipation,
 } from "ladok-integration";
 import { TProgramRoundEntity, TStudentParticipationEntity } from "../interface";
@@ -66,13 +67,29 @@ export default async function handler(
     // const ugUser = await getUgUser(ladokStudentId);
     assert(ugUser !== undefined, "");
 
+    // Don't register student participation for courses that we won't
+    // do surveys for
+    const eduInstance = await getEduInstance(ladokCourseRoundId);
+    if (eduInstance.isExchangeCourse
+      || eduInstance.isCoursePackage
+      || eduInstance.isDoctoralThesis
+      || eduInstance.isExchangeCourse
+      || eduInstance.isExchangeStudent
+      || eduInstance.isIndustrialEdu
+      || eduInstance.isLicPaper
+      || eduInstance.isDeprecatedStudyOrder
+    ) {
+      context.log(`StudentParticipation (${id}; stud_id.course_id) for irregular course round (${ladokCourseRoundId}). Skipping! [HandelseUID ${message.HandelseUID}]`)
+      return
+    }
+
     const programParticipation = await getProgramParticipation(
       ladokStudentId,
       ladokCourseRoundId,
     ) satisfies (TProgramRoundEntity | undefined);
-
+  
     if (programParticipation === undefined) {
-      context.log(`StudentParticipation ${id} isn't related to a normal course round (${ladokCourseRoundId}). Skipping! [HandelseUID ${message.HandelseUID}]`)
+      context.log(`StudentParticipation (${id}; stud_id.course_id) for course round (${ladokCourseRoundId}) didn't resolve program affiliation. This usually means it is an unconventional course. Skipping! [HandelseUID ${message.HandelseUID}]`)
       return
     }
 

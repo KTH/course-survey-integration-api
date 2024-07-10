@@ -1,0 +1,62 @@
+{
+  "_id": {
+    "$oid": "66850dafb68a1ee043f56ce8"
+  },
+  "id": "64491f22-8b1c-4722-9fa5-8e3188ebcd71",
+  "ladok3EventType": "se.ladok.schemas.studiedeltagande.RegistreringEvent",
+  "ladok3Username": "no-reply@kth.se",
+  "userProperties": {
+    "ladok3AtomEntryId": "62e9441f-3917-11ef-96e3-14718eed4514",
+    "ladok3Username": "no-reply@kth.se",
+    "ladok3IsLastFeed": true,
+    "ladok3AtomFeed": "https://api.ladok.se:443/uppfoljning/feed/325744",
+    "content_HYPHEN_Type": "application/json",
+    "ladok3AtomEntryUpdated": "2024-07-03T10:36:46.287",
+    "ladok3EventType": "se.ladok.schemas.studiedeltagande.RegistreringEvent",
+    "traceparent": "00-bce2b1de4e491fc215a5dd0a52ed0082-a97cdf46945c5407-01",
+    "ladok3AtomEntryIndexInFeed": 0,
+    "ladok3EventId": "61fdab45-3917-11ef-a118-aac673b24dba",
+    "ladok3MessageType": "ladok3Event",
+    "ladok3MessageSequenceNumber": 344
+  },
+  "message": {
+    "Omfattningsvarde": "30.0",
+    "Studieavgiftsbetalning": "studiedeltagande.domain.studieavgiftsbetalningsvarde.ej_aktuell",
+    "StudieperiodSlut": "2024-12-15",
+    "StudieperiodStart": "2024-08-01",
+    "ArAnpassad": false,
+    "HandelseUID": "61fdab45-3917-11ef-a118-aac673b24dba",
+    "EventContext": {
+      "Anvandarnamn": "no-reply@kth.se",
+      "LarosateID": 29,
+      "StudentUID": "64e2cf17-d24a-11ea-a4db-82cca4dd4b3e"
+    },
+    "InomKurspaketeringstillfalle": [
+      {
+        "KurspaketeringUID": "d6587624-911e-11eb-b7f4-1cf636a9428c",
+        "KurspaketeringstillfalleUID": "9abc313e-fe2a-11ee-92f3-c84bfa26481e",
+        "TillfallesantagningUID": "73c1fbba-390f-11ef-a118-aac673b24dba",
+        "UtbildningstypID": 101375
+      },
+      {
+        "KurspaketeringUID": "a01d3996-73d8-11e8-afa7-8e408e694e54",
+        "KurspaketeringstillfalleUID": "56d78318-329a-11ed-8d78-6b57fc3f4427",
+        "TillfallesantagningUID": "e538eb1a-4d48-11ed-a3b4-607b433e4577",
+        "UtbildningstypID": 101270
+      },
+      {
+        "KurspaketeringUID": "9febc966-73d8-11e8-afa7-8e408e694e54",
+        "KurspaketeringstillfalleUID": "60028e17-59a8-11eb-bd4e-68f4c5554cf1",
+        "TillfallesantagningUID": "4229df32-f042-11eb-8cb6-0bb93b844502",
+        "UtbildningstypID": 78
+      }
+    ],
+    "KursUID": "e5f05427-390f-11ef-8e2b-d7bb9ee54966",
+    "KurstillfalleUID": "e5efb7da-390f-11ef-8e2b-d7bb9ee54966",
+    "Period": 1,
+    "RegistreringUID": "e66c3bb3-390f-11ef-a118-aac673b24dba",
+    "StudentUID": "64e2cf17-d24a-11ea-a4db-82cca4dd4b3e",
+    "TillfallesantagningUID": "e66bed92-390f-11ef-a118-aac673b24dba",
+    "UtbildningsinstansUID": "e5eef483-390f-11ef-8e2b-d7bb9ee54966"
+  }
+}
