@@ -204,13 +204,15 @@ export async function getProgramParticipation(
   const diff = diffTerms(courseRoundStartTerm, programStartTerm);
   const studyYear = Math.floor(diff / 2) + 1;
 
-  if (program.Utbildningsinformation.Benamning) {
+  // Unpacking these so type inference works when recombining them in programData
+  const { sv, en } = program.Utbildningsinformation.Benamning;
+  if (sv === undefined || en === undefined) {
     throw new Error(`The program name for course round [${courseRoundUID}] must be a multi-lang object.`)
   }
 
   const programData = {
     code: program.Utbildningsinformation.Utbildningskod,
-    name: program.Utbildningsinformation.Benamning,
+    name: { sv, en },
     startTerm: programStartTerm,
     studyYear,
     specialization: undefined,
@@ -222,13 +224,15 @@ export async function getProgramParticipation(
 
   const specialization = arr[1];
 
-  if (specialization.Utbildningsinformation.Benamning) {
+  // Unpacking these so type inference works when recombining them in specializationData
+  const { sv: svSpecialization, en: enSpecialization } = specialization.Utbildningsinformation.Benamning;
+  if (svSpecialization === undefined || enSpecialization === undefined) {
     throw new Error(`The specialization name for course round [${courseRoundUID}] must be a multi-lang object.`)
   }
 
   const specializationData = {
     code: specialization.Utbildningsinformation.Utbildningskod,
-    name: specialization.Utbildningsinformation.Benamning,
+    name: { sv: svSpecialization, en: enSpecialization }
   };
 
   if (arr.length === 2) {
