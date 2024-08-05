@@ -14,7 +14,7 @@ for i in "$@"; do
     shift
     ;;
     --no-status)
-    STATUS=no
+    NO_STATUS=yes
     shift
     ;;
     *)
@@ -39,7 +39,7 @@ response_body: body
 EOF
 )
 
-if [ -z "$STATUS" ]; then
+if [ -z "$NO_STATUS" ]; then
   printf "HTTP STATUS: "; echo $outp | jq -r 'select(.name == "response_status") | .value'
 fi
 
